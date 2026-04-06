@@ -495,7 +495,7 @@ NPC가 의뢰를 갖고 있을 때, 대화 선택지에 "[의뢰 확인]"이 추
 
 | 파라미터 | 값 |
 |----------|-----|
-| 위치 | 화면 상단 중앙 (canonical: 본 문서 및 `docs/systems/achievement-architecture.md` 섹션 3.1. `docs/systems/achievement-system.md` 섹션 5.4의 "좌측 하단" 기술은 구버전으로 상단 중앙으로 통일 필요 [OPEN]) |
+| 위치 | 화면 상단 중앙 (→ see `docs/systems/achievement-architecture.md` 섹션 3.1) |
 | 표시 시간 | 일반 업적 4초, 숨겨진 업적 6초 (-> see `docs/systems/achievement-system.md` 섹션 5.4) |
 | 애니메이션 | 슬라이드 인 0.3초, 대기, 슬라이드 아웃 0.3초 |
 | 큐 처리 | 동시 달성 시 순차 표시 (-> see `docs/systems/achievement-architecture.md` 섹션 8.2) |

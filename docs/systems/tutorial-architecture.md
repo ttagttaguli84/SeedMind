@@ -598,7 +598,7 @@ namespace SeedMind.Tutorial
 ### 6.1 UI 계층 구조
 
 ```
-Canvas_Tutorial (Overlay, Sort Order: 100)
+Canvas_Tutorial (Overlay, Sort Order: 40)  // → see docs/systems/ui-architecture.md 섹션 2.2
 ├── Panel_Dimmer                 # 반투명 배경 (입력 차단 시)
 │   └── Mask_Highlight           # 하이라이트 영역 마스크 (원형/사각)
 ├── Panel_Bubble                 # 말풍선 컨테이너
@@ -1208,7 +1208,7 @@ Step 4: "TutorialSystem" 하위에 빈 GameObject "ContextHintSystem" 생성
 ```
 Step 1: Canvas "Canvas_Tutorial" 생성
         → Render Mode: Screen Space - Overlay
-        → Sort Order: 100 (다른 UI 위에 표시)
+        → Sort Order: 40 (→ see docs/systems/ui-architecture.md 섹션 2.2 Canvas 계층)
         → Canvas Scaler: Scale With Screen Size, Reference 1920x1080
 
 Step 2: Canvas_Tutorial 하위에 Panel_Dimmer 생성
