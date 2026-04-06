@@ -152,7 +152,10 @@ GameSaveData (루트)
 │   ├── activeStepIndex
 │   └── contextHintCooldowns          # Dictionary<string, int>
 │
-└── AchievementSaveData               # (→ see achievement-architecture.md 섹션 7)
+├── AchievementSaveData               # (→ see achievement-architecture.md 섹션 7)
+│
+└── AffinitySaveData                  # (→ see blacksmith-architecture.md 섹션 5.5)
+    └── entries[]                     # AffinityEntry[] (npcId, affinityValue, lastVisitDay, triggeredDialogues[])
 ```
 
 #### 2.2 JSON 스키마 (PATTERN-005 준수)
@@ -240,6 +243,10 @@ GameSaveData (루트)
   "achievements": {
     "records": [],
     "totalUnlocked": 0
+  },
+
+  "affinity": {
+    "entries": []
   }
 }
 ```
@@ -287,14 +294,15 @@ namespace SeedMind.Save.Data
         public NPCSaveData npc;                          // → see npc-shop-architecture.md 섹션 7.1 (null 허용)
         public TutorialSaveData tutorial;                // → see tutorial-architecture.md 섹션 7 (null 허용)
         public AchievementSaveData achievements;         // → see achievement-architecture.md 섹션 7 (null 허용)
+        public AffinitySaveData affinity;                // → see blacksmith-architecture.md 섹션 5.5 (null 허용)
     }
 }
 ```
 
 **PATTERN-005 검증**: JSON 스키마(섹션 2.2)와 C# 클래스(섹션 2.3)의 필드 수 동일:
 - 메타데이터 3개: saveVersion, savedAt, playTimeSeconds
-- 시스템 데이터 14개: player, farm, inventory, time, weather, economy, buildings, processing, unlocks, shops, milestones, npc, tutorial, achievements
-- 총 17개 필드 -- 양쪽 일치
+- 시스템 데이터 15개: player, farm, inventory, time, weather, economy, buildings, processing, unlocks, shops, milestones, npc, tutorial, achievements, affinity
+- 총 18개 필드 -- 양쪽 일치
 
 **기존 data-pipeline.md와의 차이점**: data-pipeline.md의 GameSaveData에는 `inventory`, `npc`, `tutorial` 필드가 명시적으로 분리되지 않았다. `inventory`는 PlayerSaveData 내부에 포함되어 있었고, `npc`와 `tutorial`은 각 아키텍처 문서에서 개별적으로 확장을 기술했다. 이 문서에서는 향후 구현 시 모든 세이브 데이터가 루트에서 명확히 접근 가능하도록 통합한다.
 

@@ -475,10 +475,10 @@ namespace SeedMind.UI
         "dlg_blacksmith_affinity_lv2",
         "dlg_blacksmith_affinity_lv3"
     ],
-    "upgradeCompleteAffinity": 5,
-    "materialPurchaseAffinity": 1,
-    "specialDiscountAffinityLevel": 3,
-    "discountRate": 0.1
+    "upgradeCompleteAffinity": "(→ see docs/content/blacksmith-npc.md 섹션 2.5)",
+    "materialPurchaseAffinity": "(→ see docs/content/blacksmith-npc.md 섹션 2.5)",
+    "specialDiscountAffinityLevel": "(→ see docs/content/blacksmith-npc.md 섹션 2.5)",
+    "discountRate": "(→ see docs/content/blacksmith-npc.md 섹션 2.5)"
 }
 ```
 
@@ -512,15 +512,15 @@ namespace SeedMind.NPC.Data
 
         [Header("친밀도 보상")]
         public int upgradeCompleteAffinity;               // 업그레이드 완료 시 친밀도 증가량
-                                                          // (→ see docs/content/npcs.md)
+                                                          // (→ see docs/content/blacksmith-npc.md 섹션 2.5)
         public int materialPurchaseAffinity;              // 재료 1회 구매 시 친밀도 증가량
-                                                          // (→ see docs/content/npcs.md)
+                                                          // (→ see docs/content/blacksmith-npc.md 섹션 2.5)
 
         [Header("친밀도 혜택")]
         public int specialDiscountAffinityLevel;          // 할인 혜택 해금 친밀도 단계
-                                                          // (→ see docs/content/npcs.md)
-        public float discountRate;                        // 할인율 (0.1 = 10%)
-                                                          // (→ see docs/content/npcs.md)
+                                                          // (→ see docs/content/blacksmith-npc.md 섹션 2.5)
+        public float discountRate;                        // 할인율
+                                                          // (→ see docs/content/blacksmith-npc.md 섹션 2.5)
     }
 }
 ```
@@ -558,8 +558,8 @@ namespace SeedMind.NPC.Data
 
 | 트리거 | 증가량 | 발생 조건 |
 |--------|--------|-----------|
-| 도구 업그레이드 완료 | `upgradeCompleteAffinity` (-> see `docs/content/npcs.md`) | ToolUpgradeEvents.OnUpgradeCompleted 수신 시 |
-| 재료 구매 | `materialPurchaseAffinity` (-> see `docs/content/npcs.md`) | 대장간 상점에서 아이템 구매 완료 시 |
+| 도구 업그레이드 완료 | `upgradeCompleteAffinity` (-> see `docs/content/blacksmith-npc.md` 섹션 2.5) | ToolUpgradeEvents.OnUpgradeCompleted 수신 시 |
+| 재료 구매 | `materialPurchaseAffinity` (-> see `docs/content/blacksmith-npc.md` 섹션 2.5) | 대장간 상점에서 아이템 구매 완료 시 |
 | 일상 대화 | 1 (고정) | 하루 첫 대화 시 1회만 (중복 방지) |
 
 ### 5.3 친밀도 단계별 효과
@@ -581,7 +581,7 @@ namespace SeedMind.NPC.Data
 
 단계 3: 오랜 친구 (threshold[3] 이상)
   → 개인적 이야기 공유 (greetingDialogues[3])
-  → 재료 구매 할인 (discountRate, → see docs/content/npcs.md)
+  → 재료 구매 할인 (discountRate, → see docs/content/blacksmith-npc.md 섹션 2.5)
 ```
 
 ### 5.4 친밀도 단계 대화 트리거 조건
@@ -852,11 +852,13 @@ Step B-3: BlacksmithNPCData에 DialogueData 참조 연결
 ### Phase C: 씬 오브젝트 및 UI 구성 (MCP)
 
 ```
-Step C-1: 씬에 BlacksmithNPC GameObject 생성
-          C-1-01: create_object → "BlacksmithNPC", position: (→ see docs/content/npcs.md 섹션 4)
-          C-1-02: add_component → BlacksmithNPC (SeedMind.NPC.BlacksmithNPC)
-          C-1-03: set_property → _npcData = SO_NPC_Blacksmith
-          C-1-04: set_property → _blacksmithData = SO_BlacksmithNPC_Cheolsu
+Step C-1: 기존 NPC_Blacksmith GameObject에 BlacksmithNPC 컴포넌트 추가
+          (NPC_Blacksmith는 ARC-009 T-4-03에서 이미 생성됨 -- 중복 생성 금지)
+          C-1-01: add_component → NPC_Blacksmith, BlacksmithNPC (SeedMind.NPC.BlacksmithNPC)
+          C-1-02: set_property → _npcData = SO_NPC_Blacksmith
+          C-1-03: set_property → _blacksmithData = SO_BlacksmithNPC_Cheolsu
+          C-1-04: create_object → "Blacksmith_InteractionZone", parent: "NPC_Blacksmith"
+                  add_component → BoxCollider2D (isTrigger=true)
 
 Step C-2: 씬에 NPCAffinityTracker 추가
           C-2-01: --- MANAGERS --- 하위에 create_object → "NPCAffinityTracker"
@@ -933,7 +935,8 @@ Step D-5: 세이브/로드 테스트
 - `docs/systems/ui-architecture.md` (ARC-018) -- UIManager, ScreenBase, ScreenType enum, PopupQueue
 - `docs/systems/progression-architecture.md` -- ProgressionManager, XPSource enum
 - `docs/systems/achievement-architecture.md` -- AchievementManager, AchievementConditionType, ToolUpgradeCount
-- `docs/content/npcs.md` (CON-003) -- 대장간 NPC 캐릭터 설정, 대화 예시, 영업 정보
+- `docs/content/npcs.md` (CON-003) -- 대장간 NPC 캐릭터 기본 설정, 영업 정보
+- `docs/content/blacksmith-npc.md` (CON-004) -- 철수 캐릭터 심화 설계, 대화 스크립트, 친밀도 임계값/증가량/할인율 (canonical)
 - `docs/systems/tool-upgrade.md` -- 업그레이드 비용, 재료, 등급, 소요 일수 (canonical)
 - `docs/systems/economy-architecture.md` -- ShopSystem, EconomyManager
 - `docs/pipeline/data-pipeline.md` -- ToolData SO 에셋 구조
