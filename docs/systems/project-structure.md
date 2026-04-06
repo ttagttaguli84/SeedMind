@@ -83,18 +83,31 @@ Assets/
 │   │   │       ├── MilestoneData.cs
 │   │   │       └── MilestoneReward.cs
 │   │   │
+│   │   ├── Tutorial/                  # 튜토리얼 시스템 (→ see docs/systems/tutorial-architecture.md)
+│   │   │   ├── TutorialManager.cs     # 싱글턴, 시퀀스 진행 제어
+│   │   │   ├── TutorialTriggerSystem.cs  # 이벤트 버스 구독, 트리거 판정
+│   │   │   ├── ContextHintSystem.cs   # 상황별 자동 힌트
+│   │   │   ├── TutorialEvents.cs      # 정적 이벤트 허브
+│   │   │   ├── TutorialSaveData.cs    # 세이브 데이터
+│   │   │   └── Data/
+│   │   │       ├── TutorialSequenceData.cs  # 시퀀스 SO 정의
+│   │   │       ├── TutorialStepData.cs      # 단계 SO 정의
+│   │   │       └── ContextHintData.cs       # 힌트 SO 정의
+│   │   │
 │   │   └── UI/                        # UI 시스템
 │   │       ├── HUDController.cs
 │   │       ├── LevelBarUI.cs          # 레벨/경험치 바 UI (SeedMind.UI, → see docs/systems/progression-architecture.md 섹션 7.2)
 │   │       ├── InventoryUI.cs
 │   │       ├── ShopUI.cs
-│   │       └── DialogueUI.cs
+│   │       ├── DialogueUI.cs
+│   │       └── TutorialUI.cs         # 튜토리얼 UI (SeedMind.UI, → see docs/systems/tutorial-architecture.md 섹션 6)
 │   │
 │   ├── Data/                          # ScriptableObject 인스턴스 (에셋)
 │   │   ├── Crops/                     # SO_Crop_Potato.asset 등
 │   │   ├── Fertilizers/               # SO_Fert_Basic.asset 등
 │   │   ├── Tools/                     # SO_Tool_Hoe_T1.asset 등
 │   │   ├── Buildings/                 # SO_Bldg_WaterTank.asset 등
+│   │   ├── Tutorial/                  # SO_TutSeq_MainTutorial.asset, SO_TutStep_*.asset, SO_CtxHint_*.asset
 │   │   └── Config/                    # SO_ProgressionData.asset (SO_LevelConfig.asset 대체), SO_TimeConfig.asset 등
 │   │
 │   ├── Prefabs/
@@ -167,6 +180,8 @@ SeedMind                          # 최상위 네임스페이스 (공용 인터�
 ├── SeedMind.Building.Data        # 건물 데이터
 ├── SeedMind.Level                # 레벨/경험치
 ├── SeedMind.Level.Data           # 레벨 설정 데이터
+├── SeedMind.Tutorial             # 튜토리얼 시스템 (→ see docs/systems/tutorial-architecture.md)
+├── SeedMind.Tutorial.Data        # 튜토리얼 SO 정의
 └── SeedMind.UI                   # UI 시스템
 ```
 
@@ -198,25 +213,31 @@ SeedMind                          # 최상위 네임스페이스 (공용 인터�
         │      ▼           ▼     │
         │  ┌────────┐  ┌────────┐│
         └─▶│Economy │  │Building││
-           └────────┘  └────┬───┘│
-                            │    │
-                            ▼    ▼
-                       ┌──────────┐
-                       │    UI    │  (최상층 — 모든 것을 참조 가능)
-                       └──────────┘
+           └────┬───┘  └────┬───┘│
+                │           │    │
+                └─────┬─────┘    │
+                      ▼          ▼
+               ┌────────────┐
+               │  Tutorial  │  (기존 시스템 이벤트 구독만, 역방향 의존 없음)
+               └──────┬─────┘
+                      ▼
+               ┌──────────┐
+               │    UI    │  (최상층 — 모든 것을 참조 가능)
+               └──────────┘
 ```
 
 ### 3.2 의존성 매트릭스
 
-| 모듈 | Core | Farm | Player | Economy | Building | Level | UI |
-|------|:----:|:----:|:------:|:-------:|:--------:|:-----:|:--:|
-| **Core** | - | X | X | X | X | X | X |
-| **Farm** | O | - | X | X | X | X | X |
-| **Player** | O | O | - | X | X | X | X |
-| **Economy** | O | O | X | - | X | X | X |
-| **Building** | O | O | X | O | - | X | X |
-| **Level** | O | O | X | X | X | - | X |
-| **UI** | O | O | O | O | O | O | - |
+| 모듈 | Core | Farm | Player | Economy | Building | Level | Tutorial | UI |
+|------|:----:|:----:|:------:|:-------:|:--------:|:-----:|:--------:|:--:|
+| **Core** | - | X | X | X | X | X | X | X |
+| **Farm** | O | - | X | X | X | X | X | X |
+| **Player** | O | O | - | X | X | X | X | X |
+| **Economy** | O | O | X | - | X | X | X | X |
+| **Building** | O | O | X | O | - | X | X | X |
+| **Level** | O | O | X | X | X | - | X | X |
+| **Tutorial** | O | O | O | O | O | O | - | X |
+| **UI** | O | O | O | O | O | O | O | - |
 
 O = 참조 허용, X = 참조 금지
 

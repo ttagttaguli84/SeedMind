@@ -19,7 +19,7 @@
 | VIS-001 | 2 | 비주얼 가이드 (로우폴리 스타일 참고자료, 색상 팔레트) |
 | AUD-001 | 1 | 사운드 디자인 문서 (필요한 효과음/BGM 목록) |
 | ~~DES-005~~ | ~~3~~ | ~~인벤토리/아이템 시스템 상세 설계 (아이템 분류, 스택, 인벤토리 UI 규칙)~~ — DONE → `docs/systems/inventory-system.md` |
-| DES-006 | 2 | 튜토리얼/온보딩 시스템 설계 (첫 플레이 가이드, 단계별 안내) |
+| ~~DES-006~~ | ~~2~~ | ~~튜토리얼/온보딩 시스템 설계 (첫 플레이 가이드, 단계별 안내)~~ — DONE → `docs/systems/tutorial-system.md`, `docs/systems/tutorial-architecture.md` |
 | ~~ARC-006~~ | ~~3~~ | ~~인벤토리 시스템 기술 아키텍처 (InventoryManager, ItemData SO)~~ — DONE → `docs/systems/inventory-architecture.md` |
 | ~~FIX-001~~ | ~~4~~ | ~~[C-2] 툴바 슬롯 수 설계 결정~~ — DONE: 8칸 범용 툴바 채택, data-pipeline.md toolbarSlots 8개로 수정 |
 | ~~FIX-002~~ | ~~3~~ | ~~[W-2] FertilizerData.MaxStackSize 값 통일~~ — DONE: maxStack=30으로 통일 (inventory-system.md canonical) |
@@ -41,3 +41,5 @@
 | CON-004 | 2 | 대장간 NPC 상세 (캐릭터, 대화, 업그레이드 인터페이스 UX) |
 | ARC-009 | 2 | NPC/상점 MCP 태스크 시퀀스 독립 문서화 (npc-shop-architecture.md Part II 요약 → docs/mcp/npc-shop-tasks.md 상세 분리) |
 | BAL-005 | 1 | 여행 상인 희귀 아이템 가격 밸런스 분석 (npcs.md [OPEN] 후속 — 만능 비료/겨울 씨앗 등 8종 ROI 검증) |
+| ARC-010 | 2 | 튜토리얼 MCP 태스크 시퀀스 독립 문서화 (tutorial-architecture.md Part II → docs/mcp/tutorial-tasks.md) |
+| ARC-011 | 2 | 세이브/로드 시스템 기술 아키텍처 (SaveManager, GameSaveData 통합 구조, 자동저장 트리거 설계) |

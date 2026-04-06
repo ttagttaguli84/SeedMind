@@ -93,6 +93,16 @@ Assets/_Project/                    # (→ see docs/systems/project-structure.md
 │   │       ├── ProgressionData.cs # 진행 설정 SO
 │   │       └── MilestoneData.cs   # 마일스톤 데이터
 │   │
+│   ├── Tutorial/                # 튜토리얼 시스템 (→ see docs/systems/tutorial-architecture.md)
+│   │   ├── TutorialManager.cs   # 싱글턴, 시퀀스 진행 제어
+│   │   ├── TutorialTriggerSystem.cs  # 이벤트 기반 트리거
+│   │   ├── ContextHintSystem.cs # 상황별 자동 힌트
+│   │   ├── TutorialEvents.cs   # 정적 이벤트 허브
+│   │   └── Data/
+│   │       ├── TutorialSequenceData.cs  # 시퀀스 SO
+│   │       ├── TutorialStepData.cs      # 단계 SO
+│   │       └── ContextHintData.cs       # 힌트 SO
+│   │
 │   └── UI/                      # UI 시스템
 │       ├── HUDController.cs     # 메인 HUD
 │       ├── InventoryUI.cs       # 인벤토리 UI
@@ -269,6 +279,7 @@ Release Build (최적화)
 - `docs/content/facilities.md` — 시설 콘텐츠 상세: 메카닉/업그레이드/가공 레시피 canonical (CON-002)
 - `docs/systems/tool-upgrade-architecture.md` — 도구 업그레이드 시스템 기술 아키텍처: 업그레이드 흐름/효과 계산/세이브 확장 (DES-007)
 - `docs/systems/npc-shop-architecture.md` — NPC/상점 시스템 기술 아키텍처: NPC 관리/대화/대장간 연계/여행 상인 (ARC-008)
+- `docs/systems/tutorial-architecture.md` — 튜토리얼/온보딩 시스템 기술 아키텍처: 튜토리얼 매니저/트리거/UI/상황별 힌트 (DES-006)
 
 ## Open Questions
 
