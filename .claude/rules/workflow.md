@@ -23,6 +23,8 @@
 6. [ ] Part I(디자인)과 Part II(MCP 구현) 간 오브젝트 계층, 초기값, 배치 정보가 일치하는가?
 7. [ ] Cross-references 섹션이 존재하고 관련 문서를 모두 나열하고 있는가?
 8. [ ] [OPEN] 및 [RISK] 태그가 적절히 사용되었는가?
+9. [ ] (PATTERN-005) 동일 문서 내 Part I JSON 스키마와 Part II C# 클래스의 필드명·필드 수가 일치하는가? — 한쪽에 필드를 추가/삭제했을 때 반대쪽도 즉시 업데이트되었는가?
+10. [ ] (PATTERN-006) MCP 태스크 문서(Part II 포함)에 배열·테이블 형태의 수치를 직접 기재한 경우, `(→ see canonical)` 참조 주석이 함께 기재되어 있는가? — 직접 기재 시 canonical 문서와 동시 수정 여부를 확인한다.
 
 ## Commit Cadence
 - Commit after each logical unit of work (one system expansion, one review pass)

@@ -197,6 +197,7 @@
 - `docs/systems/farming-system.md` — 경작 시스템 상세 설계
 - `docs/systems/farming-architecture.md` — 경작 시스템 기술 아키텍처
 - `docs/systems/project-structure.md` — Unity 프로젝트 구조 상세
+- `docs/systems/inventory-system.md` — 인벤토리/아이템 시스템 상세 설계
 - `docs/systems/crop-growth.md` — 작물 성장 시스템 상세 설계 (DES-002)
 - `docs/systems/time-season.md` — 시간/계절/날씨 시스템 상세 설계 (DES-003)
 - `docs/systems/economy-system.md` — 경제 시스템 상세 설계 (DES-004)

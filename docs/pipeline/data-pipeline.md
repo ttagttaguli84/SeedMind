@@ -427,15 +427,19 @@ SO_Tool_Hoe_Iridium(tier=5, nextTier=null)
       "quality": "Normal"
     }
   ],
-  "maxSlots": 24,
-  "toolSlots": [
-    { "toolId": "hoe_basic", "tier": 1 },
-    { "toolId": "watering_can_copper", "tier": 2 },
-    { "toolId": "seed_bag", "tier": 1 },
-    { "toolId": "sickle_basic", "tier": 1 },
-    { "toolId": "hand", "tier": 1 }
+  "maxSlots": 15,
+  "toolbarSlots": [
+    { "itemId": "tool_hoe_basic", "quantity": 1 },
+    { "itemId": "tool_watering_can_copper", "quantity": 1 },
+    { "itemId": "seed_potato", "quantity": 5 },
+    { "itemId": "tool_sickle_basic", "quantity": 1 },
+    { "itemId": "", "quantity": 0 },
+    { "itemId": "", "quantity": 0 },
+    { "itemId": "", "quantity": 0 },
+    { "itemId": "", "quantity": 0 }
   ],
-  "wateringCanCharges": 18
+  "wateringCanCharges": 18,
+  "toolbarSelectedIndex": 0
 }
 ```
 
@@ -443,9 +447,9 @@ SO_Tool_Hoe_Iridium(tier=5, nextTier=null)
 
 | 파라미터 | 값 |
 |----------|-----|
-| 초기 슬롯 수 | 24 |
-| 최대 슬롯 수 | 48 (창고 건설 시 확장) |
-| 도구 슬롯 | 5 (고정, 인벤토리와 별도) |
+| 초기 슬롯 수 | 15 (→ see docs/systems/inventory-system.md 섹션 2.1 for canonical 배낭 업그레이드 경로) |
+| 최대 슬롯 수 | 30 (배낭 업그레이드 완료 시, → see inventory-system.md 섹션 2.1) |
+| 툴바 슬롯 | 8 (범용, 씨앗/비료도 배치 가능, → see docs/systems/inventory-system.md 섹션 2.2) |
 | 물뿌리개 기본 충전량 | 20 (→ see docs/systems/farming-system.md) — 위 예시의 18은 사용 후 잔여량 |
 
 ##### FarmTileSaveData
@@ -575,7 +579,19 @@ SO_Tool_Hoe_Iridium(tier=5, nextTier=null)
     "gridY": 6,
     "isOperational": true,
     "upgradeLevel": 0,
-    "buildProgress": 1.0
+    "buildProgress": 1.0,
+    "storageSlots": null
+  },
+  {
+    "buildingId": "storage",
+    "gridX": 8,
+    "gridY": 4,
+    "isOperational": true,
+    "upgradeLevel": 0,
+    "buildProgress": 1.0,
+    "storageSlots": [
+      { "itemId": "crop_potato", "quantity": 20, "quality": "Normal" }
+    ]
   }
 ]
 ```
@@ -1195,6 +1211,16 @@ namespace SeedMind.Building
         public bool isOperational;            // 건설 완료 여부
         public int upgradeLevel;              // 현재 업그레이드 단계
         public float buildProgress;           // 건설 진행률 (0.0~1.0)
+        // Storage 건물에만 사용 — null이면 창고 없음 (→ see docs/systems/inventory-system.md 섹션 2.3)
+        public ItemSlotSaveData[] storageSlots;
+    }
+
+    [System.Serializable]
+    public class ItemSlotSaveData
+    {
+        public string itemId;             // IInventoryItem.ItemId
+        public int quantity;
+        public string quality;            // CropQuality enum 문자열 (Crop 카테고리만)
     }
 }
 ```

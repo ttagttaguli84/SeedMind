@@ -24,6 +24,8 @@ Every design document MUST include:
 - **코드 예시 내 기본값(defaultValue, tuningParam 등)도 canonical 참조 주석 필요**: `// → see docs/systems/X.md`
 - 동일 문서 내에서도 섹션 간 수치가 중복 기재되지 않도록 한다. 한 섹션에 기재하고 다른 섹션에서는 해당 섹션을 참조한다
 - **enum/타입 확장 시**: 해당 enum을 사용하는 모든 코드 예시(switch 문, GetXxxMultiplier 등)를 같은 문서 내에서 전수 업데이트해야 한다
+- **(PATTERN-005) JSON 스키마와 C# 클래스 동기화**: 동일 문서 내에 Part I JSON 예시와 Part II C# 클래스를 함께 작성하는 경우, 모든 필드명·필드 수가 양쪽에 동일하게 존재해야 한다. 필드 추가·삭제·이름 변경 시 JSON 예시와 C# 클래스를 같은 편집에서 동시에 업데이트한다. 리뷰어는 Reviewer Checklist 항목 9를 통해 이를 검증한다.
+- **(PATTERN-006) MCP 태스크 내 배열·테이블 수치 기재 금지**: MCP 태스크 문서(Part II 포함)에서 배열·테이블 형태의 수치(XP 테이블, 가격 목록 등)를 직접 기재하지 않는다. canonical 문서를 `(→ see docs/X.md)` 참조로만 가리킨다. 불가피하게 직접 기재할 경우 해당 값 옆에 `// → copied from docs/X.md` 주석을 붙이고, canonical 문서를 동시에 수정하여 값이 동일함을 보장한다.
 
 ## Canonical 데이터 매핑
 
