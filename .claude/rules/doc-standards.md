@@ -26,6 +26,7 @@ Every design document MUST include:
 - **enum/타입 확장 시**: 해당 enum을 사용하는 모든 코드 예시(switch 문, GetXxxMultiplier 등)를 같은 문서 내에서 전수 업데이트해야 한다
 - **(PATTERN-005) JSON 스키마와 C# 클래스 동기화**: 동일 문서 내에 Part I JSON 예시와 Part II C# 클래스를 함께 작성하는 경우, 모든 필드명·필드 수가 양쪽에 동일하게 존재해야 한다. 필드 추가·삭제·이름 변경 시 JSON 예시와 C# 클래스를 같은 편집에서 동시에 업데이트한다. 리뷰어는 Reviewer Checklist 항목 9를 통해 이를 검증한다.
 - **(PATTERN-006) MCP 태스크 내 배열·테이블 수치 기재 금지**: MCP 태스크 문서(Part II 포함)에서 배열·테이블 형태의 수치(XP 테이블, 가격 목록 등)를 직접 기재하지 않는다. canonical 문서를 `(→ see docs/X.md)` 참조로만 가리킨다. 불가피하게 직접 기재할 경우 해당 값 옆에 `// → copied from docs/X.md` 주석을 붙이고, canonical 문서를 동시에 수정하여 값이 동일함을 보장한다.
+- **(PATTERN-007) SO 에셋 테이블의 콘텐츠 파라미터 직접 기재 금지**: `data-pipeline.md` 등 파이프라인/아키텍처 문서의 SO 에셋 데이터 테이블(시설별 에셋 데이터 표 등)에서 `tileSize`, `buildTimeDays`, `recipeCount` 등 콘텐츠 정의 파라미터를 구체적 수치로 직접 기재하는 것을 금지한다. 해당 파라미터는 canonical 콘텐츠 문서를 `(→ see docs/content/facilities.md 섹션 X.X)` 형식으로만 참조한다. 파이프라인 문서 내 SO 에셋 테이블의 역할은 필드 타입·기본값 스키마 정의에 국한하며, 실제 콘텐츠 값은 콘텐츠 문서가 단독 출처가 된다.
 
 ## Canonical 데이터 매핑
 
@@ -40,6 +41,7 @@ Every design document MUST include:
 | 경제 수치(초기 골드, 가격 상하한, 수급 보정 등) | `docs/systems/economy-system.md` | 경제 메카닉 전반 |
 | 시설 이름, 건설 요건, 업그레이드 경로 | `docs/design.md` 섹션 4.6 | 시설 목록 전체 |
 | BuildingData SO 필드 정의 | `docs/pipeline/data-pipeline.md` Part I 섹션 2.4 | 시설 SO 스키마 |
+| **시설 tileSize, buildTimeDays, effectRadius 등 구조적 파라미터** | **`docs/content/facilities.md`** | **섹션 2.1 건설 프로세스 / 시설별 상세 섹션** |
 | Unity 프로젝트 폴더 구조, 네임스페이스 | `docs/systems/project-structure.md` | 프로젝트 구조 |
 
 ## Language

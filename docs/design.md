@@ -210,6 +210,7 @@
 - `docs/systems/economy-system.md` — 경제 시스템 상세 설계 (DES-004)
 - `docs/content/crops.md` — 전체 작물 상세 스펙 (작성 예정, CON-001)
 - `docs/balance/crop-economy.md` — 작물 경제 밸런스 (BAL-001)
+- `docs/systems/tool-upgrade.md` — 도구 업그레이드 시스템 상세 설계 (DES-007)
 - `docs/balance/progression-curve.md` — 게임 진행 곡선 밸런스 (BAL-002)
 
 ## Open Questions

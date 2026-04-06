@@ -254,6 +254,7 @@ Release Build (최적화)
 - `docs/mcp/progression-tasks.md` — 진행 시스템 MCP 태스크 시퀀스 (BAL-002-MCP)
 - `docs/systems/facilities-architecture.md` — 시설 시스템 기술 아키텍처: 물탱크/온실/창고/가공소 (ARC-007)
 - `docs/content/facilities.md` — 시설 콘텐츠 상세: 메카닉/업그레이드/가공 레시피 canonical (CON-002)
+- `docs/systems/tool-upgrade-architecture.md` — 도구 업그레이드 시스템 기술 아키텍처: 업그레이드 흐름/효과 계산/세이브 확장 (DES-007)
 
 ## Open Questions
 

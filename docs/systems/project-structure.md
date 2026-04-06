@@ -39,8 +39,15 @@ Assets/
 │   │   │   ├── PlayerController.cs
 │   │   │   ├── PlayerInventory.cs
 │   │   │   ├── ToolSystem.cs
+│   │   │   ├── ToolUpgradeSystem.cs     # 도구 업그레이드 처리 (→ see docs/systems/tool-upgrade-architecture.md)
+│   │   │   ├── ToolEffectResolver.cs    # 도구 등급별 효과 계산 (static)
+│   │   │   ├── ToolUpgradeEvents.cs     # 업그레이드 이벤트 허브
 │   │   │   └── Data/
-│   │   │       └── ToolData.cs
+│   │   │       ├── ToolData.cs
+│   │   │       ├── PendingUpgrade.cs          # 업그레이드 진행 상태
+│   │   │       ├── ToolUpgradeInfo.cs         # 이벤트 페이로드, enums
+│   │   │       ├── ToolSpecialEffect.cs       # 특수 효과 enum
+│   │   │       └── ToolUpgradeSaveData.cs     # 세이브 데이터
 │   │   │
 │   │   ├── Economy/                   # 경제 시스템
 │   │   │   ├── EconomyManager.cs
@@ -427,5 +434,6 @@ SCN_Farm (Scene Root)
 - `docs/architecture.md` 3절 (프로젝트 구조 개요)
 - `docs/architecture.md` 4.3절 (TimeManager), 4.4절 (입력 시스템)
 - `docs/systems/farming-architecture.md` (경작 시스템 클래스 구조)
+- `docs/systems/tool-upgrade-architecture.md` (도구 업그레이드 시스템 — DES-007)
 - `docs/mcp/scene-setup-tasks.md` (기본 씬 구성 MCP 태스크 — ARC-002)
 - `docs/pipeline/` (빌드 파이프라인, 작성 예정)

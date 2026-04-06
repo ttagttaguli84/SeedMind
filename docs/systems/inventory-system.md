@@ -62,7 +62,7 @@
 
 | 속성 | 영문 키 | 설명 |
 |------|---------|------|
-| 도구 등급 | `toolTier` | Basic / Copper / Iron / Gold |
+| 도구 등급 | `toolTier` | Basic / Reinforced / Legendary (→ see `docs/systems/tool-upgrade.md` 섹션 1.1) |
 | 에너지 소모 | `energyCost` | 1회 사용 시 소모 에너지 (-> see `docs/systems/farming-system.md` 섹션 3.1) |
 | 적용 범위 | `range` | 효과 적용 타일 범위 |
 
@@ -292,7 +292,7 @@
 | 아이템 아이콘 | 슬롯 중앙 | 항상 |
 | 수량 텍스트 | 슬롯 우측 하단 | 스택 수량 >= 2일 때만 |
 | 품질 별 | 슬롯 좌측 하단 | Crop 카테고리, Silver 이상일 때 |
-| 도구 등급 표시 | 슬롯 좌측 상단 | Tool 카테고리, Copper 이상일 때 |
+| 도구 등급 표시 | 슬롯 좌측 상단 | Tool 카테고리, Reinforced 이상일 때 (→ see `docs/systems/tool-upgrade.md` 섹션 7.3) |
 | 선택 하이라이트 | 슬롯 테두리 | 현재 선택된 툴바 슬롯 |
 
 #### 품질 표시 (수확물)
