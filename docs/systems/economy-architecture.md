@@ -176,7 +176,8 @@
 │  + Initialize(EconomyConfig config, TransactionLog log): void│
 │  + SetSeason(Season season): void   // OnSeasonChanged에서   │
 │  + SetWeather(WeatherType weather): void                     │
-│  + CalculateSellPrice(PriceData data, CropQuality q): int    │
+│  + CalculateSellPrice(PriceData data, CropQuality q,         │
+│       bool isGreenhouse = false): int                        │
 │  + CalculateBuyPrice(PriceData data): int                    │
 │  + MarkDirty(): void                                         │
 │  + RecalculateAllPrices(): void                              │
@@ -184,6 +185,8 @@
 │  - GetSupplyMultiplier(string itemId): float                 │
 │  - GetWeatherMultiplier(PriceData data, WeatherType w): float│
 │  - GetQualityMultiplier(CropQuality quality): float          │
+│  - GetGreenhouseMultiplier(bool isGreenhouse,                │
+│       SeasonFlag cropSeasons, Season currentSeason): float   │
 │  - ClampPrice(float rawPrice, PriceData data): int           │
 │  + GetSaveData(): PriceFluctuationSaveData                   │
 │  + LoadSaveData(PriceFluctuationSaveData data): void         │
@@ -319,10 +322,12 @@ namespace SeedMind.Economy
 ### 3.1 최종 가격 공식
 
 ```
-최종_판매가 = 기본_판매가 × 계절_보정 × 수급_보정 × 날씨_보정 × 품질_보정 × 축제_보정
+최종_판매가 = 기본_판매가 × 계절_보정 × 수급_보정 × 날씨_보정 × 품질_보정 × 축제_보정 × 온실_보정
 
 최종_구매가 = 기본_구매가 × 계절_보정 × 축제_보정
 ```
+
+- 온실_보정 상세: -> see 섹션 3.7 (BAL-010 확정, x0.8 페널티 또는 x1.2 시너지)
 
 최종 가격은 정수로 반올림(Mathf.RoundToInt)하며, 상한/하한으로 클램핑한다.
 
@@ -431,7 +436,112 @@ Pseudocode:
         sellMultiplier = 1.0
 ```
 
-### 3.7 가격 클램핑
+### 3.7 온실 판매가 보정 (Greenhouse Price Modifier) [BAL-010, RESOLVED]
+
+온실에서 수확한 비계절 작물에 대한 판매가 추가 보정이다 (-> see `docs/systems/economy-system.md` 섹션 2.6.5 for canonical 규칙).
+
+**[RESOLVED-BAL-010]** 2026-04-07 확정: 시나리오 A(비계절 페널티 x0.8)와 시나리오 B(겨울 전용 시너지 x1.2)를 **동시 적용**. 상세 근거는 `docs/balance/crop-economy.md` 섹션 4.3.10 참조. 아래 섹션 3.7.1~3.7.2는 각 구현 방향의 참고 기록이며, 3.7.3에서 확정 구현 방향을 참조할 것.
+
+디자이너 확정 전 두 시나리오를 병기한 원본 기록:
+
+#### 3.7.1 시나리오 A: 비계절 온실 작물 판매가 페널티
+
+```
+Pseudocode: GetGreenhouseMultiplier(bool isGreenhouse, SeasonFlag cropSeasons, Season currentSeason)
+
+    if !isGreenhouse:
+        return 1.0  // 야외 재배 → 보정 없음
+
+    if (cropSeasons & (1 << currentSeason)) != 0:
+        return 1.0  // 해당 계절 작물 → 보정 없음
+
+    if cropSeasons == SeasonFlag.Winter:
+        return 1.0  // 겨울 전용 작물 → 페널티 면제 (온실이 본래 환경)
+
+    return economyConfig.greenhouseOffSeasonPenalty
+    // 잠정 0.8 → 비계절 작물 판매가 20% 감소
+    // → see docs/systems/economy-system.md 섹션 2.6.5
+```
+
+**필요 변경 사항**:
+
+| 대상 | 변경 내용 |
+|------|----------|
+| `EconomyConfig` SO | `greenhouseOffSeasonPenalty: float` 필드 추가 (기본값 잠정 0.8) |
+| `PriceFluctuationSystem.CalculateSellPrice()` | 시그니처에 `bool isGreenhouse` 파라미터 추가 |
+| `EconomyManager.GetSellPrice()` | 호출 측에서 `FarmTile.IsInGreenhouse` 값 전달 |
+| `CropData` SO | 변경 불필요 (기존 `allowedSeasons`로 계절 매칭 판별 가능) |
+
+**데이터 흐름 변경**:
+
+```
+ShopSystem.TrySellCrop(crop, qty, quality, isGreenhouse)
+    │
+    └── EconomyManager.GetSellPrice(crop, quality, isGreenhouse)
+            → PriceFluctuationSystem.CalculateSellPrice(priceData, quality, isGreenhouse)
+                → greenhouseMul = GetGreenhouseMultiplier(isGreenhouse, cropData.allowedSeasons, currentSeason)
+                → finalPrice = base × season × supply × weather × quality × festival × greenhouseMul
+                → ClampPrice()
+```
+
+[RISK] `ShopSystem.TrySellCrop()` 시그니처 변경은 출하함 판매 흐름에도 영향을 줌. 출하함에서도 `isGreenhouse` 정보를 전달해야 하므로, 인벤토리 아이템에 수확 출처(origin) 태그가 필요할 수 있다.
+
+#### 3.7.2 시나리오 B: 겨울 전용 작물 온실 시너지 보너스
+
+```
+Pseudocode: GetGreenhouseMultiplier(bool isGreenhouse, CropData cropData, Season currentSeason)
+
+    if !isGreenhouse:
+        return 1.0  // 야외 재배 → 보정 없음
+
+    if !cropData.isWinterExclusive:
+        return 1.0  // 겨울 전용이 아닌 작물 → 보정 없음
+
+    return cropData.greenhouseSynergyBonus
+    // 잠정 1.2 → 겨울 전용 작물 판매가 20% 증가
+    // → see docs/systems/economy-system.md 섹션 2.6.5
+```
+
+**필요 변경 사항**:
+
+| 대상 | 변경 내용 |
+|------|----------|
+| `CropData` SO | `isWinterExclusive: bool` 필드 추가 (겨울 전용 3종에만 true) |
+| `CropData` SO | `greenhouseSynergyBonus: float` 필드 추가 (기본값 잠정 1.2) |
+| `PriceFluctuationSystem.CalculateSellPrice()` | 시그니처에 `bool isGreenhouse`, `CropData cropData` 파라미터 추가 |
+| `EconomyConfig` SO | 변경 불필요 (보너스 값이 CropData에 개별 저장) |
+
+[RISK] `isWinterExclusive` 필드를 CropData에 추가하면, `allowedSeasons == SeasonFlag.Winter`와 의미적으로 중복될 수 있다. 대안: `isWinterExclusive` 대신 `allowedSeasons == SeasonFlag.Winter` 조건으로 판별하여 필드 추가를 회피.
+
+#### 3.7.3 시나리오 비교 및 권장사항
+
+| 기준 | 시나리오 A (페널티) | 시나리오 B (보너스) |
+|------|-------------------|-------------------|
+| SO 스키마 변경 | EconomyConfig에 필드 1개 | CropData에 필드 1~2개 |
+| 메서드 시그니처 변경 | CalculateSellPrice에 bool 1개 추가 | CalculateSellPrice에 bool + CropData 추가 |
+| 영향 범위 | 비계절 온실 작물 전체 (광범위) | 겨울 전용 작물 3종만 (국소적) |
+| 밸런스 조정 용이성 | EconomyConfig 하나로 글로벌 조절 | 작물별 개별 조절 가능 |
+| 인벤토리 출처 태그 필요 | 예 (출하함 판매 시) | 예 (출하함 판매 시) |
+| 구현 복잡도 | 낮음 | 중간 |
+
+**[RESOLVED-BAL-010] 확정 구현 방향** (2026-04-07): 시나리오 A와 B를 **동시 적용**. 필요 변경 사항:
+
+| 대상 | 변경 내용 |
+|------|----------|
+| `EconomyConfig` SO | `greenhouseOffSeasonPenalty = 0.8f` (확정값, FIX-030 적용 후) |
+| `CropData` SO | `greenhouseSynergyBonus: float` 필드 추가 (겨울 전용 3종: 1.2, 나머지: 1.0) |
+| `PriceFluctuationSystem.CalculateSellPrice()` | `bool isGreenhouse`, `CropData cropData` 파라미터 추가 |
+| `GetGreenhouseMultiplier()` | 겨울전용 → synergyBonus 반환, 비계절 일반 → offSeasonPenalty 반환, 해당 계절 → 1.0 반환 |
+
+수치 canonical: `docs/balance/crop-economy.md` 섹션 4.3.10 (-> see canonical)
+
+**공통 필요 사항 (어느 시나리오든)**:
+
+[RISK] 수확물의 온실 출처를 추적하기 위해, 수확 → 인벤토리 → 판매 흐름에서 `HarvestOrigin` 태그(enum: Outdoor, Greenhouse)를 아이템 인스턴스에 부착해야 한다. 이는 인벤토리 시스템(-> see `docs/systems/inventory-architecture.md`)과 세이브/로드(-> see `docs/systems/save-load-architecture.md`)에 파급 효과가 있다.
+
+대안적 접근: 판매 시점이 아닌 **수확 시점에 즉시 가격을 확정**하는 방식. 수확 시 `isGreenhouse` 정보를 가격에 반영하여 아이템에 `adjustedSellPrice`를 저장. 인벤토리 추적 필요 없음. 단, 가격 변동(수급, 날씨)이 수확 시점 기준으로 고정되는 부작용.
+
+### 3.8 가격 클램핑
 
 ```
 Pseudocode: ClampPrice(float rawPrice, PriceData data)
@@ -448,7 +558,7 @@ Pseudocode: ClampPrice(float rawPrice, PriceData data)
 - `sellPriceCeiling` (기본 2.0): 아무리 폭등해도 기본가의 200%를 넘지 않는다
 - 이 값은 EconomyConfig SO에서 조정 가능
 
-### 3.8 전체 계산 예시
+### 3.9 전체 계산 예시
 
 **예시**: 토마토 판매 (Gold 품질, 가을, 폭풍, 수급 정상)
 ```
@@ -459,10 +569,29 @@ Pseudocode: ClampPrice(float rawPrice, PriceData data)
 품질_보정  = 1.5   (Gold)
 축제_보정  = 1.0   (축제 아님)
 
-최종_판매가 = 60 × 1.2 × 1.0 × 1.15 × 1.5 × 1.0 = 124.2 → 124G
+최종_판매가 = 60 × 1.2 × 1.0 × 1.15 × 1.5 × 1.0 × 1.0 = 124.2 → 124G
+                                                         ^^^ 온실_보정 (야외 재배 = 1.0)
 
 클램핑 확인: floor = 30, ceiling = 120
 클램핑 적용: min(124, 120) = 120G
+```
+
+**예시 2 [BAL-010]**: 딸기 온실 비계절 판매 (시나리오 A 적용 시, Normal 품질, 겨울, 수급 정상)
+```
+기본_판매가 = 80G  (-> see docs/design.md 4.2)
+계절_보정  = 1.5   (겨울에 봄 작물이라 희소)
+수급_보정  = 1.0   (수요 이내)
+날씨_보정  = 1.0   (맑음)
+품질_보정  = 1.0   (Normal)
+축제_보정  = 1.0   (축제 아님)
+온실_보정  = 0.8   (비계절 온실 작물 페널티, -> see economy-system.md 2.6.5, 잠정값)
+
+최종_판매가 = 80 × 1.5 × 1.0 × 1.0 × 1.0 × 1.0 × 0.8 = 96G
+
+클램핑 확인: floor = 40, ceiling = 160
+클램핑 적용: 96G (범위 내)
+
+비교: 페널티 없을 때 = 80 × 1.5 = 120G → 페널티 적용으로 24G 감소
 ```
 
 ---
@@ -485,6 +614,10 @@ namespace SeedMind.Economy.Data
         public float sellPriceFloor = 0.5f;      // 판매가 하한 배수
         public float sellPriceCeiling = 2.0f;    // 판매가 상한 배수
         public float supplyDecayRate = 0.1f;     // 수급 민감도 상수
+
+        [Header("온실 보정 [BAL-010, RESOLVED]")]
+        // 비계절 온실 작물 판매가 페널티 (전 계절 적용). → see docs/systems/economy-system.md 섹션 2.6.5
+        public float greenhouseOffSeasonPenalty = 0.8f; // BAL-010 확정값 (→ see docs/balance/crop-economy.md 섹션 4.3.10)
 
         [Header("로그")]
         public int transactionLogCapacity = 200; // 거래 로그 최대 보관 수
@@ -676,14 +809,15 @@ namespace SeedMind.Economy
 ### 5.1 작물 판매 흐름
 
 ```
-PlayerInventory → ShopSystem.TrySellCrop(crop, qty, quality)
+PlayerInventory → ShopSystem.TrySellCrop(crop, qty, quality, isGreenhouse)
     │
     ├── 1) 상점 오픈 확인 (ShopSystem.IsOpen)
     │
     ├── 2) 가격 계산
-    │       EconomyManager.GetSellPrice(crop, quality)
-    │           → PriceFluctuationSystem.CalculateSellPrice(priceData, quality)
-    │               → basePrice × seasonMul × supplyMul × weatherMul × qualityMul × festivalMul
+    │       EconomyManager.GetSellPrice(crop, quality, isGreenhouse)
+    │           → PriceFluctuationSystem.CalculateSellPrice(priceData, quality, isGreenhouse)
+    │               → basePrice × seasonMul × supplyMul × weatherMul × qualityMul
+    │                          × festivalMul × greenhouseMul
     │               → ClampPrice()
     │           → return finalPrice
     │
@@ -928,7 +1062,7 @@ Step D-3: 통합 테스트
 - `docs/systems/time-season-architecture.md` 2.5절 (FestivalData), 4.3절 (OnDayChanged 우선순위 40), 4.4절 (OnSeasonChanged 우선순위 30), 7절 (저장/로드 패턴)
 - `docs/systems/farming-architecture.md` 6절 (FarmEvents.OnCropHarvested)
 - `docs/systems/crop-growth.md` (품질 등급, 성장 공식)
-- `docs/balance/crop-economy.md` (경제 밸런스 시트, 작성 예정 -- BAL-001)
+- `docs/balance/crop-economy.md` 섹션 4.3.10 (BAL-010 온실 보정 확정 수치 canonical — x0.8 페널티, x1.2 시너지)
 
 ---
 

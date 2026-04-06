@@ -249,10 +249,33 @@ seedBuyPrice = round(baseSellPrice * seedPriceRatio)
 
 다른 축제는 가격에 영향을 주지 않는다.
 
-#### 2.6.5 최종 판매가 공식
+#### 2.6.5 온실 판매가 보정 (Greenhouse Price Modifier) [BAL-010]
+
+온실에서 재배한 비계절 작물의 판매가에 추가 보정을 적용한다. 온실의 성장 속도/품질 페널티(-> see `docs/content/facilities.md` 섹션 4.3)만으로는 비계절 작물(특히 고수익 작물)의 경쟁력을 충분히 억제하지 못하는 문제를 해결하기 위한 메커니즘이다.
+
+**적용 조건**: 아래 두 조건을 **모두** 만족하는 경우에만 적용
+
+1. 작물이 온실 타일에서 수확되었음 (`isGreenhouse == true`)
+2. 해당 작물의 재배 가능 계절(`allowedSeasons`)이 현재 계절을 포함하지 않음 (`isInSeason == false`)
+
+**[RESOLVED-BAL-010] 확정된 보정 방식** (2026-04-07 확정, -> see `docs/balance/crop-economy.md` 섹션 4.3.10):
+
+| 보정 유형 | 적용 대상 | 배수 | 파라미터 |
+|----------|----------|------|---------|
+| 비계절 온실 판매가 페널티 | 비주 계절 온실 작물 (전 계절 적용) | **x0.8** | `greenhouseOffSeasonPenalty` |
+| 겨울 전용 작물 온실 시너지 보너스 | 겨울 전용 작물 3종 (온실 재배 시) | **x1.2** | `greenhouseSynergyBonus` (CropData) |
+
+두 보정은 동시에 적용되지 않는다: 겨울 전용 작물에는 페널티 대신 시너지 보너스가 적용되며, 해당 계절 온실 작물에는 어떤 보정도 적용되지 않는다.
+
+**적용 제외 대상**:
+
+- 해당 계절 작물을 온실에서 재배 (`isInSeason == true`): 보정 없음
+- 겨울 전용 작물을 온실에서 재배 (`allowedSeasons == SeasonFlag.Winter`): 페널티 면제, 시너지 보너스(x1.2) 적용
+
+#### 2.6.6 최종 판매가 공식
 
 ```
-최종_판매가 = floor(기본_판매가 * 품질_배수 * 계절_배수 * 수급_배수 * 날씨_배수 * 축제_배수)
+최종_판매가 = floor(기본_판매가 * 품질_배수 * 계절_배수 * 수급_배수 * 날씨_배수 * 축제_배수 * 온실_배수)
 ```
 
 - 품질 배수: (-> see `docs/systems/crop-growth.md` 섹션 4.3, canonical)
@@ -261,6 +284,7 @@ seedBuyPrice = round(baseSellPrice * seedPriceRatio)
 - 수급 배수: x0.7 ~ x1.0 (섹션 2.6.2)
 - 날씨 배수: x1.0 ~ x1.08 (섹션 2.6.3)
 - 축제 배수: x1.0 또는 x1.15 (섹션 2.6.4)
+- 온실 배수: x1.0 (야외 또는 해당 계절 온실), x0.8 (비주 계절 온실 작물), x1.2 (겨울 전용 작물 온실) (-> see 섹션 2.6.5, [RESOLVED-BAL-010])
 
 **가격 변동 범위 제한**:
 
@@ -270,13 +294,13 @@ seedBuyPrice = round(baseSellPrice * seedPriceRatio)
 | 최고 가격 배율 | `maxPriceMultiplier` | 1.5 | 모든 배수 곱한 결과가 x1.5 이상이 되지 않음 |
 
 ```
-종합_배수 = clamp(품질_배수 * 계절_배수 * 수급_배수 * 날씨_배수 * 축제_배수, minPriceMultiplier, maxPriceMultiplier)
+종합_배수 = clamp(품질_배수 * 계절_배수 * 수급_배수 * 날씨_배수 * 축제_배수 * 온실_배수, minPriceMultiplier, maxPriceMultiplier)
 ```
 
 **참고**: 품질 배수(최대 x2.0)는 clamp 범위를 초과할 수 있다. clamp는 품질 배수를 **제외한** 외부 변동 요인에만 적용한다.
 
 ```
-외부_배수 = clamp(계절_배수 * 수급_배수 * 날씨_배수 * 축제_배수, minPriceMultiplier, maxPriceMultiplier)
+외부_배수 = clamp(계절_배수 * 수급_배수 * 날씨_배수 * 축제_배수 * 온실_배수, minPriceMultiplier, maxPriceMultiplier)
 최종_판매가 = floor(기본_판매가 * 품질_배수 * 외부_배수)
 ```
 

@@ -489,6 +489,8 @@ effectiveGrowth = baseGrowth * fertilizerMultiplier * soilMultiplier * seasonBon
 | 온실 내 겨울 재배 | 0.8 (겨울 페널티) |
 | 재배 불가 계절 (야외) | 성장 안 함 → 고사 처리 |
 
+**참고 [BAL-010]**: 온실 비계절 작물의 성장 속도 페널티 외에 판매가 보정도 적용될 수 있다 (-> see `docs/systems/economy-architecture.md` 섹션 3.7, `docs/systems/economy-system.md` 섹션 2.6.5).
+
 ### 4.4 계절 전환 처리 (ProcessSeasonTransition)
 
 ```csharp
@@ -982,8 +984,10 @@ private IEnumerator SpreadGrowthOverFrames(List<(FarmTile tile, int newStage)> p
 - `docs/systems/farming-system.md` 5절 (비료 메카닉), 5.4절 (수확 품질 시스템 canonical)
 - `docs/design.md` 4.2절 (작물 종류 및 가격 canonical), 4.3절 (계절 시스템)
 - `docs/systems/project-structure.md` (네임스페이스 SeedMind.Farm, 에셋 네이밍 SO_Crop_ 규칙)
-- `docs/content/crops.md` (전체 작물 상세 스펙, 작성 예정 -- CON-001)
-- `docs/balance/crop-economy.md` (작물 경제 밸런스, 작성 예정 -- BAL-001)
+- `docs/content/crops.md` (전체 작물 상세 스펙 canonical — CON-001)
+- `docs/balance/crop-economy.md` (작물 경제 밸런스 시트 — BAL-001, BAL-003, BAL-010 결정 포함)
+- `docs/systems/economy-architecture.md` 섹션 3.7 (온실 판매가 보정 구현, BAL-010)
+- `docs/systems/economy-system.md` 섹션 2.6.5 (온실 보정 canonical 규칙, BAL-010)
 
 ---
 
