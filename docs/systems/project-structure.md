@@ -113,13 +113,15 @@ Assets/
 │   │       ├── InventoryUI.cs
 │   │       ├── ShopUI.cs
 │   │       ├── DialogueUI.cs
-│   │       └── TutorialUI.cs         # 튜토리얼 UI (SeedMind.UI, → see docs/systems/tutorial-architecture.md 섹션 6)
+│   │       ├── TutorialUI.cs         # 튜토리얼 UI (SeedMind.UI, → see docs/systems/tutorial-architecture.md 섹션 6)
+│   │       └── ProcessingUI.cs       # 가공소 UI (SeedMind.UI, → see docs/systems/processing-architecture.md 섹션 7)
 │   │
 │   ├── Data/                          # ScriptableObject 인스턴스 (에셋)
 │   │   ├── Crops/                     # SO_Crop_Potato.asset 등
 │   │   ├── Fertilizers/               # SO_Fert_Basic.asset 등
 │   │   ├── Tools/                     # SO_Tool_Hoe_T1.asset 등
 │   │   ├── Buildings/                 # SO_Bldg_WaterTank.asset 등
+│   │   ├── Recipes/                   # SO_Recipe_Jam_Potato.asset 등 (→ see docs/systems/processing-architecture.md Part II)
 │   │   ├── Tutorial/                  # SO_TutSeq_MainTutorial.asset, SO_TutStep_*.asset, SO_CtxHint_*.asset
 │   │   └── Config/                    # SO_ProgressionData.asset (SO_LevelConfig.asset 대체), SO_TimeConfig.asset 등
 │   │
