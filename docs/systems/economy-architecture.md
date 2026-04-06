@@ -48,7 +48,8 @@
 │  + AddGold(int amount, string reason): bool                  │
 │  + SpendGold(int amount, string reason): bool                │
 │  + CanAfford(int amount): bool                               │
-│  + GetSellPrice(CropData crop, CropQuality quality): int     │
+│  + GetSellPrice(CropData crop, CropQuality quality,          │
+│       HarvestOrigin origin = HarvestOrigin.Outdoor): int     │
 │  + GetBuyPrice(string itemId): int                           │
 │  + SellCrop(CropData crop, int quantity, CropQuality q): int │
 │  + BuyItem(string itemId, int quantity): bool                │
@@ -177,7 +178,8 @@
 │  + SetSeason(Season season): void   // OnSeasonChanged에서   │
 │  + SetWeather(WeatherType weather): void                     │
 │  + CalculateSellPrice(PriceData data, CropQuality q,         │
-│       bool isGreenhouse = false): int                        │
+│       CropData cropData,                                     │
+│       HarvestOrigin origin = HarvestOrigin.Outdoor): int     │
 │  + CalculateBuyPrice(PriceData data): int                    │
 │  + MarkDirty(): void                                         │
 │  + RecalculateAllPrices(): void                              │
@@ -185,8 +187,8 @@
 │  - GetSupplyMultiplier(string itemId): float                 │
 │  - GetWeatherMultiplier(PriceData data, WeatherType w): float│
 │  - GetQualityMultiplier(CropQuality quality): float          │
-│  - GetGreenhouseMultiplier(bool isGreenhouse,                │
-│       SeasonFlag cropSeasons, Season currentSeason): float   │
+│  - GetGreenhouseMultiplier(HarvestOrigin origin,             │
+│       CropData cropData, Season currentSeason): float        │
 │  - ClampPrice(float rawPrice, PriceData data): int           │
 │  + GetSaveData(): PriceFluctuationSaveData                   │
 │  + LoadSaveData(PriceFluctuationSaveData data): void         │
@@ -530,16 +532,16 @@ Pseudocode: GetGreenhouseMultiplier(bool isGreenhouse, CropData cropData, Season
 |------|----------|
 | `EconomyConfig` SO | `greenhouseOffSeasonPenalty = 0.8f` (확정값, FIX-030 적용 후) |
 | `CropData` SO | `greenhouseSynergyBonus: float` 필드 추가 (겨울 전용 3종: 1.2, 나머지: 1.0) |
-| `PriceFluctuationSystem.CalculateSellPrice()` | `bool isGreenhouse`, `CropData cropData` 파라미터 추가 |
-| `GetGreenhouseMultiplier()` | 겨울전용 → synergyBonus 반환, 비계절 일반 → offSeasonPenalty 반환, 해당 계절 → 1.0 반환 |
+| `PriceFluctuationSystem.CalculateSellPrice()` | `CropData cropData, HarvestOrigin origin` 파라미터로 확정 [FIX-034] (→ see 섹션 1.2, 3.10) |
+| `GetGreenhouseMultiplier()` | `HarvestOrigin origin, CropData cropData, Season currentSeason` 시그니처로 확정 [FIX-034] (→ see 섹션 3.10.3) |
 
 수치 canonical: `docs/balance/crop-economy.md` 섹션 4.3.10 (-> see canonical)
 
 **공통 필요 사항 (어느 시나리오든)**:
 
-[RISK] 수확물의 온실 출처를 추적하기 위해, 수확 → 인벤토리 → 판매 흐름에서 `HarvestOrigin` 태그(enum: Outdoor, Greenhouse)를 아이템 인스턴스에 부착해야 한다. 이는 인벤토리 시스템(-> see `docs/systems/inventory-architecture.md`)과 세이브/로드(-> see `docs/systems/save-load-architecture.md`)에 파급 효과가 있다.
+[RESOLVED-FIX-034] 수확물의 온실 출처 추적 문제를 `HarvestOrigin` enum(Outdoor, Greenhouse)을 `ItemSlot`에 추가하는 **방식 A**로 해소했다. 판매 시점에 출처를 조회하여 온실 보정 계수를 적용한다. 상세 설계는 **섹션 3.10** 참조.
 
-대안적 접근: 판매 시점이 아닌 **수확 시점에 즉시 가격을 확정**하는 방식. 수확 시 `isGreenhouse` 정보를 가격에 반영하여 아이템에 `adjustedSellPrice`를 저장. 인벤토리 추적 필요 없음. 단, 가격 변동(수급, 날씨)이 수확 시점 기준으로 고정되는 부작용.
+대안이었던 방식 B(수확 시점 가격 확정)는 수급/날씨/축제 보정이 수확 시점에 고정되어 "언제 팔지"라는 핵심 경제 루프를 무력화하므로 기각했다(섹션 3.10.1 비교표 참조).
 
 ### 3.8 가격 클램핑
 
@@ -593,6 +595,107 @@ Pseudocode: ClampPrice(float rawPrice, PriceData data)
 
 비교: 페널티 없을 때 = 80 × 1.5 = 120G → 페널티 적용으로 24G 감소
 ```
+
+### 3.10 HarvestOrigin 추적 설계 [FIX-034, RESOLVED]
+
+수확물의 온실/야외 출처를 판매 시점까지 추적하여, 온실 판매가 보정(-> see 섹션 3.7)을 정확히 적용하기 위한 설계이다. 섹션 3.7.3의 [RISK]를 해소한다.
+
+#### 3.10.1 접근법 비교 및 결정
+
+| 항목 | 방식 A: HarvestOrigin 태그 (채택) | 방식 B: 수확 시점 가격 확정 (기각) |
+|------|----------------------------------|----------------------------------|
+| 핵심 아이디어 | `ItemSlot`에 `origin: HarvestOrigin` 필드 추가 | 수확 시 `adjustedBasePrice: int` 저장 |
+| 가격 변동 호환 | **완전 호환** — 수급/날씨/축제 보정 판매 시점 적용 | **비호환** — 온실 보정이 수확 시점에 고정 |
+| 플레이어 전략 | "언제 팔지" 전략 유지 | 수확 타이밍 메타 강제 (의도하지 않음) |
+| 스택 정책 | origin 다르면 별도 슬롯 (itemId+quality+origin 3중 매칭) | 스택 분리 구조적으로 동일 발생 |
+| 파급 범위 | ItemSlot, 세이브/로드, 인벤토리 API | 동등하거나 더 복잡 |
+
+**결정: 방식 A 채택.** economy-system.md의 핵심 설계 목표("판매 타이밍의 전략적 선택")와 충돌하지 않으며, 기존 품질별 슬롯 분리 패턴의 자연스러운 확장이다.
+
+#### 3.10.2 HarvestOrigin enum 정의
+
+```csharp
+namespace SeedMind   // 최상위 네임스페이스 — ItemType, CropQuality와 동일 레벨
+{
+    /// <summary>
+    /// 수확물의 재배 출처를 추적한다.
+    /// 온실 판매가 보정(→ see economy-architecture.md 섹션 3.7) 적용 시 사용.
+    /// </summary>
+    public enum HarvestOrigin
+    {
+        Outdoor    = 0,   // 야외 농장 타일에서 수확
+        Greenhouse = 1    // 온실 내부 타일에서 수확
+        // [OPEN] 향후 확장: Cave = 2, Planter = 3 등
+    }
+}
+```
+
+**네임스페이스 근거**: `HarvestOrigin`은 Economy, Player(Inventory), Farming 세 시스템에서 참조하므로 특정 하위 네임스페이스에 넣으면 순환 참조 위험이 있다. `ItemType`, `CropQuality`와 동일한 최상위 패턴 적용(-> see `docs/systems/project-structure.md`).
+
+**파일 위치**: `Assets/Scripts/Core/HarvestOrigin.cs`
+
+#### 3.10.3 GetGreenhouseMultiplier() 확정 Pseudocode (A+B 동시 적용)
+
+```
+Pseudocode: GetGreenhouseMultiplier(HarvestOrigin origin, CropData cropData, Season currentSeason)
+
+    // 1) 야외 수확 → 보정 없음
+    if origin == HarvestOrigin.Outdoor:
+        return 1.0
+
+    // 2) 온실 수확 + 해당 계절 작물 → 보정 없음
+    if (cropData.allowedSeasons & (1 << currentSeason)) != 0:
+        return 1.0
+
+    // 3) 온실 수확 + 겨울 전용 작물 → 시너지 보너스 (시나리오 B)
+    if cropData.allowedSeasons == SeasonFlag.Winter:
+        return cropData.greenhouseSynergyBonus
+        // → see docs/balance/crop-economy.md 섹션 4.3.10 for canonical 값 (1.2)
+
+    // 4) 온실 수확 + 비계절 일반 작물 → 페널티 (시나리오 A)
+    return economyConfig.greenhouseOffSeasonPenalty
+    // → see docs/balance/crop-economy.md 섹션 4.3.10 for canonical 값 (0.8)
+```
+
+| 조건 | 반환값 | 설명 |
+|------|--------|------|
+| `origin == Outdoor` | 1.0 | 야외 재배 — 보정 없음 |
+| `origin == Greenhouse` + 해당 계절 작물 | 1.0 | 온실이지만 제철 — 보정 없음 |
+| `origin == Greenhouse` + 겨울 전용 작물 | `cropData.greenhouseSynergyBonus` (→ see canonical) | 겨울 시너지 보너스 |
+| `origin == Greenhouse` + 비계절 일반 작물 | `economyConfig.greenhouseOffSeasonPenalty` (→ see canonical) | 비계절 페널티 |
+
+#### 3.10.4 캐시 전략 변경
+
+기존 `_cachedPrices`는 `itemId → finalPrice` 단일 캐시였다. 온실 보정은 출처별로 다른 값이 나오므로, **온실 보정(`greenhouseMul`)은 캐시 밖에서 사후 적용**한다.
+
+```
+캐시 저장: seasonMul × supplyMul × weatherMul × festivalMul (origin 독립)
+조회 시 적용: 캐시된 값 × qualityMul × GetGreenhouseMultiplier(origin, ...)
+```
+
+이렇게 하면 캐시 키 변경 없이 origin별 다른 최종가를 반환할 수 있다.
+
+#### 3.10.5 스택 분리 정책
+
+동일 `itemId` + 동일 `quality`이더라도 `origin`이 다르면 **별도 슬롯**에 저장한다.
+
+**근거**: 판매 시점에 origin별로 최대 20% 이상 가격이 달라지므로, 한 스택에서 origin을 추적하는 것은 불가능하다. 기존 품질별 슬롯 분리 패턴의 자연스러운 확장이다.
+
+**스택 키**: `itemId + quality + origin` 3중 매칭 (-> see `docs/systems/inventory-architecture.md` 섹션 3.3)
+
+[RISK] 배낭 슬롯(→ see `docs/systems/inventory-system.md` 섹션 1.1 for canonical 슬롯 수)과 origin 분리로 후반부 슬롯 부족 가능. 온실은 레벨 5+ 콘텐츠이므로 창고 확장(→ see `docs/content/facilities.md`)으로 완화 가능하나 플레이테스트 검증 필요.
+
+#### 3.10.6 파급 문서 목록
+
+| 영향 문서 | 변경 위치 | 내용 |
+|-----------|----------|------|
+| `docs/systems/inventory-architecture.md` | 섹션 3.3 ItemSlot, 5.1 AddItem, 5.2 RemoveItem | origin 필드, CanStackWith 조건, API 파라미터 추가 |
+| `docs/pipeline/data-pipeline.md` | Part I 섹션 3.2 JSON, Part II ItemSlotSaveData | origin 필드 추가 |
+| `docs/systems/save-load-architecture.md` | 세이브 트리 내 ItemSlotSaveData 설명 | origin 필드 언급 |
+
+[OPEN] 가공품의 origin 전파: 온실산 딸기로 만든 딸기잼에 온실 페널티 적용 여부. 현재 가공품은 품질 속성이 없으므로 origin 추적도 불필요할 가능성이 높다 — 별도 밸런스 검토 필요.
+
+[OPEN] 야생 채집(forageable) 시스템 추가 시 `HarvestOrigin.Wild` 값 필요 여부 — 현재 scope 외이므로 보류.
 
 ---
 
@@ -739,6 +842,8 @@ namespace SeedMind.Economy
         public int totalPrice;            // 총액 (= unitPrice * quantity)
         public int day;                   // 거래 시점 (TimeManager.TotalElapsedDays)
         public Season season;             // 거래 시점 계절
+        public HarvestOrigin origin;      // [FIX-034] 수확 출처 (Buy 거래는 Outdoor 고정)
+                                          // → see docs/systems/economy-architecture.md 섹션 3.10
     }
 
     public enum TransactionType
@@ -808,26 +913,32 @@ namespace SeedMind.Economy
 
 ### 5.1 작물 판매 흐름
 
+[FIX-034] `isGreenhouse` 파라미터를 `HarvestOrigin origin`으로 교체. 상세 설계는 섹션 3.10 참조.
+
 ```
-PlayerInventory → ShopSystem.TrySellCrop(crop, qty, quality, isGreenhouse)
+PlayerInventory → ShopSystem.TrySellCrop(crop, qty, quality, origin)  // [FIX-034] origin
     │
     ├── 1) 상점 오픈 확인 (ShopSystem.IsOpen)
     │
     ├── 2) 가격 계산
-    │       EconomyManager.GetSellPrice(crop, quality, isGreenhouse)
-    │           → PriceFluctuationSystem.CalculateSellPrice(priceData, quality, isGreenhouse)
-    │               → basePrice × seasonMul × supplyMul × weatherMul × qualityMul
-    │                          × festivalMul × greenhouseMul
+    │       EconomyManager.GetSellPrice(crop, quality, origin)         // [FIX-034]
+    │           → PriceFluctuationSystem.CalculateSellPrice(priceData, quality, cropData, origin)
+    │               → baseMul = seasonMul × supplyMul × weatherMul × qualityMul × festivalMul
+    │               → greenhouseMul = GetGreenhouseMultiplier(origin, cropData, currentSeason)
+    │               → finalPrice = basePrice × baseMul × greenhouseMul
     │               → ClampPrice()
     │           → return finalPrice
     │
     ├── 3) 거래 실행
     │       totalGold = finalPrice × qty
     │       EconomyManager.AddGold(totalGold, "sell_crop")
-    │       PlayerInventory.Remove(crop, qty)
+    │       PlayerInventory.RemoveItem(crop.itemId, qty, quality, origin)  // [FIX-034]
     │
     ├── 4) 거래 기록
-    │       Transaction tx = new Transaction { type=Sell, itemId, qty, unitPrice, totalPrice, day, season }
+    │       Transaction tx = new Transaction {
+    │           type=Sell, itemId, qty, unitPrice, totalPrice, day, season,
+    │           origin  // [FIX-034]
+    │       }
     │       TransactionLog.AddEntry(tx)
     │       EconomyManager.OnTransactionComplete?.Invoke(tx)
     │
@@ -882,7 +993,9 @@ EconomyManager.OnDayChangedHandler(int newDay)
     │
     ├── 2) PriceFluctuationSystem.RecalculateAllPrices()
     │       → foreach PriceData in _priceDataMap:
-    │           finalPrice = CalculateSellPrice(data, Normal)
+    │           finalPrice = CalculateSellPrice(data, Normal, null, Outdoor)
+    │           // 캐시는 origin 독립 기본가 저장 (qualityMul × greenhouseMul은 조회 시 사후 적용)
+    │           // → see 섹션 3.10.4 캐시 전략
     │           _cachedPrices[data.itemId] = finalPrice
     │       → _isDirty = false
     │
@@ -1063,6 +1176,8 @@ Step D-3: 통합 테스트
 - `docs/systems/farming-architecture.md` 6절 (FarmEvents.OnCropHarvested)
 - `docs/systems/crop-growth.md` (품질 등급, 성장 공식)
 - `docs/balance/crop-economy.md` 섹션 4.3.10 (BAL-010 온실 보정 확정 수치 canonical — x0.8 페널티, x1.2 시너지)
+- `docs/systems/inventory-architecture.md` -- ItemSlot.origin 필드, AddItem/RemoveItem API (FIX-034, 섹션 3.10)
+- `docs/pipeline/data-pipeline.md` -- ItemSlotSaveData JSON/C# 스키마 (섹션 3.2~3.3, FIX-034)
 
 ---
 

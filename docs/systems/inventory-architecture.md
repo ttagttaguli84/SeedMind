@@ -85,10 +85,14 @@
 |  + OnSlotClicked: Action<SlotLocation, int>                  |
 |                                                              |
 |  [배낭 연산]                                                   |
-|  + AddItem(string itemId, int qty, CropQuality q): AddResult |
-|  + RemoveItem(string itemId, int qty, CropQuality q): bool  |
+|  + AddItem(string itemId, int qty, CropQuality q,            |
+|       HarvestOrigin origin = Outdoor): AddResult             |  // [FIX-034]
+|  + RemoveItem(string itemId, int qty, CropQuality q,         |
+|       HarvestOrigin origin = Outdoor): bool                  |  // [FIX-034]
 |  + HasItem(string itemId, int qty): bool                     |
-|  + GetItemCount(string itemId): int                          |
+|  + GetItemCount(string itemId,                               |
+|       CropQuality q = Normal,                                |
+|       HarvestOrigin origin = Outdoor): int                   |  // [FIX-034]
 |  + MoveSlot(SlotLocation src, int srcIdx,                    |
 |             SlotLocation dst, int dstIdx): bool              |
 |  + SplitSlot(SlotLocation loc, int idx, int splitQty): bool  |
@@ -117,10 +121,11 @@
 | + ItemId: string       |    | + ItemId: string             |
 | + Quantity: int        |    | + ItemName: string           |
 | + Quality: CropQuality |    | + ItemType: ItemType enum    |
-| + IsEmpty: bool        |    | + Icon: Sprite               |
-|                        |    | + MaxStackSize: int          |
-| + CanStackWith(other)  |    | + Sellable: bool             |
-| + RemainingCapacity()  |    +------------------------------+
+| + Origin: HarvestOrigin|    | + Icon: Sprite               |  // [FIX-034]
+| + IsEmpty: bool        |    | + MaxStackSize: int          |
+|                        |    | + Sellable: bool             |
+| + CanStackWith(other)  |    +------------------------------+
+| + RemainingCapacity()  |
 +------------------------+         ^  ^  ^  ^
                                    |  |  |  |
                      +-------------+  |  |  +------------+
@@ -264,17 +269,21 @@ namespace SeedMind.Player
         public string itemId;           // 빈 슬롯이면 null 또는 ""
         public int quantity;            // 0이면 빈 슬롯
         public CropQuality quality;     // 작물일 때만 의미 있음 (Tool/Seed 등은 Normal 고정)
+        public HarvestOrigin origin;    // [FIX-034] 수확 출처 (Crop 타입만 의미 있음, 나머지는 Outdoor 고정)
+                                        // → see docs/systems/economy-architecture.md 섹션 3.10
 
         public bool IsEmpty => string.IsNullOrEmpty(itemId) || quantity <= 0;
 
         /// <summary>
         /// 같은 아이템으로 스택 가능한지 판정.
-        /// 조건: 같은 itemId, 같은 quality, 대상 아이템이 stackable.
+        /// [FIX-034] 조건: 같은 itemId, 같은 quality, 같은 origin, 대상 아이템이 stackable.
         /// </summary>
         public bool CanStackWith(ItemSlot other)
         {
             if (IsEmpty || other.IsEmpty) return false;
-            return itemId == other.itemId && quality == other.quality;
+            return itemId == other.itemId
+                && quality == other.quality
+                && origin == other.origin;   // [FIX-034]
         }
 
         /// <summary>
@@ -286,7 +295,12 @@ namespace SeedMind.Player
             return maxStackSize - quantity; // → maxStackSize는 IInventoryItem.MaxStackSize
         }
 
-        public static ItemSlot Empty => new ItemSlot { itemId = null, quantity = 0, quality = CropQuality.Normal };
+        public static ItemSlot Empty => new ItemSlot
+        {
+            itemId = null, quantity = 0,
+            quality = CropQuality.Normal,
+            origin = HarvestOrigin.Outdoor   // [FIX-034] 기본값
+        };
     }
 }
 ```
@@ -442,13 +456,14 @@ public class ProcessingRecipeData : GameDataSO, IInventoryItem
 ### 5.1 AddItem 알고리즘
 
 ```
-AddItem(itemId, qty, quality):
+AddItem(itemId, qty, quality, origin = HarvestOrigin.Outdoor):  // [FIX-034] origin 파라미터 추가
     1) DataRegistry에서 IInventoryItem 조회 → item
     2) item.ItemType == Tool 이면 → 거부 (도구는 SetToolbarItem으로만 추가)
     3) maxStack = item.MaxStackSize
     4) 기존 슬롯 스택 시도:
        for each slot in _backpackSlots:
-           if slot.itemId == itemId AND slot.quality == quality:
+           if slot.itemId == itemId AND slot.quality == quality
+              AND slot.origin == origin:    // [FIX-034] origin 매칭 추가
                canAdd = min(qty, slot.RemainingCapacity(maxStack))
                slot.quantity += canAdd
                qty -= canAdd
@@ -458,7 +473,7 @@ AddItem(itemId, qty, quality):
        for each slot in _backpackSlots:
            if slot.IsEmpty:
                canAdd = min(qty, maxStack)
-               slot = new ItemSlot(itemId, canAdd, quality)
+               slot = new ItemSlot(itemId, canAdd, quality, origin)  // [FIX-034]
                qty -= canAdd
                fire OnBackpackChanged(slot index, Add)
                if qty == 0: return success
@@ -468,11 +483,12 @@ AddItem(itemId, qty, quality):
 ### 5.2 RemoveItem 알고리즘
 
 ```
-RemoveItem(itemId, qty, quality):
-    1) 먼저 총 보유량 확인: if GetItemCount(itemId, quality) < qty → return false
+RemoveItem(itemId, qty, quality, origin = HarvestOrigin.Outdoor):  // [FIX-034] origin 파라미터 추가
+    1) 먼저 총 보유량 확인: if GetItemCount(itemId, quality, origin) < qty → return false
     2) 뒤에서부터 제거 (마지막 슬롯부터):
        for i = _backpackSlots.Length - 1 downto 0:
-           if slot.itemId == itemId AND slot.quality == quality:
+           if slot.itemId == itemId AND slot.quality == quality
+              AND slot.origin == origin:    // [FIX-034]
                canRemove = min(qty, slot.quantity)
                slot.quantity -= canRemove
                qty -= canRemove
@@ -521,8 +537,11 @@ MoveSlot(srcLoc, srcIdx, dstLoc, dstIdx):
 ```
 SortBackpack():
     1) 모든 비어있지 않은 슬롯을 리스트로 추출
-    2) 같은 itemId + quality인 슬롯끼리 수량 합산 → 최소 슬롯 수로 재배치
-    3) 정렬 기준: ItemType (enum 순서) → itemId (알파벳) → quality (역순, Gold→Normal)
+    2) 같은 itemId + quality + origin인 슬롯끼리 수량 합산 → 최소 슬롯 수로 재배치
+       // [FIX-034] origin이 다른 슬롯은 합산하지 않는다 (스택 키: itemId+quality+origin)
+    3) 정렬 기준: ItemType (enum 순서) → itemId (알파벳) → origin (Outdoor < Greenhouse)
+                  → quality (역순, Gold→Normal)
+       // [FIX-034] origin 정렬 추가
     4) 정렬된 리스트를 _backpackSlots 앞쪽부터 채움, 나머지는 Empty
     5) fire OnBackpackChanged(-1, Sort)  // -1 = 전체 갱신
 ```
@@ -541,7 +560,9 @@ InventorySaveData (→ see docs/pipeline/data-pipeline.md 섹션 3.2 for canonic
 │   ├── itemId: string       → ItemSlot.itemId
 │   ├── itemType: string     → ItemType enum의 문자열 표현
 │   ├── quantity: int        → ItemSlot.quantity
-│   └── quality: string      → CropQuality enum의 문자열 표현
+│   ├── quality: string      → CropQuality enum의 문자열 표현
+│   └── origin: string       → ItemSlot.origin (HarvestOrigin enum) [FIX-034]
+│                               null/미지정 시 Outdoor 기본값 (하위 호환)
 ├── maxSlots: int            → _maxBackpackSlots
 ├── toolbarSlots[]: 툴바 슬롯 배열 (8칸 범용)
 │   ├── itemId: string       → ItemSlot.itemId (씨앗/비료/도구 등 혼재 가능)
@@ -617,16 +638,16 @@ ShopUI → ShopSystem.TryBuyItem(item, qty)
 ### 7.2 판매 흐름
 
 ```
-ShopUI → ShopSystem.TrySellCrop(crop, qty, quality)
+ShopUI → ShopSystem.TrySellCrop(crop, qty, quality, origin)   // [FIX-034] origin
     │
     ├── 1) InventoryManager.HasItem(cropId, qty) 확인
     │      → false면 거래 거부
     │
     ├── 2) 가격 계산
-    │      → EconomyManager.GetSellPrice(crop, quality)
-    │      → see docs/systems/economy-architecture.md for 가격 공식
+    │      → EconomyManager.GetSellPrice(crop, quality, origin)  // [FIX-034]
+    │      → see docs/systems/economy-architecture.md 섹션 3, 3.10 for 가격 공식
     │
-    ├── 3) InventoryManager.RemoveItem(cropId, qty, quality)
+    ├── 3) InventoryManager.RemoveItem(cropId, qty, quality, origin)  // [FIX-034]
     │
     ├── 4) EconomyManager.AddGold(totalPrice, "sell_crop")
     │
@@ -907,7 +928,7 @@ Assets/_Project/Scripts/
 - `docs/architecture.md` -- 프로젝트 구조, Scripts/Player/, Scripts/UI/ (섹션 3)
 - `docs/systems/project-structure.md` -- 네임스페이스, asmdef 정의
 - `docs/systems/farming-architecture.md` -- CropData, FertilizerData, ToolData SO 정의 (섹션 4.1~4.3)
-- `docs/systems/economy-architecture.md` -- ShopSystem, EconomyManager 연동 (섹션 5)
+- `docs/systems/economy-architecture.md` -- ShopSystem, EconomyManager 연동 (섹션 5), HarvestOrigin enum 정의 (섹션 3.10) [FIX-034]
 - `docs/systems/economy-system.md` -- 경제 시스템 디자인, 가공 분류 (DES-004)
 - `docs/systems/progression-architecture.md` -- 해금 시스템, UnlockRegistry (BAL-002)
 - `docs/pipeline/data-pipeline.md` -- IInventoryItem 인터페이스, InventorySaveData JSON 스키마, GameDataSO 베이스 (ARC-004)

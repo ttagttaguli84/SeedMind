@@ -421,13 +421,15 @@ SO_Tool_Hoe_Legendary    (tier=3, nextTier=null)
       "itemId": "potato",
       "itemType": "Crop",
       "quantity": 5,
-      "quality": "Normal"
+      "quality": "Normal",
+      "origin": "Outdoor"
     },
     {
       "itemId": "seed_tomato",
       "itemType": "Seed",
       "quantity": 10,
-      "quality": "Normal"
+      "quality": "Normal",
+      "origin": "Outdoor"
     }
   ],
   "maxSlots": 15,
@@ -663,13 +665,15 @@ SO_Tool_Hoe_Legendary    (tier=3, nextTier=null)
       "itemId": "crop_potato",
       "itemType": "Crop",
       "quantity": 10,
-      "quality": "Normal"
+      "quality": "Normal",
+      "origin": "Outdoor"
     },
     {
       "itemId": "proc_strawberry_juice",
       "itemType": "Processed",
       "quantity": 3,
-      "quality": "Normal"
+      "quality": "Normal",
+      "origin": "Outdoor"
     }
   ]
 }
@@ -1263,8 +1267,12 @@ namespace SeedMind.Building
     public class ItemSlotSaveData
     {
         public string itemId;             // IInventoryItem.ItemId
+        public string itemType;           // ItemType enum 문자열 ("Crop", "Seed", "Tool" 등)
         public int quantity;
         public string quality;            // CropQuality enum 문자열 (Crop 카테고리만)
+        public string origin;             // [FIX-034] HarvestOrigin enum 문자열 ("Outdoor" | "Greenhouse")
+                                          // null/미지정 시 "Outdoor"로 역직렬화 (하위 호환)
+                                          // → see docs/systems/economy-architecture.md 섹션 3.10
     }
 }
 ```

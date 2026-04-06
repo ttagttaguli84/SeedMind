@@ -130,6 +130,8 @@ GameSaveData (루트)
 │
 ├── BuildingSaveData[]                # (→ see data-pipeline.md Part II 섹션 2.6)
 │   └── storageSlots[]                # ItemSlotSaveData[] (창고에만)
+│                                     # ItemSlotSaveData: itemId, itemType, qty, quality, origin [FIX-034]
+│                                     # (→ see economy-architecture.md 섹션 3.10 for HarvestOrigin)
 │
 ├── ProcessingSaveData[]              # (→ see data-pipeline.md Part II 섹션 2.6)
 │
