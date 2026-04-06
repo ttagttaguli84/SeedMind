@@ -74,6 +74,17 @@ Assets/_Project/                    # (→ see docs/systems/project-structure.md
 │   │       ├── Storage.cs
 │   │       └── Processor.cs
 │   │
+│   ├── NPC/                     # NPC 시스템 (→ see docs/systems/npc-shop-architecture.md)
+│   │   ├── NPCManager.cs       # NPC 레지스트리 관리
+│   │   ├── NPCController.cs    # 개별 NPC 행동 제어
+│   │   ├── DialogueSystem.cs   # 대화 흐름 관리
+│   │   ├── TravelingMerchantScheduler.cs  # 여행 상인 스케줄
+│   │   ├── NPCEvents.cs        # 정적 이벤트 허브
+│   │   └── Data/
+│   │       ├── NPCData.cs      # NPC 데이터 (ScriptableObject)
+│   │       ├── DialogueData.cs # 대화 데이터 (ScriptableObject)
+│   │       └── TravelingShopPoolData.cs
+│   │
 │   ├── Level/                   # 진행 시스템 (→ see docs/systems/progression-architecture.md)
 │   │   ├── ProgressionManager.cs # XP/레벨/해금/마일스톤 관리
 │   │   ├── UnlockRegistry.cs    # 해금 상태 관리
@@ -91,7 +102,9 @@ Assets/_Project/                    # (→ see docs/systems/project-structure.md
 ├── Data/                        # ScriptableObject 데이터
 │   ├── Crops/                   # 작물별 데이터 에셋
 │   ├── Buildings/               # 시설별 데이터 에셋
-│   └── Tools/                   # 도구별 데이터 에셋
+│   ├── Tools/                   # 도구별 데이터 에셋
+│   ├── NPCs/                    # NPC 데이터 에셋
+│   └── Dialogues/               # 대화 데이터 에셋
 │
 ├── Prefabs/
 │   ├── Player/                  # 플레이어 프리팹
@@ -255,6 +268,7 @@ Release Build (최적화)
 - `docs/systems/facilities-architecture.md` — 시설 시스템 기술 아키텍처: 물탱크/온실/창고/가공소 (ARC-007)
 - `docs/content/facilities.md` — 시설 콘텐츠 상세: 메카닉/업그레이드/가공 레시피 canonical (CON-002)
 - `docs/systems/tool-upgrade-architecture.md` — 도구 업그레이드 시스템 기술 아키텍처: 업그레이드 흐름/효과 계산/세이브 확장 (DES-007)
+- `docs/systems/npc-shop-architecture.md` — NPC/상점 시스템 기술 아키텍처: NPC 관리/대화/대장간 연계/여행 상인 (ARC-008)
 
 ## Open Questions
 

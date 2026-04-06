@@ -212,6 +212,7 @@
 - `docs/balance/crop-economy.md` — 작물 경제 밸런스 (BAL-001)
 - `docs/systems/tool-upgrade.md` — 도구 업그레이드 시스템 상세 설계 (DES-007)
 - `docs/balance/progression-curve.md` — 게임 진행 곡선 밸런스 (BAL-002)
+- `docs/content/npcs.md` — NPC/상점 콘텐츠 상세 (CON-003)
 
 ## Open Questions
 

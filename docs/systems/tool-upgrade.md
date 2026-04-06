@@ -193,10 +193,10 @@ Reinforced 업그레이드 기준 (총 비용 1,100G = 골드 800G + 재료 300G
 
 | 항목 | 내용 |
 |------|------|
-| 이름 | [OPEN] NPC 이름 미정. CON-003에서 확정 예정 |
-| 위치 | 농장 남쪽 마을 (-> see CON-003 작성 시 확정) |
-| 영업 시간 | 09:00~18:00 |
-| 휴무일 | 없음 (매일 영업) |
+| 이름 | 철수 (Cheolsu) (-> see `docs/content/npcs.md` 섹션 4.1) |
+| 위치 | 마을 외곽 (-> see `docs/content/npcs.md` 섹션 2.2) |
+| 영업 시간 | (-> see `docs/systems/economy-system.md` 섹션 3.2) |
+| 휴무일 | (-> see `docs/systems/economy-system.md` 섹션 3.2) |
 
 ### 6.2 상호작용 흐름
 
@@ -316,14 +316,14 @@ Reinforced 업그레이드 기준 (총 비용 1,100G = 골드 800G + 재료 300G
 | `docs/systems/economy-system.md` | 골드 시스템, 초기 지급액, 가격 구조 |
 | `docs/balance/progression-curve.md` 섹션 1.2.4 | 도구 업그레이드 XP 보상 |
 | `docs/balance/progression-curve.md` 섹션 1.3.2 | 레벨 테이블 (레벨 3, 레벨 7 해금) |
-| `docs/content/npcs.md` (미작성, CON-003) | 대장간 NPC 상세 |
+| `docs/content/npcs.md` (CON-003) | 대장간 NPC 상세 (철수, 대화, 영업시간) |
 
 ---
 
 ## Open Questions
 
 1. [OPEN] **재료 드롭 경로**: 철 조각/정제 강철을 상점 구매 외에 잡초 제거, 돌 파괴 등에서 확률 드롭으로도 획득 가능하게 할지. 드롭 추가 시 실질 비용 하락으로 밸런스 재조정 필요.
-2. [OPEN] **대장간 NPC 이름/성격**: CON-003에서 NPC 콘텐츠와 함께 확정 필요.
+2. [RESOLVED] **대장간 NPC 이름/성격**: 철수 (Cheolsu)로 확정 (-> see `docs/content/npcs.md` 섹션 4.1).
 3. [OPEN] **물탱크와 물뿌리개의 상위 호환 문제**: 물탱크가 자동화라면 Legendary 물뿌리개의 가치가 감소할 수 있음 (-> see `docs/systems/farming-system.md` Open Question 4). 물탱크 범위 제한(인접 4~8타일)으로 차별화하되, 플레이테스트 후 조정 필요.
 4. [OPEN] **범위 도구 사용 시 비어있는 타일 처리**: 3x3 범위 중 일부 타일만 유효할 때 에너지는 전체 소모인지, 유효 타일 비례 소모인지. 현재 설계는 **전체 소모** (단순성 우선). 플레이테스트 후 불만이 크면 비례 소모로 변경 검토.
 5. [OPEN] **progression-curve.md 업데이트 필요**: 기존 "4도구 x 4단계 = 최대 240 XP"를 "3도구 x 2단계 = 최대 90 XP"로 수정해야 한다. 총 XP 예산에서 150 XP 감소가 레벨 진행 속도에 미치는 영향 분석 필요.

@@ -216,22 +216,22 @@ SO_Tool_Hoe_Legendary    (tier=3, nextTier=null)
 | FarmEdge | 농장 그리드 가장자리에만 배치 가능 |
 | Anywhere | 농장 영역 어디든 배치 가능 |
 
-**시설별 에셋 데이터** (정적 값은 `docs/design.md` 섹션 4.6 canonical 참조):
+**시설별 에셋 데이터** (tileSize/buildTimeDays/effectRadius 등 콘텐츠 파라미터는 `docs/content/facilities.md` canonical 참조 — PATTERN-007):
 
 | 에셋 이름 | buildingId | tileSize | effectType | effectRadius | buildTimeDays |
 |-----------|------------|----------|------------|--------------|--------------|
-| SO_Bldg_WaterTank | water_tank | (2,2) | AutoWater | 3 | 1 |
-| SO_Bldg_Greenhouse | greenhouse | (6,6) | SeasonBypass | 0 (내부만) | 2 |
-| SO_Bldg_Storage | storage | (3,2) | Storage | 0 | 1 |
-| SO_Bldg_Processor | processor | (4,3) | Processing | 0 | 2 |
+| SO_Bldg_WaterTank | water_tank | (→ see `docs/content/facilities.md` 섹션 3.1) | AutoWater | (→ see `docs/content/facilities.md` 섹션 3.2) | (→ see `docs/content/facilities.md` 섹션 3.1) |
+| SO_Bldg_Greenhouse | greenhouse | (→ see `docs/content/facilities.md` 섹션 4.1) | SeasonBypass | 0 (내부만) | (→ see `docs/content/facilities.md` 섹션 4.1) |
+| SO_Bldg_Storage | storage | (→ see `docs/content/facilities.md` 섹션 5.1) | Storage | 0 | (→ see `docs/content/facilities.md` 섹션 5.1) |
+| SO_Bldg_Processor | processor | (→ see `docs/content/facilities.md` 섹션 6.1) | Processing | 0 | (→ see `docs/content/facilities.md` 섹션 6.1) |
 
-**물탱크 상세**: effectRadius=3은 물탱크 중심에서 3타일 이내의 모든 경작 타일에 매일 아침 자동으로 Watered 상태를 부여한다. 물뿌리개로 물을 줄 필요가 없어진다.
+**물탱크 상세**: effectRadius 범위 내의 모든 경작 타일에 매일 아침 자동으로 Watered 상태를 부여한다. 물뿌리개로 물을 줄 필요가 없어진다. 수치: (→ see `docs/content/facilities.md` 섹션 3.1, 3.2).
 
-**온실 상세**: tileSize (6,6) = 외부 점유 36타일 (벽 포함). 내부 경작 가능 영역은 4x4 = 16타일 (Lv.1 기준). 업그레이드 시 최대 6x6 = 36타일. SeasonBypass 효과로 겨울에도 모든 작물 재배 가능. 비계절 작물은 성장 x0.85 패널티 (-> see `docs/content/facilities.md` 섹션 4.3).
+**온실 상세**: SeasonBypass 효과로 겨울에도 모든 작물 재배 가능. 비계절 작물은 성장 패널티 적용. 면적 및 내부 경작 가능 타일 수치: (→ see `docs/content/facilities.md` 섹션 4.1, 4.3).
 
-**창고 상세**: tileSize (3,2) = 점유 6타일. effectValue = 30 (창고 1동당 슬롯 수, -> see `docs/content/facilities.md` 섹션 5.2).
+**창고 상세**: effectValue = 창고 1동당 슬롯 수 (→ see `docs/content/facilities.md` 섹션 5.1, 5.2). tileSize: (→ see `docs/content/facilities.md` 섹션 5.1).
 
-**가공소 상세**: tileSize (4,3) = 점유 12타일. effectValue = 1 (초기 가공 슬롯 수, -> see `docs/systems/economy-system.md` 섹션 2.5).
+**가공소 상세**: effectValue = 초기 가공 슬롯 수 (→ see `docs/systems/economy-system.md` 섹션 2.5). tileSize: (→ see `docs/content/facilities.md` 섹션 6.1).
 
 [OPEN] 시설 업그레이드 시스템(upgradeCosts)의 상세 설계 미정. 예: 창고 슬롯 확장, 온실 크기 확장 등.
 
