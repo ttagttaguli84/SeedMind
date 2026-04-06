@@ -1,0 +1,86 @@
+# SeedMind
+
+> AI가 스스로 설계하고, 구축하고, 배포하는 게임 프로젝트
+
+## 프로젝트 개요
+
+**SeedMind**는 하나의 실험이다.
+
+AI(Claude Code)가 사람의 개입 없이 게임을 **설계 → 구축 → 배포**까지 완수할 수 있는가?
+
+사람은 씨앗(Seed)을 심을 뿐, 나머지는 AI의 판단(Mind)에 맡긴다.
+
+## 게임 컨셉
+
+**"씨앗 하나로 시작하는 나만의 농장"** — SeedMind Farm Simulation
+
+- **장르**: 농장 시뮬레이션
+- **핵심 메카닉**: 경작(Farming) → 성장(Growing) → 수확/판매(Harvest) → 확장(Expand)
+- **비주얼**: 로우폴리 / 스타일라이즈드 3D
+- **시점**: 탑다운 또는 쿼터뷰 3D
+- **특징**: AI가 Unity MCP를 통해 에셋, 씬, 스크립트를 직접 제작
+
+> 자세한 내용: [Game Design Document](docs/design.md) | [Architecture](docs/architecture.md)
+
+## 실험 목적
+
+| 질문 | 검증 방식 |
+|------|-----------|
+| AI가 게임 컨셉을 스스로 결정할 수 있는가? | 메카닉, 시스템, 아트 방향성을 자율 설계 |
+| AI가 실제 리소스를 제작할 수 있는가? | Unity MCP를 통해 씬, 오브젝트, 머티리얼 직접 생성 |
+| AI가 동작하는 게임을 만들 수 있는가? | Unity 기반 플레이 가능한 빌드 생성 |
+| AI가 빌드/배포까지 완료할 수 있는가? | 실행 가능한 빌드 산출물 생성 |
+
+## 규칙
+
+1. **사람은 지시하지 않는다** — 최초 주제 선정 이후 구체적인 구현 지시 없음
+2. **AI가 모든 판단을 내린다** — 기술 선택, 구조 설계, 구현 순서, 문제 해결
+3. **과정을 기록한다** — 모든 의사결정과 그 근거를 문서화
+4. **결과를 있는 그대로 공개한다** — 성공이든 실패든 투명하게 공유
+
+## 기술 스택
+
+- **Engine**: Unity 6
+- **Language**: C#
+- **AI Agent**: Claude Code (Opus)
+- **AI ↔ Unity 연동**: MCP for Unity (씬 편집, 오브젝트 생성, 스크립트 연결)
+- **Version Control**: Git + GitHub
+
+## 프로젝트 구조
+
+```
+SeedMind/
+├── README.md                # 프로젝트 소개
+├── docs/                    # AI 의사결정 로그
+│   ├── design.md            # 게임 설계 문서
+│   ├── architecture.md      # 기술 아키텍처
+│   └── devlog/              # 개발 일지
+├── Assets/                  # Unity 에셋
+│   ├── Scripts/             # C# 스크립트
+│   ├── Prefabs/             # 프리팹
+│   ├── Materials/           # 머티리얼
+│   ├── Scenes/              # 씬
+│   └── UI/                  # UI 에셋
+├── Packages/                # Unity 패키지
+└── ProjectSettings/         # Unity 프로젝트 설정
+```
+
+## 현재 상태
+
+**Phase 1: AI 자율 게임 설계** — 완료
+
+- [x] Phase 0: GitHub 저장소 생성
+- [x] Phase 1: AI 자율 게임 설계
+- [ ] Phase 2: Unity 프로젝트 생성 및 기본 환경 구축
+- [ ] Phase 3: 핵심 시스템 구현 (농장, 작물, 경제)
+- [ ] Phase 4: 게임플레이 콘텐츠 제작
+- [ ] Phase 5: UI/UX 및 폴리싱
+- [ ] Phase 6: 빌드 및 배포
+
+## 라이선스
+
+MIT License
+
+---
+
+*이 README를 포함한 모든 코드와 문서는 Claude Code가 자율적으로 작성했습니다.*
