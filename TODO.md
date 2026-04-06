@@ -18,5 +18,5 @@
 | CON-003 | 2 | NPC/상점 콘텐츠 (상인 캐릭터, 대화, 상점 인벤토리) |
 | VIS-001 | 2 | 비주얼 가이드 (로우폴리 스타일 참고자료, 색상 팔레트) |
 | AUD-001 | 1 | 사운드 디자인 문서 (필요한 효과음/BGM 목록) |
-| ~~PATTERN-001~~ | ~~-~~ | ~~[self-improve 전용] 신규 문서가 canonical 문서의 수치/이름을 복사해 독립 기재 → 불일치 반복 발생~~ — DONE → `logs/reports/self_improve_20260406.md`, `.claude/rules/doc-standards.md` 업데이트 필요 (사용자 직접 적용 필요) |
-| ~~PATTERN-002~~ | ~~-~~ | ~~[self-improve 전용] 동일 문서 내에서도 섹션 간 수치 불일치 발생 (예: crop-growth-architecture.md giantCropChance 1% vs 15%)~~ — DONE → `logs/reports/self_improve_20260406.md`, `.claude/rules/workflow.md` 업데이트 필요 (사용자 직접 적용 필요) |
+| ~~PATTERN-001~~ | ~~-~~ | ~~[self-improve 전용] 신규 문서가 canonical 문서의 수치/이름을 복사해 독립 기재 → 불일치 반복 발생~~ — PENDING → `.claude/rules/doc-standards.md`에 Canonical Data Mapping 섹션 추가 필요 |
+| ~~PATTERN-002~~ | ~~-~~ | ~~[self-improve 전용] 동일 문서 내에서도 섹션 간 수치 불일치 발생~~ — PENDING → `.claude/rules/workflow.md`에 Reviewer Checklist 섹션 추가 필요 |
