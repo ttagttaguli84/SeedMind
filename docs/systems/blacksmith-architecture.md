@@ -127,6 +127,10 @@
 │──────────────────────────────────────────────────────────────────│
 │  [상태]                                                           │
 │  - _affinityMap: Dictionary<string, int>   (npcId → 현재 친밀도)  │
+│  - _lastVisitDayMap: Dictionary<string, int>                     │
+│  │                                (npcId → 마지막 방문 일차)      │
+│  - _triggeredDialogueMap: Dictionary<string, HashSet<string>>    │
+│  │                                (npcId → 발동 대화 ID 집합)     │
 │                                                                  │
 │  [메서드]                                                         │
 │  + GetAffinity(string npcId): int                                │
@@ -632,6 +636,8 @@ namespace SeedMind.NPC
         // FIX-027: bool[] triggeredDialogues → string[] triggeredDialogueIds 로 변경.
         // HasTriggeredDialogue(string dialogueId)가 임의 ID를 키로 조회하므로
         // 인덱스 기반 bool[] 대신 ID 목록이 필요하다.
+        // FIX-028: dailyVisitDates 별도 필드 불필요 — lastVisitDay(int)가
+        // CanGiveDailyAffinity/MarkDailyVisit의 일일 중복 방지 역할을 수행한다.
     }
 }
 ```

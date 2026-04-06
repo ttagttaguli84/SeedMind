@@ -260,8 +260,8 @@ create_script
         {
             public string npcId;                  // "npc_cheolsu"
             public int affinityValue;             // 현재 친밀도 수치
-            public int lastVisitDay;              // 마지막 방문 일차 (일일 대화 중복 방지)
-            public bool[] triggeredDialogues;     // 단계별 특수 대화 재생 여부
+            public int lastVisitDay;              // 마지막 방문 일차 (CanGiveDailyAffinity/MarkDailyVisit 중복 방지, → see blacksmith-architecture.md 섹션 5.5)
+            public string[] triggeredDialogueIds;  // 발동된 대화 ID 목록 (→ see blacksmith-architecture.md 섹션 5.5)
         }
     }
 ```
@@ -301,8 +301,8 @@ create_script
                 = new Dictionary<string, int>();
             private Dictionary<string, int> _lastVisitDayMap
                 = new Dictionary<string, int>();
-            private Dictionary<string, bool[]> _triggeredDialogueMap
-                = new Dictionary<string, bool[]>();
+            private Dictionary<string, HashSet<string>> _triggeredDialogueMap
+                = new Dictionary<string, HashSet<string>>();
 
             // --- 이벤트 ---
             public event Action<string, int, int> OnAffinityChanged;
@@ -315,10 +315,10 @@ create_script
             // AddAffinity(npcId, amount): void
             //   -> 단계 상승 감지 시 OnAffinityLevelUp 발행
             // GetAffinityLevel(npcId, thresholds): int
-            // HasTriggeredDialogue(npcId, level): bool
-            // MarkDialogueTriggered(npcId, level): void
-            // CanGiveDailyAffinity(npcId, currentDay): bool
-            // MarkDailyVisit(npcId, currentDay): void
+            // HasTriggeredDialogue(npcId, dialogueId): bool   // FIX-028: string dialogueId로 변경
+            // MarkDialogueTriggered(npcId, dialogueId): void  // FIX-028: string dialogueId로 변경
+            // CanGiveDailyAffinity(npcId): bool               // FIX-028: lastVisitDay 기반, currentDay 파라미터 불필요
+            // MarkDailyVisit(npcId): void                     // FIX-028: lastVisitDay 기반, currentDay 파라미터 불필요
             // GetSaveData(): AffinitySaveData
             // LoadSaveData(data): void
         }
@@ -1460,7 +1460,7 @@ get_console_logs
     # - 친밀도 값 복원 (AffinitySaveData)
     # - 업그레이드 진행 중이었다면 잔여 일수 복원
     # - 도구 잠금 상태 복원
-    # - 단계별 특수 대화 재생 여부 복원 (triggeredDialogues)
+    # - 발동된 대화 ID 목록 복원 (triggeredDialogueIds)
 ```
 
 - **검증**: 세이브/로드 후 모든 상태가 올바르게 복원됨
