@@ -349,6 +349,14 @@ private int ApplyLevelScale(int baseValue, int playerLevel)
     scale = Mathf.Min(scale, 1.9f);               // → see canonical (레벨 10 상한)
     return Mathf.RoundToInt(baseValue * scale);
 }
+
+private void GrantXP(int baseAmount, int playerLevel)
+{
+    // XP 보상은 ProgressionManager에 XPSource.QuestComplete 출처로 전달
+    // XP 수치 → see docs/systems/quest-system.md 섹션 3~6 (canonical)
+    int scaledXP = ApplyLevelScale(baseAmount, playerLevel);
+    _progressionManager.AddExp(scaledXP, XPSource.QuestComplete);
+}
 ```
 
 ---

@@ -78,6 +78,8 @@
 │      FarmEvents.OnCropHarvested += HandleCropHarvested       │
 │      BuildingManager.OnBuildingConstructed += HandleBuilding  │
 │      ToolSystem.OnToolUsed += HandleToolUse                  │
+│      QuestEvents.OnQuestRewarded += HandleQuestXP            │
+│      AchievementEvents.OnAchievementUnlocked += HandleAchievementXP │
 │  + OnDisable(): 구독 해제                                      │
 └──────────────────────────────────────────────────────────────┘
          │ owns                        │ ref
@@ -117,6 +119,14 @@ ToolSystem.OnToolUsed ──▶ ProgressionManager.HandleToolUse()
 
 TimeManager.OnDayChanged ──▶ ProgressionManager.OnDayChanged()
     → 일일 마일스톤 체크 트리거
+
+QuestEvents.OnQuestRewarded ──▶ ProgressionManager.HandleQuestXP()
+    → 퀘스트 완료 보상 XP 부여 (AddExp(amount, XPSource.QuestComplete))
+    → XP 수치 → see docs/systems/quest-system.md 섹션 3~6
+
+AchievementEvents.OnAchievementUnlocked ──▶ ProgressionManager.HandleAchievementXP()
+    → 업적 달성 보상 XP 부여 (AddExp(amount, XPSource.AchievementReward))
+    → XP 수치 → see docs/content/achievements.md
 
 
 [이벤트 발행 — ProgressionManager가 발행하는 이벤트]
@@ -227,9 +237,8 @@ namespace SeedMind.Level
         FacilityBuild,      // 시설 건설
         FacilityProcess,    // 가공 완료
         MilestoneReward,    // 마일스톤 달성 보너스
-        // 향후 확장
-        // FishCaught,
-        // QuestComplete,
+        QuestComplete,      // 퀘스트 완료 보상 (→ see docs/systems/quest-system.md 섹션 7)
+        AchievementReward,  // 업적 달성 보상 (→ see docs/content/achievements.md 섹션 2.4)
     }
 }
 ```
@@ -268,6 +277,16 @@ namespace SeedMind.Level
                     var milestone = (MilestoneData)context;
                     return milestone.expReward;
                     // → see docs/balance/progression-curve.md for value
+
+                case XPSource.QuestComplete:
+                    // 퀘스트 완료 XP는 QuestRewarder가 직접 amount를 계산하여 전달
+                    // → see docs/systems/quest-system.md 섹션 3~6 (canonical XP 수치)
+                    return (int)context;  // context = 퀘스트 보상 XP (int)
+
+                case XPSource.AchievementReward:
+                    // 업적 보상 XP는 AchievementManager가 직접 amount를 계산하여 전달
+                    // → see docs/content/achievements.md (canonical XP 수치)
+                    return (int)context;  // context = 업적 보상 XP (int)
 
                 default:
                     return 0;

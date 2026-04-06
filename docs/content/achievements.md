@@ -64,12 +64,10 @@
 ### 2.4 XP 보상 총량 추정
 
 - 전 업적(30종) 완료 시 총 XP: **2,250 XP** (아래 섹션 3~9 및 섹션 12.1 확정 합산)
-- 전체 필요 누적 XP 4,609의 약 **49%**에 해당 (-> see `docs/balance/progression-curve.md` 섹션 1.3.2)
+- 전체 필요 누적 XP **9,029**의 약 **24.9%**에 해당 (-> see `docs/balance/progression-curve.md` 섹션 2.4.1 — canonical XP 테이블)
 - 전 업적 완료는 2년차 이후에나 가능하므로 실질적 XP 가속 효과는 제한적
 
-[RISK] 업적 XP 비중(49%)이 당초 설계 목표(33~43%, -> see `docs/systems/achievement-system.md` 섹션 4.1)를 초과한다. XP 하향 조정 또는 레벨 테이블 상향 검토 필요 (-> see 섹션 12.2).
-
-[RISK] 업적 XP + 퀘스트 XP 합산 시 레벨업 속도를 과도하게 가속할 수 있다. 출시 전 시뮬레이션으로 검증 필요. (-> see `docs/balance/progression-curve.md`)
+[NOTE] 업적 XP 비중(24.9%)은 canonical 기준(9,029 XP) 대비 적정 수준이다. BAL-007 통합 시뮬레이션(-> see `docs/balance/xp-integration.md`)에서 퀘스트 900 XP + 업적 2,250 XP 포함 시 1년차 일반 플레이어 레벨 8 중반 도달이 확정되었다. 추가 삭감 불필요.
 
 ### 2.5 골드 보상 총량 추정
 
