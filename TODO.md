@@ -87,7 +87,7 @@
 | ARC-019 | 1 | 목축/낙농 시스템 기술 아키텍처 (AnimalManager, AnimalData SO, 돌봄 사이클 설계 — CON-006 후속) |
 | BAL-008 | 1 | 목축/낙농 경제 밸런스 분석 (동물 구매/사료 비용 vs 젖/양모/알 판매 ROI — CON-006 + ARC-019 후속) |
 | ~~ARC-022~~ | ~~2~~ | ~~UI 시스템 MCP 태스크 시퀀스 독립 문서화 (ui-architecture.md Part II → docs/mcp/ui-tasks.md)~~ — DONE → `docs/mcp/ui-tasks.md` |
-| DES-012 | 2 | 농장 확장 시스템 설계 (구역 해금, 타일 구매, 신규 땅 개간 메카닉 — ARC-023 선행 요건) |
+| ~~DES-012~~ | ~~2~~ | ~~농장 확장 시스템 설계 (구역 해금, 타일 구매, 신규 땅 개간 메카닉 — ARC-023 선행 요건)~~ — DONE → `docs/systems/farm-expansion.md` (7구역 Zone A~G, 576타일, 총 16,000G 해금 비용) |
 | CON-008 | 1 | 추가 NPC 상세 설계 (마을 상인/농업 전문가 등 blacksmith 외 NPC 대화 및 서비스 내용 상세화) |
 | ~~FIX-026~~ | ~~2~~ | ~~time-season-tasks.md 작성 예정 항목 우선순위 확인 (time-season-architecture.md Cross-references에 '작성 예정'으로 등재됨)~~ — DONE → `docs/mcp/time-season-tasks.md` (ARC-021) 신규 생성, Cross-references 업데이트 |
 | ~~ARC-020~~ | ~~2~~ | ~~대장간 NPC MCP 태스크 시퀀스 독립 문서화 (blacksmith-architecture.md Part II → docs/mcp/blacksmith-tasks.md)~~ — DONE → `docs/mcp/blacksmith-tasks.md` |
@@ -103,5 +103,9 @@
 | ~~FIX-025~~ | ~~2~~ | ~~tutorial-tasks.md Step 07/11 이벤트명 확정 (TimeEvents.OnSleepExecuted, 구매 완료 이벤트 — ARC-010 리뷰 WARNING 후속)~~ — DONE: S07→TimeManager.OnSleepCompleted, S11→EconomyEvents.OnShopPurchased 확정; economy-architecture.md 이벤트 표 보완 |
 | PATTERN-009 | - | [self-improve 전용] 밸런스 문서에서 결정 이전 분석 섹션 수치가 결정 이후에도 갱신되지 않아 구/신 수치 혼재 발생 (crop-economy.md 섹션 4.3.2~4.3.8 vs 4.3.10에서 5건 식별 — 수확 6회/4일 vs 5회/5일 불일치) → 결정 이전 섹션에 "(히스토리 — BAL-XXX 이전 분석)" 배너 의무 표기 규칙 추가 필요 |
 | ~~FIX-034~~ | ~~2~~ | ~~economy-architecture.md HarvestOrigin enum 설계 (온실 수확물 출처 추적 — BAL-010 아키텍트 분석 [RISK] 후속, devlog 043 언급)~~ — DONE → economy-architecture.md 섹션 3.10 추가, inventory-architecture.md ItemSlot/AddItem/RemoveItem 업데이트, data-pipeline.md ItemSlotSaveData origin 필드 추가 |
-| ARC-023 | 2 | 농장 확장 시스템 기술 아키텍처 (FarmZoneManager, ZoneData SO, 타일 구매 흐름 — DES-012 후속) |
+| ~~ARC-023~~ | ~~2~~ | ~~농장 확장 시스템 기술 아키텍처 (FarmZoneManager, ZoneData SO, 타일 구매 흐름 — DES-012 후속)~~ — DONE → `docs/systems/farm-expansion-architecture.md` |
 | ARC-024 | 1 | 목축/낙농 시스템 MCP 태스크 시퀀스 (AnimalManager/AnimalData 구현 시퀀스 독립 문서화 — ARC-019 후속) |
+| FIX-035 | 2 | progression-curve.md 섹션 1.2.4 농장 확장 XP를 "4단계 100XP" → "6단계 150XP"로 업데이트 (DES-012에서 Zone B~G 6단계로 확정 — farm-expansion.md [OPEN] 8 후속) |
+| FIX-036 | 2 | economy-system.md 섹션 3.3 목공소 인벤토리를 Zone B~G 7구역 방식으로 업데이트 (DES-012 섹션 2.1 해금 조건 테이블 반영 — farming-system.md 섹션 1 확장 방식 동기화 포함) |
+| FIX-037 | 1 | farm-expansion.md 섹션 4.4 과일나무 데이터(묘목 가격, 수확량, 판매가)를 crops.md로 이전하고 참조 표기로 교체 (WARNING-8: 비-canonical 문서에 작물 가격 직접 기재) |
+| PATTERN-010 | - | [self-improve 전용] 아키텍처 문서를 디자인 문서와 병렬 작성 시 플레이스홀더 수치/ID를 사용하고 디자인 확정 후 동기화하지 않는 패턴 (ARC-023에서 zoneId 5종·최대 크기 불일치 3건 발생) |
