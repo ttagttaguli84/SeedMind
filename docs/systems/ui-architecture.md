@@ -83,7 +83,8 @@ namespace SeedMind.UI
         SaveLoad    = 7,   // 세이브/로드 슬롯 화면
         Dialogue    = 8,   // NPC 대화 화면
         Processing  = 9,   // 가공소 화면
-        Crafting    = 10   // 크래프팅 화면 (향후 확장)
+        Crafting    = 10,  // 크래프팅 화면 (향후 확장)
+        ToolUpgrade = 11   // 대장간 도구 업그레이드 화면
     }
 }
 ```
@@ -106,6 +107,8 @@ namespace SeedMind.UI
       ├──(Esc)──▶ [Menu] ──(Esc)──▶ [Farming]
       │
       ├──(NPC 상호작용)──▶ [Dialogue] ──(대화 종료)──▶ [Farming]
+      │                       │
+      │                       └──(업그레이드 선택)──▶ [ToolUpgrade] ──(Esc/닫기)──▶ [Farming]
       │
       └──(가공소 상호작용)──▶ [Processing] ──(Esc/닫기)──▶ [Farming]
 

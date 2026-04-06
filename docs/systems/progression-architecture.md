@@ -239,6 +239,7 @@ namespace SeedMind.Level
         MilestoneReward,    // 마일스톤 달성 보너스
         QuestComplete,      // 퀘스트 완료 보상 (→ see docs/systems/quest-system.md 섹션 7)
         AchievementReward,  // 업적 달성 보상 (→ see docs/content/achievements.md 섹션 2.4)
+        ToolUpgrade,        // 도구 업그레이드 완료 (→ see docs/balance/progression-curve.md)
     }
 }
 ```
@@ -287,6 +288,11 @@ namespace SeedMind.Level
                     // 업적 보상 XP는 AchievementManager가 직접 amount를 계산하여 전달
                     // → see docs/content/achievements.md (canonical XP 수치)
                     return (int)context;  // context = 업적 보상 XP (int)
+
+                case XPSource.ToolUpgrade:
+                    // 도구 업그레이드 완료 시 BlacksmithEvents.OnUpgradeCompleted에서 전달
+                    // → see docs/balance/progression-curve.md (canonical XP 수치)
+                    return _progressionData.toolUpgradeExp;
 
                 default:
                     return 0;

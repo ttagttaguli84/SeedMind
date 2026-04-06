@@ -867,6 +867,7 @@ Step E-5: 세이브/로드 테스트
 - `docs/systems/tool-upgrade.md` (디자인 canonical -- 디자이너 작성 예정, 모든 수치의 단일 출처)
 - `docs/systems/progression-architecture.md` (업그레이드 완료 시 XP 부여 연동)
 - `docs/mcp/farming-tasks.md` (기존 ToolSystem MCP 태스크 -- Phase C-2)
+- `docs/systems/blacksmith-architecture.md` (ARC-020 — 대장간 NPC, ToolUpgradeUI, 친밀도 시스템 연동)
 
 ---
 

@@ -37,7 +37,7 @@
 | ~~DES-008~~ | ~~1~~ | ~~세이브/로드 UX 설계 (자동저장 트리거, 수동 저장, 멀티슬롯 여부)~~ — DONE → `docs/systems/save-load-system.md` |
 | ~~FIX-004~~ | ~~3~~ | ~~data-pipeline.md 섹션 2.4 시설 에셋 테이블의 tileSize/buildTimeDays 직접 수치를 `(→ see docs/content/facilities.md)` 참조로 교체 (PATTERN-007 후속)~~ — DONE |
 | ~~ARC-008~~ | ~~2~~ | ~~도구 업그레이드 MCP 태스크 시퀀스 (tool-upgrade-architecture.md Part II를 독립 문서로 분리 → docs/mcp/tool-upgrade-tasks.md)~~ — DONE → `docs/mcp/tool-upgrade-tasks.md` (문서 ID ARC-015로 할당, ARC-008은 npc-shop-architecture.md에 이미 사용됨) |
-| CON-004 | 2 | 대장간 NPC 상세 (캐릭터, 대화, 업그레이드 인터페이스 UX) |
+| ~~CON-004~~ | ~~2~~ | ~~대장간 NPC 상세 (캐릭터, 대화, 업그레이드 인터페이스 UX)~~ — DONE → `docs/content/blacksmith-npc.md`, `docs/systems/blacksmith-architecture.md` (ARC-020) |
 | ~~ARC-009~~ | ~~2~~ | ~~NPC/상점 MCP 태스크 시퀀스 독립 문서화 (npc-shop-architecture.md Part II 요약 → docs/mcp/npc-shop-tasks.md 상세 분리)~~ — DONE → `docs/mcp/npc-shop-tasks.md` |
 | BAL-005 | 1 | 여행 상인 희귀 아이템 가격 밸런스 분석 (npcs.md [OPEN] 후속 — 만능 비료/겨울 씨앗 등 8종 ROI 검증) |
 | ARC-010 | 2 | 튜토리얼 MCP 태스크 시퀀스 독립 문서화 (tutorial-architecture.md Part II → docs/mcp/tutorial-tasks.md) |
@@ -84,8 +84,9 @@
 | ~~ARC-010~~ | ~~2~~ | ~~튜토리얼 MCP 태스크 시퀀스 독립 문서화 (tutorial-architecture.md Part II → docs/mcp/tutorial-tasks.md)~~ — DONE → `docs/mcp/tutorial-tasks.md` |
 | ~~ARC-012~~ | ~~2~~ | ~~세이브/로드 MCP 태스크 시퀀스 독립 문서화 (save-load-architecture.md Part II → docs/mcp/save-load-tasks.md)~~ — DONE → `docs/mcp/save-load-tasks.md` |
 | BAL-003 | 2 | 겨울 작물 3종 ROI/밸런스 분석 (겨울무/표고버섯/시금치 → crop-economy.md 추가) |
-| CON-004 | 2 | 대장간 NPC 상세 (캐릭터, 대화, 업그레이드 인터페이스 UX) |
 | ARC-019 | 1 | 목축/낙농 시스템 기술 아키텍처 (AnimalManager, AnimalData SO, 돌봄 사이클 설계 — CON-006 후속) |
 | BAL-008 | 1 | 목축/낙농 경제 밸런스 분석 (동물 구매/사료 비용 vs 젖/양모/알 판매 ROI — CON-006 + ARC-019 후속) |
 | FIX-026 | 2 | time-season-tasks.md 작성 예정 항목 우선순위 확인 (time-season-architecture.md Cross-references에 '작성 예정'으로 등재됨) |
+| ARC-020 | 2 | 대장간 NPC MCP 태스크 시퀀스 독립 문서화 (blacksmith-architecture.md Part II → docs/mcp/blacksmith-tasks.md) |
+| BAL-009 | 1 | 도구 업그레이드 XP 밸런스 분석 (ToolUpgrade XPSource 추가 후 — progression-curve.md toolUpgradeExp 수치 결정) |
 | ~~FIX-025~~ | ~~2~~ | ~~tutorial-tasks.md Step 07/11 이벤트명 확정 (TimeEvents.OnSleepExecuted, 구매 완료 이벤트 — ARC-010 리뷰 WARNING 후속)~~ — DONE: S07→TimeManager.OnSleepCompleted, S11→EconomyEvents.OnShopPurchased 확정; economy-architecture.md 이벤트 표 보완 |
