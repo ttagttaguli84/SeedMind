@@ -238,7 +238,8 @@ Release Build (최적화)
 - `docs/systems/farming-architecture.md` — 경작 시스템 기술 아키텍처 상세
 - `docs/systems/time-season-architecture.md` — 시간/계절/날씨 시스템 기술 아키텍처 상세 (DES-003)
 - `docs/systems/economy-architecture.md` — 경제 시스템 기술 아키텍처 상세 (DES-004)
-- `docs/mcp/farming-tasks.md` — MCP 태스크 시퀀스 (작성 예정, ARC-003)
+- `docs/mcp/scene-setup-tasks.md` — 기본 씬 구성 MCP 태스크 시퀀스 (ARC-002)
+- `docs/mcp/farming-tasks.md` — 농장 그리드 MCP 태스크 시퀀스 (작성 예정, ARC-003)
 
 ## Open Questions
 

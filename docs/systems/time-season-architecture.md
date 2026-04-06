@@ -42,7 +42,7 @@ namespace SeedMind.Core
 {
     public enum DayPhase
     {
-        Dawn,       // 06:00 ~ 07:59  — 새벽, 하루 시작
+        Dawn,       // 06:00 ~ 08:00 미만  — 새벽, 하루 시작
         Morning,    // 08:00 ~ 11:59  — 오전
         Afternoon,  // 12:00 ~ 16:59  — 오후
         Evening,    // 17:00 ~ 19:59  — 저녁, 석양

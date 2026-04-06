@@ -114,8 +114,11 @@ Assets/
 │   │   ├── Player/                    # 플레이어 애니메이션
 │   │   └── Crops/                     # 작물 흔들림 등
 │   │
-│   └── Input/
-│       └── SeedMindInputActions.inputactions  # Input System 에셋
+│   ├── Input/
+│   │   └── SeedMindInputActions.inputactions  # Input System 에셋
+│   │
+│   └── Resources/
+│       └── UI/                        # UI 스프라이트, 폰트
 │
 ├── Plugins/                           # 서드파티 플러그인 (필요 시)
 └── Settings/                          # URP, Quality, Input 등 Unity 설정
@@ -318,7 +321,8 @@ SCN_Farm (Scene Root)
 │
 ├── --- ECONOMY ---
 │   ├── EconomyManager
-│   └── Shop
+│   ├── Shop
+│   └── ShippingBin          (출하함 — 24시간 이용 가능, → see docs/systems/economy-system.md 섹션 3.2)
 │
 ├── --- CAMERA ---
 │   └── Main Camera (Orthographic, 쿼터뷰)
@@ -413,5 +417,5 @@ SCN_Farm (Scene Root)
 - `docs/architecture.md` 3절 (프로젝트 구조 개요)
 - `docs/architecture.md` 4.3절 (TimeManager), 4.4절 (입력 시스템)
 - `docs/systems/farming-architecture.md` (경작 시스템 클래스 구조)
-- `docs/mcp/scene-setup-tasks.md` (기본 씬 구성 MCP 태스크, 작성 예정 -- ARC-002)
+- `docs/mcp/scene-setup-tasks.md` (기본 씬 구성 MCP 태스크 — ARC-002)
 - `docs/pipeline/` (빌드 파이프라인, 작성 예정)

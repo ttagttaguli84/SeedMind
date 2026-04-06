@@ -8,7 +8,7 @@
 | ~~DES-004~~ | ~~4~~ | ~~경제 시스템 상세 (가격 변동, 상점 구조, 수입/지출 밸런스)~~ — DONE → `docs/systems/economy-system.md`, `docs/systems/economy-architecture.md` |
 | ~~ARC-001~~ | ~~5~~ | ~~Unity 프로젝트 구조 상세 설계~~ — DONE → `docs/systems/project-structure.md` |
 | ~~ARC-005~~ | ~~5~~ | ~~경작 시스템 기술 아키텍처~~ — DONE → `docs/systems/farming-architecture.md` |
-| ARC-002 | 4 | MCP 작업 계획 — 기본 씬 구성 태스크 시퀀스 |
+| ~~ARC-002~~ | ~~4~~ | ~~MCP 작업 계획 — 기본 씬 구성 태스크 시퀀스~~ — DONE → `docs/mcp/scene-setup-tasks.md` |
 | ARC-003 | 4 | MCP 작업 계획 — 농장 그리드 생성 태스크 시퀀스 |
 | ARC-004 | 3 | 데이터 파이프라인 설계 (ScriptableObject 구조, JSON 스키마) |
 | BAL-001 | 3 | 작물 경제 밸런스 시트 (씨앗 비용 vs 판매가, ROI 분석) |
@@ -21,3 +21,4 @@
 | ~~PATTERN-001~~ | ~~-~~ | ~~[self-improve 전용] 신규 문서가 canonical 문서의 수치/이름을 복사해 독립 기재 → 불일치 반복 발생~~ — PENDING → `.claude/rules/doc-standards.md`에 Canonical Data Mapping 섹션 추가 필요 |
 | ~~PATTERN-002~~ | ~~-~~ | ~~[self-improve 전용] 동일 문서 내에서도 섹션 간 수치 불일치 발생~~ — PENDING → `.claude/rules/workflow.md`에 Reviewer Checklist 섹션 추가 필요 |
 | PATTERN-003 | - | [self-improve 전용] enum/타입 확장 시 같은 문서 내 다른 섹션(pseudo-code, 예시 코드 등)이 업데이트되지 않음 (예: WeatherType 5종→7종 확장 시 GetWeatherMultiplier 예시 코드 미갱신) → 리뷰 체크리스트에 "enum 확장 시 사용처 전수 검색" 항목 추가 필요 |
+| PATTERN-004 | - | [self-improve 전용] 같은 문서 내 디자인 섹션(Part I)과 MCP 구현 섹션(Part II) 간 불일치 반복 발생 (Buildings 부모, 시작 시각, EconomyManager 배치, TestPlayer 누락 등 4건) → 리뷰 체크리스트에 "디자인-구현 간 대조 검증" 항목 추가 필요 |
