@@ -891,6 +891,7 @@ namespace SeedMind.Save
 | ProgressionManager | 70 | 해금/마일스톤 복원 |
 | NPCManager | 75 | NPC 상태, 여행 상인 일정 |
 | TutorialManager | 80 | 튜토리얼 진행 (다른 시스템 상태 참조 가능) |
+| QuestManager | 85 | 튜토리얼 완료 상태 참조 필요, 퀘스트 해금 조건 복원 |
 
 ---
 
