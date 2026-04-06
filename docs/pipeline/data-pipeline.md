@@ -241,52 +241,47 @@ SO_Tool_Hoe_Legendary    (tier=3, nextTier=null)
 
 #### 2.5 ProcessingRecipeData (신규)
 
-가공소에서 사용하는 가공 레시피를 정의하는 ScriptableObject.
+가공소에서 사용하는 가공 레시피를 정의하는 ScriptableObject. `GameDataSO`를 상속하며 `dataId`, `displayName`, `icon`은 부모 클래스에서 제공된다.
+
+(-> see `docs/systems/processing-architecture.md` 섹션 2.1 for canonical 클래스 정의 및 PATTERN-005 검증)
 
 | 필드 | 타입 | 기본값 | 설명 |
 |------|------|--------|------|
-| recipeId | string | "" | 코드용 고유 식별자 (예: "jam_potato") |
-| recipeName | string | "" | 표시 이름 (예: "감자 잼") |
+| dataId | string | "" | 코드용 고유 식별자 (예: "recipe_jam_potato") — GameDataSO 상속 |
+| displayName | string | "" | 표시 이름 (예: "감자 잼") — GameDataSO 상속 |
+| icon | Sprite | null | 가공품 UI 아이콘 — GameDataSO 상속 |
 | description | string | "" | UI 설명 텍스트 |
-| icon | Sprite | null | 가공품 UI 아이콘 |
 | processingType | ProcessingType | Jam | 가공 유형 |
 | inputCategory | CropCategory | Vegetable | 입력 가능 작물 카테고리 |
-| priceMultiplier | float | 2.0 | 원재료 기본 판매가 대비 배수 (-> see `docs/systems/economy-system.md` 섹션 2.5) |
-| priceBonus | int | 50 | 고정 가격 보너스 (-> see `docs/systems/economy-system.md` 섹션 2.5) |
-| processingTimeHours | float | 4.0 | 가공 소요 시간 (게임 내 시간) |
+| inputItemId | string | "" | 입력 아이템 식별자 (예: "potato") |
+| inputQuantity | int | 1 | 입력 수량 |
+| priceMultiplier | float | 0.0 | 원재료 기본 판매가 대비 배수 (-> see `docs/systems/economy-system.md` 섹션 2.5) |
+| priceBonus | int | 0 | 고정 가격 보너스 (-> see `docs/systems/economy-system.md` 섹션 2.5) |
+| processingTimeHours | float | 0.0 | 가공 소요 시간, 게임 내 시간 (-> see `docs/content/processing-system.md` 섹션 3) |
+| fuelCost | int | 0 | 연료 비용 (0 = 연료 불필요, -> see `docs/content/processing-system.md` 섹션 4) |
+| requiredFacilityTier | int | 0 | 필요 가공소 등급 (0 = Tier 1) |
 | outputItemId | string | "" | 출력 아이템 식별자 (예: "jam_potato") |
+| outputQuantity | int | 1 | 출력 수량 |
 
 **ProcessingType enum** (신규):
 
-| 값 | 설명 | 입력 카테고리 | 가격 배수 | 고정 보너스 | 소요 시간 |
-|----|------|-------------|----------|-----------|----------|
-| Jam | 잼 | 모든 과일/채소 | x2.0 | +50G | 4시간 |
-| Juice | 주스 | 과일만 (Fruit, FruitVegetable) | x2.5 | +30G | 6시간 |
-| Pickle | 절임 | 채소만 (Vegetable, FruitVegetable) | x2.0 | +30G | 4시간 |
+| 값 | 설명 | 가공소 | 수치 참조 |
+|----|------|--------|---------|
+| Jam | 잼 | 가공소 (일반) | (-> see `docs/content/processing-system.md` 섹션 3.1) |
+| Juice | 주스 | 가공소 (일반) | (-> see `docs/content/processing-system.md` 섹션 3.1) |
+| Pickle | 절임 | 가공소 (일반) | (-> see `docs/content/processing-system.md` 섹션 3.1) |
+| Mill | 제분 | 제분소 (building_mill) | (-> see `docs/content/processing-system.md` 섹션 3.2) |
+| Fermentation | 발효 | 발효실 (building_fermentation) | (-> see `docs/content/processing-system.md` 섹션 3.3) |
+| Bake | 요리 | 베이커리 (building_bakery) | (-> see `docs/content/processing-system.md` 섹션 3.4) |
 
-(-> see `docs/systems/economy-system.md` 섹션 2.5 for canonical 가공 공식 및 가격)
+(-> see `docs/content/processing-system.md` 섹션 3 for canonical 가공 공식, 파라미터, 레시피 전체 목록)
+(-> see `docs/systems/economy-system.md` 섹션 2.5 for 가공 배수 공식 canonical)
 
-**레시피 에셋 목록** (작물 8종 x 가공 유형):
+**레시피 에셋 목록**: (-> see `docs/content/processing-system.md` 섹션 3.5 for 전체 레시피 32종 및 에셋 ID 목록 canonical)
 
-| 에셋 이름 | inputCategory 충족 작물 | 비고 |
-|-----------|----------------------|------|
-| SO_Recipe_Jam_Potato | 감자 | 채소 -> 잼 가능 |
-| SO_Recipe_Jam_Carrot | 당근 | 채소 -> 잼 가능 |
-| SO_Recipe_Jam_Tomato | 토마토 | 과채겸용 -> 잼 가능 |
-| SO_Recipe_Jam_Corn | 옥수수 | 채소 -> 잼 가능 |
-| SO_Recipe_Jam_Strawberry | 딸기 | 과일 -> 잼 가능 |
-| SO_Recipe_Jam_Pumpkin | 호박 | 채소 -> 잼 가능 |
-| SO_Recipe_Jam_Watermelon | 수박 | 과일 -> 잼 가능 |
-| SO_Recipe_Juice_Tomato | 토마토 | 과채겸용 -> 주스 가능 |
-| SO_Recipe_Juice_Strawberry | 딸기 | 과일 -> 주스 가능 |
-| SO_Recipe_Juice_Watermelon | 수박 | 과일 -> 주스 가능 |
-| SO_Recipe_Pickle_Potato | 감자 | 채소 -> 절임 가능 |
-| SO_Recipe_Pickle_Carrot | 당근 | 채소 -> 절임 가능 |
-| SO_Recipe_Pickle_Tomato | 토마토 | 과채겸용 -> 절임 가능 |
-| SO_Recipe_Pickle_Corn | 옥수수 | 채소 -> 절임 가능 |
-| SO_Recipe_Pickle_Pumpkin | 호박 | 채소 -> 절임 가능 |
+총 32개 레시피 에셋 (가공소 18종 + 제분소 4종 + 발효실 5종 + 베이커리 5종). 에셋명 패턴: `SO_Recipe_<Type>_<Crop>`. 해바라기는 Special 카테고리로 가공 불가.
 
-총 15개 레시피. 해바라기는 Special 카테고리로 가공 불가.
+[OPEN] 가공 레시피를 작물별 개별 에셋으로 할지, ProcessingType별 에셋(3개)으로 만들고 입력 카테고리로 필터할지. 개별 에셋이면 작물별 커스텀 아이콘/이름이 가능하지만 에셋 수가 많아진다. 현재는 개별 에셋 방식 채택.
 
 [OPEN] 가공 레시피를 작물별 개별 에셋으로 할지, ProcessingType별 에셋(3개)으로 만들고 입력 카테고리로 필터할지. 개별 에셋이면 작물별 커스텀 아이콘/이름이 가능하지만 에셋 수가 많아진다. 현재는 개별 에셋 방식 채택.
 
@@ -616,12 +611,16 @@ SO_Tool_Hoe_Legendary    (tier=3, nextTier=null)
 ```json
 [
   {
+    "processorBuildingId": "building_processing_0",
     "slotIndex": 0,
     "recipeId": "jam_potato",
     "inputCropId": "potato",
     "inputQuantity": 1,
     "remainingHours": 2.5,
-    "totalHours": 4.0
+    "totalHours": 4.0,
+    "slotState": 1,
+    "outputItemId": "",
+    "outputQuantity": 0
   }
 ]
 ```
@@ -1245,12 +1244,17 @@ namespace SeedMind.Economy
     [System.Serializable]
     public class ProcessingSaveData
     {
+        public string processorBuildingId;    // 가공소 BuildingInstance의 식별자
         public int slotIndex;                 // 가공 슬롯 인덱스
         public string recipeId;               // ProcessingRecipeData.dataId 참조
         public string inputCropId;            // 입력 작물 ID
         public int inputQuantity;             // 입력 수량
         public float remainingHours;          // 남은 시간 (게임 내 시간)
         public float totalHours;              // 총 소요 시간
+        public int slotState;                 // ProcessingSlot.SlotState의 int 캐스팅
+        public string outputItemId;           // 출력 아이템 ID (Completed 상태에서만 유효)
+        public int outputQuantity;            // 출력 수량
+        // (-> see docs/systems/processing-architecture.md 섹션 5.1 for canonical 필드 정의)
     }
 }
 ```

@@ -107,11 +107,13 @@ Assets/_Project/                    # (→ see docs/systems/project-structure.md
 │       ├── HUDController.cs     # 메인 HUD
 │       ├── InventoryUI.cs       # 인벤토리 UI
 │       ├── ShopUI.cs            # 상점 UI
-│       └── DialogueUI.cs        # 대화/알림 UI
+│       ├── DialogueUI.cs        # 대화/알림 UI
+│       └── ProcessingUI.cs     # 가공소 UI (→ see docs/systems/processing-architecture.md)
 │
 ├── Data/                        # ScriptableObject 데이터
 │   ├── Crops/                   # 작물별 데이터 에셋
 │   ├── Buildings/               # 시설별 데이터 에셋
+│   ├── Recipes/                 # 가공 레시피 데이터 에셋 (→ see docs/systems/processing-architecture.md)
 │   ├── Tools/                   # 도구별 데이터 에셋
 │   ├── NPCs/                    # NPC 데이터 에셋
 │   └── Dialogues/               # 대화 데이터 에셋
@@ -282,6 +284,8 @@ Release Build (최적화)
 - `docs/systems/tutorial-architecture.md` — 튜토리얼/온보딩 시스템 기술 아키텍처: 튜토리얼 매니저/트리거/UI/상황별 힌트 (DES-006)
 - `docs/systems/save-load-architecture.md` — 세이브/로드 시스템 기술 아키텍처: SaveManager, GameSaveData 통합 루트, 자동저장 트리거, 비동기 API, 오류 처리 (ARC-011)
 - `docs/systems/save-load-system.md` — 세이브/로드 UX 설계: 자동저장 트리거, 수동 저장, 멀티슬롯 구조, 게임 종료/시작 흐름 (DES-008)
+- `docs/content/processing-system.md` — 가공/요리 시스템 콘텐츠: 레시피 32종 canonical, 특화 가공소 3종(제분소/발효실/베이커리), 연료 시스템, 가공품 퀄리티 (CON-005)
+- `docs/systems/processing-architecture.md` — 가공/요리 시스템 기술 아키텍처: ProcessingSystem, RecipeData, 가공 큐/슬롯, 이벤트/저장 (ARC-012)
 
 ## Open Questions
 

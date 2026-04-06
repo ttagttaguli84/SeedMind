@@ -90,6 +90,7 @@
 
 **항상 판매 품목**:
 - 기본 비료 (Basic Fertilizer) — 가격: (-> see `docs/systems/farming-system.md` 섹션 5.1)
+- 장작 (Firewood, `item_firewood`) — 구매가: 30G (베이커리 연료, -> see `docs/content/processing-system.md` 섹션 4.2)
 
 **계절별 씨앗 판매** (해당 계절에만 판매):
 
