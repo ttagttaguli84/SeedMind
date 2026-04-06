@@ -202,6 +202,8 @@
 - `docs/systems/farming-system.md` — 경작 시스템 상세 설계
 - `docs/systems/farming-architecture.md` — 경작 시스템 기술 아키텍처
 - `docs/systems/project-structure.md` — Unity 프로젝트 구조 상세
+- `docs/content/facilities.md` — 시설 콘텐츠 상세 (섹션 4.6의 시설 기본값 상세화, CON-002)
+- `docs/systems/facilities-architecture.md` — 시설 시스템 기술 아키텍처 (ARC-007)
 - `docs/systems/inventory-system.md` — 인벤토리/아이템 시스템 상세 설계
 - `docs/systems/crop-growth.md` — 작물 성장 시스템 상세 설계 (DES-002)
 - `docs/systems/time-season.md` — 시간/계절/날씨 시스템 상세 설계 (DES-003)
