@@ -74,6 +74,14 @@ Assets/_Project/                    # (→ see docs/systems/project-structure.md
 │   │       ├── Storage.cs
 │   │       └── Processor.cs
 │   │
+│   ├── Level/                   # 진행 시스템 (→ see docs/systems/progression-architecture.md)
+│   │   ├── ProgressionManager.cs # XP/레벨/해금/마일스톤 관리
+│   │   ├── UnlockRegistry.cs    # 해금 상태 관리
+│   │   ├── MilestoneTracker.cs  # 마일스톤 추적
+│   │   └── Data/
+│   │       ├── ProgressionData.cs # 진행 설정 SO
+│   │       └── MilestoneData.cs   # 마일스톤 데이터
+│   │
 │   └── UI/                      # UI 시스템
 │       ├── HUDController.cs     # 메인 HUD
 │       ├── InventoryUI.cs       # 인벤토리 UI
@@ -242,6 +250,8 @@ Release Build (최적화)
 - `docs/mcp/farming-tasks.md` — 농장 그리드 MCP 태스크 시퀀스 (ARC-003)
 - `docs/pipeline/data-pipeline.md` — 데이터 파이프라인 설계: SO 구조, 세이브/로드, JSON 스키마 (ARC-004)
 - `docs/balance/crop-economy.md` — 작물 경제 밸런스 시트: ROI, 시뮬레이션, 조정 제안 (BAL-001)
+- `docs/systems/progression-architecture.md` — 진행 시스템 기술 아키텍처: XP/레벨/해금/마일스톤 (BAL-002)
+- `docs/mcp/progression-tasks.md` — 진행 시스템 MCP 태스크 시퀀스 (BAL-002-MCP)
 
 ## Open Questions
 

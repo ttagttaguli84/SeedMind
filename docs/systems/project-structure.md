@@ -62,13 +62,23 @@ Assets/
 │   │   │       ├── Storage.cs
 │   │   │       └── Processor.cs
 │   │   │
-│   │   ├── Level/                     # 레벨/경험치 시스템
-│   │   │   ├── LevelSystem.cs
+│   │   ├── Level/                     # 진행 시스템 (→ see docs/systems/progression-architecture.md)
+│   │   │   ├── ProgressionManager.cs  # XP/레벨/해금/마일스톤 관리 (LevelSystem.cs 대체)
+│   │   │   ├── UnlockRegistry.cs      # 해금 상태 관리
+│   │   │   ├── MilestoneTracker.cs    # 마일스톤 추적
+│   │   │   ├── XPSource.cs            # enum
+│   │   │   ├── UnlockType.cs          # enum
+│   │   │   ├── MilestoneConditionType.cs # enum
+│   │   │   ├── ProgressionEvents.cs   # ExpGainInfo, LevelUpInfo, UnlockInfo
 │   │   │   └── Data/
-│   │   │       └── LevelConfig.cs
+│   │   │       ├── ProgressionData.cs # 진행 설정 SO (LevelConfig.cs 대체)
+│   │   │       ├── LevelUnlockEntry.cs
+│   │   │       ├── MilestoneData.cs
+│   │   │       └── MilestoneReward.cs
 │   │   │
 │   │   └── UI/                        # UI 시스템
 │   │       ├── HUDController.cs
+│   │       ├── LevelBarUI.cs          # 레벨/경험치 바 UI (SeedMind.UI, → see docs/systems/progression-architecture.md 섹션 7.2)
 │   │       ├── InventoryUI.cs
 │   │       ├── ShopUI.cs
 │   │       └── DialogueUI.cs
@@ -78,7 +88,7 @@ Assets/
 │   │   ├── Fertilizers/               # SO_Fert_Basic.asset 등
 │   │   ├── Tools/                     # SO_Tool_Hoe_T1.asset 등
 │   │   ├── Buildings/                 # SO_Bldg_WaterTank.asset 등
-│   │   └── Config/                    # SO_LevelConfig.asset, SO_TimeConfig.asset 등
+│   │   └── Config/                    # SO_ProgressionData.asset (SO_LevelConfig.asset 대체), SO_TimeConfig.asset 등
 │   │
 │   ├── Prefabs/
 │   │   ├── Player/                    # PFB_Player.prefab
