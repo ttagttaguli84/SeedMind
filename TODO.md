@@ -56,18 +56,21 @@
 | ~~CON-007~~ | ~~2~~ | ~~업적 콘텐츠 상세 (전체 업적 30종 목록, 단계별 목표 수치, 보상 테이블 → docs/content/achievements.md)~~ — DONE → `docs/content/achievements.md` |
 | ~~BAL-006~~ | ~~2~~ | ~~퀘스트/미션 보상 밸런스 분석 (계절 목표 골드/경험치 보상 ROI 검증 → docs/balance/quest-rewards.md)~~ — DONE → `docs/balance/quest-rewards.md` (XP 인플레이션 198.5%, 골드 149.4% 초과 확인, 제안 A+C 권장) |
 | ~~BAL-007~~ | ~~3~~ | ~~XP 통합 재조정 — 수확/경작 + 퀘스트 + 업적 XP 합산 시뮬레이션, progression-curve.md XP 테이블 재검토 (BAL-006 후속)~~ — DONE → `docs/balance/xp-integration.md` (제안 A': 퀘스트 900 XP, 업적 유지, 1년차 일반 레벨 8 목표 확정) + `docs/balance/bal-007-architecture-analysis.md` |
-| FIX-012 | 3 | quest-system.md 섹션 3~6 퀘스트 XP 수치 재확정 (BAL-007 제안 A' 적용 — 카테고리 총량: 메인 280, NPC 140, 일일 280, 도전 200, 합계 900 XP) |
-| FIX-013 | 3 | progression-curve.md 섹션 1.2에 퀘스트/업적 XP 배분 카테고리 추가 (수확 55%, 경작 15%, 시설 12%, 가공 3%, 퀘스트 10%, 업적 5%) |
-| FIX-014 | 2 | progression-curve.md 섹션 1.3.1에 [DEPRECATED] 태그 추가, 섹션 2.4.1을 canonical XP 테이블로 확정 명시 |
-| FIX-015 | 2 | progression-curve.md 섹션 2.4에 퀘스트/업적 XP 포함 통합 시뮬레이션 섹션 추가 (BAL-007 섹션 3.2 시나리오 A' 기준) |
-| FIX-016 | 2 | quest-rewards.md (BAL-006) 섹션 3.1~3.2 기준 XP 4,609→9,029 정정 및 비율 재계산 |
-| FIX-017 | 2 | achievements.md 섹션 2.4 XP 비율 재계산 (4,609 기준 49% → 9,029 기준 24.9%로 정정) + [RISK] 태그 완화 |
-| FIX-018 | 1 | quest-system.md 섹션 7.3 XP 예산 목표 비율을 "10%(~900 XP)"로 확정 업데이트 |
-| FIX-019 | 2 | progression-architecture.md 섹션 2.2 XPSource enum에 QuestComplete/AchievementReward 추가 |
-| FIX-020 | 2 | progression-architecture.md 섹션 2.3 GetExpForSource() switch문에 QuestComplete/AchievementReward case 추가 |
-| FIX-021 | 1 | progression-architecture.md 섹션 1 클래스 다이어그램에 QuestEvents/AchievementEvents 구독 명시 |
-| FIX-022 | 1 | quest-architecture.md GrantXP 메서드를 AddExp(amount, XPSource.QuestComplete) 호출로 명시 |
-| FIX-023 | 1 | achievement-architecture.md GrantReward 흐름을 ProgressionManager.AddExp(xp, XPSource.AchievementReward) 호출로 명시 |
+| ~~FIX-012~~ | ~~3~~ | ~~quest-system.md 섹션 3~6 퀘스트 XP 수치 재확정 (BAL-007 제안 A' 적용 — 카테고리 총량: 메인 280, NPC 140, 일일 280, 도전 200, 합계 900 XP)~~ — DONE: quest-system.md 섹션 3~6 모든 XP 수치 BAL-007 A' 기준으로 확정됨 |
+| ~~FIX-013~~ | ~~3~~ | ~~progression-curve.md 섹션 1.2에 퀘스트/업적 XP 배분 카테고리 추가 (수확 55%, 경작 15%, 시설 12%, 가공 3%, 퀘스트 10%, 업적 5%)~~ — DONE: progression-curve.md 섹션 1.2 배분 요약표 추가됨 |
+| ~~FIX-014~~ | ~~2~~ | ~~progression-curve.md 섹션 1.3.1에 [DEPRECATED] 태그 추가, 섹션 2.4.1을 canonical XP 테이블로 확정 명시~~ — DONE: [DEPRECATED] 태그 및 참조 추가됨 |
+| ~~FIX-015~~ | ~~2~~ | ~~progression-curve.md 섹션 2.4에 퀘스트/업적 XP 포함 통합 시뮬레이션 섹션 추가 (BAL-007 섹션 3.2 시나리오 A' 기준)~~ — DONE: 섹션 2.4.4 통합 시뮬레이션 추가됨 |
+| ~~FIX-016~~ | ~~2~~ | ~~quest-rewards.md (BAL-006) 섹션 3.1~3.2 기준 XP 4,609→9,029 정정 및 비율 재계산~~ — DONE: 섹션 3.1 기준 XP 9,029로 정정, [수정-BAL-007] 태그 추가됨 |
+| ~~FIX-017~~ | ~~2~~ | ~~achievements.md 섹션 2.4 XP 비율 재계산 (4,609 기준 49% → 9,029 기준 24.9%로 정정) + [RISK] 태그 완화~~ — DONE: 24.9%로 정정, [NOTE]로 변경됨 |
+| ~~FIX-018~~ | ~~1~~ | ~~quest-system.md 섹션 7.3 XP 예산 목표 비율을 "10%(~900 XP)"로 확정 업데이트~~ — DONE: 섹션 7.3 확정됨 |
+| ~~FIX-019~~ | ~~2~~ | ~~progression-architecture.md 섹션 2.2 XPSource enum에 QuestComplete/AchievementReward 추가~~ — DONE: 추가됨 |
+| ~~FIX-020~~ | ~~2~~ | ~~progression-architecture.md 섹션 2.3 GetExpForSource() switch문에 QuestComplete/AchievementReward case 추가~~ — DONE: 추가됨 |
+| ~~FIX-021~~ | ~~1~~ | ~~progression-architecture.md 섹션 1 클래스 다이어그램에 QuestEvents/AchievementEvents 구독 명시~~ — DONE: 추가됨 |
+| ~~FIX-022~~ | ~~1~~ | ~~quest-architecture.md GrantXP 메서드를 AddExp(amount, XPSource.QuestComplete) 호출로 명시~~ — DONE: 추가됨 |
+| ~~FIX-023~~ | ~~1~~ | ~~achievement-architecture.md GrantReward 흐름을 ProgressionManager.AddExp(xp, XPSource.AchievementReward) 호출로 명시~~ — DONE: 추가됨 |
+| REV-001 | 3 | quest-rewards.md 섹션 2.4 농장 도전 XP 집계를 BAL-007 A' 적용 후 값으로 재계산 (현행 ~4,400 XP 대폭 삭감 필요) |
+| REV-002 | 2 | quest-rewards.md 섹션 2.5 전체 퀘스트 보상 총계 XP 재산정 (현행 9,147 XP → BAL-007 A' 기준 ~900 XP 반영) |
+| REV-003 | 2 | quest-rewards.md 섹션 6.2 제안 A 설명을 A'(900 XP) 기준으로 업데이트 (현행 692 XP 기준) |
 | ~~FIX-010~~ | ~~2~~ | ~~save-load-architecture.md GameSaveData 루트에 `achievements: AchievementSaveData` 필드 추가 (ARC-017 리뷰 후속 — PATTERN-005)~~ — DONE: 트리/JSON/C# 3곳 업데이트, 필드 수 16→17, SaveLoadOrder 90 할당표 추가 |
 | ~~FIX-011~~ | ~~2~~ | ~~achievement-architecture.md AchievementConditionType에 PurchaseCount 전용 타입 추가 검토 (Explorer 업적 ach_explorer_02/04 conditionType 불일치 해소 — ARC-017 리뷰 [OPEN])~~ — DONE: PurchaseCount=14 추가, EconomyEvents.OnShopPurchased 이벤트 구독 추가, achievements.md conditionType 수정 |
 | ~~FIX-005~~ | ~~2~~ | ~~facilities.md에 특화 가공소 3종(제분소·발효실·베이커리) 건설 요건·업그레이드 경로 추가 (design.md 4.6 반영 후속)~~ — DONE → `docs/content/facilities.md` 섹션 7~9 |
