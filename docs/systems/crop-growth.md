@@ -255,13 +255,15 @@ farming-system.md 섹션 6.1에서 정의한 보너스를 배수로 환산:
 | 계절 보정 (해당 계절) | x1.0 (보정 없음) |
 | 계절 보정 (비계절 작물) | 성장 x0.85, 품질 x0.9 (-> see `docs/content/facilities.md` 섹션 4.3 for canonical) |
 | 계절 보정 (겨울 전용 작물) | x1.0 (패널티 없음, 온실이 본래 환경) |
+| 판매가 보정 (비계절 작물) | x0.8 (-> see `docs/systems/economy-system.md` 섹션 2.6.5) |
+| 판매가 보정 (겨울 전용 작물, 겨울 온실) | 시너지 x1.2 (-> see `docs/systems/economy-system.md` 섹션 2.6.5) |
 | 물주기 | 수동으로 물을 줘야 함 (비 효과 없음) |
 | 토양 | 온실 내부 토양은 Normal에서 시작, 일반 토양 규칙 동일 적용 |
 | 크기 | 온실 내부 경작 가능 면적: 4x4 (16타일) |
 
 **온실의 트레이드오프**:
-- 장점: 겨울에도 재배 가능, 폭풍 피해 없음, 비계절 작물도 재배 가능 (단, 소폭 패널티)
-- 단점: 비 자동 물주기 없음 (매일 수동 물주기 필요), 면적 제한, 높은 건설 비용, 비계절 작물 성장 15% 감속
+- 장점: 겨울에도 재배 가능, 폭풍 피해 없음, 비계절 작물도 재배 가능 (단, 소폭 패널티), 겨울 전용 작물은 시너지 판매가 x1.2
+- 단점: 비 자동 물주기 없음 (매일 수동 물주기 필요), 면적 제한, 높은 건설 비용, 비계절 작물 성장 15% 감속 + 판매가 x0.8
 
 ---
 
@@ -288,6 +290,7 @@ farming-system.md 섹션 6.1에서 정의한 보너스를 배수로 환산:
 | 작물 | 재수확 간격 | 최대 수확 횟수 | 비고 |
 |------|-----------|--------------|------|
 | 딸기 | 3일 | 계절 내 무제한 | 봄 동안 계속 수확 가능 |
+| 표고버섯 | 5일 | 계절 내 무제한 | 온실(겨울) 전용, 첫 수확 6일 후 시작 (-> see `docs/content/crops.md` 섹션 3.10) |
 
 **다중 수확 작물 흐름**:
 ```
@@ -539,6 +542,7 @@ farming-system.md 섹션 6.1에서 정의한 보너스를 배수로 환산:
 | `stormDamageChance` | 0.10 | 폭풍 피해 확률 (-> see farming-system.md) |
 | `witherThresholdDays` | 3 | 연속 건조 → 고사 일수 (-> see farming-system.md) |
 | `regrowthDays_Strawberry` | 3 | 딸기 재수확 간격 |
+| `regrowthDays_Shiitake` | 5 | 표고버섯 재수확 간격 (-> see `docs/content/crops.md` 섹션 3.10) |
 | `qualityRandomRange` | 0.3 | 품질 결정 랜덤 범위 (-> see farming-system.md) |
 | `growthParticleDuration` | 0.5 | 성장 파티클 지속 시간 (초) |
 | `harvestPopScale` | 1.3 | 수확 시 팝 애니메이션 최대 스케일 |

@@ -95,9 +95,13 @@
 | ~~FIX-028~~ | ~~2~~ | ~~blacksmith-architecture.md Part II Step A-4에 추가된 4개 메서드(HasTriggeredDialogue 등)의 AffinitySaveData 필드(triggeredDialogueIds, dailyVisitDates) 스키마 확장 검토 (save-load-architecture.md AffinityEntry 동기화 여부 — CRITICAL-5 후속)~~ — DONE: blacksmith-tasks.md AffinityEntry/NPCAffinityTracker 동기화, _lastVisitDayMap/_triggeredDialogueMap 다이어그램 추가, dailyVisitDates 불필요 결정 명시 |
 | BAL-009 | 1 | 도구 업그레이드 XP 밸런스 분석 (ToolUpgrade XPSource 추가 후 — progression-curve.md toolUpgradeExp 수치 결정) |
 | ~~BAL-010~~ | ~~2~~ | ~~겨울 전용 작물 온실 경쟁력 조정 (B-09 후속 — 제안 E 비주 계절 온실 페널티 또는 겨울 전용 작물 시너지 보너스 설계 확정, crop-growth.md/economy-system.md 반영)~~ — DONE → `docs/balance/crop-economy.md` 섹션 4.3.10 (제안 E x0.8 + 시너지 x1.2 + 제안 F + B-11 확정) |
-| FIX-029 | 3 | crop-growth.md 섹션 3.3 온실 규칙 테이블에 "비주 계절 판매가 x0.8" 및 "겨울 전용 작물 시너지 판매가 x1.2" 행 추가 (BAL-010 후속) |
+| ~~FIX-029~~ | ~~3~~ | ~~crop-growth.md 섹션 3.3 온실 규칙 테이블에 "비주 계절 판매가 x0.8" 및 "겨울 전용 작물 시너지 판매가 x1.2" 행 추가 (BAL-010 후속)~~ — DONE: crop-growth.md 섹션 3.3 두 행 추가 + 트레이드오프 업데이트 + 섹션 4.2 표고버섯 재수확 5일 + 섹션 8 파라미터 추가 |
 | ~~FIX-030~~ | ~~3~~ | ~~economy-system.md 판매가 계산 공식에 온실 비주 계절 페널티(x0.8) 및 겨울 전용 시너지(x1.2) 배수 반영 (BAL-010 후속)~~ — DONE: economy-system.md 섹션 2.6.5~2.6.6 확정 반영 (리뷰어 수정) |
-| FIX-031 | 2 | crops.md 섹션 3.10 표고버섯 재수확 간격 4일 -> 5일 변경 (BAL-010 제안 F 확정) |
-| FIX-032 | 2 | crops.md 섹션 3.9 겨울무 씨앗 가격 20G -> 23G 변경 (BAL-010 B-11 확정) |
-| FIX-033 | 2 | design.md 섹션 4.2 겨울 작물 canonical 테이블에 표고버섯 재수확 5일, 겨울무 씨앗 23G 반영 (BAL-010 후속) |
+| ~~FIX-031~~ | ~~2~~ | ~~crops.md 섹션 3.10 표고버섯 재수확 간격 4일 -> 5일 변경 (BAL-010 제안 F 확정)~~ — DONE: crops.md 섹션 3.10 + 4.1 + 6 모두 5일로 업데이트, ROI 재계산 |
+| ~~FIX-032~~ | ~~2~~ | ~~crops.md 섹션 3.9 겨울무 씨앗 가격 20G -> 23G 변경 (BAL-010 B-11 확정)~~ — DONE: crops.md 섹션 3.9 + 6 업데이트, ROI 재계산 |
+| ~~FIX-033~~ | ~~2~~ | ~~design.md 섹션 4.2 겨울 작물 canonical 테이블에 표고버섯 재수확 5일, 겨울무 씨앗 23G 반영 (BAL-010 후속)~~ — DONE: design.md는 "→ see crops.md 섹션 3.9~3.11" 참조 방식으로 유지 (canonical 규칙 준수). crops.md 섹션 6 요약표 및 주석 업데이트. crop-economy.md CRITICAL/WARNING 수정 포함. |
 | ~~FIX-025~~ | ~~2~~ | ~~tutorial-tasks.md Step 07/11 이벤트명 확정 (TimeEvents.OnSleepExecuted, 구매 완료 이벤트 — ARC-010 리뷰 WARNING 후속)~~ — DONE: S07→TimeManager.OnSleepCompleted, S11→EconomyEvents.OnShopPurchased 확정; economy-architecture.md 이벤트 표 보완 |
+| PATTERN-009 | - | [self-improve 전용] 밸런스 문서에서 결정 이전 분석 섹션 수치가 결정 이후에도 갱신되지 않아 구/신 수치 혼재 발생 (crop-economy.md 섹션 4.3.2~4.3.8 vs 4.3.10에서 5건 식별 — 수확 6회/4일 vs 5회/5일 불일치) → 결정 이전 섹션에 "(히스토리 — BAL-XXX 이전 분석)" 배너 의무 표기 규칙 추가 필요 |
+| FIX-034 | 2 | economy-architecture.md HarvestOrigin enum 설계 (온실 수확물 출처 추적 — BAL-010 아키텍트 분석 [RISK] 후속, devlog 043 언급) |
+| ARC-023 | 2 | 농장 확장 시스템 기술 아키텍처 (FarmZoneManager, ZoneData SO, 타일 구매 흐름 — DES-012 후속) |
+| ARC-024 | 1 | 목축/낙농 시스템 MCP 태스크 시퀀스 (AnimalManager/AnimalData 구현 시퀀스 독립 문서화 — ARC-019 후속) |
