@@ -46,7 +46,7 @@ BuildingData의 필드 정의는 `docs/pipeline/data-pipeline.md` 섹션 2.4가 
 
 ```json
 {
-  "dataId": "water_tank",
+  "dataId": "building_water_tank",
   "displayName": "물탱크",
   "description": "인접 경작지에 매일 아침 자동으로 물을 준다.",
   "icon": null,
@@ -72,7 +72,7 @@ BuildingData의 필드 정의는 `docs/pipeline/data-pipeline.md` 섹션 2.4가 
 
 ```json
 {
-  "dataId": "greenhouse",
+  "dataId": "building_greenhouse",
   "displayName": "온실",
   "description": "계절에 관계없이 모든 작물을 재배할 수 있다.",
   "icon": null,
@@ -97,7 +97,7 @@ BuildingData의 필드 정의는 `docs/pipeline/data-pipeline.md` 섹션 2.4가 
 
 ```json
 {
-  "dataId": "storage",
+  "dataId": "building_storage",
   "displayName": "창고",
   "description": "작물을 저장하여 가격 변동에 대응할 수 있다.",
   "icon": null,
@@ -122,7 +122,7 @@ BuildingData의 필드 정의는 `docs/pipeline/data-pipeline.md` 섹션 2.4가 
 
 ```json
 {
-  "dataId": "processor",
+  "dataId": "building_processing",
   "displayName": "가공소",
   "description": "작물을 가공하여 더 높은 가격에 판매할 수 있다.",
   "icon": null,
@@ -1088,7 +1088,7 @@ namespace SeedMind.Building
 
 ## Phase A: 시설 데이터 파이프라인 (ScriptableObject 생성)
 
-**목표**: BuildingData SO 4개 + ProcessingRecipeData SO 18개를 MCP로 생성 (잼7+주스3+절임5+겨울3, -> see `docs/content/facilities.md` 섹션 6.3).
+**목표**: BuildingData SO **7개** + ProcessingRecipeData SO 32개를 MCP로 생성 (-> see `docs/content/processing-system.md` for 레시피 목록).
 
 **MCP 명령 패턴**:
 
@@ -1102,16 +1102,23 @@ Step A-4: Create Script "ProcessingRecipeData.cs" in Scripts/Building/Data/
 Step A-5: Create Script "ProcessingType.cs" (enum) in Scripts/Building/Data/
 Step A-6: Unity 컴파일 대기 → 에러 확인
 Step A-7: Create SO asset "SO_Bldg_WaterTank" in Data/Buildings/
-          → 필드값: (→ see docs/pipeline/data-pipeline.md 섹션 2.4)
+          → dataId: "building_water_tank", 필드값: (→ see docs/design.md 섹션 4.6 + docs/content/facilities.md)
 Step A-8: Create SO asset "SO_Bldg_Greenhouse" in Data/Buildings/
-          → 필드값: (→ see docs/pipeline/data-pipeline.md 섹션 2.4)
+          → dataId: "building_greenhouse", 필드값: (→ see docs/design.md 섹션 4.6 + docs/content/facilities.md)
 Step A-9: Create SO asset "SO_Bldg_Storage" in Data/Buildings/
-          → 필드값: (→ see docs/pipeline/data-pipeline.md 섹션 2.4)
+          → dataId: "building_storage", 필드값: (→ see docs/design.md 섹션 4.6 + docs/content/facilities.md)
 Step A-10: Create SO asset "SO_Bldg_Processor" in Data/Buildings/
-           → 필드값: (→ see docs/pipeline/data-pipeline.md 섹션 2.4)
-Step A-11~A-28: Create SO asset "SO_Recipe_*" (18개) in Data/Buildings/Recipes/
-           → 레시피 목록: (→ see docs/content/facilities.md 섹션 6.3)
+           → dataId: "building_processing", 필드값: (→ see docs/design.md 섹션 4.6 + docs/content/facilities.md)
+Step A-11: Create SO asset "SO_Bldg_Mill" in Data/Buildings/
+           → dataId: "building_mill", 필드값: (→ see docs/design.md 섹션 4.6 + docs/content/facilities.md 섹션 7)
+Step A-12: Create SO asset "SO_Bldg_Fermentation" in Data/Buildings/
+           → dataId: "building_fermentation", 필드값: (→ see docs/design.md 섹션 4.6 + docs/content/facilities.md 섹션 8)
+Step A-13: Create SO asset "SO_Bldg_Bakery" in Data/Buildings/
+           → dataId: "building_bakery", 필드값: (→ see docs/design.md 섹션 4.6 + docs/content/facilities.md 섹션 9)
+Step A-14~A-45: Create SO asset "SO_Recipe_*" (32개) in Data/Buildings/Recipes/
+           → 레시피 목록: (→ see docs/content/processing-system.md)
            → 필드값 공식: (→ see docs/pipeline/data-pipeline.md 섹션 2.5)
+           → Editor 스크립트(CreateAllRecipes.cs) 일괄 생성 강력 권장 (32종 x ~16회 = ~512회 절감)
 ```
 
 **검증 기준**:
