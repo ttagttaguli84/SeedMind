@@ -825,9 +825,9 @@ namespace SeedMind
 }
 ```
 
-**경제 시스템 연동**: 동물 생산물 판매 시 `HarvestOrigin.Barn`을 전달한다. 가격 보정 계수 적용 여부는 경제 시스템 설계에서 결정한다.
+**경제 시스템 연동**: 동물 생산물 판매 시 `HarvestOrigin.Barn`을 전달한다. 수급 변동은 `SupplyCategory.AnimalProduct` 카테고리로 완화 적용된다 (supplyDropRate 0.008, saturationThreshold 35, minSupplyMultiplier 0.85). 온실 보정(`GetGreenhouseMultiplier`)은 Barn origin에 대해 1.0을 반환하여 적용하지 않는다.
 
-[OPEN] Barn origin에 대한 가격 보정 정책. 야외 작물과 동일한 기본 가격을 적용할지, 동물 생산물 전용 가격 체계를 사용할지는 경제 밸런스(BAL) 문서에서 확정 필요.
+[RESOLVED-FIX-044] Barn origin 가격 보정 정책이 확정되었다. 동물 생산물은 `SupplyCategory.AnimalProduct`로 별도 수급 풀을 사용하며, 작물 대비 60% 낮은 하락 계수를 적용한다. 온실 보정은 적용 대상 외. (-> see `docs/systems/economy-system.md` 섹션 2.6.2.1, 7.3)
 
 **파급 문서**: `docs/systems/economy-architecture.md` 섹션 3.10.2에 `Barn = 2` 추가, `GetGreenhouseMultiplier()` switch 문에 `Barn` case 추가 필요.
 

@@ -327,6 +327,8 @@ Giant 변이가 가능한 어종: 잉어, 산천어, 황금 잉어, 무지개송
 
 모든 생선은 출하함 또는 상점에 판매 가능하다. 가격은 섹션 4.2의 기본 판매가를 따르며, 경제 시스템의 마진 비율(-> see `docs/systems/economy-system.md` 섹션 2.1)은 적용되지 않는다 (생선은 상점에서 구매하는 아이템이 아니므로).
 
+**수급 변동**: 생선은 `SupplyCategory.Fish` 카테고리로 완화된 수급 변동이 적용된다 (saturationThreshold 30, supplyDropRate 0.01, minSupplyMultiplier 0.8). 주당 30마리 이하 판매 시 수급 영향 없음 (-> see `docs/systems/economy-system.md` 섹션 2.6.2.1).
+
 **품질 시스템 적용**: 생선에도 작물과 동일한 4단계 품질을 적용한다(-> see `docs/systems/crop-growth.md` 섹션 4.3 — Normal/Silver/Gold/Iridium). 아키텍처 문서(ARC-026)의 FishingConfig.qualityThresholds도 4단계 기준.
 
 | 품질 | 영문 키 | 판매가 배수 | 결정 조건 |
@@ -600,7 +602,7 @@ Giant 변이가 가능한 어종: 잉어, 산천어, 황금 잉어, 무지개송
 |-----------|-----------|
 | `docs/systems/farm-expansion.md` 섹션 1.3, 2.1, 4.3 | Zone F 정의, 해금 조건, 연못 구역 상세 |
 | `docs/systems/time-season.md` 섹션 1.2, 3.1~3.2 | 시간대 정의, 날씨 종류/확률 |
-| `docs/systems/economy-system.md` 섹션 1~2 | 경제 수치, 판매가 공식 |
+| `docs/systems/economy-system.md` 섹션 1~2, 2.6.2.1, 7.3 | 경제 수치, 판매가 공식, Fish 수급 카테고리 파라미터 |
 | `docs/systems/farming-system.md` 섹션 3.2 | 에너지 시스템 |
 | `docs/systems/crop-growth.md` 섹션 5.1, 6 | Giant 변이 참조, 품질 시스템 |
 | `docs/systems/tool-upgrade.md` | 도구 업그레이드 3단계 구조 참조 |

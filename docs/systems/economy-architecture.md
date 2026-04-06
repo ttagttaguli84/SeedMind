@@ -73,7 +73,7 @@
 │ (아래 1.2 참조)        │     │  maxGold: 999999             │
 │                        │     │  sellPriceFloor: 0.5f        │
 │                        │     │  sellPriceCeiling: 2.0f      │
-│                        │     │  supplyDecayRate: 0.1f       │
+│                        │     │  categorySupplyParams[4]     │
 │                        │     │  transactionLogCapacity: 200 │
 └────────────────────────┘     └──────────────────────────────┘
          │ uses
@@ -135,7 +135,7 @@
 │  + AddEntry(Transaction tx): void                            │
 │  + GetEntriesByDay(int day): List<Transaction>               │
 │  + GetEntriesBySeason(Season season): List<Transaction>      │
-│  + GetCropSalesCount(string cropId): int   (수급 보정 입력)    │
+│  + GetItemSalesCount(string itemId): int   (수급 보정 입력 — 품목 무관 범용) │
 │  + Clear(): void                                             │
 │  + GetSaveData(): TransactionLogSaveData                     │
 │  + LoadSaveData(TransactionLogSaveData data): void           │
@@ -184,7 +184,7 @@
 │  + MarkDirty(): void                                         │
 │  + RecalculateAllPrices(): void                              │
 │  - GetSeasonMultiplier(PriceData data, Season season): float │
-│  - GetSupplyMultiplier(string itemId): float                 │
+│  - GetSupplyMultiplier(string itemId, SupplyCategory cat): float │
 │  - GetWeatherMultiplier(PriceData data, WeatherType w): float│
 │  - GetQualityMultiplier(CropQuality quality): float          │
 │  - GetGreenhouseMultiplier(HarvestOrigin origin,             │
@@ -352,29 +352,34 @@ Pseudocode: GetSeasonMultiplier(PriceData data, Season season)
 최근 판매량에 따라 가격이 하락하는 수급 시뮬레이션이다.
 
 ```
-Pseudocode: GetSupplyMultiplier(string itemId)
+Pseudocode: GetSupplyMultiplier(string itemId, SupplyCategory category)
 
-    recentSales = TransactionLog.GetCropSalesCount(itemId)
+    // 카테고리별 수급 파라미터 조회 (→ see docs/systems/economy-system.md 섹션 7.3)
+    supplyParams = EconomyConfig.GetSupplyParams(category)
+    // supplyParams: { demandThreshold, supplyDropRate, minSupplyMultiplier }
+
+    if supplyParams.demandThreshold < 0:
+        return 1.0  // 수급 보정 면제 (ProcessedGoods 등)
+
+    recentSales = TransactionLog.GetItemSalesCount(itemId)
     // 현재 계절(28일) 내 해당 품목 총 판매 수량
 
-    if recentSales <= data.demandThreshold:
+    if recentSales <= supplyParams.demandThreshold:
         return 1.0  // 수요 충분, 보정 없음
 
-    excessRatio = (recentSales - data.demandThreshold) / data.demandThreshold
+    excessRatio = (recentSales - supplyParams.demandThreshold) / supplyParams.demandThreshold
     // 초과 판매 비율 (0.0 ~ ...)
 
-    supplyPenalty = excessRatio * economyConfig.supplyDecayRate
-    // supplyDecayRate = 0.1 이면, 수요의 2배 판매 시 penalty = 0.1
+    supplyPenalty = excessRatio * supplyParams.supplyDropRate
+    // Crop: 0.02, AnimalProduct: 0.008, Fish: 0.01 (→ see economy-system.md 섹션 7.3)
 
-    multiplier = max(0.5, 1.0 - supplyPenalty)
-    // 최저 0.5배 (기본가의 50%까지만 하락)
+    multiplier = max(supplyParams.minSupplyMultiplier, 1.0 - supplyPenalty)
+    // Crop: 최저 0.70, AnimalProduct: 최저 0.85, Fish: 최저 0.80 (→ see economy-system.md 섹션 7.3)
 
     return multiplier
 ```
 
-**demandThreshold**: PriceData SO에 정의된 품목별 수요 기준치. 한 계절 동안 이 수량 이하로 판매하면 가격 하락 없음.
-
-**supplyDecayRate**: EconomyConfig SO에 정의된 글로벌 수급 민감도 상수 (기본 0.1).
+**supplyParams**: EconomyConfig SO의 `categorySupplyParams` 배열에서 `SupplyCategory` 인덱스로 조회. 카테고리별로 demandThreshold, supplyDropRate, minSupplyMultiplier가 개별 설정된다 (-> see 섹션 3.11).
 
 **리셋 타이밍**: 계절이 바뀌면 recentSales 카운트가 리셋된다 (새 시장 사이클 시작).
 
@@ -702,6 +707,25 @@ Pseudocode: GetGreenhouseMultiplier(HarvestOrigin origin, CropData cropData, Sea
 
 [OPEN] 야생 채집(forageable) 시스템 추가 시 `HarvestOrigin.Wild` 값 필요 여부 — 현재 scope 외이므로 보류.
 
+### 3.11 동물 생산물 및 낚시 생산물 수급 정책 (FIX-044)
+
+[RESOLVED-FIX-044] 동물 생산물 수급 변동 정책: 카테고리별 별도 파라미터(옵션 B) 채택.
+
+| SupplyCategory | demandThreshold | supplyDropRate | minSupplyMultiplier | 비고 |
+|----------------|----------------|----------------|---------------------|------|
+| Crop | 20 | 0.02 | 0.70 | (-> see economy-system.md 섹션 7.3) |
+| AnimalProduct | 35 | 0.008 | 0.85 | 안정 수입 보전, 대량 생산 시 완만한 하락 (-> see economy-system.md 섹션 7.3) |
+| Fish | 30 | 0.01 | 0.80 | 중간 수급 민감도, 보조 수입 보전 (-> see economy-system.md 섹션 7.3) |
+| ProcessedGoods | -1 | -- | -- | 수급 보정 면제 (가공 투자 동기 보전) |
+
+**설계 근거**: 목축은 "안정적 수입원"으로 설계(BAL-008)되어 작물의 가격 변동성과 대조된다. 동물 생산물에 작물과 동일한 수급 보정을 적용하면 후기 다두 사육 시 수익이 급격히 감소하여 목축 진입 동기가 무너진다. AnimalProduct 카테고리는 민감도를 절반(supplyDropRate 0.01)으로 낮추고 최저 배수를 0.85로 제한하여 대량 생산 시에도 최소 수익성이 보장된다. ProcessedGoods(가공품)는 가공 투자 ROI 보전을 위해 수급 보정에서 완전 면제한다.
+
+**파급 영향**:
+- `EconomyConfig.categorySupplyParams` 배열에 4개 SupplyParams 원소를 MCP로 설정 (-> see 섹션 4.1)
+- `PriceData.supplyCategory` 필드를 품목별 SO에 설정 (-> see 섹션 4.2)
+- `PriceFluctuationSystem.GetSupplyMultiplier()` 시그니처에 SupplyCategory 파라미터 추가 (-> see 섹션 1.2)
+- `TransactionLog.GetItemSalesCount()` 메서드명 변경 (cropId 한정 -> itemId 범용) (-> see 섹션 1 클래스 다이어그램)
+
 ---
 
 ## 4. 데이터 구조
@@ -721,14 +745,48 @@ namespace SeedMind.Economy.Data
         [Header("가격 변동")]
         public float sellPriceFloor = 0.5f;      // 판매가 하한 배수
         public float sellPriceCeiling = 2.0f;    // 판매가 상한 배수
-        public float supplyDecayRate = 0.1f;     // 수급 민감도 상수
+        // [DEPRECATED by FIX-044] supplyDecayRate → categorySupplyParams로 대체
+        // public float supplyDecayRate = 0.1f;
 
         [Header("온실 보정 [BAL-010, RESOLVED]")]
         // 비계절 온실 작물 판매가 페널티 (전 계절 적용). → see docs/systems/economy-system.md 섹션 2.6.5
         public float greenhouseOffSeasonPenalty = 0.8f; // BAL-010 확정값 (→ see docs/balance/crop-economy.md 섹션 4.3.10)
 
+        [Header("카테고리별 수급 파라미터")]
+        // → see docs/systems/economy-system.md 섹션 7.3
+        public SupplyParams[] categorySupplyParams = new SupplyParams[4];
+        // indexed by SupplyCategory (0=Crop, 1=AnimalProduct, 2=Fish, 3=ProcessedGoods)
+
         [Header("로그")]
         public int transactionLogCapacity = 200; // 거래 로그 최대 보관 수
+
+        /// <summary>
+        /// SupplyCategory 인덱스로 수급 파라미터를 반환한다.
+        /// 배열 범위 초과 시 Crop 기본값을 반환한다.
+        /// </summary>
+        public SupplyParams GetSupplyParams(SupplyCategory category)
+        {
+            int idx = (int)category;
+            if (idx >= 0 && idx < categorySupplyParams.Length)
+                return categorySupplyParams[idx];
+            return categorySupplyParams[0]; // fallback to Crop
+        }
+    }
+
+    /// <summary>
+    /// 카테고리별 수급 보정 파라미터.
+    /// EconomyConfig.categorySupplyParams 배열의 원소로 사용된다.
+    /// → see docs/systems/economy-system.md 섹션 7.3 (canonical 수치)
+    /// </summary>
+    [System.Serializable]
+    public class SupplyParams
+    {
+        public int demandThreshold;        // 계절당 수요 기준치. -1 = 수급 보정 면제
+        // → see docs/systems/economy-system.md 섹션 7.3
+        public float supplyDropRate;       // 초과 판매 시 가격 하락률
+        // → see docs/systems/economy-system.md 섹션 7.3
+        public float minSupplyMultiplier;  // 수급 보정 최저 배수 (하한)
+        // → see docs/systems/economy-system.md 섹션 7.3
     }
 }
 ```
@@ -757,7 +815,10 @@ namespace SeedMind.Economy.Data
         // [0]=Spring, [1]=Summer, [2]=Autumn, [3]=Winter
 
         [Header("수급 설정")]
-        public int demandThreshold = 20;         // 계절당 수요 기준치
+        public SupplyCategory supplyCategory = SupplyCategory.Crop;
+        // → see docs/systems/economy-system.md 섹션 7.3
+        public int demandThreshold = 20;         // 계절당 수요 기준치 — 실제값은 EconomyConfig.categorySupplyParams에서 카테고리별 관리 (→ see economy-system.md 섹션 7.3)
+        // demandThreshold = -1 이면 수급 보정 면제
 
         [Header("품목별 오버라이드")]
         public bool isAffectedByWeather = true;  // 날씨 보정 적용 여부
@@ -771,6 +832,20 @@ namespace SeedMind.Economy.Data
         Building,   // 시설 (구매 전용)
         Fertilizer, // 비료 (구매 전용)
         Processed   // 가공품 (판매/구매)
+    }
+
+    /// <summary>
+    /// 수급 보정 카테고리. PriceData.supplyCategory에서 사용.
+    /// 카테고리별 수급 파라미터(demandThreshold, supplyDropRate, minSupplyMultiplier)는
+    /// EconomyConfig.categorySupplyParams 배열로 관리된다.
+    /// → see docs/systems/economy-system.md 섹션 7.3
+    /// </summary>
+    public enum SupplyCategory
+    {
+        Crop            = 0,  // 작물: 높은 수급 민감도
+        AnimalProduct   = 1,  // 동물 생산물: 낮은 수급 민감도 (안정 수입 보전)
+        Fish            = 2,  // 낚시 생산물: 중간 수급 민감도 (보조 수입 보전, → see economy-system.md 섹션 2.6.2.1)
+        ProcessedGoods  = 3   // 가공품: 수급 보정 면제
     }
 }
 ```
@@ -1041,7 +1116,7 @@ CircularBuffer 동작:
 
 **메모리 추정**: Transaction 1건 = ~64 bytes, 200건 = ~12.8 KB → 무시 가능
 
-**수급 보정용 카운트**: `GetCropSalesCount()`는 현재 계절 내 entries만 순회한다. 최악 200건 전체 순회해도 O(200)으로 성능 문제 없음. 빈도가 높아지면(매 프레임 호출 등) Dictionary 캐시 추가를 고려한다.
+**수급 보정용 카운트**: `GetItemSalesCount()`는 현재 계절 내 entries만 순회한다. 최악 200건 전체 순회해도 O(200)으로 성능 문제 없음. 빈도가 높아지면(매 프레임 호출 등) Dictionary 캐시 추가를 고려한다.
 
 ### 6.3 가격 조회 최적화
 
@@ -1073,7 +1148,8 @@ Step A-3: EconomyConfig SO 인스턴스 생성
           → Assets/_Project/Data/Config/SO_EconomyConfig.asset
           → startingGold=500, maxGold=999999
           → sellPriceFloor=0.5, sellPriceCeiling=2.0
-          → supplyDecayRate=0.1, transactionLogCapacity=200
+          → categorySupplyParams[4] (-> see 섹션 3.11 수급 정책 테이블)
+          → transactionLogCapacity=200
 
 Step A-4: SCN_Farm 씬의 "--- ECONOMY ---" 하위에 컴포넌트 부착
           → "EconomyManager" GameObject에 EconomyManager.cs 부착
@@ -1158,7 +1234,7 @@ Step D-3: 통합 테스트
 - [OPEN] 가공품(잼, 주스 등) 판매 시스템은 가공소(Processor) 해금 후 구현. PriceData에 PriceCategory.Processed는 미리 정의했으나, 가공품 목록 및 레시피는 미정
 - [OPEN] 상점이 복수 개(잡화점, 대장간 등)인지, 단일 통합 상점인지 미확정. 현재 설계는 ShopData SO를 교체하면 복수 상점 지원 가능
 - [OPEN] 날씨 보정 수치(0.95, 1.15, 1.1)가 적절한지 플레이테스트 전까지 검증 불가
-- [OPEN] demandThreshold의 품목별 기본값(20, 15, 12 등)이 밸런스에 적합한지 검증 필요 (-> see `docs/balance/crop-economy.md` 작성 시 확정)
+- [RESOLVED-FIX-044] demandThreshold의 카테고리별 기본값 확정: Crop=20, AnimalProduct=40, Fish=40, ProcessedGoods=-1(면제). 품목별 미세 조정은 플레이테스트 후 결정 (-> see 섹션 3.11)
 
 ---
 
@@ -1183,6 +1259,9 @@ Step D-3: 통합 테스트
 - `docs/balance/crop-economy.md` 섹션 4.3.10 (BAL-010 온실 보정 확정 수치 canonical — x0.8 페널티, x1.2 시너지)
 - `docs/systems/inventory-architecture.md` -- ItemSlot.origin 필드, AddItem/RemoveItem API (FIX-034, 섹션 3.10)
 - `docs/pipeline/data-pipeline.md` -- ItemSlotSaveData JSON/C# 스키마 (섹션 3.2~3.3, FIX-034)
+- `docs/systems/economy-system.md` 섹션 7.3 -- 카테고리별 수급 파라미터 canonical 수치 (FIX-044)
+- `docs/systems/livestock-system.md` -- 동물 생산물 수익 설계, BAL-008 안정 수입원 원칙
+- `docs/systems/fishing-system.md` -- 낚시 생산물 수급 정책 (Fish 카테고리, FIX-044)
 
 ---
 

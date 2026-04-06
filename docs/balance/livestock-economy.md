@@ -400,7 +400,7 @@ Zone E 해금 후 목축을 시작하기 위한 최소 투자 (-> see `docs/cont
 4. [OPEN] **닭장 수용 수 조정 여부**: 닭 편중 방지를 위한 수용 수 감소 (섹션 5.2 제안 2)
 5. [OPEN] **치즈 공방 해금 레벨**: 레벨 8 → 7 완화 여부 (섹션 5.2 제안 3)
 6. [OPEN] **초기 진입 비용 조정**: Zone E 또는 닭장 비용 하향 여부 (섹션 5.2 제안 4)
-7. [OPEN] **수급 변동 적용 여부**: 동물 생산물에도 대량 판매 시 가격 하락이 적용되는지. 적용 시 고정 수입 모델이 무너짐 (-> see `docs/systems/economy-system.md` 섹션 2.6)
+7. [RESOLVED-FIX-044] **수급 변동 적용 여부**: 동물 생산물은 `SupplyCategory.AnimalProduct` 카테고리로 완화된 수급 변동을 적용한다 (supplyDropRate 0.008, saturationThreshold 35, minSupplyMultiplier 0.85). 닭 4~6마리 규모에서는 실질 영향 없음, 대량 사육(8마리+)에서만 소폭 하락. 고정 수입 모델은 실질적으로 유지됨 (-> see `docs/systems/economy-system.md` 섹션 2.6.2.1)
 
 ### Risks
 

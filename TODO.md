@@ -121,7 +121,7 @@
 | FIX-056 | 3 | farm-expansion-architecture.md 섹션 5.2 도구-장애물 매핑 표에서 SmallRock/LargeRock 간 등급 기준(Basic vs Reinforced)을 farm-expansion.md 섹션 3.1과 동기화 확인 후 canonical 등록 (DES-012 섹션 3.1이 아직 미완성 — HP 수치 확정 필요) |
 | ~~DES-013~~ | ~~1~~ | ~~낚시 시스템 설계 (Zone F 연못 구역 활용 — 낚시 메카닉, 어종 목록, 계절별 분포)~~ — DONE → `docs/systems/fishing-system.md` |
 | CON-009 | 2 | 치즈 공방 레시피 정의 (processing-system.md에 치즈 공방 레시피 4~6종 확정 추가 — BAL-008 GAP-1 후속, CON-006 완료로 선행 조건 해소됨) |
-| FIX-044 | 1 | economy-architecture.md에 동물 생산물 수급 변동 적용 정책 명시 (작물과 동일 풀 vs 별도 카테고리 결정 — BAL-008 GAP-3 후속) |
+| ~~FIX-044~~ | ~~1~~ | ~~economy-architecture.md에 동물 생산물 수급 변동 적용 정책 명시 (작물과 동일 풀 vs 별도 카테고리 결정 — BAL-008 GAP-3 후속)~~ — DONE → SupplyCategory enum(Crop/AnimalProduct/Fish/ProcessedGoods), 카테고리별 수급 파라미터, 섹션 3.11 정책 문서 추가 |
 | ~~ARC-026~~ | ~~3~~ | ~~fishing-architecture.md 문서 ID 등록 — 낚시 시스템 기술 아키텍처 (DES-013 후속, ARC-026으로 확정)~~ — DONE → `docs/systems/fishing-architecture.md` (devlog 051에서 생성 완료) |
 | FIX-049 | 3 | economy-architecture.md 섹션 3.10.2 HarvestOrigin에 `Fishing = 3` 추가, 섹션 3.10.3 switch 문에 Fishing case 추가 (ARC-026 후속) |
 | FIX-050 | 3 | progression-architecture.md 섹션 2.2 XPSource에 `FishingCatch` 추가, 섹션 2.3 GetExpForSource() switch 문에 FishingCatch case 추가 (ARC-026 후속) |
