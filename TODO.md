@@ -31,7 +31,7 @@
 | ~~PATTERN-005~~ | ~~-~~ | ~~[self-improve 전용] 동일 문서 내 Part I JSON 예시와 Part II C# 클래스 간 필드 불일치 반복 발생 (ARC-004에서 5건: PlayerSaveData 에너지/도구인덱스, FarmTileSaveData soil/consecutive 필드, CropInstanceSaveData fertilizer 필드명, GameSaveData 누락 필드) → JSON 예시 작성 후 C# 클래스를 동기화하지 않거나 그 반대인 경우~~ — DONE → `.claude/rules/doc-standards.md` Consistency Rules 및 `.claude/rules/workflow.md` Reviewer Checklist 항목 9 추가 |
 | ~~PATTERN-006~~ | ~~-~~ | ~~[self-improve 전용] MCP 태스크 문서(Part II 포함)가 canonical 수치를 직접 배열로 기재하고, canonical이 변경(BAL-002 조정)되어도 MCP 문서가 자동 갱신되지 않는 패턴 (BAL-002에서 3건: data-pipeline.md 2.6 XP 테이블, progression-architecture.md Part II Step 11, progression-tasks.md Step A-3) → MCP 태스크 내 배열 수치도 `→ see canonical` 참조로만 표기하거나, 값 기재 시 반드시 canonical과 동시 수정 체크리스트 추가 필요~~ — DONE → `.claude/rules/doc-standards.md` Consistency Rules 및 `.claude/rules/workflow.md` Reviewer Checklist 항목 10 추가 |
 | ~~PATTERN-007~~ | ~~-~~ | ~~[self-improve 전용] SO 에셋 데이터 테이블(data-pipeline.md 섹션 2.4 등)의 tileSize/buildTimeDays 등 구조적 파라미터가 콘텐츠 문서(facilities.md 등)와 별도로 기재되어 3건 이상 불일치 발생 (온실 tileSize 4x4 vs 6x6, 가공소 2x2 vs 4x3, 창고 2x3 vs 3x2, 건설 기간 불일치) → SO 에셋 테이블의 tileSize/buildTimeDays 등 콘텐츠 정의 파라미터는 canonical 콘텐츠 문서를 참조만 하고 직접 기재 금지 규칙 추가 필요~~ — DONE → `.claude/rules/doc-standards.md` Consistency Rules 및 Canonical 매핑 + `.claude/rules/workflow.md` Reviewer Checklist 항목 11 추가 (`logs/reports/self_improve_PATTERN007.md`) |
-| BAL-003 | 2 | 겨울 작물 3종 ROI/밸런스 분석 (겨울무/표고버섯/시금치 → crop-economy.md 추가) |
+| ~~BAL-003~~ | ~~2~~ | ~~겨울 작물 3종 ROI/밸런스 분석 (겨울무/표고버섯/시금치 → crop-economy.md 추가)~~ — DONE → `docs/balance/crop-economy.md` 섹션 4.3 추가, B-09~B-11 밸런스 이슈 식별 |
 | ~~ARC-007~~ | ~~2~~ | ~~시설 MCP 태스크 시퀀스 (facilities-architecture.md Part II를 독립 문서로 분리 → docs/mcp/facilities-tasks.md)~~ — DONE → `docs/mcp/facilities-tasks.md` |
 | ~~DES-007~~ | ~~2~~ | ~~도구 업그레이드 시스템 설계 (호미/물뿌리개/낫 각 3단계 업그레이드, 비용, 효과)~~ — DONE -> `docs/systems/tool-upgrade.md` |
 | ~~DES-008~~ | ~~1~~ | ~~세이브/로드 UX 설계 (자동저장 트리거, 수동 저장, 멀티슬롯 여부)~~ — DONE → `docs/systems/save-load-system.md` |
@@ -86,7 +86,7 @@
 | ~~BAL-003-dup~~ | ~~2~~ | ~~겨울 작물 3종 ROI/밸런스 분석 중복 항목~~ — REMOVED (line 34에 동일 항목 존재) |
 | ARC-019 | 1 | 목축/낙농 시스템 기술 아키텍처 (AnimalManager, AnimalData SO, 돌봄 사이클 설계 — CON-006 후속) |
 | BAL-008 | 1 | 목축/낙농 경제 밸런스 분석 (동물 구매/사료 비용 vs 젖/양모/알 판매 ROI — CON-006 + ARC-019 후속) |
-| ARC-022 | 2 | UI 시스템 MCP 태스크 시퀀스 독립 문서화 (ui-architecture.md Part II → docs/mcp/ui-tasks.md) |
+| ~~ARC-022~~ | ~~2~~ | ~~UI 시스템 MCP 태스크 시퀀스 독립 문서화 (ui-architecture.md Part II → docs/mcp/ui-tasks.md)~~ — DONE → `docs/mcp/ui-tasks.md` |
 | DES-012 | 1 | 농장 확장 시스템 설계 (구역 해금, 타일 구매, 신규 땅 개간 메카닉) |
 | CON-008 | 1 | 추가 NPC 상세 설계 (마을 상인/농업 전문가 등 blacksmith 외 NPC 대화 및 서비스 내용 상세화) |
 | ~~FIX-026~~ | ~~2~~ | ~~time-season-tasks.md 작성 예정 항목 우선순위 확인 (time-season-architecture.md Cross-references에 '작성 예정'으로 등재됨)~~ — DONE → `docs/mcp/time-season-tasks.md` (ARC-021) 신규 생성, Cross-references 업데이트 |
@@ -94,4 +94,5 @@
 | ~~FIX-027~~ | ~~2~~ | ~~blacksmith-architecture.md 섹션 1 NPCAffinityTracker 클래스 다이어그램에 메서드 4개 추가 (HasTriggeredDialogue, MarkDialogueTriggered, CanGiveDailyAffinity, MarkDailyVisit — ARC-020 리뷰 INFO-1 후속)~~ — DONE: 메서드 4개 추가, AffinityEntry.triggeredDialogues bool[] → string[] triggeredDialogueIds 타입 수정 |
 | ~~FIX-028~~ | ~~2~~ | ~~blacksmith-architecture.md Part II Step A-4에 추가된 4개 메서드(HasTriggeredDialogue 등)의 AffinitySaveData 필드(triggeredDialogueIds, dailyVisitDates) 스키마 확장 검토 (save-load-architecture.md AffinityEntry 동기화 여부 — CRITICAL-5 후속)~~ — DONE: blacksmith-tasks.md AffinityEntry/NPCAffinityTracker 동기화, _lastVisitDayMap/_triggeredDialogueMap 다이어그램 추가, dailyVisitDates 불필요 결정 명시 |
 | BAL-009 | 1 | 도구 업그레이드 XP 밸런스 분석 (ToolUpgrade XPSource 추가 후 — progression-curve.md toolUpgradeExp 수치 결정) |
+| BAL-010 | 2 | 겨울 전용 작물 온실 경쟁력 조정 (B-09 후속 — 제안 E 비주 계절 온실 페널티 또는 겨울 전용 작물 시너지 보너스 설계 확정, crop-growth.md/economy-system.md 반영) |
 | ~~FIX-025~~ | ~~2~~ | ~~tutorial-tasks.md Step 07/11 이벤트명 확정 (TimeEvents.OnSleepExecuted, 구매 완료 이벤트 — ARC-010 리뷰 WARNING 후속)~~ — DONE: S07→TimeManager.OnSleepCompleted, S11→EconomyEvents.OnShopPurchased 확정; economy-architecture.md 이벤트 표 보완 |

@@ -1013,6 +1013,7 @@ Assets/_Project/Scripts/UI/              # SeedMind.UI 네임스페이스
 
 ## Cross-references
 
+- `docs/mcp/ui-tasks.md` (ARC-022) -- UI 시스템 MCP 태스크 시퀀스 (본 문서 Part II를 독립 문서로 분리 확장)
 - `docs/systems/ui-system.md` (DES-011) -- UI/UX 디자인 canonical (HUD 배치, 키 바인딩, 알림 우선순위, Canvas 논리 계층)
 - `docs/architecture.md` -- 마스터 기술 아키텍처, 프로젝트 구조 개요, 입력 시스템 (섹션 4.4)
 - `docs/systems/project-structure.md` -- 폴더 구조, 네임스페이스 규칙, 의존성 매트릭스 (UI는 최상층)
