@@ -424,7 +424,7 @@ public static class FarmEvents
 
 ## 7. MCP 구현 계획
 
-경작 시스템을 MCP for Unity를 통해 단계적으로 구축하는 태스크 시퀀스. 상세 MCP 태스크는 `docs/mcp/farming-tasks.md`에 별도 작성 예정(ARC-003).
+경작 시스템을 MCP for Unity를 통해 단계적으로 구축하는 태스크 시퀀스. 상세 MCP 태스크는 `docs/mcp/farming-tasks.md`(ARC-003)를 참조.
 
 ### Phase A: 기본 그리드 (MCP 6단계)
 
@@ -440,7 +440,7 @@ Step A-3: FarmGrid 하위에 Quad 기반 타일 8x8 = 64개 생성
           → 각 타일 이름: "Tile_0_0" ~ "Tile_7_7"
           → 각 타일에 FarmTile.cs 컴포넌트 부착
           → GridPosition 프로퍼티 설정 (x, y)
-          → 위치: (x * 1.0, 0, y * 1.0)
+          → 위치: (x * 1.0, 0.001, y * 1.0) (GroundPlane과의 Z-fighting 방지)
 
 Step A-4: Material "M_Soil_Empty" 생성 (URP/Lit, Base Color: #8B7355)
           Material "M_Soil_Tilled" 생성 (URP/Lit, Base Color: #5C4033)
@@ -461,7 +461,7 @@ Step A-6: Directional Light "Sun" 설정
 ### Phase B: 작물 데이터 (MCP 4단계)
 
 ```
-Step B-1: Assets/Data/Crops/ 폴더에 CropData SO 생성
+Step B-1: Assets/_Project/Data/Crops/ 폴더에 CropData SO 생성
           → SO_Crop_Potato (감자: growthDays=3, sellPrice=30, seedPrice=15)
           → SO_Crop_Carrot (당근: growthDays=3, sellPrice=35, seedPrice=15)
           → SO_Crop_Tomato (토마토: growthDays=5, sellPrice=60, seedPrice=25)
@@ -516,5 +516,5 @@ Step C-3: Play Mode 통합 테스트
 - `docs/architecture.md` 4.1절 (Farm Grid 시스템), 4.2절 (작물 성장)
 - `docs/design.md` 4.1절 (경작 시스템), 4.2절 (작물 종류)
 - `docs/systems/project-structure.md` (네임스페이스, 의존성)
-- `docs/mcp/farming-tasks.md` (상세 MCP 태스크 시퀀스, 작성 예정 -- ARC-003)
+- `docs/mcp/farming-tasks.md` (상세 MCP 태스크 시퀀스 — ARC-003)
 - `docs/balance/crop-economy.md` (작물 경제 밸런스, 작성 예정 -- BAL-001)
