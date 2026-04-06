@@ -197,6 +197,7 @@
 - `docs/systems/farming-system.md` — 경작 시스템 상세 설계
 - `docs/systems/farming-architecture.md` — 경작 시스템 기술 아키텍처
 - `docs/systems/project-structure.md` — Unity 프로젝트 구조 상세
+- `docs/systems/crop-growth.md` — 작물 성장 시스템 상세 설계 (DES-002)
 - `docs/content/crops.md` — 전체 작물 상세 스펙 (작성 예정, CON-001)
 - `docs/balance/crop-economy.md` — 작물 경제 밸런스 (작성 예정, BAL-001)
 

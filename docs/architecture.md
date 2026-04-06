@@ -93,8 +93,9 @@ Assets/_Project/                    # (→ see docs/systems/project-structure.md
 │   └── Buildings/               # 시설 머티리얼
 │
 ├── Scenes/
-│   ├── MainMenu.unity           # 메인 메뉴
-│   └── Farm.unity               # 메인 농장 씬 (상점은 UI 오버레이로 처리, → see docs/systems/project-structure.md)
+│   ├── SCN_MainMenu.unity       # 메인 메뉴
+│   ├── SCN_Loading.unity        # 로딩 씬
+│   └── SCN_Farm.unity           # 메인 농장 씬 (상점은 UI 오버레이로 처리, → see docs/systems/project-structure.md)
 │
 └── Resources/
     └── UI/                      # UI 스프라이트, 폰트
@@ -110,13 +111,16 @@ Assets/_Project/                    # (→ see docs/systems/project-structure.md
 농장 = N×M 타일 그리드
 
 각 타일 상태:
-├── Empty      (빈 땅)
-├── Tilled     (경작된 땅)
-├── Planted    (씨앗 심어짐)
-├── Watered    (물 줌)
-├── Growing    (성장 중)
-├── Harvestable(수확 가능)
-└── Building   (시설 설치됨)
+├── Empty       (빈 땅)
+├── Tilled      (경작된 땅)
+├── Planted     (씨앗 심어짐)
+├── Watered     (물 줌)
+├── Dry         (물 증발, 성장 정지)
+├── Harvestable (수확 가능)
+├── Withered    (작물 고사)
+└── Building    (시설 설치됨)
+
+(→ see docs/systems/farming-system.md 섹션 2.1 for canonical state list)
 ```
 
 - 초기 농장: 8×8 그리드
