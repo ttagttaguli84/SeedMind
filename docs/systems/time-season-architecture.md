@@ -68,14 +68,18 @@ namespace SeedMind.Core
 {
     public enum WeatherType
     {
-        Sunny,      // 맑음 — 기본
-        Cloudy,     // 흐림 — 시각적 차이만
-        Rainy,      // 비 — 물주기 자동, 성장 보너스 없음
-        Stormy,     // 폭풍우 — 물주기 자동, 작물 피해 확률
-        Snowy       // 눈 — 겨울 전용, 야외 경작 불가 강조
+        Clear,       // 맑음 — 기본 날씨
+        Cloudy,      // 흐림 — 시각적 변화만, 게임플레이 영향 없음
+        Rain,        // 비 — 야외 경작 타일 자동 물주기
+        HeavyRain,   // 폭우 — 자동 물주기 + 이동속도 감소
+        Storm,       // 폭풍 — 자동 물주기 + 작물 피해 + 이동속도 감소
+        Snow,        // 눈 — 야외 작물 성장 정지, 이동속도 감소
+        Blizzard     // 폭설 — 성장 정지 + 이동속도 크게 감소 + 시야 축소
     }
 }
 ```
+
+> canonical 날씨 종류 정의는 `docs/systems/time-season.md` 섹션 3.1이다. 7종 날씨(Clear/Cloudy/Rain/HeavyRain/Storm/Snow/Blizzard) 모두 여기서 관리된다.
 
 ---
 

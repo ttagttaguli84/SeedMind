@@ -55,10 +55,15 @@ Assets/_Project/                    # (→ see docs/systems/project-structure.md
 │   │   ├── PlayerInventory.cs   # 인벤토리
 │   │   └── ToolSystem.cs        # 도구 사용 로직
 │   │
-│   ├── Economy/                 # 경제 시스템
-│   │   ├── EconomyManager.cs    # 골드, 거래
-│   │   ├── Shop.cs              # 상점 로직
-│   │   └── PriceData.cs         # 가격 데이터
+│   ├── Economy/                 # 경제 시스템 (→ see docs/systems/economy-architecture.md for details)
+│   │   ├── EconomyManager.cs    # 골드, 거래, 가격 조회
+│   │   ├── ShopSystem.cs        # 상점 로직
+│   │   ├── PriceFluctuationSystem.cs  # 가격 변동 계산
+│   │   ├── TransactionLog.cs    # 거래 기록
+│   │   └── Data/
+│   │       ├── EconomyConfig.cs # 경제 설정 ScriptableObject
+│   │       ├── PriceData.cs     # 가격 데이터 ScriptableObject
+│   │       └── ShopData.cs      # 상점 데이터 ScriptableObject
 │   │
 │   ├── Building/                # 건설 시스템
 │   │   ├── BuildingManager.cs   # 시설 배치
@@ -232,6 +237,7 @@ Release Build (최적화)
 - `docs/systems/project-structure.md` — 프로젝트 구조 상세 (폴더, 네임스페이스, asmdef)
 - `docs/systems/farming-architecture.md` — 경작 시스템 기술 아키텍처 상세
 - `docs/systems/time-season-architecture.md` — 시간/계절/날씨 시스템 기술 아키텍처 상세 (DES-003)
+- `docs/systems/economy-architecture.md` — 경제 시스템 기술 아키텍처 상세 (DES-004)
 - `docs/mcp/farming-tasks.md` — MCP 태스크 시퀀스 (작성 예정, ARC-003)
 
 ## Open Questions

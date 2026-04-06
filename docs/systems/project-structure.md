@@ -44,9 +44,13 @@ Assets/
 │   │   │
 │   │   ├── Economy/                   # 경제 시스템
 │   │   │   ├── EconomyManager.cs
-│   │   │   ├── Shop.cs
+│   │   │   ├── ShopSystem.cs
+│   │   │   ├── PriceFluctuationSystem.cs
+│   │   │   ├── TransactionLog.cs
 │   │   │   └── Data/
-│   │   │       └── PriceData.cs
+│   │   │       ├── EconomyConfig.cs
+│   │   │       ├── PriceData.cs
+│   │   │       └── ShopData.cs
 │   │   │
 │   │   ├── Building/                  # 건설 시스템
 │   │   │   ├── BuildingManager.cs

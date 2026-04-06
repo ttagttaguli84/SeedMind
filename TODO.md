@@ -5,7 +5,7 @@
 | ~~DES-001~~ | ~~5~~ | ~~경작 시스템 상세 설계 (타일 상태, 도구 인터랙션, 물/비료 효과)~~ — DONE → `docs/systems/farming-system.md` |
 | ~~DES-002~~ | ~~5~~ | ~~작물 성장 시스템 상세 (성장 단계, 시각적 변화, 계절 제한)~~ — DONE → `docs/systems/crop-growth.md` |
 | ~~DES-003~~ | ~~4~~ | ~~시간/계절 시스템 상세 (하루 흐름, 계절 전환, 날씨)~~ — DONE → `docs/systems/time-season.md`, `docs/systems/time-season-architecture.md` |
-| DES-004 | 4 | 경제 시스템 상세 (가격 변동, 상점 구조, 수입/지출 밸런스) |
+| ~~DES-004~~ | ~~4~~ | ~~경제 시스템 상세 (가격 변동, 상점 구조, 수입/지출 밸런스)~~ — DONE → `docs/systems/economy-system.md`, `docs/systems/economy-architecture.md` |
 | ~~ARC-001~~ | ~~5~~ | ~~Unity 프로젝트 구조 상세 설계~~ — DONE → `docs/systems/project-structure.md` |
 | ~~ARC-005~~ | ~~5~~ | ~~경작 시스템 기술 아키텍처~~ — DONE → `docs/systems/farming-architecture.md` |
 | ARC-002 | 4 | MCP 작업 계획 — 기본 씬 구성 태스크 시퀀스 |
@@ -20,3 +20,4 @@
 | AUD-001 | 1 | 사운드 디자인 문서 (필요한 효과음/BGM 목록) |
 | ~~PATTERN-001~~ | ~~-~~ | ~~[self-improve 전용] 신규 문서가 canonical 문서의 수치/이름을 복사해 독립 기재 → 불일치 반복 발생~~ — PENDING → `.claude/rules/doc-standards.md`에 Canonical Data Mapping 섹션 추가 필요 |
 | ~~PATTERN-002~~ | ~~-~~ | ~~[self-improve 전용] 동일 문서 내에서도 섹션 간 수치 불일치 발생~~ — PENDING → `.claude/rules/workflow.md`에 Reviewer Checklist 섹션 추가 필요 |
+| PATTERN-003 | - | [self-improve 전용] enum/타입 확장 시 같은 문서 내 다른 섹션(pseudo-code, 예시 코드 등)이 업데이트되지 않음 (예: WeatherType 5종→7종 확장 시 GetWeatherMultiplier 예시 코드 미갱신) → 리뷰 체크리스트에 "enum 확장 시 사용처 전수 검색" 항목 추가 필요 |
