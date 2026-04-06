@@ -367,16 +367,17 @@ namespace SeedMind.NPC
 │  - _merchantNPCData: NPCData                                 │
 │  - _shopPool: TravelingShopPoolData                          │
 │  - _spawnPosition: Transform                                 │
+│  - _visitDays: DayFlag (토/일 고정 → see docs/content/npcs.md │
+│                         섹션 6.2)                             │
 │                                                              │
 │  [상태]                                                       │
 │  - _isPresent: bool                                          │
 │  - _currentStock: List<ShopItemEntry>                        │
-│  - _nextVisitDay: int (다음 방문일, 총 경과 일수 기준)          │
-│  - _departureDayOffset: int (방문 후 체류 일수)               │
 │  - _randomSeed: int                                          │
 │                                                              │
 │  [메서드]                                                     │
-│  + CheckVisitSchedule(int totalElapsedDays): void            │
+│  + CheckVisitSchedule(int currentDay, int currentDayOfWeek): │
+│    void                                                      │
 │  + GenerateStock(int playerLevel, Season season): void       │
 │  + SpawnMerchant(): void                                     │
 │  + DespawnMerchant(): void                                   │
@@ -388,25 +389,22 @@ namespace SeedMind.NPC
 └──────────────────────────────────────────────────────────────┘
 ```
 
-**여행 상인 등장 조건 로직**:
+**여행 상인 등장 조건 로직** (DayFlag 기반 고정 스케줄):
 
 ```
-CheckVisitSchedule(totalElapsedDays):
-    if _isPresent:
-        if totalElapsedDays >= _nextVisitDay + _departureDayOffset:
-            DespawnMerchant()
-            ScheduleNextVisit()
-    else:
-        if totalElapsedDays >= _nextVisitDay:
-            GenerateStock(playerLevel, currentSeason)
-            SpawnMerchant()
+CheckVisitSchedule(currentDay, currentDayOfWeek):
+    // currentDayOfWeek: 0=Monday ~ 6=Sunday
+    // _visitDays: DayFlag 비트마스크 (토/일 → see docs/content/npcs.md 섹션 6.2)
+    isVisitDay = (_visitDays & (1 << currentDayOfWeek)) != 0
 
-ScheduleNextVisit():
-    _nextVisitDay = totalElapsedDays + randomRange(visitIntervalMin, visitIntervalMax)
-    // visitIntervalMin, visitIntervalMax → see docs/content/npcs.md, CON-003
+    if _isPresent && !isVisitDay:
+        DespawnMerchant()
+    elif !_isPresent && isVisitDay:
+        GenerateStock(playerLevel, currentSeason)
+        SpawnMerchant()
 ```
 
-방문 주기, 체류 일수, 후보 아이템 수 등의 수치는 (-> see `docs/content/npcs.md`, CON-003)에서 정의한다.
+등장 요일, 등장 시간, 플레이어 레벨 요건 등의 수치는 (-> see `docs/content/npcs.md` 섹션 6.2, CON-003)에서 정의한다. 난수 주기(`visitIntervalMin/Max`) 방식을 채택하지 않고, canonical 문서의 "매주 토/일 고정 등장" 방식을 따른다.
 
 ---
 
@@ -577,7 +575,7 @@ Assets/_Project/Scripts/
             ├── DialogueChoice.cs      # 직렬화 데이터 클래스
             ├── DialogueChoiceAction.cs # enum
             ├── TravelingShopPoolData.cs # ScriptableObject 정의
-            └── TravelingMerchantSaveData.cs # 세이브 데이터
+            └── NPCSaveData.cs         # NPCSaveData, TravelingMerchantSaveData (직렬화 클래스)
 
 Assets/_Project/Data/
     ├── NPCs/                          # NPC SO 에셋
@@ -694,11 +692,11 @@ namespace SeedMind.NPC.Data
     public class TravelingMerchantSaveData
     {
         public bool isPresent;              // 현재 방문 중 여부
-        public int nextVisitDay;            // 다음 방문일 (총 경과 일수)
-        public int departureDayOffset;      // 체류 일수
         public int randomSeed;              // 재고 생성 시드
         public string[] currentStockItemIds; // 현재 재고 아이템 ID 목록
         public int[] currentStockQuantities; // 현재 재고 수량
+        // DayFlag 기반 고정 스케줄이므로 nextVisitDay, departureDayOffset 불필요
+        // 등장 요일: -> see docs/content/npcs.md 섹션 6.2
     }
 }
 ```
@@ -712,8 +710,6 @@ namespace SeedMind.NPC.Data
     "npc": {
         "travelingMerchant": {
             "isPresent": false,
-            "nextVisitDay": 14,
-            "departureDayOffset": 2,
             "randomSeed": 42,
             "currentStockItemIds": [],
             "currentStockQuantities": []
@@ -722,7 +718,7 @@ namespace SeedMind.NPC.Data
 }
 ```
 
-PATTERN-005 준수: JSON 스키마와 C# 클래스의 필드명/필드 수가 동일하다 (isPresent, nextVisitDay, departureDayOffset, randomSeed, currentStockItemIds, currentStockQuantities -- 6개씩).
+PATTERN-005 준수: JSON 스키마와 C# 클래스의 필드명/필드 수가 동일하다 (isPresent, randomSeed, currentStockItemIds, currentStockQuantities -- 4개씩). DayFlag 기반 고정 스케줄 전환으로 nextVisitDay, departureDayOffset 필드를 양쪽 모두에서 제거하였다.
 
 ---
 
@@ -786,7 +782,7 @@ PATTERN-005 준수: JSON 스키마와 C# 클래스의 필드명/필드 수가 �
 
 **Step F-2**: ToolUpgradeSystem 연동
 - NPCController(Blacksmith)에서 OpenUpgrade 선택 시 ToolUpgradeSystem 호출 경로 연결
-- UpgradePanel UI 추가 (Canvas_Overlay)
+- BlacksmithPanel(UpgradePanel)은 ARC-015(tool-upgrade-tasks.md)에서 이미 생성됨 -- 참조 연결만 수행
 
 **Step F-3**: 통합 테스트
 - NPC 접근 -> 대화 -> 상점/업그레이드 전체 흐름 Play Mode 테스트
