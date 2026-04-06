@@ -1138,7 +1138,8 @@ SCN_Farm (Scene Root)
 1-6: 열거형 스크립트 생성
      → QuestCategory.cs, QuestStatus.cs, ObjectiveType.cs,
        RewardType.cs, UnlockConditionType.cs, CompositeMode.cs
-     → 모두 Assets/_Project/Scripts/Quest/ 배치
+     → 모두 Assets/_Project/Scripts/Quest/Data/ 배치
+       (→ see docs/mcp/quest-tasks.md ARC-016 섹션 1.2 스크립트 목록 S-01~S-06)
 ```
 
 ## Step 2: QuestData ScriptableObject 정의 및 에셋 생성

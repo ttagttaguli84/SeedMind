@@ -50,11 +50,11 @@
 | CON-006 | 1 | 목축/낙농 시스템 콘텐츠 상세 (치즈 공방 활성화 선행 조건 — 젖소/염소 등 동물 관리 메카닉) |
 | ~~FIX-007~~ | ~~3~~ | ~~tool-upgrade-tasks.md ToolSpecialEffect enum 확장 방안 확정 (전설 낫 다중 효과 처리 — Flags enum vs string[] vs tier 분기 결정, tool-upgrade-architecture.md 반영)~~ — DONE: [System.Flags] 비트마스크 채택, SeedRecovery 추가, ToolData.specialEffect 타입 string→ToolSpecialEffect 변경 |
 | ~~ARC-013~~ | ~~2~~ | ~~인벤토리 MCP 태스크 시퀀스 독립 문서화 (inventory-architecture.md Part II → docs/mcp/inventory-tasks.md)~~ — DONE → `docs/mcp/inventory-tasks.md` |
-| ARC-016 | 2 | 퀘스트 시스템 MCP 태스크 시퀀스 독립 문서화 (quest-architecture.md Part II → docs/mcp/quest-tasks.md) |
+| ~~ARC-016~~ | ~~2~~ | ~~퀘스트 시스템 MCP 태스크 시퀀스 독립 문서화 (quest-architecture.md Part II → docs/mcp/quest-tasks.md)~~ — DONE → `docs/mcp/quest-tasks.md` |
 | DES-010 | 2 | 도전 과제/업적 시스템 설계 (작물 마스터, 수익 달성, 시설 완성 등 업적 구조 + UI 표시 방식) |
 | BAL-006 | 2 | 퀘스트/미션 보상 밸런스 분석 (계절 목표 골드/경험치 보상 ROI 검증 → docs/balance/quest-rewards.md) |
 | ~~FIX-005~~ | ~~2~~ | ~~facilities.md에 특화 가공소 3종(제분소·발효실·베이커리) 건설 요건·업그레이드 경로 추가 (design.md 4.6 반영 후속)~~ — DONE → `docs/content/facilities.md` 섹션 7~9 |
 | ~~PATTERN-008~~ | ~~-~~ | ~~[self-improve 전용] 특화 가공소 레시피 목록을 비-canonical 문서(facilities.md 섹션 7~9)에 직접 기재하여 canonical(processing-system.md)과 불일치 3건 발생 (제분소/발효실/베이커리) → 가공소 레시피 목록을 직접 기재하는 패턴 방지 규칙 추가 필요~~ — DONE → `.claude/rules/doc-standards.md` PATTERN-008 규칙 + `.claude/rules/workflow.md` Reviewer Checklist 항목 12 추가 (`logs/reports/self_improve_PATTERN008.md`) |
 | ~~FIX-006~~ | ~~3~~ | ~~facilities-architecture.md ProcessingType enum에 Mill/Fermentation/Bake 추가 (W-3 후속)~~ — DONE |
-| FIX-008 | 2 | inventory-system.md 섹션 5.3·7 도구 ID 표기 통일 (tool_hoe → hoe_basic 형식, 등급 포함 규칙 수정 — ARC-013 리뷰 W-5 후속) |
-| FIX-009 | 2 | data-pipeline.md 섹션 3.2에 ShippingBinSaveData 스키마 정의 추가 (ARC-013 리뷰 GAP-05 후속) |
+| ~~FIX-008~~ | ~~2~~ | ~~inventory-system.md 섹션 5.3·7 도구 ID 표기 통일 (tool_hoe → hoe_basic 형식, 등급 포함 규칙 수정 — ARC-013 리뷰 W-5 후속)~~ — DONE |
+| ~~FIX-009~~ | ~~2~~ | ~~data-pipeline.md 섹션 3.2에 ShippingBinSaveData 스키마 정의 추가 (ARC-013 리뷰 GAP-05 후속)~~ — DONE |

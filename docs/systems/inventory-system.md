@@ -404,10 +404,10 @@
 
 | 아이템 ID | 표시명 | 기본 기능 | 업그레이드 | 비고 |
 |-----------|--------|-----------|-----------|------|
-| `tool_hoe` | 호미 | Empty -> Tilled 전환 | 범위 확대 | (-> see `docs/systems/farming-system.md` 섹션 3.3) |
-| `tool_wateringcan` | 물뿌리개 | 물주기 | 용량/범위 증가 | 용량 (-> see `docs/systems/farming-system.md` 섹션 4.3) |
-| `tool_sickle` | 낫 | 수확/고사체 제거 | 범위 확대 | (-> see `docs/systems/farming-system.md` 섹션 3.3) |
-| `tool_axe` | 도끼 | 나무/장애물 제거 | 효율 증가 | 농장 내 장애물 정리용 |
+| `hoe_basic` | 호미 | Empty -> Tilled 전환 | 범위 확대 | (-> see `docs/systems/farming-system.md` 섹션 3.3) |
+| `wateringcan_basic` | 물뿌리개 | 물주기 | 용량/범위 증가 | 용량 (-> see `docs/systems/farming-system.md` 섹션 4.3) |
+| `sickle_basic` | 낫 | 수확/고사체 제거 | 범위 확대 | (-> see `docs/systems/farming-system.md` 섹션 3.3) |
+| `axe_basic` | 도끼 | 나무/장애물 제거 | 효율 증가 | 농장 내 장애물 정리용 |
 
 **도구 업그레이드 비용**: (-> see `docs/systems/farming-system.md` 섹션 7)
 
@@ -497,17 +497,17 @@
 {category}_{name}[_{variant}]
 ```
 
-| 카테고리 | 접두사 | 예시 |
-|----------|--------|------|
-| 씨앗 | `seed_` | `seed_potato`, `seed_tomato` |
-| 수확물 | `crop_` | `crop_potato`, `crop_corn` |
-| 도구 | `tool_` | `tool_hoe`, `tool_wateringcan` |
-| 비료 | `fert_` | `fert_basic`, `fert_quality` |
-| 가공품 | `proc_` | `proc_potato_jam`, `proc_strawberry_juice` |
-| 건설 재료 | `mat_` | `mat_wood`, `mat_stone` (Phase 2) |
-| 음식 | `food_` | `food_bread` (미정) |
+| 카테고리 | 형식 | 예시 |
+|----------|------|------|
+| 씨앗 | `seed_{name}` | `seed_potato`, `seed_tomato` |
+| 수확물 | `crop_{name}` | `crop_potato`, `crop_corn` |
+| 도구 | `{type}_{tier}` | `hoe_basic`, `sickle_reinforced`, `wateringcan_legendary` |
+| 비료 | `fert_{name}` | `fert_basic`, `fert_quality` |
+| 가공품 | `proc_{crop}_{type}` | `proc_potato_jam`, `proc_strawberry_juice` |
+| 건설 재료 | `mat_{name}` | `mat_wood`, `mat_stone` (Phase 2) |
+| 음식 | `food_{name}` | `food_bread` (미정) |
 
-**variant 규칙**: 도구 등급은 ID에 포함하지 않는다. 도구 등급은 도구 인스턴스의 `toolTier` 속성으로 관리한다.
+**도구 ID 규칙**: 도구 등급(tier)은 ID suffix에 포함된다. tier 값은 `basic` / `reinforced` / `legendary` 세 단계이다. 같은 도구 종류의 다른 등급은 별개의 ItemData SO 에셋으로 존재한다. (→ see `docs/systems/tool-upgrade.md`, `docs/mcp/tool-upgrade-tasks.md`)
 
 ---
 
