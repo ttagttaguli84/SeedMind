@@ -132,6 +132,14 @@
 │  + GetAffinity(string npcId): int                                │
 │  + AddAffinity(string npcId, int amount): void                   │
 │  + GetAffinityLevel(string npcId, int[] thresholds): int         │
+│  + HasTriggeredDialogue(string npcId, string dialogueId): bool   │
+│  │   // 특정 대화(이벤트 대화 등)가 이미 발동되었는지 확인         │
+│  + MarkDialogueTriggered(string npcId, string dialogueId): void  │
+│  │   // 대화 발동 기록 (중복 발동 방지)                           │
+│  + CanGiveDailyAffinity(string npcId): bool                      │
+│  │   // 해당 NPC에게 오늘 이미 친밀도를 부여했는지 확인           │
+│  + MarkDailyVisit(string npcId): void                            │
+│  │   // 오늘 방문 기록 (자정 리셋, 1일 1회 친밀도 상한 제어)      │
 │  + GetSaveData(): AffinitySaveData                               │
 │  + LoadSaveData(AffinitySaveData data): void                     │
 │                                                                  │
@@ -617,10 +625,13 @@ namespace SeedMind.NPC
     [System.Serializable]
     public class AffinityEntry
     {
-        public string npcId;              // "npc_cheolsu"
-        public int affinityValue;         // 현재 친밀도 수치
-        public int lastVisitDay;          // 마지막 방문 일차 (일일 대화 친밀도 중복 방지)
-        public bool[] triggeredDialogues; // 단계별 특수 대화 재생 여부
+        public string npcId;                   // "npc_cheolsu"
+        public int affinityValue;              // 현재 친밀도 수치
+        public int lastVisitDay;               // 마지막 방문 일차 (CanGiveDailyAffinity/MarkDailyVisit 중복 방지)
+        public string[] triggeredDialogueIds;  // 발동된 대화 ID 목록 (HasTriggeredDialogue/MarkDialogueTriggered 연동)
+        // FIX-027: bool[] triggeredDialogues → string[] triggeredDialogueIds 로 변경.
+        // HasTriggeredDialogue(string dialogueId)가 임의 ID를 키로 조회하므로
+        // 인덱스 기반 bool[] 대신 ID 목록이 필요하다.
     }
 }
 ```
@@ -794,6 +805,11 @@ Step A-4: Scripts/NPC/NPCAffinityTracker.cs 작성
           → namespace SeedMind.NPC
           → MonoBehaviour, 범용 친밀도 추적
           → GetAffinity, AddAffinity, GetAffinityLevel, GetSaveData, LoadSaveData
+          → HasTriggeredDialogue(string npcId, string dialogueId): bool  // FIX-027 추가
+          → MarkDialogueTriggered(string npcId, string dialogueId): void // FIX-027 추가
+          → CanGiveDailyAffinity(string npcId): bool                     // FIX-027 추가
+          → MarkDailyVisit(string npcId): void                           // FIX-027 추가
+          // 위 4개 메서드는 섹션 1 클래스 다이어그램 NPCAffinityTracker 박스 참조
 
 Step A-5: Scripts/NPC/BlacksmithEvents.cs 작성
           → namespace SeedMind.NPC

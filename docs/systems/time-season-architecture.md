@@ -147,13 +147,12 @@ namespace SeedMind.Core
 ┌────────────────────┐          ┌──────────────────────────┐
 │  WeatherSystem     │          │  TimeConfig (SO)         │
 │  (MonoBehaviour)   │          │──────────────────────────│
-│                    │          │  secondsPerGameHour: 33f │
-│ (아래 2.3 참조)    │          │  dayStartHour: 6         │
-│                    │          │  dayEndHour: 24          │
-└────────────────────┘          │  daysPerSeason: 28       │
-                                │  seasonsPerYear: 4       │
-         │ events                │  defaultTimeScale: 1.0f  │
-         ▼                      └──────────────────────────┘
+│                    │          │  (필드 및 수치:           │
+│ (아래 2.3 참조)    │          │   → see 섹션 2.2)        │
+│                    │          │                          │
+└────────────────────┘          └──────────────────────────┘
+         │ events
+         ▼
 ┌────────────────────┐
 │  FestivalManager   │
 │  (아래 2.5 참조)   │
@@ -208,18 +207,19 @@ namespace SeedMind.Core
     [CreateAssetMenu(fileName = "TimeConfig", menuName = "SeedMind/TimeConfig")]
     public class TimeConfig : ScriptableObject
     {
+        // canonical 수치 출처: 이 섹션(time-season-architecture.md 섹션 2.2)
         [Header("시간 진행")]
-        public float secondsPerGameHour = 33.33f;  // 실시간 33초 = 게임 내 1시간
-        public int dayStartHour = 6;               // 하루 시작 시각
-        public int dayEndHour = 24;                 // 하루 종료 시각 (자동 다음 날)
+        public float secondsPerGameHour = 33.33f;  // 실시간 33초 = 게임 내 1시간 // → canonical (this section)
+        public int dayStartHour = 6;               // 하루 시작 시각               // → canonical (this section)
+        public int dayEndHour = 24;                 // 하루 종료 시각 (자동 다음 날) // → canonical (this section)
 
         [Header("달력")]
-        public int daysPerSeason = 28;              // 1계절 = 28일
-        public int seasonsPerYear = 4;              // 1년 = 4계절
+        public int daysPerSeason = 28;              // 1계절 = 28일                 // → canonical (this section)
+        public int seasonsPerYear = 4;              // 1년 = 4계절                  // → canonical (this section)
 
         [Header("배속")]
-        public float defaultTimeScale = 1.0f;       // 기본 배속
-        public float maxTimeScale = 3.0f;            // 최대 배속
+        public float defaultTimeScale = 1.0f;       // 기본 배속                    // → canonical (this section)
+        public float maxTimeScale = 3.0f;            // 최대 배속                   // → canonical (this section)
 
         // 파생 값 (읽기 전용)
         public int DaysPerYear => daysPerSeason * seasonsPerYear; // 112
@@ -275,38 +275,32 @@ namespace SeedMind.Core
     {
         public Season season;
 
-        [Header("확률 (합계 = 1.0) — canonical 수치는 docs/systems/time-season.md 섹션 3.2")]
-        public float clearChance    = 0.40f;  // Clear (맑음)
-        public float cloudyChance   = 0.20f;  // Cloudy (흐림)
-        public float rainChance     = 0.25f;  // Rain (비)
-        public float heavyRainChance= 0.10f;  // HeavyRain (폭우)
-        public float stormChance    = 0.05f;  // Storm (폭풍)
-        public float snowChance     = 0.00f;  // Snow (눈) — 겨울 전용
-        public float blizzardChance = 0.00f;  // Blizzard (폭설) — 겨울 전용
+        // 확률 수치 canonical: docs/systems/time-season.md 섹션 3.2
+        [Header("확률 (합계 = 1.0) — canonical: docs/systems/time-season.md 섹션 3.2")]
+        public float clearChance;     // Clear (맑음)    // → see docs/systems/time-season.md 섹션 3.2
+        public float cloudyChance;    // Cloudy (흐림)   // → see docs/systems/time-season.md 섹션 3.2
+        public float rainChance;      // Rain (비)       // → see docs/systems/time-season.md 섹션 3.2
+        public float heavyRainChance; // HeavyRain (폭우) // → see docs/systems/time-season.md 섹션 3.2
+        public float stormChance;     // Storm (폭풍)    // → see docs/systems/time-season.md 섹션 3.2
+        public float snowChance;      // Snow (눈) — 겨울 전용    // → see docs/systems/time-season.md 섹션 3.2
+        public float blizzardChance;  // Blizzard (폭설) — 겨울 전용 // → see docs/systems/time-season.md 섹션 3.2
 
+        // 연속 보정 수치 canonical: 이 섹션 (time-season-architecture.md 섹션 2.4)
         [Header("연속 날씨 보정")]
-        public int maxConsecutiveSameWeatherDays = 3;  // 동일 날씨 최대 연속일
-        public int maxConsecutiveExtremeWeatherDays = 2; // Storm/Blizzard 최대 연속일
-        public float consecutivePenalty = 0.5f;         // 연속 시 확률 감소 배수
+        public int maxConsecutiveSameWeatherDays = 3;  // 동일 날씨 최대 연속일    // → canonical (this section)
+        public int maxConsecutiveExtremeWeatherDays = 2; // Storm/Blizzard 최대 연속일 // → canonical (this section)
+        public float consecutivePenalty = 0.5f;         // 연속 시 확률 감소 배수  // → canonical (this section)
 
+        // 날씨 효과 수치 canonical: 이 섹션 (time-season-architecture.md 섹션 2.4)
         [Header("날씨 효과")]
-        public float rainGrowthBonus = 0.0f;        // 비 올 때 성장 보너스 (기본 0)
-        public float stormCropDamageChance = 0.1f;  // 폭풍 시 작물 피해 확률
-        public float blizzardWitherChance = 0.05f;  // 폭설 시 작물 동사 확률
+        public float rainGrowthBonus = 0.0f;        // 비 올 때 성장 보너스 (기본 0) // → canonical (this section)
+        public float stormCropDamageChance = 0.1f;  // 폭풍 시 작물 피해 확률       // → canonical (this section)
+        public float blizzardWitherChance = 0.05f;  // 폭설 시 작물 동사 확률       // → canonical (this section)
     }
 }
 ```
 
-**계절별 날씨 확률 기본값** (-> see `docs/systems/time-season.md` 섹션 3.2 for canonical):
-
-| 계절 | Clear | Cloudy | Rain | HeavyRain | Storm | Snow | Blizzard |
-|------|-------|--------|------|-----------|-------|------|----------|
-| Spring | 0.40 | 0.20 | 0.25 | 0.10 | 0.05 | 0.00 | 0.00 |
-| Summer | 0.45 | 0.15 | 0.20 | 0.05 | 0.15 | 0.00 | 0.00 |
-| Autumn | 0.30 | 0.20 | 0.25 | 0.15 | 0.10 | 0.00 | 0.00 |
-| Winter | 0.15 | 0.15 | 0.00 | 0.00 | 0.00 | 0.35 | 0.35 |
-
-(-> see `docs/balance/weather.md` 작성 시 canonical 이동 예정)
+**계절별 날씨 확률 기본값**: (-> see `docs/systems/time-season.md` 섹션 3.2 for canonical — 이 문서에 직접 기재 금지, PATTERN-006)
 
 ### 2.5 FestivalManager
 
@@ -346,14 +340,7 @@ namespace SeedMind.Core
 └──────────────────────────────────────────────────────────────┘
 ```
 
-**기본 축제 목록** (-> see `docs/systems/time-season.md` 섹션 4.2 for canonical 축제 상세):
-
-| 축제 | 계절 | 날짜 | 효과 |
-|------|------|------|------|
-| 봄 씨앗 축제 (Spring Seed Festival) | Spring | 13일 | 희귀 씨앗 교환 기회 |
-| 여름 불꽃 축제 (Summer Fireworks Festival) | Summer | 21일 | 미니게임 보상 최대 500G |
-| 가을 수확 축제 (Autumn Harvest Festival) | Autumn | 21일 | 작물 품평회, 1등 2000G |
-| 겨울 별빛 축제 (Winter Starlight Festival) | Winter | 25일 | NPC 호감도 보너스, 특수 씨앗 우편 |
+**기본 축제 목록**: (-> see `docs/systems/time-season.md` 섹션 4.2 for canonical — 이 문서에 직접 기재 금지, PATTERN-006)
 
 ---
 
@@ -751,7 +738,7 @@ namespace SeedMind.Core
 
 ## 8. MCP 구현 계획
 
-TimeManager/WeatherSystem을 MCP for Unity를 통해 단계적으로 구축하는 태스크 시퀀스. 상세 태스크는 `docs/mcp/time-season-tasks.md`에 별도 작성 예정.
+TimeManager/WeatherSystem을 MCP for Unity를 통해 단계적으로 구축하는 태스크 시퀀스. 상세 태스크는 `docs/mcp/time-season-tasks.md` (ARC-021)에 분리 문서화 완료.
 
 ### Phase A: TimeManager 기본 (MCP 5단계)
 
@@ -761,9 +748,9 @@ Step A-1: Scripts/Core/TimeManager.cs 작성
           → Update 루프 시간 진행 로직
 
 Step A-2: Data/Core/ 폴더에 TimeConfig SO 생성
-          → SO_TimeConfig: secondsPerGameHour=33.33, dayStartHour=6,
-            dayEndHour=24, daysPerSeason=28
-          → MCP로 SO 생성 및 필드 값 설정
+          → SO_TimeConfig 생성 및 필드 값 설정
+          → 수치: (-> see 섹션 2.2 TimeConfig 코드 블록)
+          // PATTERN-006: 수치 직접 기재 금지 — 섹션 2.2가 canonical 출처
 
 Step A-3: SCN_Farm 씬에 GameObject "TimeSystem" 생성
           → TimeManager.cs 컴포넌트 부착
@@ -784,11 +771,10 @@ Step A-5: HUDController에 시간/날짜/계절 텍스트 연결
 ### Phase B: SeasonData 환경 연출 (MCP 4단계)
 
 ```
-Step B-1: SeasonData SO 4개 생성
-          → SO_Season_Spring: sunColor=#FFE4B5, growthMultiplier=1.0
-          → SO_Season_Summer: sunColor=#FFFAED, growthMultiplier=1.1
-          → SO_Season_Autumn: sunColor=#FFB347, growthMultiplier=1.0
-          → SO_Season_Winter: sunColor=#B0C4DE, growthMultiplier=0.0
+Step B-1: SeasonData SO 4개 생성 (-> docs/mcp/time-season-tasks.md Phase B Step B-1 상세)
+          → SO_Season_Spring / SO_Season_Summer / SO_Season_Autumn / SO_Season_Winter 생성
+          → sunColor, growthSpeedMultiplier 등 수치: (-> see docs/systems/time-season.md 섹션 2.2~2.3)
+          // PATTERN-006: 수치 직접 기재 금지 — canonical 문서에서 MCP 실행 시점에 읽어 입력
 
 Step B-2: DayPhaseVisual 데이터 각 SeasonData에 설정 (5개 시간대 x 4계절 = 20 세트)
           → 조명 색상, 강도, 태양 각도 값 입력
@@ -836,8 +822,9 @@ Step D-1: Scripts/Core/FestivalManager.cs 작성
           → OnDayChanged 구독, 축제 판정
 
 Step D-2: FestivalData SO 4개 생성 (-> docs/systems/time-season.md 섹션 4.2)
-          → SO_Festival_SpringSeed (Spring 13), SO_Festival_SummerFireworks (Summer 21),
-            SO_Festival_AutumnHarvest (Autumn 21), SO_Festival_WinterStarlight (Winter 25)
+          → SO_Festival_SpringSeed, SO_Festival_SummerFireworks,
+            SO_Festival_AutumnHarvest, SO_Festival_WinterStarlight
+          // 날짜·이름·효과 수치: (-> see docs/systems/time-season.md 섹션 4.2) — 직접 기재 금지 (PATTERN-006)
 
 Step D-3: Play Mode 테스트
           → 축제 날짜에 이벤트 발행 확인
@@ -942,7 +929,7 @@ Assets/_Project/
 - `docs/systems/farming-architecture.md` (GrowthSystem의 OnDayChanged 구독, 일일 성장 흐름)
 - `docs/systems/crop-growth-architecture.md` (계절 전환 시 SeasonalWither 처리, 성장 공식의 seasonBonus)
 - `docs/systems/project-structure.md` (네임스페이스 SeedMind.Core, 의존성 방향)
-- `docs/mcp/time-season-tasks.md` (상세 MCP 태스크 시퀀스, 작성 예정)
+- `docs/mcp/time-season-tasks.md` (상세 MCP 태스크 시퀀스, ARC-021)
 - `docs/balance/weather.md` (계절별 날씨 확률 밸런스, 작성 예정)
 - `docs/mcp/tutorial-tasks.md` (Step 07: `TimeManager.OnSleepCompleted` 구독 — FIX-025)
 - `docs/mcp/save-load-tasks.md` (T-6: `TimeManager.OnDayChanged`/`OnSeasonChanged` 자동저장 트리거 — ARC-012)

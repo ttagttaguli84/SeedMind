@@ -155,7 +155,7 @@ GameSaveData (루트)
 ├── AchievementSaveData               # (→ see achievement-architecture.md 섹션 7)
 │
 └── AffinitySaveData                  # (→ see blacksmith-architecture.md 섹션 5.5)
-    └── entries[]                     # AffinityEntry[] (npcId, affinityValue, lastVisitDay, triggeredDialogues[])
+    └── entries[]                     # AffinityEntry[] (npcId, affinityValue, lastVisitDay, triggeredDialogueIds[])
 ```
 
 #### 2.2 JSON 스키마 (PATTERN-005 준수)
