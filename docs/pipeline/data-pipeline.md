@@ -373,8 +373,8 @@ SO_Tool_Hoe_Legendary    (tier=3, nextTier=null)
 |----------|-----|
 | 최대 세이브 슬롯 | 3 |
 | 세이브 형식 | JSON |
-| 저장 경로 | `Application.persistentDataPath/saves/` |
-| 파일 이름 | `save_slot_{N}.json` (N = 1, 2, 3) |
+| 저장 경로 | `Application.persistentDataPath/Saves/` |
+| 파일 이름 | `save_{N}.json` (N = 0, 1, 2) |
 | 메타 파일 | `save_meta.json` (슬롯별 요약: 플레이 시간, 날짜, 골드) |
 | 자동 저장 | 매일 06:00 (하루 시작 배치 처리 완료 후) |
 | 수동 저장 | 침대 수면 시 |
@@ -1082,6 +1082,10 @@ namespace SeedMind.Core
         public ShopStockSaveData[] shops;   // 상점 재고 상태
         // BAL-002: 진행 시스템 추가 (→ see docs/systems/progression-architecture.md 섹션 4.4, 5.1)
         public MilestoneSaveData milestones; // 마일스톤 진행 상태 (null 허용 — 구버전 세이브 호환)
+        // ARC-011: 루트 레벨로 분리된 추가 필드
+        public InventorySaveData inventory;  // 인벤토리 상태 (null 허용 — 구버전 호환, → see docs/systems/inventory-architecture.md 섹션 6.1)
+        public NPCSaveData npc;              // NPC 상태 (null 허용, → see docs/systems/npc-shop-architecture.md 섹션 7.1)
+        public TutorialSaveData tutorial;    // 튜토리얼 진행 (null 허용, → see docs/systems/tutorial-architecture.md 섹션 7)
     }
 }
 ```

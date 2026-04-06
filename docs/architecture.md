@@ -280,6 +280,8 @@ Release Build (최적화)
 - `docs/systems/tool-upgrade-architecture.md` — 도구 업그레이드 시스템 기술 아키텍처: 업그레이드 흐름/효과 계산/세이브 확장 (DES-007)
 - `docs/systems/npc-shop-architecture.md` — NPC/상점 시스템 기술 아키텍처: NPC 관리/대화/대장간 연계/여행 상인 (ARC-008)
 - `docs/systems/tutorial-architecture.md` — 튜토리얼/온보딩 시스템 기술 아키텍처: 튜토리얼 매니저/트리거/UI/상황별 힌트 (DES-006)
+- `docs/systems/save-load-architecture.md` — 세이브/로드 시스템 기술 아키텍처: SaveManager, GameSaveData 통합 루트, 자동저장 트리거, 비동기 API, 오류 처리 (ARC-011)
+- `docs/systems/save-load-system.md` — 세이브/로드 UX 설계: 자동저장 트리거, 수동 저장, 멀티슬롯 구조, 게임 종료/시작 흐름 (DES-008)
 
 ## Open Questions
 

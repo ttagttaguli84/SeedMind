@@ -543,14 +543,14 @@ InventorySaveData (→ see docs/pipeline/data-pipeline.md 섹션 3.2 for canonic
 │   ├── quantity: int        → ItemSlot.quantity
 │   └── quality: string      → CropQuality enum의 문자열 표현
 ├── maxSlots: int            → _maxBackpackSlots
-├── toolSlots[]: 도구 슬롯 배열
-│   ├── toolId: string       → ItemSlot.itemId (도구 슬롯)
-│   └── tier: int            → ToolData에서 조회 가능 (저장 편의용)
+├── toolbarSlots[]: 툴바 슬롯 배열 (8칸 범용)
+│   ├── itemId: string       → ItemSlot.itemId (씨앗/비료/도구 등 혼재 가능)
+│   └── quantity: int        → ItemSlot.quantity
 ├── toolbarSelectedIndex: int → _toolbarSelectedIndex (추가 필드)
 └── wateringCanCharges: int  → 물뿌리개 잔여 충전량 (→ see farming-system.md)
 ```
 
-[OPEN] `toolbarSelectedIndex`가 기존 InventorySaveData JSON 스키마에 명시되어 있지 않다. data-pipeline.md에 필드 추가가 필요하다.
+[결정] `toolbarSelectedIndex` 필드는 data-pipeline.md 섹션 3.2 InventorySaveData JSON 스키마에 추가 완료.
 
 ### 6.2 저장 흐름
 

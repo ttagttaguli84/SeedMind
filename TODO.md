@@ -35,11 +35,14 @@
 | BAL-004 | 2 | 가공품 ROI/밸런스 분석 (18종 레시피 수익성, 가공 vs 생작물 비교 → crop-economy.md 또는 신규 balance 문서) |
 | ARC-007 | 2 | 시설 MCP 태스크 시퀀스 (facilities-architecture.md Part II를 독립 문서로 분리 → docs/mcp/facilities-tasks.md) |
 | ~~DES-007~~ | ~~2~~ | ~~도구 업그레이드 시스템 설계 (호미/물뿌리개/낫 각 3단계 업그레이드, 비용, 효과)~~ — DONE -> `docs/systems/tool-upgrade.md` |
-| DES-008 | 1 | 세이브/로드 UX 설계 (자동저장 트리거, 수동 저장, 멀티슬롯 여부) |
+| ~~DES-008~~ | ~~1~~ | ~~세이브/로드 UX 설계 (자동저장 트리거, 수동 저장, 멀티슬롯 여부)~~ — DONE → `docs/systems/save-load-system.md` |
 | ~~FIX-004~~ | ~~3~~ | ~~data-pipeline.md 섹션 2.4 시설 에셋 테이블의 tileSize/buildTimeDays 직접 수치를 `(→ see docs/content/facilities.md)` 참조로 교체 (PATTERN-007 후속)~~ — DONE |
 | ARC-008 | 2 | 도구 업그레이드 MCP 태스크 시퀀스 (tool-upgrade-architecture.md Part II를 독립 문서로 분리 → docs/mcp/tool-upgrade-tasks.md) |
 | CON-004 | 2 | 대장간 NPC 상세 (캐릭터, 대화, 업그레이드 인터페이스 UX) |
 | ARC-009 | 2 | NPC/상점 MCP 태스크 시퀀스 독립 문서화 (npc-shop-architecture.md Part II 요약 → docs/mcp/npc-shop-tasks.md 상세 분리) |
 | BAL-005 | 1 | 여행 상인 희귀 아이템 가격 밸런스 분석 (npcs.md [OPEN] 후속 — 만능 비료/겨울 씨앗 등 8종 ROI 검증) |
 | ARC-010 | 2 | 튜토리얼 MCP 태스크 시퀀스 독립 문서화 (tutorial-architecture.md Part II → docs/mcp/tutorial-tasks.md) |
-| ARC-011 | 2 | 세이브/로드 시스템 기술 아키텍처 (SaveManager, GameSaveData 통합 구조, 자동저장 트리거 설계) |
+| ~~ARC-011~~ | ~~2~~ | ~~세이브/로드 시스템 기술 아키텍처 (SaveManager, GameSaveData 통합 구조, 자동저장 트리거 설계)~~ — DONE → `docs/systems/save-load-architecture.md` |
+| ARC-012 | 2 | 세이브/로드 MCP 태스크 시퀀스 독립 문서화 (save-load-architecture.md Part II → docs/mcp/save-load-tasks.md) |
+| CON-005 | 2 | 가공/요리 시스템 콘텐츠 상세 (가공소별 레시피 전체 목록, 처리 시간, 연료 소모 규칙) |
+| DES-009 | 2 | 퀘스트/미션 시스템 설계 (계절별 목표, NPC 의뢰, 달성 보상 구조) |
