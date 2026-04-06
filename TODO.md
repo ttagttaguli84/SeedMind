@@ -45,8 +45,9 @@
 | ARC-012 | 2 | 세이브/로드 MCP 태스크 시퀀스 독립 문서화 (save-load-architecture.md Part II → docs/mcp/save-load-tasks.md) |
 | ~~CON-005~~ | ~~2~~ | ~~가공/요리 시스템 콘텐츠 상세 (가공소별 레시피 전체 목록, 처리 시간, 연료 소모 규칙)~~ — DONE -> `docs/content/processing-system.md` |
 | ~~DES-009~~ | ~~2~~ | ~~퀘스트/미션 시스템 설계 (계절별 목표, NPC 의뢰, 달성 보상 구조)~~ — DONE → `docs/systems/quest-system.md`, `docs/systems/quest-architecture.md` |
-| ARC-013 | 2 | 가공 시스템 MCP 태스크 시퀀스 독립 문서화 (processing-architecture.md Part II → docs/mcp/processing-tasks.md) |
-| BAL-004 | 2 | 가공품 ROI/밸런스 분석 (32종 레시피 수익성, 가공 체인 ROI, 가공 vs 생작물 비교 → docs/balance/processing-economy.md) |
+| ~~ARC-014~~ | ~~2~~ | ~~가공 시스템 MCP 태스크 시퀀스 독립 문서화 (processing-architecture.md Part II → docs/mcp/processing-tasks.md)~~ — DONE → `docs/mcp/processing-tasks.md` (ID: ARC-014) |
+| ~~BAL-004~~ | ~~2~~ | ~~가공품 ROI/밸런스 분석 (32종 레시피 수익성, 가공 체인 ROI, 가공 vs 생작물 비교 → docs/balance/processing-economy.md)~~ — DONE → `docs/balance/processing-economy.md` |
 | CON-006 | 1 | 목축/낙농 시스템 콘텐츠 상세 (치즈 공방 활성화 선행 조건 — 젖소/염소 등 동물 관리 메카닉) |
 | ~~FIX-005~~ | ~~2~~ | ~~facilities.md에 특화 가공소 3종(제분소·발효실·베이커리) 건설 요건·업그레이드 경로 추가 (design.md 4.6 반영 후속)~~ — DONE → `docs/content/facilities.md` 섹션 7~9 |
-| PATTERN-008 | - | [self-improve 전용] 특화 가공소 레시피 목록을 비-canonical 문서(facilities.md 섹션 7~9)에 직접 기재하여 canonical(processing-system.md)과 불일치 3건 발생 (제분소/발효실/베이커리) → 가공소 레시피 목록을 직접 기재하는 패턴 방지 규칙 추가 필요 |
+| ~~PATTERN-008~~ | ~~-~~ | ~~[self-improve 전용] 특화 가공소 레시피 목록을 비-canonical 문서(facilities.md 섹션 7~9)에 직접 기재하여 canonical(processing-system.md)과 불일치 3건 발생 (제분소/발효실/베이커리) → 가공소 레시피 목록을 직접 기재하는 패턴 방지 규칙 추가 필요~~ — DONE → `.claude/rules/doc-standards.md` PATTERN-008 규칙 + `.claude/rules/workflow.md` Reviewer Checklist 항목 12 추가 (`logs/reports/self_improve_PATTERN008.md`) |
+| FIX-006 | 3 | facilities-architecture.md ProcessingType enum에 Mill/Fermentation/Bake 추가 (W-3 후속) — DONE |

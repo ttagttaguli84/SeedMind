@@ -133,9 +133,12 @@ namespace SeedMind.Building.Data
     /// </summary>
     public enum ProcessingType
     {
-        Jam,        // 잼 -- 과일/채소 모두 가능
-        Juice,      // 주스 -- 과일류만
-        Pickle      // 절임 -- 채소류만
+        Jam,          // 잼 -- 과일/채소 모두 가능
+        Juice,        // 주스 -- 과일류만
+        Pickle,       // 절임 -- 채소류만
+        Mill,         // 제분 -- 제분소 전용 (-> see docs/pipeline/data-pipeline.md 섹션 2.5)
+        Fermentation, // 발효 -- 발효실 전용 (-> see docs/pipeline/data-pipeline.md 섹션 2.5)
+        Bake          // 요리 -- 베이커리 전용 (-> see docs/pipeline/data-pipeline.md 섹션 2.5)
     }
 }
 ```
@@ -797,8 +800,9 @@ ProcessingUI는 **SeedMind.UI 네임스페이스**에 배치되어 BuildingManag
 
 # Part II -- MCP 구현 태스크 요약
 
-> 이 섹션은 향후 **ARC-013** 독립 MCP 태스크 문서로 분리될 예정이다.
+> 이 섹션은 **ARC-014** 독립 MCP 태스크 문서(`docs/mcp/processing-tasks.md`)로 분리 완료되었다.
 > 여기서는 핵심 GameObject 계층, ScriptableObject 에셋 목록만 간략히 기술한다.
+> 상세 MCP 도구 호출 명세, 실행 순서, 검증 체크리스트는 `docs/mcp/processing-tasks.md`를 참조한다.
 
 ---
 

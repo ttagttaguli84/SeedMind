@@ -838,9 +838,12 @@ namespace SeedMind.Building.Data
     /// </summary>
     public enum ProcessingType
     {
-        Jam,        // 잼
-        Juice,      // 주스
-        Pickle      // 절임
+        Jam,            // 잼 (-> see docs/pipeline/data-pipeline.md 섹션 2.5)
+        Juice,          // 주스
+        Pickle,         // 절임
+        Mill,           // 제분 (제분소)
+        Fermentation,   // 발효 (발효실)
+        Bake            // 베이킹 (베이커리)
     }
 }
 ```

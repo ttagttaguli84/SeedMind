@@ -26,6 +26,7 @@
 9. [ ] (PATTERN-005) 동일 문서 내 Part I JSON 스키마와 Part II C# 클래스의 필드명·필드 수가 일치하는가? — 한쪽에 필드를 추가/삭제했을 때 반대쪽도 즉시 업데이트되었는가?
 10. [ ] (PATTERN-006) MCP 태스크 문서(Part II 포함)에 배열·테이블 형태의 수치를 직접 기재한 경우, `(→ see canonical)` 참조 주석이 함께 기재되어 있는가? — 직접 기재 시 canonical 문서와 동시 수정 여부를 확인한다.
 11. [ ] (PATTERN-007) SO 에셋 데이터 테이블(data-pipeline.md 섹션 2.4 등)에서 tileSize/buildTimeDays/effectRadius/recipeCount 등 콘텐츠 정의 파라미터를 직접 수치로 기재했을 경우, canonical 콘텐츠 문서(docs/content/facilities.md 등) 참조로 교체되었는가? — 직접 기재된 구체적 수치는 반드시 참조 표기로 대체한다.
+12. [ ] (PATTERN-008) 시설 문서(facilities.md 등)의 가공소 섹션에 레시피 목록(재료/산출물/가격)을 직접 기재했을 경우, canonical 문서(processing-system.md) 참조로 교체되었는가? — 시설 문서에 허용되는 것은 슬롯 수·연료 타입·처리 속도 배율 등 구조적 파라미터뿐이다.
 
 ## Commit Cadence
 - Commit after each logical unit of work (one system expansion, one review pass)
