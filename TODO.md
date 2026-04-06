@@ -11,7 +11,7 @@
 | ~~ARC-002~~ | ~~4~~ | ~~MCP 작업 계획 — 기본 씬 구성 태스크 시퀀스~~ — DONE → `docs/mcp/scene-setup-tasks.md` |
 | ~~ARC-003~~ | ~~4~~ | ~~MCP 작업 계획 — 농장 그리드 생성 태스크 시퀀스~~ — DONE → `docs/mcp/farming-tasks.md` |
 | ~~ARC-004~~ | ~~3~~ | ~~데이터 파이프라인 설계 (ScriptableObject 구조, JSON 스키마)~~ — DONE → `docs/pipeline/data-pipeline.md` |
-| BAL-001 | 3 | 작물 경제 밸런스 시트 (씨앗 비용 vs 판매가, ROI 분석) |
+| ~~BAL-001~~ | ~~3~~ | ~~작물 경제 밸런스 시트 (씨앗 비용 vs 판매가, ROI 분석)~~ — DONE → `docs/balance/crop-economy.md` |
 | BAL-002 | 3 | 게임 진행 곡선 (레벨별 해금, 예상 플레이타임) |
 | CON-001 | 2 | 작물 콘텐츠 상세 (전체 작물 목록, 계절별 분류, 특수 작물) |
 | CON-002 | 2 | 시설 콘텐츠 상세 (건설 요건, 업그레이드 경로) |

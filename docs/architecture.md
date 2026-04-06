@@ -241,6 +241,7 @@ Release Build (최적화)
 - `docs/mcp/scene-setup-tasks.md` — 기본 씬 구성 MCP 태스크 시퀀스 (ARC-002)
 - `docs/mcp/farming-tasks.md` — 농장 그리드 MCP 태스크 시퀀스 (ARC-003)
 - `docs/pipeline/data-pipeline.md` — 데이터 파이프라인 설계: SO 구조, 세이브/로드, JSON 스키마 (ARC-004)
+- `docs/balance/crop-economy.md` — 작물 경제 밸런스 시트: ROI, 시뮬레이션, 조정 제안 (BAL-001)
 
 ## Open Questions
 

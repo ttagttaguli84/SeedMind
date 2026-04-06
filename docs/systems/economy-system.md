@@ -82,7 +82,7 @@ baseSellPrice = baseBuyPrice * marginRatio
 | 씨앗가 비율 (seedPriceRatio) | 작물 기본 판매가의 50% |
 
 ```
-seedBuyPrice = floor(baseSellPrice * seedPriceRatio)
+seedBuyPrice = round(baseSellPrice * seedPriceRatio)
 ```
 
 | 작물 | 기본 판매가 (-> see `docs/design.md`) | 씨앗 구매가 | 순이익 (일반 품질, 비료 없음) |
