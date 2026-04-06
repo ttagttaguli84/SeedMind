@@ -1124,7 +1124,7 @@ set_property  target: "SO_TutStep_Main_07_Sleep"
   stepId = "STEP_MainTutorial_07_Sleep"
   uiType = 4                                // Combined (시계 하이라이트 + 집 방향 화살표)
   completionType = 0                        // EventBased
-  completionEventType = "TimeEvents.OnSleepExecuted"
+  completionEventType = "TimeManager.OnSleepCompleted"  // → see docs/systems/time-season-architecture.md 섹션 2.1
   messageText = "[placeholder: 집으로 돌아가 잠을 자세요]"
   showArrow = true
   anchorType = 0                            // WorldTarget (집/침대 위치)
@@ -1208,7 +1208,7 @@ set_property  target: "SO_TutStep_Main_11_Reinvest"
   stepId = "STEP_MainTutorial_11_Reinvest"
   uiType = 4                                // Combined
   completionType = 0                        // EventBased
-  completionEventType = "EconomyEvents.OnItemPurchased"
+  completionEventType = "EconomyEvents.OnShopPurchased"  // → see docs/systems/economy-architecture.md 섹션 2.2 (canonical 정의)
   messageText = "[placeholder: 씨앗을 구매하세요]"
   showArrow = true
   anchorType = 0                            // WorldTarget
@@ -1839,7 +1839,7 @@ save_scene
 
 4. [RISK] **입력 차단 오버레이 충돌**: blockOtherInput 활성화 시 다른 UI(인벤토리, 상점)의 Raycast가 차단되는 것은 의도적이나, 비정상 상태에서의 복구 로직이 필요하다. (-> see `docs/systems/tutorial-architecture.md` [RISK])
 
-5. [RISK] **이벤트 미정의 (3건)**: S07 수면(`TimeEvents.OnSleepExecuted`), S08 성장 확인(ClickToContinue 임시 처리), S11 구매 완료(`EconomyEvents.OnItemPurchased` 정확한 이름 미확정) — 해당 이벤트를 canonical 아키텍처 문서에 먼저 추가해야 MCP SO 값 확정 가능.
+5. [NOTE] **이벤트 확정 완료 (FIX-025)**: S07 수면 → `TimeManager.OnSleepCompleted` (time-season-architecture.md 섹션 2.1에 추가됨), S11 구매 → `EconomyEvents.OnShopPurchased` (achievement-architecture.md 섹션 5 canonical). S08 성장 확인은 인터랙션 이벤트(`FarmEvents.OnCropInfoViewed`)가 미정의이므로 `ClickToContinue` 유지.
 
 ---
 

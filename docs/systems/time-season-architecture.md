@@ -125,6 +125,7 @@ namespace SeedMind.Core
 │  + OnDayChanged: Action<int>            // newDay            │
 │  + OnSeasonChanged: Action<Season>      // newSeason         │
 │  + OnYearChanged: Action<int>           // newYear           │
+│  + OnSleepCompleted: Action             // 수면 완료 (SkipToNextDay 내부 발행, OnDayChanged 이전) │
 │                                                              │
 │  [메서드]                                                     │
 │  + Initialize(): void                                        │
@@ -137,7 +138,7 @@ namespace SeedMind.Core
 │  - UpdateDayPhase(): void                                    │
 │  + SetTimeScale(float scale): void                           │
 │  + Pause() / Resume(): void                                  │
-│  + SkipToNextDay(): void  // 디버그/수면용                     │
+│  + SkipToNextDay(): void  // 디버그/수면용 → OnSleepCompleted 발행 후 OnDayChanged 발행 │
 │  + GetSaveData(): TimeSaveData                               │
 │  + LoadSaveData(TimeSaveData data): void                     │
 └──────────────────────────────────────────────────────────────┘
@@ -918,7 +919,7 @@ Assets/_Project/
 
 ## Open Questions
 
-- [OPEN] 수면(Sleep) 메카닉: 밤에 침대에서 잠자면 즉시 다음 날 6:00으로 건너뛰는 기능. SkipToNextDay()로 구현 가능하나, 수면 중 시간 경과에 따른 체력/스태미나 회복 로직이 필요할 수 있다.
+- [OPEN] 수면(Sleep) 메카닉: 밤에 침대에서 잠자면 즉시 다음 날 6:00으로 건너뛰는 기능. `SkipToNextDay()` 내부에서 `OnSleepCompleted` → `OnDayChanged` 순서로 발행. 수면 중 체력/스태미나 회복 로직 필요 여부는 미결.
 - [OPEN] 시간 일시정지 상황: 대화, 상점 UI, 인벤토리 열람 시 시간을 멈출지, 계속 진행할지. 현재 설계는 Pause()/Resume()으로 대응 가능.
 - [OPEN] 날씨 예보 UI: 내일 날씨(_tomorrowWeather)를 TV/라디오 같은 인게임 오브젝트로 보여줄지, HUD에 직접 표시할지.
 - [OPEN] 시간 배속 UI: 플레이어에게 1x/2x/3x 배속 전환을 허용할지. SetTimeScale()로 구현 가능하나 UX 설계 필요.
@@ -943,6 +944,8 @@ Assets/_Project/
 - `docs/systems/project-structure.md` (네임스페이스 SeedMind.Core, 의존성 방향)
 - `docs/mcp/time-season-tasks.md` (상세 MCP 태스크 시퀀스, 작성 예정)
 - `docs/balance/weather.md` (계절별 날씨 확률 밸런스, 작성 예정)
+- `docs/mcp/tutorial-tasks.md` (Step 07: `TimeManager.OnSleepCompleted` 구독 — FIX-025)
+- `docs/mcp/save-load-tasks.md` (T-6: `TimeManager.OnDayChanged`/`OnSeasonChanged` 자동저장 트리거 — ARC-012)
 
 ---
 

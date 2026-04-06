@@ -100,7 +100,7 @@
 │  [이벤트]                                                     │
 │  + OnShopOpened: Action                                      │
 │  + OnShopClosed: Action                                      │
-│  + OnItemPurchased: Action<ShopItemEntry, int>               │
+│  + OnShopPurchased: Action<ShopItemEntry, int>               │  // ← EconomyEvents 정적 허브를 통해 외부 구독 (→ 섹션 2.2)
 │  + OnItemSold: Action<CropData, int, int>  // crop, qty, gold│
 │                                                              │
 │  [메서드]                                                     │
@@ -265,6 +265,9 @@ EconomyManager.OnSeasonChangedHandler(Season newSeason):
 | `OnGoldChanged` | `(int oldGold, int newGold)` | AddGold, SpendGold 호출 시 | HUDController (GoldDisplay 갱신), SaveManager |
 | `OnTransactionComplete` | `Transaction` | SellCrop, BuyItem 완료 시 | ShopUI (거래 피드백), TransactionLog |
 | `OnPriceChanged` | (없음) | 일일 가격 재계산 완료 후 | ShopUI (가격표 갱신), HUDController |
+| `EconomyEvents.OnShopPurchased` | `(ShopItemEntry, int qty)` | BuyItem 완료 시 (ShopSystem.OnShopPurchased 래핑) | AchievementManager(PurchaseCount), TutorialTriggerSystem(Step 11), ShopUI |
+| `EconomyEvents.OnSaleCompleted` | `(string itemId, int qty, int goldEarned)` | SellCrop 완료 시 | AchievementManager(GoldEarned), NotificationManager, UIManager |
+| `EconomyEvents.OnGoldSpent` | `int amount` | SpendGold 호출 시 | AchievementManager(GoldSpent) |
 
 ### 2.3 외부 이벤트 소비
 
@@ -728,7 +731,8 @@ ShopUI → ShopSystem.TryBuyItem(item, qty)
     │       EconomyManager.OnTransactionComplete?.Invoke(tx)
     │
     └── 7) 이벤트 발행
-            ShopSystem.OnItemPurchased?.Invoke(item, qty)
+            ShopSystem.OnShopPurchased?.Invoke(item, qty)
+            EconomyEvents.OnShopPurchased?.Invoke(item, qty)  // 정적 이벤트 허브 경유 — AchievementManager·TutorialTriggerSystem 구독
 ```
 
 ### 5.3 일일 가격 갱신 흐름
