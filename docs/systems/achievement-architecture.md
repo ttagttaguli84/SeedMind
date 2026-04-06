@@ -203,9 +203,11 @@ namespace SeedMind.Achievement
 │  - _unlockedIds: HashSet<string>                                 │
 │  - _achievementLookup: Dictionary<string, AchievementData>       │
 │                                                                  │
-│  [외부 참조]                                                      │
-│  - _economyManager: EconomyManager                               │
-│  - _progressionManager: ProgressionManager                       │
+│  [외부 참조 — Singleton 직접 접근]                               │
+│  - EconomyManager.Instance (보상 골드 지급 시)                   │
+│  - ProgressionManager.Instance (보상 XP 지급 시)                 │
+│  - InventoryManager.Instance (보상 아이템 지급 시)               │
+│  // 필드 직렬화 대신 Instance 직접 호출 방식 사용 (코드 참조 없음) │
 │                                                                  │
 │  [ISaveable]                                                     │
 │  + SaveLoadOrder => 90                                           │
@@ -229,7 +231,7 @@ namespace SeedMind.Achievement
 │  [이벤트 구독] (→ see 섹션 5)                                    │
 │  - FarmEvents.OnCropHarvested → HandleHarvest                    │
 │  - EconomyEvents.OnSaleCompleted → HandleSale                    │
-│  - EconomyEvents.OnGoldChanged → HandleGoldChange                │
+│  - EconomyEvents.OnGoldSpent → HandleGoldSpent                   │
 │  - BuildingEvents.OnConstructionCompleted → HandleBuildingBuilt  │
 │  - ToolEvents.OnToolUpgraded → HandleToolUpgrade                 │
 │  - NPCEvents.OnNPCFirstMet → HandleNPCMet                       │

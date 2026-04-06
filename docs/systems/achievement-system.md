@@ -340,12 +340,16 @@ AchievementProgress {
 | 속성장 비료 x10 | `ach_farming_02` Gold | (-> see `docs/systems/farming-system.md` 섹션 5.1 for 비료 효과) |
 | 금고 장식품 x1 | `ach_economy_02` Gold | 농장 배치 가능 장식 오브젝트. 기능 없음 |
 | 고급 연료 x20 | `ach_facility_03` | (-> see `docs/content/processing-system.md` for 연료 시스템) |
+| 특수 레시피 x1 | `ach_facility_04` Gold | [OPEN] 업적 전용 특수 레시피 vs 기존 레시피 조기 해금 미정. (-> see `docs/content/processing-system.md`) |
 | 장인의 망치 장식품 x1 | `ach_tool_03` | 농장 배치 가능 장식 오브젝트. 기능 없음 |
 | 바람이 특별 할인권 x1 | `ach_explorer_02` | 바람이 상점에서 1회 20% 할인 적용 |
+| 상인의 뱃지 장식품 x1 | `ach_explorer_04` Gold | 농장 배치 가능 장식 오브젝트. 기능 없음 |
 | 영웅의 증표 장식품 x1 | `ach_quest_02` Gold | 농장 배치 가능 장식 오브젝트. 기능 없음 |
 | 거대 씨앗 x1 | `ach_hidden_05` | 심으면 거대 작물 생성 확률 50% 상승 (해당 작물 1회). (-> see `docs/systems/crop-growth.md` 섹션 5.1 for 거대 작물) |
 
-[OPEN] 장식 오브젝트(금고, 장인의 망치, 영웅의 증표)의 비주얼 사양 및 배치 시스템은 별도 설계 필요. 현재 농장 꾸미기 시스템이 미설계 상태.
+> 아이템 보상 전체 목록(10종) canonical 출처는 `docs/content/achievements.md` 섹션 11.
+
+[OPEN] 장식 오브젝트(금고, 장인의 망치, 영웅의 증표, 상인의 뱃지)의 비주얼 사양 및 배치 시스템은 별도 설계 필요. 현재 농장 꾸미기 시스템이 미설계 상태.
 
 ### 4.4 농장 게시판 (Hall of Fame)
 
