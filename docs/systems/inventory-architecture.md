@@ -781,7 +781,7 @@ Step D-1: Canvas_HUD 하위에 "ToolbarPanel" 생성
 Step D-2: "InventoryPanel" 팝업 UI 생성
           → MCP: CreateGameObject("InventoryPanel", parent=Canvas_HUD)
           → 기본 상태: SetActive(false)
-          → GridLayoutGroup 컴포넌트 추가 (열 수: 6~8)
+          → GridLayoutGroup 컴포넌트 추가 (열 수: 5, → see inventory-system.md 섹션 2.1 "5열 x N행")
           → 배낭 슬롯 수만큼 SlotUI 프리팹 인스턴스 생성
              (→ see inventory-system.md 섹션 2.1: 초기 15슬롯, 최대 30슬롯)
 
@@ -833,7 +833,7 @@ Step D-7: 통합 테스트
 
 | 이벤트 소스 | 이벤트 | 처리 |
 |------------|--------|------|
-| `BuildingManager` | `OnBuildingConstructed` | 창고 건설 시 ExpandBackpack() |
+| `BuildingManager` | `OnBuildingConstructed` | 창고 건설 시 HandleStorage() → AddStorageSlots() (배낭 슬롯 확장 아님, 창고 슬롯 배열 추가) |
 
 ### 10.3 타 시스템의 InventoryManager 호출
 
