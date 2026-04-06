@@ -113,8 +113,11 @@
 | ~~FIX-039~~ | ~~2~~ | ~~LivestockConfig SO에 goldQualityThreshold, silverQualityThreshold 필드 추가 필요 (ARC-019 섹션 5.2 — GetProductQuality에서 참조하는 임계값이 SO에 정의되어야 함)~~ — DONE → livestock-architecture.md 섹션 5.2 품질 임계값 필드 추가, livestock-system.md 섹션 5.3 canonical 수치 정의 |
 | ~~FIX-040~~ | ~~2~~ | ~~CON-006 섹션 7.3의 XPSource enum 제안이 ARC-019 섹션 7.1과 완전 중복 기재됨 — CON-006 섹션 7.3에서 enum 전체 기재를 제거하고 ARC-019 참조로 교체 (PATTERN-001 위반: 비-canonical 문서에 enum 직접 기재)~~ — DONE → livestock-system.md 섹션 7.3 enum 제거, ARC-019 참조로 교체 |
 | ~~FIX-041~~ | ~~1~~ | ~~design.md 섹션 4.6 시설 목록에 외양간(Barn)/닭장(Chicken Coop)/치즈 공방(Cheese Workshop) 추가 필요 (CON-006 섹션 10 [RISK]-2 후속)~~ — DONE → design.md 섹션 4.6 3개 시설 추가 (canonical 참조 방식) |
-| FIX-042 | 2 | progression-curve.md 섹션 2.2 상단에 "[DEPRECATED 시나리오]" 배너 추가 (물주기 XP=0 조정 이전 수치 혼재 방지 — ARC-024 리뷰 WARNING-1 후속) |
-| FIX-043 | 1 | livestock-architecture.md AnimalManager 메서드 목록에 `ClearAllAnimals()` 테스트 전용 메서드 추가 (#if UNITY_EDITOR 블록 — ARC-024 리뷰 I-2 후속) |
+| ~~FIX-042~~ | ~~2~~ | ~~progression-curve.md 섹션 2.2 상단에 "[DEPRECATED 시나리오]" 배너 추가 (물주기 XP=0 조정 이전 수치 혼재 방지 — ARC-024 리뷰 WARNING-1 후속)~~ — DONE |
+| ~~FIX-043~~ | ~~1~~ | ~~livestock-architecture.md AnimalManager 메서드 목록에 `ClearAllAnimals()` 테스트 전용 메서드 추가 (#if UNITY_EDITOR 블록 — ARC-024 리뷰 I-2 후속)~~ — DONE |
+| ~~BAL-011~~ | ~~1~~ | ~~목축 XP canonical 등록 (livestock-system.md 섹션 7.3 제안값을 progression-curve.md에 공식 포함 — devlog 048 INFO-1 후속)~~ — DONE → progression-curve.md 섹션 1.2.6 신규 추가 |
+| ~~BAL-008~~ | ~~1~~ | ~~목축/낙농 경제 밸런스 분석 (동물 구매/사료 비용 vs 젖/양모/알 판매 ROI — CON-006 + ARC-019 후속)~~ — DONE → `docs/balance/livestock-economy.md` (410줄, 동물별 ROI/가공 체인/초기 투자 분석) |
 | ARC-025 | 1 | 농장 확장(Zone) 시스템 MCP 태스크 시퀀스 문서화 (FarmZoneManager, ZoneData SO 구현 시퀀스 — ARC-023 후속) |
 | DES-013 | 1 | 낚시 시스템 설계 (Zone F 연못 구역 활용 — 낚시 메카닉, 어종 목록, 계절별 분포) |
-| BAL-011 | 1 | 목축 XP canonical 등록 (livestock-system.md 섹션 7.3 제안값을 progression-curve.md에 공식 포함 — devlog 048 INFO-1 후속) |
+| CON-009 | 2 | 치즈 공방 레시피 정의 (processing-system.md에 치즈 공방 레시피 4~6종 확정 추가 — BAL-008 GAP-1 후속, CON-006 완료로 선행 조건 해소됨) |
+| FIX-044 | 1 | economy-architecture.md에 동물 생산물 수급 변동 적용 정책 명시 (작물과 동일 풀 vs 별도 카테고리 결정 — BAL-008 GAP-3 후속) |

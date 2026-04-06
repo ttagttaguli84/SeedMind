@@ -85,6 +85,9 @@
 │  - ProcessDailyHappiness(AnimalInstance animal): void         │
 │  - ProcessDailyProduction(AnimalInstance animal): void        │
 │  - CheckAutoFeed(AnimalInstance animal): void                 │
+│  #if UNITY_EDITOR                                             │
+│  + ClearAllAnimals(): void  // 테스트 전용 — 모든 동물 초기화│
+│  #endif                                                       │
 │                                                              │
 │  [구독]                                                       │
 │  + OnEnable():                                               │
@@ -215,6 +218,10 @@ namespace SeedMind.Livestock
         // --- 메타 ---
         public int purchaseDay;            // 구매 시점 (TimeManager.TotalElapsedDays)
         public string displayName;         // 플레이어가 지정한 이름 (nullable)
+
+        // --- 통계 (업적/추적용) ---
+        public int totalProductCount;      // 누적 생산 횟수 (업적/통계 추적)
+        public int totalGoldQualityCount;  // 고품질 생산 누적 횟수 (업적 조건)
 
         // --- 참조 (런타임에만, 직렬화 제외) ---
         [System.NonSerialized]
@@ -742,6 +749,10 @@ namespace SeedMind.Livestock
         public int productQuality;
         public int purchaseDay;
         public string displayName;         // nullable
+        public int totalProductCount;      // 누적 생산 횟수 (업적/통계 추적)
+        public int totalGoldQualityCount;  // 고품질 생산 누적 횟수 (업적 조건)
+        // totalRevenue는 AnimalInstance에 저장하지 않음 — EconomyManager의
+        // TransactionRecord에서 HarvestOrigin.Barn 필터링으로 집계 (→ see economy-architecture.md 섹션 5)
     }
 }
 ```
@@ -768,7 +779,17 @@ GetSaveData(): AnimalSaveData
             instanceId = a.instanceId,
             animalDataId = a.animalDataId,
             happiness = a.happiness,
-            ... // 모든 런타임 필드 매핑
+            daysSinceLastFed = a.daysSinceLastFed,
+            daysSinceLastPetted = a.daysSinceLastPetted,
+            isFedToday = a.isFedToday,
+            isPettedToday = a.isPettedToday,
+            daysSinceLastProduct = a.daysSinceLastProduct,
+            isProductReady = a.isProductReady,
+            productQuality = a.productQuality,
+            purchaseDay = a.purchaseDay,
+            displayName = a.displayName,
+            totalProductCount = a.totalProductCount,      // [GAP-2] 누적 생산 횟수
+            totalGoldQualityCount = a.totalGoldQualityCount  // [GAP-2] 고품질 생산 누적
         }).ToArray()
 
 LoadSaveData(AnimalSaveData data):
