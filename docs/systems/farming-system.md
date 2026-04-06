@@ -16,10 +16,10 @@
 ## 1. 농장 그리드
 
 - **초기 크기**: 8x8 타일 (64타일)
-- **최대 크기**: 16x16 타일 (256타일)
+- **최대 크기**: 32x32 타일 (576타일, Zone A~G 합계) — (→ see `docs/systems/farm-expansion.md` 섹션 1.1)
 - **타일 크기**: 1m x 1m (Unity 월드 단위)
-- **확장 방식**: 골드를 지불하여 한 방향으로 4x8 또는 8x4 블록 단위 확장
-- **확장 비용**: 1단계 500G, 2단계 1000G, 3단계 2000G, 4단계 4000G (누적 7500G)
+- **확장 방식**: Zone(구역) 단위 해금 방식 — Zone B~G 6단계 (→ see `docs/systems/farm-expansion.md` 섹션 2)
+- **확장 비용**: (→ see `docs/systems/farm-expansion.md` 섹션 2.1, canonical) 총 16,000G (Zone B~G 누적)
 
 ---
 

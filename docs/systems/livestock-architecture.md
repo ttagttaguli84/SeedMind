@@ -63,6 +63,8 @@
 │  + OnAnimalPetted: Action<AnimalInstance>                     │
 │  + OnProductReady: Action<AnimalInstance, AnimalProductInfo>  │
 │  + OnProductCollected: Action<AnimalInstance, ItemData, int>  │
+│    // UI 구독용 인스턴스 이벤트 — ItemData 포함               │
+│    // 경량 시스템(XP/퀘스트) 구독 → LivestockEvents.OnProductCollected 사용│
 │  + OnBarnUpgraded: Action<int>           // newLevel         │
 │  + OnCoopUpgraded: Action<int>           // newLevel         │
 │                                                              │
@@ -829,6 +831,8 @@ namespace SeedMind.Livestock
         // --- 생산 ---
         public static event Action<AnimalInstance, AnimalProductInfo> OnProductReady;
         public static event Action<AnimalInstance, int> OnProductCollected;  // amount
+        // ※ 경량 이벤트 허브 — XP/퀘스트 등 시스템 구독용 (ItemData 생략)
+        // ※ UI 구독은 AnimalManager 인스턴스 이벤트 OnProductCollected(AnimalInstance, ItemData, int) 사용
 
         // --- 외양간/닭장 ---
         public static event Action<int> OnBarnUpgraded;  // newLevel
