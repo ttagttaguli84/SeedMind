@@ -125,8 +125,11 @@
 | 제분소 | 1500G | 작물 → 가루/분말 (중간 가공재) | 레벨 5 |
 | 발효실 | 4000G | 작물 → 와인/식초/발효품 | 레벨 8 |
 | 베이커리 | 5000G | 가공품 → 고급 요리 (연료 소모) | 레벨 9 |
+| 닭장 (Chicken Coop) | (-> see `docs/content/livestock-system.md` 섹션 3.1) | 닭 수용, 레벨 1~2 업그레이드 가능 | Zone E 해금 |
+| 외양간 (Barn) | (-> see `docs/content/livestock-system.md` 섹션 3.2) | 중/대형 동물 수용, 레벨 1~3 업그레이드 가능 | Zone E 해금 |
+| 치즈 공방 (Cheese Workshop) | (-> see `docs/content/livestock-system.md` 섹션 7.1) | 우유/염소젖 가공 | 외양간 Lv.1 |
 
-시설 상세 (건설 요건, 슬롯, 레시피): (-> see `docs/content/processing-system.md` 섹션 2~3 for 특화 가공소 3종, `docs/content/facilities.md` 섹션 6 for 일반 가공소)
+시설 상세 (건설 요건, 슬롯, 레시피): (-> see `docs/content/processing-system.md` 섹션 2~3 for 특화 가공소 3종, `docs/content/facilities.md` 섹션 6 for 일반 가공소, `docs/content/livestock-system.md` 섹션 3, 7.2 for 목축 시설)
 
 ---
 
@@ -220,6 +223,8 @@
 - `docs/content/npcs.md` — NPC/상점 콘텐츠 상세 (CON-003)
 - `docs/systems/tutorial-system.md` — 튜토리얼/온보딩 시스템 상세 설계 (DES-006)
 - `docs/systems/quest-system.md` — 퀘스트/미션 시스템 상세 설계 (DES-009)
+- `docs/content/livestock-system.md` — 목축/낙농 콘텐츠 상세 (CON-006)
+- `docs/systems/livestock-architecture.md` — 목축/낙농 시스템 기술 아키텍처 (ARC-019)
 
 ## Open Questions
 

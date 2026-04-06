@@ -109,7 +109,7 @@
 | FIX-036 | 2 | economy-system.md 섹션 3.3 목공소 인벤토리를 Zone B~G 7구역 방식으로 업데이트 (DES-012 섹션 2.1 해금 조건 테이블 반영 — farming-system.md 섹션 1 확장 방식 동기화 포함) |
 | ~~FIX-037~~ | ~~1~~ | ~~farm-expansion.md 섹션 4.4 과일나무 데이터(묘목 가격, 수확량, 판매가)를 crops.md로 이전하고 참조 표기로 교체 (WARNING-8: 비-canonical 문서에 작물 가격 직접 기재)~~ — DONE → crops.md 섹션 6 (과일나무 canonical 섹션 신규), farm-expansion.md 섹션 4.4 참조 표기로 교체 |
 | PATTERN-010 | - | [self-improve 전용] 아키텍처 문서를 디자인 문서와 병렬 작성 시 플레이스홀더 수치/ID를 사용하고 디자인 확정 후 동기화하지 않는 패턴 (ARC-023에서 zoneId 5종·최대 크기 불일치 3건 발생) |
-| FIX-038 | 3 | AnimalManager는 _barnLevel 단일 필드로 외양간(Barn)만 추적하고 닭장(Chicken Coop)의 레벨/수용 수를 별도 관리하지 않음 — _coopLevel, _coopCapacity 필드 추가 또는 시설별 레벨 딕셔너리 방식으로 설계 확장 필요 (ARC-019 섹션 1/6 수정) |
-| FIX-039 | 2 | LivestockConfig SO에 goldQualityThreshold, silverQualityThreshold 필드 추가 필요 (ARC-019 섹션 5.2 — GetProductQuality에서 참조하는 임계값이 SO에 정의되어야 함) |
-| FIX-040 | 2 | CON-006 섹션 7.3의 XPSource enum 제안이 ARC-019 섹션 7.1과 완전 중복 기재됨 — CON-006 섹션 7.3에서 enum 전체 기재를 제거하고 ARC-019 참조로 교체 (PATTERN-001 위반: 비-canonical 문서에 enum 직접 기재) |
-| FIX-041 | 1 | design.md 섹션 4.6 시설 목록에 외양간(Barn)/닭장(Chicken Coop)/치즈 공방(Cheese Workshop) 추가 필요 (CON-006 섹션 10 [RISK]-2 후속) |
+| ~~FIX-038~~ | ~~3~~ | ~~AnimalManager는 _barnLevel 단일 필드로 외양간(Barn)만 추적하고 닭장(Chicken Coop)의 레벨/수용 수를 별도 관리하지 않음 — _coopLevel, _coopCapacity 필드 추가 또는 시설별 레벨 딕셔너리 방식으로 설계 확장 필요 (ARC-019 섹션 1/6 수정)~~ — DONE → livestock-architecture.md 섹션 1/5.2/6/8 전수 업데이트, coopLevel/coopCapacity 분리 |
+| ~~FIX-039~~ | ~~2~~ | ~~LivestockConfig SO에 goldQualityThreshold, silverQualityThreshold 필드 추가 필요 (ARC-019 섹션 5.2 — GetProductQuality에서 참조하는 임계값이 SO에 정의되어야 함)~~ — DONE → livestock-architecture.md 섹션 5.2 품질 임계값 필드 추가, livestock-system.md 섹션 5.3 canonical 수치 정의 |
+| ~~FIX-040~~ | ~~2~~ | ~~CON-006 섹션 7.3의 XPSource enum 제안이 ARC-019 섹션 7.1과 완전 중복 기재됨 — CON-006 섹션 7.3에서 enum 전체 기재를 제거하고 ARC-019 참조로 교체 (PATTERN-001 위반: 비-canonical 문서에 enum 직접 기재)~~ — DONE → livestock-system.md 섹션 7.3 enum 제거, ARC-019 참조로 교체 |
+| ~~FIX-041~~ | ~~1~~ | ~~design.md 섹션 4.6 시설 목록에 외양간(Barn)/닭장(Chicken Coop)/치즈 공방(Cheese Workshop) 추가 필요 (CON-006 섹션 10 [RISK]-2 후속)~~ — DONE → design.md 섹션 4.6 3개 시설 추가 (canonical 참조 방식) |

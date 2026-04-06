@@ -38,8 +38,10 @@
 │──────────────────────────────────────────────────────────────│
 │  [상태]                                                       │
 │  - _animals: List<AnimalInstance>                             │
-│  - _barnLevel: int                                           │
-│  - _maxCapacity: int           // 현재 외양간 수용 한계      │
+│  - _barnLevel: int             // 외양간 레벨 (0 = 미건설)   │
+│  - _barnCapacity: int          // 외양간 수용 한계 (중/대형) │
+│  - _coopLevel: int             // 닭장 레벨 (0 = 미건설)     │
+│  - _coopCapacity: int          // 닭장 수용 한계 (닭 전용)   │
 │  - _isUnlocked: bool           // Zone E 해금 여부           │
 │                                                              │
 │  [설정 참조]                                                   │
@@ -49,7 +51,9 @@
 │  [읽기 전용 프로퍼티]                                           │
 │  + Animals: IReadOnlyList<AnimalInstance>                     │
 │  + BarnLevel: int                                            │
-│  + MaxCapacity: int                                          │
+│  + BarnCapacity: int                                         │
+│  + CoopLevel: int                                            │
+│  + CoopCapacity: int                                         │
 │  + CurrentCount: int                                         │
 │  + IsUnlocked: bool                                          │
 │                                                              │
@@ -60,11 +64,14 @@
 │  + OnProductReady: Action<AnimalInstance, AnimalProductInfo>  │
 │  + OnProductCollected: Action<AnimalInstance, ItemData, int>  │
 │  + OnBarnUpgraded: Action<int>           // newLevel         │
+│  + OnCoopUpgraded: Action<int>           // newLevel         │
 │                                                              │
 │  [메서드]                                                     │
 │  + Initialize(LivestockConfig config): void                  │
 │  + UnlockBarn(): void                    // Zone E 해금 시   │
 │  + UpgradeBarn(): bool                   // 외양간 업그레이드│
+│  + UpgradeCoop(): bool                   // 닭장 업그레이드  │
+│  + HandleCoopBuilt(): void               // 닭장 건설 콜백   │
 │  + TryBuyAnimal(AnimalData data): bool                       │
 │  + FeedAnimal(AnimalInstance animal): bool                    │
 │  + PetAnimal(AnimalInstance animal): void                     │
@@ -219,7 +226,11 @@ namespace SeedMind.Livestock
 ```
 TryBuyAnimal(AnimalData data)
     │
-    ├── 1) 수용 가능 여부 확인: CurrentCount < MaxCapacity
+    ├── 1) 수용 가능 여부 확인 (동물 타입별):
+    │       if data.animalType == AnimalType.Poultry:
+    │           if CurrentCount(Poultry) >= _coopCapacity: return false
+    │       else:
+    │           if CurrentCount(NonPoultry) >= _barnCapacity: return false
     │
     ├── 2) 골드 차감: EconomyManager.SpendGold(data.purchasePrice, "BuyAnimal")
     │       → 실패 시 false 반환
@@ -508,6 +519,15 @@ namespace SeedMind.Livestock.Data
         public int[] barnUpgradeCapacity;    // 레벨별 수용 한계 (→ see docs/content/livestock-system.md)
         public int[] barnUpgradeCost;        // 레벨별 업그레이드 비용 (→ see docs/content/livestock-system.md)
 
+        [Header("닭장")]
+        public int initialCoopCapacity;      // 초기 수용 한계 (→ see docs/content/livestock-system.md)
+        public int[] coopUpgradeCapacity;    // 레벨별 수용 한계 (→ see docs/content/livestock-system.md)
+        public int[] coopUpgradeCost;        // 레벨별 업그레이드 비용 (→ see docs/content/livestock-system.md)
+
+        [Header("생산물 품질 임계값")]
+        public float goldQualityThreshold;    // Gold 품질 최소 행복도 (→ see docs/content/livestock-system.md 섹션 5.3)
+        public float silverQualityThreshold;  // Silver 품질 최소 행복도 (→ see docs/content/livestock-system.md 섹션 5.3)
+
         [Header("행복도")]
         public int neglectThresholdDays;     // 연속 미급여 페널티 시작 일수 (→ see docs/content/livestock-system.md 섹션 5)
         public float neglectPenaltyPerDay;   // 미급여 초과 시 일일 추가 감소 (→ see docs/content/livestock-system.md 섹션 5)
@@ -564,18 +584,27 @@ Zone E(`zone_south_meadow`, ZoneType.Pasture) 해금과 AnimalManager 활성화�
     │       └── // 외양간 건설 가능 상태 활성화
     │           // 실제 동물 수용은 Barn 건설 후
     │
-    └── [플레이어가 외양간(Barn) 건설]
+    ├── [플레이어가 외양간(Barn) 건설]
+    │       │
+    │       ├── BuildingManager.OnBuildingConstructed("barn")
+    │       │
+    │       └── AnimalManager.HandleBarnBuilt()
+    │               ├── _barnLevel = 1
+    │               ├── _barnCapacity = _livestockConfig.initialBarnCapacity
+    │               │       // → see docs/content/livestock-system.md
+    │               ├── OnBarnUpgraded?.Invoke(1)
+    │               └── // 중/대형 동물 구매 가능
+    │
+    └── [플레이어가 닭장(Chicken Coop) 건설]
             │
-            ├── BuildingManager.OnBuildingConstructed("barn")
+            ├── BuildingManager.OnBuildingConstructed("chicken_coop")
             │
-            └── AnimalManager.HandleBarnBuilt()
-                    │
-                    ├── _barnLevel = 1
-                    ├── _maxCapacity = _livestockConfig.initialBarnCapacity
+            └── AnimalManager.HandleCoopBuilt()
+                    ├── _coopLevel = 1
+                    ├── _coopCapacity = _livestockConfig.initialCoopCapacity
                     │       // → see docs/content/livestock-system.md
-                    ├── OnBarnUpgraded?.Invoke(1)
-                    │
-                    └── // 이제 동물 구매 가능
+                    ├── OnCoopUpgraded?.Invoke(1)
+                    └── // 닭 구매 가능
 ```
 
 #### 6.1 외양간(Barn) 업그레이드
@@ -589,9 +618,27 @@ UpgradeBarn(): bool
     │       // → see docs/content/livestock-system.md
     │
     ├── 3) _barnLevel++
-    │       _maxCapacity = barnUpgradeCapacity[_barnLevel]
+    │       _barnCapacity = barnUpgradeCapacity[_barnLevel]
     │
     ├── 4) OnBarnUpgraded?.Invoke(_barnLevel)
+    │
+    └── 5) return true
+```
+
+#### 6.2 닭장(Chicken Coop) 업그레이드
+
+```
+UpgradeCoop(): bool
+    │
+    ├── 1) 최대 레벨 체크: _coopLevel < _livestockConfig.coopUpgradeCapacity.Length
+    │
+    ├── 2) 비용 차감: EconomyManager.SpendGold(coopUpgradeCost[nextLevel])
+    │       // → see docs/content/livestock-system.md
+    │
+    ├── 3) _coopLevel++
+    │       _coopCapacity = coopUpgradeCapacity[_coopLevel]
+    │
+    ├── 4) OnCoopUpgraded?.Invoke(_coopLevel)
     │
     └── 5) return true
 ```
@@ -674,6 +721,7 @@ namespace SeedMind.Livestock
     {
         public bool isUnlocked;                    // Zone E 해금 여부
         public int barnLevel;                      // 외양간 레벨
+        public int coopLevel;                      // 닭장 레벨
         public AnimalInstanceSaveData[] animals;   // 동물 개체 목록
     }
 
@@ -713,6 +761,7 @@ public AnimalSaveData animals;   // 목축/낙농 시스템 상태 (ARC-019)
 GetSaveData(): AnimalSaveData
     ├── isUnlocked = _isUnlocked
     ├── barnLevel = _barnLevel
+    ├── coopLevel = _coopLevel
     └── animals = _animals.Select(a => new AnimalInstanceSaveData {
             instanceId = a.instanceId,
             animalDataId = a.animalDataId,
@@ -723,7 +772,9 @@ GetSaveData(): AnimalSaveData
 LoadSaveData(AnimalSaveData data):
     ├── _isUnlocked = data.isUnlocked
     ├── _barnLevel = data.barnLevel
-    ├── _maxCapacity = _livestockConfig.barnUpgradeCapacity[_barnLevel]
+    ├── _barnCapacity = _livestockConfig.barnUpgradeCapacity[_barnLevel]
+    ├── _coopLevel = data.coopLevel
+    ├── _coopCapacity = _livestockConfig.coopUpgradeCapacity[_coopLevel]
     └── foreach savedAnimal in data.animals:
             var instance = new AnimalInstance { ... }
             instance.data = DataRegistry.GetAnimalData(savedAnimal.animalDataId)
@@ -779,8 +830,9 @@ namespace SeedMind.Livestock
         public static event Action<AnimalInstance, AnimalProductInfo> OnProductReady;
         public static event Action<AnimalInstance, int> OnProductCollected;  // amount
 
-        // --- 외양간 ---
+        // --- 외양간/닭장 ---
         public static event Action<int> OnBarnUpgraded;  // newLevel
+        public static event Action<int> OnCoopUpgraded;  // newLevel
 
         // --- Raise 메서드 ---
         public static void RaiseAnimalPurchased(AnimalInstance a) => OnAnimalPurchased?.Invoke(a);
@@ -790,6 +842,7 @@ namespace SeedMind.Livestock
         public static void RaiseProductReady(AnimalInstance a, AnimalProductInfo i) => OnProductReady?.Invoke(a, i);
         public static void RaiseProductCollected(AnimalInstance a, int amt) => OnProductCollected?.Invoke(a, amt);
         public static void RaiseBarnUpgraded(int lvl) => OnBarnUpgraded?.Invoke(lvl);
+        public static void RaiseCoopUpgraded(int lvl) => OnCoopUpgraded?.Invoke(lvl);
     }
 
     public struct AnimalProductInfo
@@ -961,7 +1014,7 @@ Step E-5: 저장/로드 → AnimalSaveData 무결성 확인
 
 5. [OPEN] **동물 프리팹 배치**: Zone E 목초지에 동물 프리팹을 어떻게 배치할지. 자유 배회(NavMesh) vs 고정 위치 vs 울타리 영역 내 랜덤. 비주얼 시스템과 연계 필요.
 
-6. [OPEN] **닭장(Coop) vs 외양간(Barn) 분리**: AnimalType.Poultry는 Coop, 나머지는 Barn을 요구하는 구조인지, 통합 시설인지. CON-006에서 확정.
+6. [RESOLVED] **닭장(Coop) vs 외양간(Barn) 분리**: AnimalType.Poultry는 Coop, 나머지는 Barn을 요구하는 구조로 확정. 섹션 1 클래스 다이어그램, 섹션 3.1 구매 흐름, 섹션 6 Zone E 연동 흐름에 반영 완료 (FIX-038).
 
 7. [OPEN] **치즈 공방 연계**: processing-system.md(CON-005)에서 보류된 치즈 공방 레시피 활성화. 동물 생산물(우유)이 가공 원재료로 사용되는 흐름의 상세 설계 필요.
 
