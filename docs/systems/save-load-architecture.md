@@ -145,12 +145,14 @@ GameSaveData (루트)
 ├── NPCSaveData                       # (→ see npc-shop-architecture.md 섹션 7.1)
 │   └── travelingMerchant             # TravelingMerchantSaveData
 │
-└── TutorialSaveData                  # (→ see tutorial-architecture.md 섹션 7)
-    ├── completedSequenceIds[]
-    ├── completedStepIds[]
-    ├── activeSequenceId
-    ├── activeStepIndex
-    └── contextHintCooldowns          # Dictionary<string, int>
+├── TutorialSaveData                  # (→ see tutorial-architecture.md 섹션 7)
+│   ├── completedSequenceIds[]
+│   ├── completedStepIds[]
+│   ├── activeSequenceId
+│   ├── activeStepIndex
+│   └── contextHintCooldowns          # Dictionary<string, int>
+│
+└── AchievementSaveData               # (→ see achievement-architecture.md 섹션 7)
 ```
 
 #### 2.2 JSON 스키마 (PATTERN-005 준수)
@@ -233,6 +235,11 @@ GameSaveData (루트)
     "activeSequenceId": "",
     "activeStepIndex": -1,
     "contextHintCooldowns": {}
+  },
+
+  "achievements": {
+    "records": [],
+    "totalUnlocked": 0
   }
 }
 ```
@@ -251,6 +258,7 @@ namespace SeedMind.Save.Data
     using SeedMind.Level;
     using SeedMind.NPC.Data;
     using SeedMind.Tutorial;
+    using SeedMind.Achievement;
 
     /// <summary>
     /// 하나의 세이브 슬롯에 저장되는 전체 게임 상태.
@@ -278,14 +286,15 @@ namespace SeedMind.Save.Data
         public MilestoneSaveData milestones;             // → see progression-architecture.md 섹션 4.4 (null 허용)
         public NPCSaveData npc;                          // → see npc-shop-architecture.md 섹션 7.1 (null 허용)
         public TutorialSaveData tutorial;                // → see tutorial-architecture.md 섹션 7 (null 허용)
+        public AchievementSaveData achievements;         // → see achievement-architecture.md 섹션 7 (null 허용)
     }
 }
 ```
 
 **PATTERN-005 검증**: JSON 스키마(섹션 2.2)와 C# 클래스(섹션 2.3)의 필드 수 동일:
 - 메타데이터 3개: saveVersion, savedAt, playTimeSeconds
-- 시스템 데이터 13개: player, farm, inventory, time, weather, economy, buildings, processing, unlocks, shops, milestones, npc, tutorial
-- 총 16개 필드 -- 양쪽 일치
+- 시스템 데이터 14개: player, farm, inventory, time, weather, economy, buildings, processing, unlocks, shops, milestones, npc, tutorial, achievements
+- 총 17개 필드 -- 양쪽 일치
 
 **기존 data-pipeline.md와의 차이점**: data-pipeline.md의 GameSaveData에는 `inventory`, `npc`, `tutorial` 필드가 명시적으로 분리되지 않았다. `inventory`는 PlayerSaveData 내부에 포함되어 있었고, `npc`와 `tutorial`은 각 아키텍처 문서에서 개별적으로 확장을 기술했다. 이 문서에서는 향후 구현 시 모든 세이브 데이터가 루트에서 명확히 접근 가능하도록 통합한다.
 
@@ -612,7 +621,9 @@ LoadAsync(slotIndex)
     │       ├── [60] BuildingManager    → 시설 상태 복원
     │       ├── [70] ProgressionManager → 해금/마일스톤
     │       ├── [75] NPCManager         → NPC 상태
-    │       └── [80] TutorialManager    → 튜토리얼 진행 (마지막)
+    │       ├── [80] TutorialManager    → 튜토리얼 진행
+    │       ├── [85] QuestManager       → 튜토리얼 완료 상태 참조
+    │       └── [90] AchievementManager → QuestCompleted 조건 정합성 보장 (마지막)
     │
     ├── 8) _isLoading = false, _activeSlot = slotIndex
     │        SaveEvents.RaiseLoadCompleted(slotIndex)
@@ -892,6 +903,7 @@ namespace SeedMind.Save
 | NPCManager | 75 | NPC 상태, 여행 상인 일정 |
 | TutorialManager | 80 | 튜토리얼 진행 (다른 시스템 상태 참조 가능) |
 | QuestManager | 85 | 튜토리얼 완료 상태 참조 필요, 퀘스트 해금 조건 복원 |
+| AchievementManager | 90 | QuestManager(85) 이후. QuestCompleted 조건 업적의 진행도 복원 정합성 보장 |
 
 ---
 
@@ -1053,6 +1065,7 @@ Step D-3: 메인 메뉴 연동
 - `docs/systems/npc-shop-architecture.md` -- NPCSaveData, TravelingMerchantSaveData (섹션 7)
 - `docs/systems/tool-upgrade-architecture.md` -- ToolUpgradeSaveData (섹션 7.2)
 - `docs/systems/time-season-architecture.md` -- TimeSaveData, WeatherSaveData (섹션 7)
+- `docs/systems/achievement-architecture.md` (ARC-017) -- AchievementSaveData 구조, SaveLoadOrder 90 할당 (섹션 7)
 
 ---
 

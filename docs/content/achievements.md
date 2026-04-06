@@ -95,7 +95,7 @@
 | 단계 | conditionValue | 골드 | XP | 칭호 | 아이템 |
 |------|---------------|------|-----|------|--------|
 | Bronze | 50 | 50G | 20 XP | - | - |
-| Silver | 200 | 150G | 50 XP | 숙련 농부 (`title_farming_silver`) | - |
+| Silver | 200 | 150G | 50 XP | 숙련 농부 (`title_skilled_farmer`) | - |
 | Gold | 1,000 | 300G | 100 XP | 수확의 대가 (`title_farming_gold`) | 속성장 비료 x10 |
 
 ### 3.3 단일 업적 보상 상세
@@ -206,9 +206,9 @@
 | # | achievementId | 이름 | 유형 | conditionType | 조건 상세 | 숨김 |
 |---|---------------|------|------|---------------|----------|------|
 | 1 | `ach_explorer_01` | 마을 인사 | Single | `NPCMet` (4) | 4명의 NPC(하나, 철수, 목이, 바람이) 모두와 첫 대화 완료 (-> see `docs/content/npcs.md` 섹션 2.1). conditionValue = 4 | N |
-| 2 | `ach_explorer_02` | 바람이의 단골 | Single | `GoldSpent` (7) | 바람이(여행 상인)에게서 누적 5회 이상 물건 구매. Custom 추적: shopId = 바람이 필터. conditionValue = 5 | N |
+| 2 | `ach_explorer_02` | 바람이의 단골 | Single | `PurchaseCount` (14) | 바람이(여행 상인)에게서 누적 5회 이상 물건 구매. targetId = "merchant_baramyi" 필터. conditionValue = 5 | N |
 | 3 | `ach_explorer_03` | 사계절의 기억 | Single | `SeasonCompleted` (9) | 봄/여름/가을/겨울 4계절 모두 경험 (1년 완주). conditionValue = 4 | N |
-| 4 | `ach_explorer_04` | 쇼핑 마니아 | Tiered | `GoldSpent` (7) | 상점에서 누적 물건 구매 횟수 (3단계). 이벤트: `OnShopPurchase` | N |
+| 4 | `ach_explorer_04` | 쇼핑 마니아 | Tiered | `PurchaseCount` (14) | 상점에서 누적 물건 구매 횟수 (3단계). 이벤트: `EconomyEvents.OnShopPurchased` | N |
 
 ### 7.2 ach_explorer_04 단계 상세 (쇼핑 마니아)
 
@@ -427,7 +427,7 @@
 1. **[OPEN]** 경제 달인 Gold 단계(100,000G) 달성 가능 시점의 정밀 시뮬레이션 필요 (-> see 섹션 4.2)
 2. **[OPEN]** `ach_facility_04` Gold 단계의 특수 레시피 보상 설계 미정 (-> see 섹션 5.2)
 3. **[OPEN]** 장식 오브젝트(금고, 장인의 망치, 영웅의 증표, 상인의 뱃지)의 비주얼 사양 및 농장 배치 시스템 미설계 (-> see 섹션 11)
-4. **[OPEN]** `ach_explorer_02` (바람이의 단골)과 `ach_explorer_04` (쇼핑 마니아)의 conditionType이 `GoldSpent` (7)로 매핑되어 있으나, 실제로는 "구매 횟수"를 추적해야 한다. `GoldSpent`는 "골드 지출량"이므로 semantic 불일치가 있다. 전용 conditionType 추가 또는 `Custom` (99)로 처리 필요 (-> see `docs/systems/achievement-architecture.md` 섹션 2.3)
+4. ~~**[OPEN]** `ach_explorer_02`/`ach_explorer_04` conditionType 불일치~~ — **RESOLVED (FIX-011)**: `PurchaseCount` (14) 전용 enum 값 추가, `EconomyEvents.OnShopPurchased` 이벤트 구독으로 해소 (-> see `docs/systems/achievement-architecture.md` 섹션 2.3)
 
 ### [RISK] 항목
 
