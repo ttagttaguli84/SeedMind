@@ -103,7 +103,13 @@ Assets/_Project/                    # (→ see docs/systems/project-structure.md
 │   │       ├── TutorialStepData.cs      # 단계 SO
 │   │       └── ContextHintData.cs       # 힌트 SO
 │   │
-│   └── UI/                      # UI 시스템
+│   └── UI/                      # UI 시스템 (→ see docs/systems/ui-architecture.md for full details)
+│       ├── UIManager.cs         # Screen FSM, PopupQueue 관리
+│       ├── ScreenBase.cs        # Screen 추상 기반 클래스
+│       ├── PopupBase.cs         # Popup 추상 기반 클래스
+│       ├── PopupQueue.cs        # 우선순위 큐
+│       ├── NotificationManager.cs # 토스트 알림 큐
+│       ├── UIEvents.cs          # 정적 이벤트 허브
 │       ├── HUDController.cs     # 메인 HUD
 │       ├── InventoryUI.cs       # 인벤토리 UI
 │       ├── ShopUI.cs            # 상점 UI
@@ -286,6 +292,7 @@ Release Build (최적화)
 - `docs/systems/save-load-system.md` — 세이브/로드 UX 설계: 자동저장 트리거, 수동 저장, 멀티슬롯 구조, 게임 종료/시작 흐름 (DES-008)
 - `docs/content/processing-system.md` — 가공/요리 시스템 콘텐츠: 레시피 32종 canonical, 특화 가공소 3종(제분소/발효실/베이커리), 연료 시스템, 가공품 퀄리티 (CON-005)
 - `docs/systems/processing-architecture.md` — 가공/요리 시스템 기술 아키텍처: ProcessingSystem, RecipeData, 가공 큐/슬롯, 이벤트/저장 (ARC-012)
+- `docs/systems/ui-architecture.md` — UI 시스템 기술 아키텍처: UIManager Screen FSM, ScreenBase/PopupBase, NotificationManager, Canvas 계층, 이벤트-UI 연동 (ARC-018)
 
 ## Open Questions
 

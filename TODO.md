@@ -78,7 +78,8 @@
 | ~~FIX-006~~ | ~~3~~ | ~~facilities-architecture.md ProcessingType enum에 Mill/Fermentation/Bake 추가 (W-3 후속)~~ — DONE |
 | ~~FIX-008~~ | ~~2~~ | ~~inventory-system.md 섹션 5.3·7 도구 ID 표기 통일 (tool_hoe → hoe_basic 형식, 등급 포함 규칙 수정 — ARC-013 리뷰 W-5 후속)~~ — DONE |
 | ~~FIX-009~~ | ~~2~~ | ~~data-pipeline.md 섹션 3.2에 ShippingBinSaveData 스키마 정의 추가 (ARC-013 리뷰 GAP-05 후속)~~ — DONE |
-| DES-011 | 2 | UI/UX 시스템 상세 설계 (HUD 구조, 인벤토리 UI 레이아웃, 퀘스트 로그 UI, 알림 시스템) |
-| ARC-018 | 2 | UI 시스템 기술 아키텍처 (UIManager, Screen 전환 FSM, 팝업 큐 시스템, CanvasGroup 구조) |
+| ~~DES-011~~ | ~~2~~ | ~~UI/UX 시스템 상세 설계 (HUD 구조, 인벤토리 UI 레이아웃, 퀘스트 로그 UI, 알림 시스템)~~ — DONE → `docs/systems/ui-system.md` |
+| ~~ARC-018~~ | ~~2~~ | ~~UI 시스템 기술 아키텍처 (UIManager, Screen 전환 FSM, 팝업 큐 시스템, CanvasGroup 구조)~~ — DONE → `docs/systems/ui-architecture.md` |
+| FIX-024 | 3 | achievement-system.md 섹션 5.4 업적 토스트 위치 "좌측 하단" → "상단 중앙"으로 수정 (DES-011·achievement-architecture.md canonical과 불일치 — REV-UI-001 후속) |
 | ARC-019 | 1 | 목축/낙농 시스템 기술 아키텍처 (AnimalManager, AnimalData SO, 돌봄 사이클 설계 — CON-006 후속) |
 | BAL-008 | 1 | 목축/낙농 경제 밸런스 분석 (동물 구매/사료 비용 vs 젖/양모/알 판매 ROI — CON-006 + ARC-019 후속) |
