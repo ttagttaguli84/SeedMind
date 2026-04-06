@@ -333,25 +333,23 @@
 
 ### 8.1 날씨 종류
 
-| 날씨 | 영문 키 | 확률 (봄) | 확률 (여름) | 확률 (가을) | 확률 (겨울) |
-|------|---------|-----------|-------------|-------------|-------------|
-| 맑음 | `Sunny` | 50% | 60% | 40% | 30% |
-| 흐림 | `Cloudy` | 20% | 10% | 25% | 25% |
-| 비 | `Rainy` | 25% | 20% | 25% | 5% |
-| 폭풍 | `Storm` | 5% | 10% | 10% | 5% |
-| 눈 | `Snow` | 0% | 0% | 0% | 35% |
+(→ see `docs/systems/time-season.md` 섹션 3.1~3.2 for canonical 날씨 종류 및 계절별 확률 테이블, DES-003)
 
-(→ see `docs/systems/time-weather-system.md` 작성 예정, DES-003)
+날씨는 7종(`Clear`, `Cloudy`, `Rain`, `HeavyRain`, `Storm`, `Snow`, `Blizzard`)으로 정의되며, 계절별 확률과 영문 키는 `docs/systems/time-season.md` 섹션 3.1이 canonical source이다.
 
 ### 8.2 날씨의 경작 영향
 
-| 날씨 | 효과 |
-|------|------|
-| 맑음 | 효과 없음 (기본 상태) |
-| 흐림 | 효과 없음 |
-| 비 | **모든 경작 타일 자동 물주기**, 물뿌리개 사용 불필요 |
-| 폭풍 | 자동 물주기 + **10% 확률로 작물 피해** (성장 단계 -1) |
-| 눈 | 야외 작물 성장 정지 (온실 내부 제외) |
+| 날씨 (영문 키) | 효과 |
+|--------------|------|
+| `Clear` | 효과 없음 (기본 상태) |
+| `Cloudy` | 효과 없음 |
+| `Rain` | **모든 경작 타일 자동 물주기**, 물뿌리개 사용 불필요 |
+| `HeavyRain` | 자동 물주기 |
+| `Storm` | 자동 물주기 + **10% 확률로 작물 피해** (성장 단계 -1, → see `docs/systems/time-season.md` 섹션 5.3 `stormDamageChance`) |
+| `Snow` | 야외 작물 성장 정지 (온실 내부 제외) |
+| `Blizzard` | 야외 작물 성장 정지 + 5% 확률 작물 동사(Withered) |
+
+(→ see `docs/systems/time-season.md` 섹션 3.4 for 전체 날씨 영향 상세)
 
 ### 8.3 날씨 예보
 
@@ -467,7 +465,7 @@
 | `docs/design.md` 섹션 4.3 | 시간/계절 규칙 (1일=10분, 1계절=28일) |
 | `docs/design.md` 섹션 4.4 | 경제 시스템 (씨앗/도구 비용) |
 | `docs/design.md` 섹션 4.6 | 시설 목록 (물탱크, 온실) |
-| `docs/systems/time-weather-system.md` | 날씨 시스템 상세 (미작성, DES-003) |
+| `docs/systems/time-season.md` | 날씨 시스템 상세, 날씨 종류/확률 canonical (DES-003) |
 | `docs/content/crops.md` | 전체 작물 상세 스펙 (미작성, CON-001) |
 | `docs/content/npcs.md` | 대장장이 NPC, 도구 업그레이드 (미작성, CON-003) |
 | `docs/balance/crop-economy.md` | 작물 ROI 분석, 비료 투자 회수율 (미작성, BAL-001) |

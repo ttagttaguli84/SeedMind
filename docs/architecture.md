@@ -231,6 +231,7 @@ Release Build (최적화)
 - `docs/design.md` — 게임 디자인 마스터 문서 (시스템 개요, 작물/시설 데이터 canonical)
 - `docs/systems/project-structure.md` — 프로젝트 구조 상세 (폴더, 네임스페이스, asmdef)
 - `docs/systems/farming-architecture.md` — 경작 시스템 기술 아키텍처 상세
+- `docs/systems/time-season-architecture.md` — 시간/계절/날씨 시스템 기술 아키텍처 상세 (DES-003)
 - `docs/mcp/farming-tasks.md` — MCP 태스크 시퀀스 (작성 예정, ARC-003)
 
 ## Open Questions
