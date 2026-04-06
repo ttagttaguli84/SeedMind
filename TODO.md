@@ -47,7 +47,7 @@
 | ~~DES-009~~ | ~~2~~ | ~~퀘스트/미션 시스템 설계 (계절별 목표, NPC 의뢰, 달성 보상 구조)~~ — DONE → `docs/systems/quest-system.md`, `docs/systems/quest-architecture.md` |
 | ~~ARC-014~~ | ~~2~~ | ~~가공 시스템 MCP 태스크 시퀀스 독립 문서화 (processing-architecture.md Part II → docs/mcp/processing-tasks.md)~~ — DONE → `docs/mcp/processing-tasks.md` (ID: ARC-014) |
 | ~~BAL-004~~ | ~~2~~ | ~~가공품 ROI/밸런스 분석 (32종 레시피 수익성, 가공 체인 ROI, 가공 vs 생작물 비교 → docs/balance/processing-economy.md)~~ — DONE → `docs/balance/processing-economy.md` |
-| CON-006 | 1 | 목축/낙농 시스템 콘텐츠 상세 (치즈 공방 활성화 선행 조건 — 젖소/염소 등 동물 관리 메카닉) |
+| ~~CON-006~~ | ~~1~~ | ~~목축/낙농 시스템 콘텐츠 상세 (치즈 공방 활성화 선행 조건 — 젖소/염소 등 동물 관리 메카닉)~~ — DONE → `docs/content/livestock-system.md` |
 | ~~FIX-007~~ | ~~3~~ | ~~tool-upgrade-tasks.md ToolSpecialEffect enum 확장 방안 확정 (전설 낫 다중 효과 처리 — Flags enum vs string[] vs tier 분기 결정, tool-upgrade-architecture.md 반영)~~ — DONE: [System.Flags] 비트마스크 채택, SeedRecovery 추가, ToolData.specialEffect 타입 string→ToolSpecialEffect 변경 |
 | ~~ARC-013~~ | ~~2~~ | ~~인벤토리 MCP 태스크 시퀀스 독립 문서화 (inventory-architecture.md Part II → docs/mcp/inventory-tasks.md)~~ — DONE → `docs/mcp/inventory-tasks.md` |
 | ~~ARC-016~~ | ~~2~~ | ~~퀘스트 시스템 MCP 태스크 시퀀스 독립 문서화 (quest-architecture.md Part II → docs/mcp/quest-tasks.md)~~ — DONE → `docs/mcp/quest-tasks.md` |
@@ -84,7 +84,7 @@
 | ~~ARC-010~~ | ~~2~~ | ~~튜토리얼 MCP 태스크 시퀀스 독립 문서화 (tutorial-architecture.md Part II → docs/mcp/tutorial-tasks.md)~~ — DONE → `docs/mcp/tutorial-tasks.md` |
 | ~~ARC-012~~ | ~~2~~ | ~~세이브/로드 MCP 태스크 시퀀스 독립 문서화 (save-load-architecture.md Part II → docs/mcp/save-load-tasks.md)~~ — DONE → `docs/mcp/save-load-tasks.md` |
 | ~~BAL-003-dup~~ | ~~2~~ | ~~겨울 작물 3종 ROI/밸런스 분석 중복 항목~~ — REMOVED (line 34에 동일 항목 존재) |
-| ARC-019 | 1 | 목축/낙농 시스템 기술 아키텍처 (AnimalManager, AnimalData SO, 돌봄 사이클 설계 — CON-006 후속) |
+| ~~ARC-019~~ | ~~1~~ | ~~목축/낙농 시스템 기술 아키텍처 (AnimalManager, AnimalData SO, 돌봄 사이클 설계 — CON-006 후속)~~ — DONE → `docs/systems/livestock-architecture.md` |
 | BAL-008 | 1 | 목축/낙농 경제 밸런스 분석 (동물 구매/사료 비용 vs 젖/양모/알 판매 ROI — CON-006 + ARC-019 후속) |
 | ~~ARC-022~~ | ~~2~~ | ~~UI 시스템 MCP 태스크 시퀀스 독립 문서화 (ui-architecture.md Part II → docs/mcp/ui-tasks.md)~~ — DONE → `docs/mcp/ui-tasks.md` |
 | ~~DES-012~~ | ~~2~~ | ~~농장 확장 시스템 설계 (구역 해금, 타일 구매, 신규 땅 개간 메카닉 — ARC-023 선행 요건)~~ — DONE → `docs/systems/farm-expansion.md` (7구역 Zone A~G, 576타일, 총 16,000G 해금 비용) |
@@ -107,5 +107,9 @@
 | ARC-024 | 1 | 목축/낙농 시스템 MCP 태스크 시퀀스 (AnimalManager/AnimalData 구현 시퀀스 독립 문서화 — ARC-019 후속) |
 | FIX-035 | 2 | progression-curve.md 섹션 1.2.4 농장 확장 XP를 "4단계 100XP" → "6단계 150XP"로 업데이트 (DES-012에서 Zone B~G 6단계로 확정 — farm-expansion.md [OPEN] 8 후속) |
 | FIX-036 | 2 | economy-system.md 섹션 3.3 목공소 인벤토리를 Zone B~G 7구역 방식으로 업데이트 (DES-012 섹션 2.1 해금 조건 테이블 반영 — farming-system.md 섹션 1 확장 방식 동기화 포함) |
-| FIX-037 | 1 | farm-expansion.md 섹션 4.4 과일나무 데이터(묘목 가격, 수확량, 판매가)를 crops.md로 이전하고 참조 표기로 교체 (WARNING-8: 비-canonical 문서에 작물 가격 직접 기재) |
+| ~~FIX-037~~ | ~~1~~ | ~~farm-expansion.md 섹션 4.4 과일나무 데이터(묘목 가격, 수확량, 판매가)를 crops.md로 이전하고 참조 표기로 교체 (WARNING-8: 비-canonical 문서에 작물 가격 직접 기재)~~ — DONE → crops.md 섹션 6 (과일나무 canonical 섹션 신규), farm-expansion.md 섹션 4.4 참조 표기로 교체 |
 | PATTERN-010 | - | [self-improve 전용] 아키텍처 문서를 디자인 문서와 병렬 작성 시 플레이스홀더 수치/ID를 사용하고 디자인 확정 후 동기화하지 않는 패턴 (ARC-023에서 zoneId 5종·최대 크기 불일치 3건 발생) |
+| FIX-038 | 3 | AnimalManager는 _barnLevel 단일 필드로 외양간(Barn)만 추적하고 닭장(Chicken Coop)의 레벨/수용 수를 별도 관리하지 않음 — _coopLevel, _coopCapacity 필드 추가 또는 시설별 레벨 딕셔너리 방식으로 설계 확장 필요 (ARC-019 섹션 1/6 수정) |
+| FIX-039 | 2 | LivestockConfig SO에 goldQualityThreshold, silverQualityThreshold 필드 추가 필요 (ARC-019 섹션 5.2 — GetProductQuality에서 참조하는 임계값이 SO에 정의되어야 함) |
+| FIX-040 | 2 | CON-006 섹션 7.3의 XPSource enum 제안이 ARC-019 섹션 7.1과 완전 중복 기재됨 — CON-006 섹션 7.3에서 enum 전체 기재를 제거하고 ARC-019 참조로 교체 (PATTERN-001 위반: 비-canonical 문서에 enum 직접 기재) |
+| FIX-041 | 1 | design.md 섹션 4.6 시설 목록에 외양간(Barn)/닭장(Chicken Coop)/치즈 공방(Cheese Workshop) 추가 필요 (CON-006 섹션 10 [RISK]-2 후속) |

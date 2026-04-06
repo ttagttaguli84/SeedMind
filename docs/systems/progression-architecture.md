@@ -240,6 +240,8 @@ namespace SeedMind.Level
         QuestComplete,      // 퀘스트 완료 보상 (→ see docs/systems/quest-system.md 섹션 7)
         AchievementReward,  // 업적 달성 보상 (→ see docs/content/achievements.md 섹션 2.4)
         ToolUpgrade,        // 도구 업그레이드 완료 (→ see docs/balance/progression-curve.md)
+        AnimalCare,         // 동물 돌봄 (먹이, 쓰다듬기) (→ see docs/systems/livestock-architecture.md 섹션 7, ARC-019)
+        AnimalHarvest,      // 동물 생산물 수집 (→ see docs/systems/livestock-architecture.md 섹션 7, ARC-019)
     }
 }
 ```
@@ -293,6 +295,17 @@ namespace SeedMind.Level
                     // 도구 업그레이드 완료 시 BlacksmithEvents.OnUpgradeCompleted에서 전달
                     // → see docs/balance/progression-curve.md (canonical XP 수치)
                     return _progressionData.toolUpgradeExp;
+
+                case XPSource.AnimalCare:
+                    // 동물 돌봄 (먹이/쓰다듬기) XP
+                    // → see docs/balance/progression-curve.md for value
+                    return _progressionData.animalCareExp;
+
+                case XPSource.AnimalHarvest:
+                    // 동물 생산물 수집 XP (일반/고품질 구분)
+                    // → see docs/systems/livestock-architecture.md 섹션 7.2 (ARC-019)
+                    var animalInst = (AnimalInstance)context;
+                    return CalculateAnimalHarvestExp(animalInst);
 
                 default:
                     return 0;

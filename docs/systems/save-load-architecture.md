@@ -159,6 +159,11 @@ GameSaveData (루트)
 │
 ├── AchievementSaveData               # (→ see achievement-architecture.md 섹션 7)
 │
+├── AnimalSaveData                    # (→ see livestock-architecture.md 섹션 8, ARC-019)
+│   ├── isUnlocked: bool
+│   ├── barnLevel: int
+│   └── animals[]                     # AnimalInstanceSaveData[]
+│
 └── AffinitySaveData                  # (→ see blacksmith-architecture.md 섹션 5.5)
     └── entries[]                     # AffinityEntry[] (npcId, affinityValue, lastVisitDay, triggeredDialogueIds[])
 ```
@@ -304,6 +309,7 @@ namespace SeedMind.Save.Data
         public NPCSaveData npc;                          // → see npc-shop-architecture.md 섹션 7.1 (null 허용)
         public TutorialSaveData tutorial;                // → see tutorial-architecture.md 섹션 7 (null 허용)
         public AchievementSaveData achievements;         // → see achievement-architecture.md 섹션 7 (null 허용)
+        public AnimalSaveData animals;                   // → see livestock-architecture.md 섹션 8 (ARC-019, null 허용)
         public AffinitySaveData affinity;                // → see blacksmith-architecture.md 섹션 5.5 (null 허용)
     }
 }
@@ -311,8 +317,8 @@ namespace SeedMind.Save.Data
 
 **PATTERN-005 검증**: JSON 스키마(섹션 2.2)와 C# 클래스(섹션 2.3)의 필드 수 동일:
 - 메타데이터 3개: saveVersion, savedAt, playTimeSeconds
-- 시스템 데이터 16개: player, farm, farmZones, inventory, time, weather, economy, buildings, processing, unlocks, shops, milestones, npc, tutorial, achievements, affinity
-- 총 19개 필드 -- 양쪽 일치
+- 시스템 데이터 17개: player, farm, farmZones, inventory, time, weather, economy, buildings, processing, unlocks, shops, milestones, npc, tutorial, achievements, animals, affinity
+- 총 20개 필드 -- 양쪽 일치 (ARC-019 animals 필드 추가)
 
 **기존 data-pipeline.md와의 차이점**: data-pipeline.md의 GameSaveData에는 `inventory`, `npc`, `tutorial` 필드가 명시적으로 분리되지 않았다. `inventory`는 PlayerSaveData 내부에 포함되어 있었고, `npc`와 `tutorial`은 각 아키텍처 문서에서 개별적으로 확장을 기술했다. 이 문서에서는 향후 구현 시 모든 세이브 데이터가 루트에서 명확히 접근 가능하도록 통합한다.
 
@@ -915,6 +921,7 @@ namespace SeedMind.Save
 | EconomyManager | 30 | 시간/날씨 의존 |
 | FarmGrid | 40 | SO 참조 복원(DataRegistry) 필요 |
 | FarmZoneManager | 45 | FarmGrid(40) 복원 후 구역 해금 상태 적용 (ARC-023) |
+| AnimalManager | 48 | FarmZoneManager(45) 이후 — Zone E 해금 상태 복원 후 동물 상태 로드 (ARC-019) |
 | PlayerController | 50 | 인벤토리 SO 참조 필요 |
 | InventoryManager | 55 | 별도 인벤토리 상태 복원 |
 | BuildingManager | 60 | 시설 SO 참조 복원 |
