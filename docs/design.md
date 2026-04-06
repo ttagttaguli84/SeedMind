@@ -225,6 +225,7 @@
 - `docs/systems/quest-system.md` — 퀘스트/미션 시스템 상세 설계 (DES-009)
 - `docs/content/livestock-system.md` — 목축/낙농 콘텐츠 상세 (CON-006)
 - `docs/systems/livestock-architecture.md` — 목축/낙농 시스템 기술 아키텍처 (ARC-019)
+- `docs/systems/fishing-system.md` — 낚시 시스템 상세 설계 (DES-013)
 
 ## Open Questions
 

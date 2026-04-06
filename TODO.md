@@ -118,6 +118,14 @@
 | ~~BAL-011~~ | ~~1~~ | ~~목축 XP canonical 등록 (livestock-system.md 섹션 7.3 제안값을 progression-curve.md에 공식 포함 — devlog 048 INFO-1 후속)~~ — DONE → progression-curve.md 섹션 1.2.6 신규 추가 |
 | ~~BAL-008~~ | ~~1~~ | ~~목축/낙농 경제 밸런스 분석 (동물 구매/사료 비용 vs 젖/양모/알 판매 ROI — CON-006 + ARC-019 후속)~~ — DONE → `docs/balance/livestock-economy.md` (410줄, 동물별 ROI/가공 체인/초기 투자 분석) |
 | ARC-025 | 1 | 농장 확장(Zone) 시스템 MCP 태스크 시퀀스 문서화 (FarmZoneManager, ZoneData SO 구현 시퀀스 — ARC-023 후속) |
-| DES-013 | 1 | 낚시 시스템 설계 (Zone F 연못 구역 활용 — 낚시 메카닉, 어종 목록, 계절별 분포) |
+| ~~DES-013~~ | ~~1~~ | ~~낚시 시스템 설계 (Zone F 연못 구역 활용 — 낚시 메카닉, 어종 목록, 계절별 분포)~~ — DONE → `docs/systems/fishing-system.md` |
 | CON-009 | 2 | 치즈 공방 레시피 정의 (processing-system.md에 치즈 공방 레시피 4~6종 확정 추가 — BAL-008 GAP-1 후속, CON-006 완료로 선행 조건 해소됨) |
 | FIX-044 | 1 | economy-architecture.md에 동물 생산물 수급 변동 적용 정책 명시 (작물과 동일 풀 vs 별도 카테고리 결정 — BAL-008 GAP-3 후속) |
+| ARC-026 | 3 | fishing-architecture.md 문서 ID 등록 — 낚시 시스템 기술 아키텍처 (DES-013 후속, ARC-026으로 확정) |
+| FIX-049 | 3 | economy-architecture.md 섹션 3.10.2 HarvestOrigin에 `Fishing = 3` 추가, 섹션 3.10.3 switch 문에 Fishing case 추가 (ARC-026 후속) |
+| FIX-050 | 3 | progression-architecture.md 섹션 2.2 XPSource에 `FishingCatch` 추가, 섹션 2.3 GetExpForSource() switch 문에 FishingCatch case 추가 (ARC-026 후속) |
+| FIX-051 | 3 | data-pipeline.md Part I 섹션 2.1 GameSaveData에 `public FishingSaveData fishing;` 필드 추가 (ARC-026 후속) |
+| FIX-052 | 2 | save-load-architecture.md 섹션 7 SaveLoadOrder 할당표에 `FishingManager \| 52` 행 추가 (ARC-026 후속) |
+| FIX-053 | 3 | data-pipeline.md Part I ItemType enum에 `Fish` 값 추가 (ARC-026 후속) |
+| FIX-054 | 2 | processing-system.md에 생선 가공 레시피 섹션 추가 후 fishing-system.md 섹션 6.2 테이블 제거 및 참조 교체 (PATTERN-008 이전 — DES-013 후속) |
+| ~~FIX-055~~ | ~~5~~ | ~~낚시 미니게임 방식 결정 및 통일: fishing-system.md 섹션 3(Oscillating Bar 가로 커서)과 fishing-architecture.md 섹션 2(ExcitementGauge 세로 게이지)가 불일치. 한 방식으로 확정 후 두 문서를 동시 수정 (CRITICAL — ARC-026 후속)~~ — DONE: ExcitementGauge 방식으로 통일, fishing-system.md 섹션 3 전면 재작성 (FishData SO targetZoneWidthMul/moveSpeed 필드 정합) |
