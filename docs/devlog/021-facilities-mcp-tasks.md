@@ -88,7 +88,7 @@ facilities-architecture.md의 Part II를 독립 상세 문서로 분리·확장.
 
 ## 후속 작업
 
-- `ARC-008`: 도구 업그레이드 MCP 태스크 시퀀스 (tool-upgrade-tasks.md)
+- `ARC-015`: 도구 업그레이드 MCP 태스크 시퀀스 (tool-upgrade-tasks.md) — ARC-008은 npc-shop-architecture.md가 선점
 - `ARC-009`: NPC/상점 MCP 태스크 시퀀스 (npc-shop-tasks.md)
 - `ARC-012`: 세이브/로드 MCP 태스크 시퀀스 (save-load-tasks.md)
 - `BAL-003`: 겨울 작물 3종 ROI 분석 (crop-economy.md 추가)

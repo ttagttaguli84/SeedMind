@@ -627,7 +627,7 @@ namespace SeedMind.Player
 | OnUpgradeCompleted | UI (HUD) | "호미가 철 호미로 업그레이드되었습니다!" 팝업 |
 | OnUpgradeCompleted | ProgressionManager | 업그레이드 완료 XP 부여 |
 | OnUpgradeFailed | UI | 실패 사유 표시 ("골드가 부족합니다") |
-| OnUpgradeProgressUpdated | UI (SmithyPanel) | 진행 바 갱신 |
+| OnUpgradeProgressUpdated | UI (BlacksmithPanel) | 진행 바 갱신 |
 
 ---
 
@@ -644,7 +644,7 @@ namespace SeedMind.Player
 | `Scripts/Player/Data/ToolUpgradeInfo.cs` | ToolUpgradeInfo, UpgradeCheckResult, ToolUpgradeFailReason, UpgradeCostInfo | SeedMind.Player |
 | `Scripts/Player/Data/ToolSpecialEffect.cs` | ToolSpecialEffect | SeedMind.Player |
 | `Scripts/Player/Data/ToolUpgradeSaveData.cs` | ToolUpgradeSaveData, PendingUpgradeSaveEntry | SeedMind.Player |
-| `Scripts/UI/SmithyUI.cs` | SmithyUI | SeedMind.UI |
+| `Scripts/UI/BlacksmithPanelUI.cs` | BlacksmithPanelUI | SeedMind.UI |
 | `Scripts/UI/ToolUpgradeSlotUI.cs` | ToolUpgradeSlotUI | SeedMind.UI |
 
 모든 경로 접두어: `Assets/_Project/`
@@ -652,7 +652,7 @@ namespace SeedMind.Player
 ### 9.2 Assembly Definition 영향
 
 - `SeedMind.Player.asmdef`에 신규 파일 자동 포함 (기존 참조: Core, Farm)
-- `SeedMind.UI.asmdef`에 SmithyUI 포함 (기존 참조에 Player 이미 포함)
+- `SeedMind.UI.asmdef`에 BlacksmithPanelUI 포함 (기존 참조에 Player 이미 포함)
 - 추가 asmdef 참조 변경 없음
 
 ### 9.3 씬 계층 구조 변경
@@ -782,12 +782,12 @@ Step C-2: ToolUpgradeSystem에 참조 설정
 ### Phase D: 대장간 UI (MCP)
 
 ```
-Step D-1: Canvas_Overlay 하위에 SmithyPanel 생성
-          D-1-01: create_object → "SmithyPanel", parent: "Canvas_Overlay"
+Step D-1: Canvas_Overlay 하위에 BlacksmithPanel 생성
+          D-1-01: create_object → "BlacksmithPanel", parent: "Canvas_Overlay"
           D-1-02: add_component → RectTransform, CanvasGroup
           D-1-03: set_property → 기본 비활성 (CanvasGroup.alpha = 0, blocksRaycasts = false)
 
-Step D-2: SmithyPanel 내부 구조
+Step D-2: BlacksmithPanel 내부 구조
           D-2-01: create_object → "Title" (TextMeshProUGUI, "대장간")
           D-2-02: create_object → "ToolSlotContainer" (HorizontalLayoutGroup)
           D-2-03: create_object → "UpgradeInfoPanel" (선택된 도구 정보 표시)
@@ -796,10 +796,12 @@ Step D-2: SmithyPanel 내부 구조
           D-2-06: create_object → "ProgressBar" (업그레이드 진행 중 표시)
           D-2-07: create_object → "CloseButton" (Button, "닫기")
 
-Step D-3: SmithyUI 컴포넌트 연결
-          D-3-01: add_component → "SmithyPanel", "SeedMind.UI.SmithyUI"
+Step D-3: BlacksmithPanelUI 컴포넌트 연결
+          D-3-01: add_component → "BlacksmithPanel", "SeedMind.UI.BlacksmithPanelUI"
           D-3-02: set_property → 각 UI 요소 참조 연결
 ```
+
+(상세 MCP 태스크 시퀀스: → see `docs/mcp/tool-upgrade-tasks.md` (ARC-015) Phase T-3)
 
 ### Phase E: 통합 테스트 (MCP Play Mode)
 
