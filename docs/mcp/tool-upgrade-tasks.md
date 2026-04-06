@@ -207,7 +207,7 @@ set_property  target: "SO_Tool_Hoe_Basic"
   useSpeed = 1.0
   upgradeGoldCost = 0                         // (-> see docs/systems/tool-upgrade.md 섹션 2.1)
   upgradeTimeDays = 0                         // (-> see docs/systems/tool-upgrade.md 섹션 2.1)
-  specialEffect = ""                          // Basic 등급: 특수 효과 없음
+  specialEffect = None                         // ToolSpecialEffect.None (FIX-007: [Flags] enum)
   description = "기본 호미. 땅을 갈아 경작지를 만든다."
 ```
 
@@ -233,7 +233,7 @@ set_property  target: "SO_Tool_Hoe_Reinforced"
   useSpeed = 1.0
   upgradeGoldCost = 0                         // (-> see docs/systems/tool-upgrade.md 섹션 2.1)
   upgradeTimeDays = 0                         // (-> see docs/systems/tool-upgrade.md 섹션 2.1)
-  specialEffect = "AreaEffect"               // 돌 자동 제거 (-> see docs/systems/tool-upgrade.md 섹션 3.1)
+  specialEffect = AreaEffect                  // ToolSpecialEffect.AreaEffect (FIX-007: [Flags] enum)
   description = "강화된 호미. 1x3 범위로 경작하며 돌을 자동 제거한다."
 ```
 
@@ -257,7 +257,7 @@ set_property  target: "SO_Tool_Hoe_Legendary"
   useSpeed = 1.0
   upgradeGoldCost = 0                         // Legendary가 최종 등급이므로 0
   upgradeTimeDays = 0                         // 최종 등급이므로 0
-  specialEffect = "AreaEffect"               // 돌+잡초 자동 제거 (-> see docs/systems/tool-upgrade.md 섹션 3.1)
+  specialEffect = AreaEffect                  // ToolSpecialEffect.AreaEffect (FIX-007: [Flags] enum)
   description = "전설의 호미. 3x3 범위로 경작하며 돌과 잡초를 자동 제거한다."
 ```
 
@@ -281,7 +281,7 @@ set_property  target: "SO_Tool_WateringCan_Basic"
   useSpeed = 1.0
   upgradeGoldCost = 0                         // (-> see docs/systems/tool-upgrade.md 섹션 2.1)
   upgradeTimeDays = 0                         // (-> see docs/systems/tool-upgrade.md 섹션 2.1)
-  specialEffect = ""                          // Basic 등급: 특수 효과 없음
+  specialEffect = None                         // ToolSpecialEffect.None (FIX-007: [Flags] enum)
   description = "기본 물뿌리개. 작물에 물을 준다."
 ```
 
@@ -305,7 +305,7 @@ set_property  target: "SO_Tool_WateringCan_Reinforced"
   useSpeed = 1.0
   upgradeGoldCost = 0                         // (-> see docs/systems/tool-upgrade.md 섹션 2.1)
   upgradeTimeDays = 0                         // (-> see docs/systems/tool-upgrade.md 섹션 2.1)
-  specialEffect = ""                          // Reinforced 물뿌리개: 범위 확대만
+  specialEffect = None                         // ToolSpecialEffect.None (FIX-007: [Flags] enum)
   description = "강화된 물뿌리개. 1x3 범위에 물을 뿌린다."
 ```
 
@@ -329,7 +329,7 @@ set_property  target: "SO_Tool_WateringCan_Legendary"
   useSpeed = 1.0
   upgradeGoldCost = 0                         // 최종 등급이므로 0
   upgradeTimeDays = 0                         // 최종 등급이므로 0
-  specialEffect = "QualityBoost"             // 물 준 타일 성장 속도 보너스 (-> see docs/systems/tool-upgrade.md 섹션 3.2)
+  specialEffect = QualityBoost                // ToolSpecialEffect.QualityBoost (FIX-007: [Flags] enum)
   description = "전설의 물뿌리개. 3x3 범위에 물을 뿌리고 성장 속도를 높인다."
 ```
 
@@ -353,7 +353,7 @@ set_property  target: "SO_Tool_Sickle_Basic"
   useSpeed = 1.0
   upgradeGoldCost = 0                         // (-> see docs/systems/tool-upgrade.md 섹션 2.1)
   upgradeTimeDays = 0                         // (-> see docs/systems/tool-upgrade.md 섹션 2.1)
-  specialEffect = ""                          // Basic 등급: 특수 효과 없음
+  specialEffect = None                         // ToolSpecialEffect.None (FIX-007: [Flags] enum)
   description = "기본 낫. 작물을 수확한다."
 ```
 
@@ -377,7 +377,7 @@ set_property  target: "SO_Tool_Sickle_Reinforced"
   useSpeed = 1.0
   upgradeGoldCost = 0                         // (-> see docs/systems/tool-upgrade.md 섹션 2.1)
   upgradeTimeDays = 0                         // (-> see docs/systems/tool-upgrade.md 섹션 2.1)
-  specialEffect = "DoubleHarvest"            // 보너스 수확 확률 (-> see docs/systems/tool-upgrade.md 섹션 3.3)
+  specialEffect = DoubleHarvest               // ToolSpecialEffect.DoubleHarvest (FIX-007: [Flags] enum)
   description = "강화된 낫. 1x3 범위로 수확하며 보너스 수확 확률이 있다."
 ```
 
@@ -401,7 +401,7 @@ set_property  target: "SO_Tool_Sickle_Legendary"
   useSpeed = 1.0
   upgradeGoldCost = 0                         // 최종 등급이므로 0
   upgradeTimeDays = 0                         // 최종 등급이므로 0
-  specialEffect = "DoubleHarvest"            // [OPEN] ToolSpecialEffect enum에 단일 값으로 표현. 전설 낫의 3가지 효과(보너스 수확+품질 상승+씨앗 회수)를 단일 enum 값으로 표현하는 방식은 tool-upgrade-architecture.md Open Question에서 결정 필요 (-> see docs/systems/tool-upgrade.md 섹션 3.3)
+  specialEffect = DoubleHarvest | QualityBoost | SeedRecovery  // [Flags] enum 복합 효과 — → see docs/systems/tool-upgrade-architecture.md 섹션 3.5
   description = "전설의 낫. 3x3 범위로 수확하며 보너스 수확, 품질 상승, 씨앗 회수 효과가 있다."
 ```
 
@@ -533,18 +533,20 @@ set_property  target: "SO_Material_RefinedSteel"
 create_script
   path: "Assets/_Project/Scripts/Player/Data/ToolSpecialEffect.cs"
   content: |
-    // T-01: 도구 특수 효과 enum
+    // T-01: 도구 특수 효과 enum → [Flags] 어트리뷰트 포함, SeedRecovery = 1 << 5 추가 (FIX-007)
     // → see docs/systems/tool-upgrade-architecture.md 섹션 3.5
     namespace SeedMind.Player
     {
+        [System.Flags]
         public enum ToolSpecialEffect
         {
-            None,
-            AreaEffect,
-            ChargeAttack,
-            AutoWater,
-            QualityBoost,
-            DoubleHarvest
+            None          = 0,
+            AreaEffect    = 1 << 0,   // 범위 효과
+            ChargeAttack  = 1 << 1,   // 충전 사용
+            AutoWater     = 1 << 2,   // 자동 물주기
+            QualityBoost  = 1 << 3,   // 품질 보너스
+            DoubleHarvest = 1 << 4,   // 이중 수확
+            SeedRecovery  = 1 << 5,   // 씨앗 회수 (FIX-007)
         }
     }
 ```
@@ -621,7 +623,11 @@ create_script
             public static int GetEnergyCost(ToolData tool) => tool.energyCost;
             public static float GetUseSpeed(ToolData tool) => tool.useSpeed;
             public static int GetWateringCapacity(ToolData tool) { ... }
-            public static ToolSpecialEffect GetSpecialEffect(ToolData tool) { ... }
+            // GetSpecialEffect: FIX-007 — 문자열 파싱 제거, flags enum 직접 반환
+            public static ToolSpecialEffect GetSpecialEffect(ToolData tool)
+                => tool.specialEffect; // [Flags] enum 직접 반환. 소비자는 HasFlag()로 효과 검사
+                                       // 예: GetSpecialEffect(tool).HasFlag(ToolSpecialEffect.DoubleHarvest)
+                                       // → see docs/systems/tool-upgrade.md 섹션 3.3
             public static Vector2Int[] GetTilePattern(ToolData tool) { ... }
         }
     }
@@ -1150,7 +1156,7 @@ save_scene
 
 4. [OPEN] **대장간 ShopData SO**: 대장간의 재료 판매 기능은 기존 ShopSystem을 재사용할 것인지, BlacksmithPanelUI에 직접 구현할 것인지. `npc-shop-architecture.md` 섹션 5.1에서 대장간이 ShopSystem과 연동되는 것으로 기술되어 있으므로, ShopData SO("SO_Shop_Blacksmith")를 별도로 생성해야 할 수 있다.
 
-5. [OPEN] **전설 낫 specialEffect 단일 값 표현 한계**: 전설 낫은 보너스 수확 + 품질 상승 + 씨앗 회수 3가지 효과를 가진다 (-> see `docs/systems/tool-upgrade.md` 섹션 3.3). 현재 `ToolSpecialEffect` enum의 단일 값(`DoubleHarvest`)으로는 3가지 효과를 동시에 표현할 수 없다. 해결 방안: (a) enum을 [Flags] 비트마스크로 변경, (b) specialEffect 필드를 string[]으로 변경, (c) ToolEffectResolver에서 tier 값으로 직접 분기하는 방식 채택. `docs/systems/tool-upgrade-architecture.md` 섹션 3.5 및 4의 GetSpecialEffect() 구현과 함께 결정 필요.
+5. [RESOLVED: FIX-007 -- Flags enum 적용] **전설 낫 specialEffect 단일 값 표현 한계**: `ToolSpecialEffect` enum에 `[System.Flags]` 어트리뷰트를 적용하고, 각 값에 `1 << N` 비트값을 할당하여 복합 효과를 비트 OR로 표현한다. `SeedRecovery = 1 << 5` 추가. `ToolData.specialEffect` 필드 타입을 `string` -> `ToolSpecialEffect`(flags enum)로 변경. 소비자 코드는 `HasFlag()` 패턴으로 개별 효과를 검사한다. (-> see `docs/systems/tool-upgrade-architecture.md` 섹션 3.5)
 
 ---
 

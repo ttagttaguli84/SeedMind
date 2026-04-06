@@ -134,7 +134,7 @@
 │  + upgradeMaterials: UpgradeMaterial[]                            │
 │  + upgradeGoldCost: int      // → see docs/systems/tool-upgrade.md│
 │  + upgradeTimeDays: int      // → see docs/systems/tool-upgrade.md│
-│  + specialEffect: string     // → see docs/systems/tool-upgrade.md│
+│  + specialEffect: ToolSpecialEffect // [Flags] enum, Unity Inspector에서 멀티셀렉트 체크박스로 표시 → see docs/systems/tool-upgrade.md│
 │                                                                  │
 │  [IInventoryItem 구현]                                            │
 │  + ItemId => dataId                                              │
@@ -195,7 +195,7 @@ namespace SeedMind.Player
         public ToolType toolType;
         public ToolData previousTool;       // 업그레이드 전 SO
         public ToolData upgradedTool;       // 업그레이드 후 SO
-        public int newTier;                 // 새 등급 (1~5)
+        public int newTier;                 // 새 등급 (1~3) → see docs/systems/tool-upgrade.md 섹션 1.1
     }
 }
 ```
@@ -249,20 +249,28 @@ namespace SeedMind.Player
 namespace SeedMind.Player
 {
     /// <summary>
-    /// 고등급 도구의 특수 효과.
+    /// 고등급 도구의 특수 효과 (비트 플래그).
+    /// 하나의 도구가 여러 효과를 동시에 가질 수 있다.
     /// 구체적 수치/조건은 → see docs/systems/tool-upgrade.md
     /// </summary>
+    [System.Flags]
     public enum ToolSpecialEffect
     {
-        None,               // 기본 등급: 특수 효과 없음
-        AreaEffect,         // 범위 효과 (3x3 등)
-        ChargeAttack,       // 충전 사용 (긴 누르기로 범위 확대)
-        AutoWater,          // 자동 물주기 효과
-        QualityBoost,       // 수확 품질 보너스
-        DoubleHarvest       // 이중 수확 확률
+        None          = 0,
+        AreaEffect    = 1 << 0,   // 범위 효과 (3x3 등)
+        ChargeAttack  = 1 << 1,   // 충전 사용 (긴 누르기로 범위 확대)
+        AutoWater     = 1 << 2,   // 자동 물주기 효과
+        QualityBoost  = 1 << 3,   // 수확 품질 보너스 (+1등급 확률)
+        DoubleHarvest = 1 << 4,   // 이중 수확 (추가 드롭 확률)
+        SeedRecovery  = 1 << 5,   // 씨앗 회수 확률
     }
 }
 ```
+
+**전설 낫 적용 예시**:
+`ToolSpecialEffect.DoubleHarvest | ToolSpecialEffect.QualityBoost | ToolSpecialEffect.SeedRecovery`
+→ 비트값: `0b111000` (= 56)
+→ `HasFlag(ToolSpecialEffect.DoubleHarvest)` → true
 
 ---
 
@@ -321,15 +329,13 @@ namespace SeedMind.Player
 
         /// <summary>
         /// 도구의 특수 효과를 반환한다.
-        /// specialEffect 문자열 → enum 매핑.
+        /// [Flags] enum 직접 반환 — HasFlag()로 복합 효과 검사 가능.
         /// </summary>
         public static ToolSpecialEffect GetSpecialEffect(ToolData tool)
         {
-            if (string.IsNullOrEmpty(tool.specialEffect)) return ToolSpecialEffect.None;
-            // → see docs/systems/tool-upgrade.md for 등급별 특수 효과 목록
-            return System.Enum.TryParse<ToolSpecialEffect>(tool.specialEffect, out var effect)
-                ? effect
-                : ToolSpecialEffect.None;
+            return tool.specialEffect; // [Flags] enum 직접 반환 — HasFlag()로 복합 효과 검사 가능
+            // 예: GetSpecialEffect(tool).HasFlag(ToolSpecialEffect.DoubleHarvest)
+            // → see docs/systems/tool-upgrade.md 섹션 3.3 for 효과별 수치
         }
 
         /// <summary>
@@ -658,12 +664,10 @@ namespace SeedMind.Player
 ### 9.3 씬 계층 구조 변경
 
 ```
---- PLAYER ---
-    └── Player
-        ├── PlayerModel
-        ├── PlayerController
-        ├── ToolSystem
-        └── ToolUpgradeSystem    ← 신규 추가
+--- MANAGERS ---
+    ├── (기존 매니저들)
+    └── ToolUpgradeSystem (GameObject)    ← 신규 추가
+        └── [컴포넌트] ToolUpgradeSystem (SeedMind.Player.ToolUpgradeSystem)
 ```
 
 ---
@@ -740,9 +744,9 @@ Step B-1: Assets/_Project/Data/Tools/ 폴더에 ToolData SO 에셋 생성
           B-1-03: create_asset → SO_Tool_Hoe_Legendary   (tier=3)
 
           물뿌리개 체인:
-          B-1-04: create_asset → SO_Tool_Water_Basic       (tier=1)
-          B-1-05: create_asset → SO_Tool_Water_Reinforced  (tier=2)
-          B-1-06: create_asset → SO_Tool_Water_Legendary   (tier=3)
+          B-1-04: create_asset → SO_Tool_WateringCan_Basic       (tier=1)
+          B-1-05: create_asset → SO_Tool_WateringCan_Reinforced  (tier=2)
+          B-1-06: create_asset → SO_Tool_WateringCan_Legendary   (tier=3)
 
           낫 체인:
           B-1-07: create_asset → SO_Tool_Sickle_Basic       (tier=1)
@@ -756,8 +760,8 @@ Step B-1: Assets/_Project/Data/Tools/ 폴더에 ToolData SO 에셋 생성
 Step B-2: nextTier 참조 체인 연결
           B-2-01: set_property → SO_Tool_Hoe_Basic.nextTier = SO_Tool_Hoe_Reinforced
           B-2-02: set_property → SO_Tool_Hoe_Reinforced.nextTier = SO_Tool_Hoe_Legendary
-          B-2-03: set_property → SO_Tool_Water_Basic.nextTier = SO_Tool_Water_Reinforced
-          B-2-04: set_property → SO_Tool_Water_Reinforced.nextTier = SO_Tool_Water_Legendary
+          B-2-03: set_property → SO_Tool_WateringCan_Basic.nextTier = SO_Tool_WateringCan_Reinforced
+          B-2-04: set_property → SO_Tool_WateringCan_Reinforced.nextTier = SO_Tool_WateringCan_Legendary
           B-2-05: set_property → SO_Tool_Sickle_Basic.nextTier = SO_Tool_Sickle_Reinforced
           B-2-06: set_property → SO_Tool_Sickle_Reinforced.nextTier = SO_Tool_Sickle_Legendary
           (각 체인 2개씩, 총 6개)
@@ -769,8 +773,9 @@ Step B-2: nextTier 참조 체인 연결
 ### Phase C: 씬 오브젝트 구성 (MCP)
 
 ```
-Step C-1: Player 오브젝트에 ToolUpgradeSystem 컴포넌트 추가
-          C-1-01: add_component → "Player", "SeedMind.Player.ToolUpgradeSystem"
+Step C-1: --- MANAGERS --- 하위에 ToolUpgradeSystem GameObject 생성 및 컴포넌트 추가
+          C-1-01: create_object → "ToolUpgradeSystem", parent: "--- MANAGERS ---"
+          C-1-02: add_component → "ToolUpgradeSystem", "SeedMind.Player.ToolUpgradeSystem"
 
 Step C-2: ToolUpgradeSystem에 참조 설정
           C-2-01: set_property → _inventoryManager = InventoryManager (씬 내 참조)
@@ -840,6 +845,7 @@ Step E-5: 세이브/로드 테스트
 - [OPEN] 업그레이드 취소 시 재료/골드 환불 비율. 전액 환불이면 리스크 없는 시도가 가능해져 긴장감 저하.
 - [OPEN] 씨앗봉투(SeedBag)의 업그레이드 가능 여부. "한 번에 여러 타일에 심기" 확장 가능성 있음 (-> see data-pipeline.md 섹션 2.3).
 - [OPEN] ToolEffectResolver의 GetTilePattern() 반환 패턴이 방향 의존적인지. 플레이어 facing 방향에 따라 패턴을 회전시킬지.
+- [RESOLVED: FIX-007] `ToolSpecialEffect` enum에 `[System.Flags]` 적용 및 `SeedRecovery = 1 << 5` 신규 추가. `ToolData.specialEffect` 필드 타입 `string` → `ToolSpecialEffect`로 변경. 전설 낫은 `DoubleHarvest | QualityBoost | SeedRecovery` 조합 사용. (→ see 섹션 3.5)
 
 ## Risks
 
