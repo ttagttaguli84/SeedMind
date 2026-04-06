@@ -37,6 +37,7 @@ Every design document MUST include:
 | 시간대 정의, 날씨 종류, 날씨 확률, 계절 전환 | `docs/systems/time-season.md` | 시간/날씨 데이터 |
 | 경제 수치(초기 골드, 가격 상하한, 수급 보정 등) | `docs/systems/economy-system.md` | 경제 메카닉 전반 |
 | 시설 이름, 건설 요건, 업그레이드 경로 | `docs/design.md` 섹션 4.6 | 시설 목록 전체 |
+| BuildingData SO 필드 정의 | `docs/pipeline/data-pipeline.md` Part I 섹션 2.4 | 시설 SO 스키마 |
 | Unity 프로젝트 폴더 구조, 네임스페이스 | `docs/systems/project-structure.md` | 프로젝트 구조 |
 
 ## Language
