@@ -180,7 +180,7 @@
 | ~~FIX-086~~ | ~~2~~ | ~~tool-upgrade.md에 채집 낫 통합 반영 (ToolUpgradeRecipe 스키마에 levelReqType 필드 추가)~~ — DONE: LevelReqType enum(PlayerLevel/GatheringMastery/FishingMastery), UpgradeCostInfo 확장, CanUpgrade 분기 |
 | ~~FIX-087~~ | ~~1~~ | ~~npcs.md 대장간(철수) 섹션에 채집 낫 업그레이드 대화 9건 반영 (DES-017 섹션 7.3 확정 대화 → npcs.md 동기화)~~ — DONE: 섹션 4.3 업그레이드 대상 4종 갱신, 섹션 4.4 채집 낫 관련 대화 9건 추가 |
 | ~~DES-019~~ | ~~2~~ | ~~베이커리 채집물 레시피 경제 조정 설계~~ — DONE: 조정안 (b)+(a) 채택 — 봄나물 비빔밥 30→60G, 송이 구이 55→70G 상향 확정 |
-| BAL-018 | 1 | 낚시 가공 + 치즈공방 가공 ROI 분석 (processing-economy.md 섹션 2.14~2.15 신규 추가 — FIX-085에서 "추후 추가 예정"으로 명시) |
+| ~~BAL-018~~ | ~~1~~ | ~~낚시 가공 + 치즈공방 가공 ROI 분석 (processing-economy.md 섹션 2.14~2.15 신규 추가 — FIX-085에서 "추후 추가 예정"으로 명시)~~ — DONE: 섹션 2.14 생선 가공 5종 + 섹션 2.15 치즈공방 5종 추가. fishing-economy.md 섹션 4.2~4.3 연료비 누락 수정(PATTERN-BAL-COST) |
 | ~~CON-014~~ | ~~1~~ | ~~npcs.md 여행 상인 아이템 풀에 수정 원석 추가 (DES-017 섹션 5.5.2 [OPEN] — 전설 낫 재료 대안 공급 경로 확보)~~ — DONE: 160G(직판가 32G x5), 등장 확률 10%, 재고 1개, gathering-system.md [OPEN] 해소 |
 | ~~FIX-088~~ | ~~2~~ | ~~achievement-architecture.md AchievementConditionType enum에 GatherCount/GatherSpeciesCollected/GatherSickleUpgraded 3종 추가 (CON-013 [TODO] 후속)~~ — DONE: enum 15→19 값, 이벤트 테이블 GatheringEvents 2행 추가, Step 1-2 16→19개 |
 | ~~FIX-089~~ | ~~2~~ | ~~xp-integration.md 채집 퀘스트 XP ~105 + 채집 업적 XP 490 추가분 시뮬레이션 반영 (CON-013 후속)~~ — DONE: 섹션 3.1 Gatherer 행+합계(2,640→3,130/39종), 섹션 4.2.2 시뮬레이션, 5.1~5.4 전체 수치 갱신 |
