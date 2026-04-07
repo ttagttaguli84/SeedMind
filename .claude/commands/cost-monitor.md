@@ -15,31 +15,38 @@ Each report covers one batch of sessions (typically 10 sessions). Extract from e
 - Total session count
 - Total cost and average cost per session
 - Highest-cost session (filename and cost)
-- cache_creation token percentage (%)
+- cache_creation token count and percentage (%)
+- cache_read token count — compute `cache_read % = cache_read / (input + cache_creation + cache_read) * 100`
+- output_tokens total
 - Per-session detail table (filename, cost, stop_reason)
+- Count of sessions where `stop_reason == "error"`
 
 ## Step 2 — Aggregate & Detect Anomalies
 
 Combine all extracted data into a unified view across all batches. Check every metric against the thresholds below:
 
-| Metric | Warning | Critical |
-|--------|---------|----------|
-| Average cost per session | > $6.00 | > $10.00 |
-| Highest-cost session | > $10.00 | > $15.00 |
-| cache_creation % | > 12% | > 18% |
-| Sessions exceeding Warning threshold within a batch | > 3 of 10 | > 6 of 10 |
+| Metric | Warning | Critical | Notes |
+|--------|---------|----------|-------|
+| Average cost per session | > $6.00 | > $10.00 | |
+| Highest-cost session | > $10.00 | > $15.00 | |
+| cache_creation % | > 12% | > 18% | High = agent spawns or cache misses |
+| cache_read % | < 50% | < 20% | Low = cache not being reused |
+| output_tokens per session (avg) | > 30,000 | > 60,000 | output costs 5× more than input |
+| stop_reason == error rate | > 5% | > 15% | Failed turns still consume tokens |
+| Sessions exceeding Warning cost within a batch | > 3 of 10 | > 6 of 10 | |
 
 For each threshold exceeded, record:
 - Which batch (report file) triggered it
 - Which session(s) triggered it
-- Estimated cause (excessive loops, large document injection, parallel agent spawns, etc.)
+- Estimated cause (excessive loops, large document injection, parallel agent spawns, cache invalidation, error retries, etc.)
 
 **Sufficiency check — JSONL fallback conditions:**
 
 Proceed to Step 2.5 if any of the following are true:
 - Only one batch is available, making trend analysis impossible
 - A Warning or Critical threshold was exceeded but the report detail table does not clarify the cause
-- The highest-cost session is more than 2x the batch average but no breakdown data is available in the report
+- The highest-cost session is more than 2× the batch average but no breakdown data is available in the report
+- cache_read % is below Warning threshold but cause is unclear from aggregated data
 
 If none of these conditions apply, skip Step 2.5 and proceed directly to Step 3.
 
@@ -48,7 +55,8 @@ If none of these conditions apply, skip Step 2.5 and proceed directly to Step 3.
 Run this step only when Step 2's sufficiency check determined fallback is needed.
 
 **Selecting target JSONL files:**
-- For the single highest-cost session: locate the corresponding `logs/backup/<YYYYMMDD_HHMMSS>/run_*.jsonl` file from that session's batch folder.
+- The backup folder path is recorded in each batch report's "데이터 소스" field (e.g., `logs/backup/20260408_020332/`). Alternatively, derive it by stripping the `cost-monitor-` prefix and `.md` suffix from the report filename.
+- For the single highest-cost session: locate the corresponding `run_*.jsonl` file inside that batch's backup folder.
 - For batches with multiple above-average sessions: read all JSONL files in that batch's backup folder.
 - If a JSONL file cannot be opened or is unreadable, skip it and note the filename in the analysis report. Do not abort the entire step.
 
@@ -64,6 +72,9 @@ for path_str in sys.argv[1:]:
         print(f"SKIP (not found): {fp}")
         continue
     turns = []
+    seen_message_ids = set()
+    stop_reason = "unknown"
+    error_results = 0  # counts result events with stop_reason == 'error' (typically 0 or 1 per session)
     try:
         with open(fp, encoding='utf-8') as f:
             for line in f:
@@ -75,31 +86,61 @@ for path_str in sys.argv[1:]:
                 except json.JSONDecodeError:
                     continue
                 if d.get('type') == 'assistant':
+                    # Dedup by message id to avoid double-counting parallel tool calls
+                    mid = d.get('message', {}).get('id')
+                    if mid and mid in seen_message_ids:
+                        continue
+                    if mid:
+                        seen_message_ids.add(mid)
                     u = d.get('message', {}).get('usage', {})
                     turns.append({
                         'cc': u.get('cache_creation_input_tokens', 0),
                         'cr': u.get('cache_read_input_tokens', 0),
+                        'inp': u.get('input_tokens', 0),
                         'out': u.get('output_tokens', 0),
                     })
+                elif d.get('type') == 'result':
+                    sr = d.get('stop_reason', '')
+                    if sr:
+                        stop_reason = sr
+                    if sr == 'error':
+                        error_results += 1
     except OSError as e:
         print(f"SKIP (unreadable): {fp} — {e}")
         continue
-    spikes = [i for i, t in enumerate(turns) if t['cc'] > 50_000]
-    large_injections = [i for i, t in enumerate(turns) if t['cc'] > 200_000]
-    print(f"{fp.name}: {len(turns)} turns, {len(spikes)} agent spawns, "
-          f"{len(large_injections)} large injections (cc>200k)")
+
+    total_inp = sum(t['inp'] for t in turns)
+    total_cc  = sum(t['cc']  for t in turns)
+    total_cr  = sum(t['cr']  for t in turns)
+    total_out = sum(t['out'] for t in turns)
+    total_tok = total_inp + total_cc + total_cr
+    cr_pct    = total_cr / total_tok * 100 if total_tok else 0
+    spikes         = [i for i, t in enumerate(turns) if t['cc'] > 50_000]
+    large_inj      = [i for i, t in enumerate(turns) if t['cc'] > 200_000]
+    output_spikes  = [i for i, t in enumerate(turns) if t['out'] > 5_000]
+
+    print(
+        f"{fp.name}: {len(turns)} turns | stop={stop_reason} | errors={error_turns} | "
+        f"cr%={cr_pct:.1f}% | out={total_out:,} | "
+        f"spawns={len(spikes)} | large_inj={len(large_inj)} | out_spikes={len(output_spikes)} | "
+        f"error_result={error_results}"
+    )
 ```
 
 From the output, extract:
 - Total turn count (session length)
+- cache_read % per session (low = cache not reusing, possible context invalidation)
 - Number of agent spawns (turns where cc > 50,000)
-- cc size at each spawn (used to estimate injected document size)
-- Output-heavy turns (high `out` values indicate large document generation)
+- Number of large injections (turns where cc > 200,000)
+- Output spike turns (turns where out > 5,000 — large document writes)
+- Error turn count and stop_reason
 
 **Interpretation thresholds:**
-- 3 or more agent spawns → suspected Session Task Budget overrun
-- Any single spawn with cc > 200,000 → suspected large document injection
+- 3+ agent spawns → suspected Session Task Budget overrun
+- Any single spawn cc > 200,000 → suspected large document injection
 - Total turns > 300 → suspected loop overrun
+- Session cr% < 50% → cache breakpoint instability or varied context
+- `error_result=1` → this session ended with a non-zero stop_reason; the session cost was still billed. If multiple sessions in the same batch show `error_result=1`, check for context window overflow or rate limit loops in that time window.
 
 ## Step 3 — Root Cause Analysis
 
@@ -110,9 +151,12 @@ Cross-reference anomalies with `start.md` using the table below:
 | Symptom | Likely cause in start.md |
 |---------|--------------------------|
 | Rising average cost trend across batches | Session Task Budget may have been relaxed |
-| cc% spike in a specific batch | Agent Context Injection rule violated |
+| High cc%, low cr% in a specific batch | Agent Context Injection rule violated — large docs injected instead of direct-read |
 | Same session repeatedly appearing as highest-cost | DES-* sequential execution not enforced (parallel spawns) |
 | Reviewer turn count abnormally high | Reviewer checklist scope limit not enforced |
+| High output_tokens avg | Large document generation tasks — check if FIX-* batched with DES-* |
+| High stop_reason error rate | Retry cascade — context window overflow or rate limit loops |
+| Low cr% across all batches | System context changing per session (CLAUDE.md > 200 lines, dynamic content) |
 
 State which specific rule in `start.md` appears to be the failure point, or state that no correlation was found.
 
@@ -148,15 +192,25 @@ Write to `logs/reports/cost-monitor-analysis-<YYYYMMDD>.md`. Use today's date fo
 - 총 세션 수: N개 / 총 비용: $X.XX
 
 ## 배치별 요약
-| 배치 | 기간 | 평균 비용 | 최고 비용 | cc% | 상태 |
-|------|------|-----------|-----------|-----|------|
-| cost-monitor-YYYYMMDD_HHMMSS.md | ... | $X.XX | $X.XX | X% | OK / WARNING / CRITICAL |
+| 배치 | 기간 | 평균비용 | 최고비용 | cc% | cr% | avg_out | error율 | 상태 |
+|------|------|---------|---------|-----|-----|---------|--------|------|
+| cost-monitor-YYYYMMDD_HHMMSS.md | ... | $X.XX | $X.XX | X% | X% | X,XXX | X% | OK / WARNING / CRITICAL |
+
+## 임계치 체크
+| Metric | 값 | 임계치 | 상태 |
+|--------|-----|--------|------|
+| 평균 비용 | $X.XX | $6 / $10 | OK |
+| 최고 비용 세션 | $X.XX | $10 / $15 | OK |
+| cache_creation % | X% | 12% / 18% | OK |
+| cache_read % | X% | <50% / <20% | OK |
+| 평균 output_tokens | X,XXX | 30K / 60K | OK |
+| stop_reason error 비율 | X% | 5% / 15% | OK |
 
 ## 이상 감지
 <임계치 초과 항목 목록, 없으면 "이상 없음">
 
 ## 추정 원인
-<root cause 분석>
+<root cause 분석, JSONL fallback 사용 시 근거 포함>
 
 ## 조치 내용
 <편집한 파일과 변경 내용, 없으면 "편집 없음 — 모든 임계치 정상">
