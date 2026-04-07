@@ -1730,6 +1730,202 @@ namespace SeedMind.NPC.Data
 
 ---
 
+## 15. 계절별 재고 필터링 시스템 (DES-014)
+
+> **목적**: 고정 상점과 여행 상인 모두에서 계절 기반 재고 필터링을 통합적으로 지원한다.  
+> 겨울 씨앗(겨울무/표고버섯/시금치) 판매 경로 결정이 어떤 방향이든 대응 가능한 아키텍처를 제공한다.
+
+### 15.1 기존 데이터 구조의 계절 필터 필드 현황
+
+두 데이터 구조 모두 이미 `SeasonFlag` 기반 계절 필터 필드를 보유한다.
+
+| SO 클래스 | 필드 | 위치 | 용도 |
+|-----------|------|------|------|
+| `ShopItemEntry` (ShopData 내부) | `availableSeasons: SeasonFlag` | 섹션 4.3 (economy-architecture.md) | 고정 상점(잡화/대장간) 아이템별 판매 계절 제한 |
+| `TravelingShopCandidate` (TravelingShopPoolData 내부) | `availableSeasons: SeasonFlag` | 섹션 2.3 (본 문서) | 여행 상인 후보 아이템별 등장 계절 제한 |
+| `TravelingMerchantData` | `seasonalPools: TravelingShopPoolData[]` | 섹션 9.1 (본 문서) | 계절별 추가 아이템 풀 분리 |
+
+따라서 **데이터 스키마 추가 변경은 불필요**하며, 런타임 필터링 로직만 설계하면 된다.
+
+### 15.2 런타임 필터링 로직 — ShopSystem.GetAvailableItems()
+
+고정 상점(잡화점, 대장간)에서 현재 계절에 맞는 아이템만 노출하는 필터링 흐름:
+
+```
+Pseudocode: ShopSystem.GetAvailableItems(ShopData shopData)
+
+    currentSeason = TimeManager.Instance.CurrentSeason
+    playerLevel = ProgressionManager.Instance.CurrentLevel
+    result = new List<ShopItemEntry>()
+
+    for each entry in shopData.items:
+
+        // 1. 계절 필터: availableSeasons 비트마스크 검사
+        if (entry.availableSeasons & (1 << currentSeason)) == 0:
+            continue   // 현재 계절에 판매하지 않는 아이템
+
+        // 2. 레벨 필터: 해금 레벨 확인
+        if playerLevel < entry.requiredLevel:
+            continue   // → see docs/balance/progression-curve.md for 해금 레벨
+
+        // 3. 재고 확인: stockLimit != 0
+        if entry.stockLimit == 0:
+            continue   // 재고 소진
+
+        result.Add(entry)
+
+    return result
+```
+
+**핵심 원칙**: `availableSeasons` 기본값은 `SeasonFlag.All` (= Spring | Summer | Autumn | Winter)이므로, 기존 사계절 판매 아이템은 필터링에 영향받지 않는다. 겨울 전용 씨앗에만 `SeasonFlag.Winter`를 설정하면 겨울에만 노출된다.
+
+### 15.3 런타임 필터링 로직 — TravelingMerchantScheduler.GenerateStock()
+
+여행 상인 재고 생성 시 계절 필터를 적용하는 흐름:
+
+```
+Pseudocode: TravelingMerchantScheduler.GenerateStock()
+
+    currentSeason = TimeManager.Instance.CurrentSeason
+    playerLevel = ProgressionManager.Instance.CurrentLevel
+
+    // 1. 기본 풀 + 계절별 추가 풀 병합
+    candidatePool = new List<TravelingShopCandidate>()
+    candidatePool.AddRange(_merchantData.defaultPool.candidates)
+
+    seasonIndex = (int)currentSeason
+    if _merchantData.seasonalPools != null
+       && seasonIndex < _merchantData.seasonalPools.Length
+       && _merchantData.seasonalPools[seasonIndex] != null:
+        candidatePool.AddRange(_merchantData.seasonalPools[seasonIndex].candidates)
+
+    // 2. 필터링: 계절 + 레벨
+    filteredPool = new List<TravelingShopCandidate>()
+    for each candidate in candidatePool:
+        if (candidate.availableSeasons & (1 << currentSeason)) == 0:
+            continue
+        if playerLevel < candidate.minPlayerLevel:
+            continue
+        filteredPool.Add(candidate)
+
+    // 3. 가중치 기반 무작위 선택
+    //    아이템 수: minItemCount ~ maxItemCount (→ see docs/content/npcs.md 섹션 6.3)
+    selectedItems = WeightedRandomSelect(
+        filteredPool,
+        count = Random.Range(pool.minItemCount, pool.maxItemCount + 1),
+        seed = _currentRandomSeed
+    )
+
+    // 4. 각 아이템 재고 수량 결정
+    for each item in selectedItems:
+        item.currentStock = Random.Range(item.stockMin, item.stockMax + 1)
+
+    return selectedItems
+```
+
+### 15.4 겨울 씨앗 판매 경로 — 시나리오별 SO 설정 가이드
+
+디자인 팀의 결정에 따라 SO 에셋 설정만 변경하면 된다. 코드 변경은 불필요하다.
+
+#### 시나리오 A: 여행 상인 독점
+
+겨울 씨앗 3종을 여행 상인의 `TravelingShopPoolData`에만 등록하고, 잡화점 `ShopData`에는 등록하지 않는다.
+
+| 설정 대상 | 필드 | 값 |
+|-----------|------|-----|
+| `SO_TravelingPool_Default` 또는 `seasonalPools[3]` (겨울) | 겨울무/표고버섯/시금치 `TravelingShopCandidate` 추가 | `availableSeasons = SeasonFlag.Winter` |
+| `SO_Shop_GeneralStore` (잡화점) | 겨울 씨앗 항목 | **미등록** (항목 자체가 없음) |
+
+**장점**: 여행 상인 존재 가치 극대화, 겨울 콘텐츠 희소성  
+**단점**: 여행 상인 미등장 주에 겨울 씨앗 입수 불가 (→ see docs/content/npcs.md 섹션 6.2 등장 요일)
+
+#### 시나리오 B: 잡화점 겨울 한정 판매
+
+겨울 씨앗 3종을 잡화점 `ShopData`에 등록하되, `availableSeasons = SeasonFlag.Winter`로 설정한다.
+
+| 설정 대상 | 필드 | 값 |
+|-----------|------|-----|
+| `SO_Shop_GeneralStore` (잡화점) | 겨울무/표고버섯/시금치 `ShopItemEntry` 추가 | `availableSeasons = SeasonFlag.Winter`, `requiredLevel` (→ see docs/balance/progression-curve.md) |
+| `SO_TravelingPool_Default` | 겨울 씨앗 항목 | **미등록** |
+
+**장점**: 접근성 보장, 잡화점 겨울 라인업 확충  
+**단점**: 여행 상인 차별화 약화
+
+#### 시나리오 C: 혼합 (잡화점 + 여행 상인) — **DES-014 확정**
+
+두 상점 모두에 겨울 씨앗을 등록하되, 차별화 요소를 부여한다.
+
+| 설정 대상 | 차별화 |
+|-----------|--------|
+| 잡화점 (`SO_Shop_GeneralStore`) | `availableSeasons = SeasonFlag.Winter`, 정가 판매, Day 8~, 온실 보유 조건 (→ see `docs/content/npcs.md` 섹션 3.3) |
+| 여행 상인 (`SO_TravelingPool_Default`) | `availableSeasons = SeasonFlag.Winter` (겨울에만 풀 포함), 정가 x1.5 프리미엄 (→ see `docs/balance/traveler-economy.md` 섹션 3.8) |
+
+**장점**: 겨울 1주차 여행 상인 x1.5 선점 + 겨울 2주차부터 잡화점 정가의 안정적 이중 경로  
+**단점**: 여행 상인 등장 확률(주말 + 20% 풀 선정)에 따라 1주차 구매가 불확실할 수 있음  
+**확정 근거**: (→ see `docs/balance/traveler-economy.md` 섹션 6.1)
+
+### 15.5 SeasonFlag 비트마스크 enum 참조
+
+`SeasonFlag`는 이미 crop-growth-architecture.md 등 다수 시스템에서 사용 중이다.
+
+```csharp
+// illustrative — 기존 정의 참조 (→ see docs/systems/crop-growth-architecture.md)
+[System.Flags]
+public enum SeasonFlag
+{
+    None   = 0,
+    Spring = 1 << 0,  // 1
+    Summer = 1 << 1,  // 2
+    Autumn = 1 << 2,  // 4
+    Winter = 1 << 3,  // 8
+    All    = Spring | Summer | Autumn | Winter  // 15
+}
+```
+
+상점 시스템에서의 계절 비교는 `(entry.availableSeasons & (1 << currentSeason)) != 0` 패턴으로 통일한다. 이는 `TravelingShopCandidate.availableSeasons`, `ShopItemEntry.availableSeasons`, `CropData.allowedSeasons` 모두 동일한 비트마스크 연산이다.
+
+### 15.6 ShopSystem ↔ SeasonManager 연동 포인트
+
+```
+[이벤트 기반 갱신]
+
+TimeManager.OnSeasonChanged(Season newSeason)
+    │
+    ├── ShopSystem.RefreshAvailableItems()
+    │   └── GetAvailableItems() 재호출 → UI 갱신
+    │
+    └── TravelingMerchantScheduler.OnSeasonChanged()
+        └── seasonalPools 교체 → 다음 방문 시 반영
+```
+
+계절 전환 시 `ShopSystem`이 자동으로 판매 목록을 재구성하므로, 겨울 진입 시 겨울 씨앗이 등장하고 봄 전환 시 사라지는 동작이 자연스럽게 구현된다.
+
+### 15.7 MCP 구현 태스크 (DES-014)
+
+**Step L-1**: ShopSystem 계절 필터 구현
+- `ShopSystem.GetAvailableItems()` 메서드에 `SeasonFlag` 비트마스크 필터 추가
+- `TimeManager.OnSeasonChanged` 이벤트에 `RefreshAvailableItems()` 구독 등록
+
+**Step L-2**: 잡화점 SO 에셋 겨울 씨앗 설정 (시나리오 B/C 선택 시)
+- `SO_Shop_GeneralStore` 에셋 편집
+- 겨울무/표고버섯/시금치 `ShopItemEntry` 추가
+- `availableSeasons = SeasonFlag.Winter` 설정
+- `requiredLevel` 설정 (→ see docs/balance/progression-curve.md)
+- 가격 참조: 각 씨앗의 PriceData SO (→ see docs/design.md 섹션 4.2)
+
+**Step L-3**: 여행 상인 풀 겨울 씨앗 등록 (시나리오 A/C 선택 시)
+- `SO_TravelingPool_Default` 에셋 편집 또는 `seasonalPools[3]` (겨울 풀) 생성
+- 겨울무/표고버섯/시금치 `TravelingShopCandidate` 추가
+- `availableSeasons` 설정: 시나리오 A, C 모두 `SeasonFlag.Winter` (DES-014 확정 — 비겨울 선구매 미적용)
+- `selectionWeight`, `stockMin`, `stockMax` 설정 (→ see docs/content/npcs.md 섹션 6.3)
+
+**Step L-4**: 통합 테스트
+- 계절 전환 시 잡화점 인벤토리 변화 확인 (겨울 진입 → 겨울 씨앗 등장, 봄 전환 → 사라짐)
+- 여행 상인 겨울 방문 시 겨울 씨앗 재고 포함 확인
+- 비겨울 계절에 잡화점에서 겨울 씨앗 미노출 확인
+
+---
+
 ## Cross-references (CON-008 추가분)
 
 | 문서 | 참조 내용 |
@@ -1741,6 +1937,9 @@ namespace SeedMind.NPC.Data
 | `docs/systems/time-season.md` 섹션 3.4 | 폭풍/폭설 조건 (WeatherClosed 판정 기준) |
 | `docs/systems/tutorial-architecture.md` 섹션 8 | ContextHintSystem (기존 자동 힌트 — NPCHintSystem과 역할 분리) |
 | `docs/systems/save-load-architecture.md` | GameSaveData 통합 루트에 NPCSaveData 확장 반영 |
+| `docs/systems/economy-architecture.md` 섹션 4.3 | ShopData/ShopItemEntry.availableSeasons 필드 정의 (DES-014 계절 필터 기반) |
+| `docs/systems/time-season.md` | Season enum, 계절 전환 이벤트 (DES-014 SeasonFlag 연동) |
+| `docs/design.md` 섹션 4.2 | 겨울 씨앗(겨울무/표고버섯/시금치) 가격 canonical (DES-014) |
 
 ---
 
@@ -1754,6 +1953,8 @@ namespace SeedMind.NPC.Data
 
 9. [OPEN] **여행 상인 아이템 재판매 가능 여부**: 여행 상인에서 구매한 소비 아이템(에너지 토닉 등)을 다른 NPC에게 되팔 수 있는지 결정 필요. 되팔기 허용 시 SupplyCategory 확장 및 되팔기 가격 정책 수립 필요.
 
+10. [RESOLVED] **겨울 씨앗 판매 경로 확정 (DES-014)**: 시나리오 C (혼합) 확정. 여행 상인(겨울 Day 1~, 정가 x1.5, 재고 1~3개) + 잡화 상점(겨울 Day 8~, 정가, 온실 보유 조건). SO 설정은 섹션 15.4 시나리오 C 가이드를 따른다. 가격 배율(x1.5)은 `docs/balance/traveler-economy.md` 섹션 3.8에서 확정 완료. 잡화 상점 Day 8 시작 조건은 `docs/content/npcs.md` 섹션 3.3, `docs/systems/economy-system.md` 섹션 3.3에 반영 완료.
+
 ---
 
 ## Risks (CON-008 추가분)
@@ -1763,3 +1964,5 @@ namespace SeedMind.NPC.Data
 6. [RISK] **NPCHintSystem의 넓은 의존성**: 힌트 조건 평가를 위해 FarmGrid, BuildingManager, EconomyManager, TimeManager, ProgressionManager 등 거의 모든 주요 시스템을 참조한다. 인터페이스 추상화 없이 직접 참조 시, 이들 시스템의 API 변경이 NPCHintSystem에 연쇄 영향을 미친다.
 
 7. [RISK] **여행 상인 시드 기반 재현성과 게임 밸런스 패치 간의 충돌**: 시드 기반으로 재고를 결정하면, 후속 밸런스 패치(아이템 풀 변경, 확률 조정)가 기존 세이브 파일의 재고 재현성을 깨뜨릴 수 있다. 세이브 파일에 현재 재고를 직접 저장하는 방식(currentStockItemIds/Quantities/Prices)으로 이를 완화하지만, 아이템 정의 자체가 변경되면 세이브 호환성 문제가 남는다.
+
+8. [RISK] **계절 전환 시 상점 UI 갱신 타이밍 (DES-014)**: 플레이어가 잡화점 UI를 열고 있는 도중 계절이 전환되면, 판매 목록이 실시간으로 바뀌어 혼란을 줄 수 있다. 완화책: 상점 UI가 열려 있는 동안에는 `RefreshAvailableItems()`를 지연 처리하고, UI 닫힘 시점에 갱신을 적용한다.
