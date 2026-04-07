@@ -39,7 +39,7 @@
 | ~~ARC-008~~ | ~~2~~ | ~~도구 업그레이드 MCP 태스크 시퀀스 (tool-upgrade-architecture.md Part II를 독립 문서로 분리 → docs/mcp/tool-upgrade-tasks.md)~~ — DONE → `docs/mcp/tool-upgrade-tasks.md` (문서 ID ARC-015로 할당, ARC-008은 npc-shop-architecture.md에 이미 사용됨) |
 | ~~CON-004~~ | ~~2~~ | ~~대장간 NPC 상세 (캐릭터, 대화, 업그레이드 인터페이스 UX)~~ — DONE → `docs/content/blacksmith-npc.md`, `docs/systems/blacksmith-architecture.md` (ARC-020) |
 | ~~ARC-009~~ | ~~2~~ | ~~NPC/상점 MCP 태스크 시퀀스 독립 문서화 (npc-shop-architecture.md Part II 요약 → docs/mcp/npc-shop-tasks.md 상세 분리)~~ — DONE → `docs/mcp/npc-shop-tasks.md` |
-| BAL-005 | 1 | 여행 상인 희귀 아이템 가격 밸런스 분석 (npcs.md [OPEN] 후속 — 만능 비료/겨울 씨앗 등 8종 ROI 검증) |
+| ~~BAL-005~~ | ~~1~~ | ~~여행 상인 희귀 아이템 가격 밸런스 분석 (npcs.md [OPEN] 후속 — 만능 비료/겨울 씨앗 등 8종 ROI 검증)~~ — DONE → `docs/balance/traveler-economy.md` (8종 ROI 분석, 만능 비료 150→80G, 성장 촉진제 250→150G+2일, 행운의 부적 400→250G+15%) |
 | ~~ARC-010~~ | ~~2~~ | ~~튜토리얼 MCP 태스크 시퀀스 독립 문서화 (tutorial-architecture.md Part II → docs/mcp/tutorial-tasks.md)~~ — DONE → `docs/mcp/tutorial-tasks.md` (중복 항목 정리) |
 | ~~ARC-011~~ | ~~2~~ | ~~세이브/로드 시스템 기술 아키텍처 (SaveManager, GameSaveData 통합 구조, 자동저장 트리거 설계)~~ — DONE → `docs/systems/save-load-architecture.md` |
 | ~~ARC-012~~ | ~~2~~ | ~~세이브/로드 MCP 태스크 시퀀스 독립 문서화 (save-load-architecture.md Part II → docs/mcp/save-load-tasks.md)~~ — DONE → `docs/mcp/save-load-tasks.md` (중복 항목 정리) |
@@ -130,3 +130,9 @@
 | FIX-053 | 3 | data-pipeline.md Part I ItemType enum에 `Fish` 값 추가 (ARC-026 후속) |
 | FIX-054 | 2 | processing-system.md에 생선 가공 레시피 섹션 추가 후 fishing-system.md 섹션 6.2 테이블 제거 및 참조 교체 (PATTERN-008 이전 — DES-013 후속) |
 | ~~FIX-055~~ | ~~5~~ | ~~낚시 미니게임 방식 결정 및 통일: fishing-system.md 섹션 3(Oscillating Bar 가로 커서)과 fishing-architecture.md 섹션 2(ExcitementGauge 세로 게이지)가 불일치. 한 방식으로 확정 후 두 문서를 동시 수정 (CRITICAL — ARC-026 후속)~~ — DONE: ExcitementGauge 방식으로 통일, fishing-system.md 섹션 3 전면 재작성 (FishData SO targetZoneWidthMul/moveSpeed 필드 정합) |
+| FIX-057 | 3 | npcs.md 섹션 9.3 `luckyCharmIridiumBonus` 조정 범위 0.03~0.10 → 0.03~0.20 확장 (BAL-005 섹션 8 Open Question 6 후속 — 권장 값 0.15 수용 위해 상한 확장 필요) |
+| FIX-058 | 2 | BAL-005 확정 후 npcs.md 섹션 6.3·9.2·9.3 가격/파라미터 반영: universalFertPrice 150→80G, offSeasonSeedPriceMult 2.0→1.5, growthAccelDays 1→2, luckyCharmIridiumBonus 0.05→0.15, 성장 촉진제 가격 250G→150G, 행운의 부적 400G→250G (BAL-005 권장 조정 — [OPEN] 확정 대기) |
+| FIX-059 | 3 | data-pipeline.md Part I ItemType enum에 `Consumable` 값 추가 — 여행 상인 소비형 아이템(에너지 토닉, 성장 촉진제, 행운의 부적)을 Special과 구분하기 위해 (BAL-005 아키텍처 분석 후속) |
+| FIX-060 | 3 | economy-architecture.md PriceCategory enum에 `Consumable`, `Decoration` 값 추가 후 관련 switch 문 업데이트 (BAL-005 아키텍처 분석 후속) |
+| FIX-061 | 2 | npc-shop-architecture.md 섹션 7.2의 구버전 TravelingMerchantSaveData(4필드)를 섹션 9.4 확장판(7필드)으로 대체 또는 명시적 deprecated 표기 (BAL-005 아키텍처 분석 후속) |
+| FIX-062 | 3 | npc-shop-architecture.md 섹션 3.5 TravelingMerchantScheduler 클래스 다이어그램에 `_affinityPoints`, `GetAffinityLevel()`, `ApplyAffinityBonus()` 추가 (BAL-005 아키텍처 분석 후속) |
