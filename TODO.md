@@ -85,7 +85,7 @@
 | ~~ARC-012~~ | ~~2~~ | ~~세이브/로드 MCP 태스크 시퀀스 독립 문서화 (save-load-architecture.md Part II → docs/mcp/save-load-tasks.md)~~ — DONE → `docs/mcp/save-load-tasks.md` |
 | ~~BAL-003-dup~~ | ~~2~~ | ~~겨울 작물 3종 ROI/밸런스 분석 중복 항목~~ — REMOVED (line 34에 동일 항목 존재) |
 | ~~ARC-019~~ | ~~1~~ | ~~목축/낙농 시스템 기술 아키텍처 (AnimalManager, AnimalData SO, 돌봄 사이클 설계 — CON-006 후속)~~ — DONE → `docs/systems/livestock-architecture.md` |
-| BAL-008 | 1 | 목축/낙농 경제 밸런스 분석 (동물 구매/사료 비용 vs 젖/양모/알 판매 ROI — CON-006 + ARC-019 후속) |
+| ~~BAL-008~~ | ~~1~~ | ~~목축/낙농 경제 밸런스 분석 (동물 구매/사료 비용 vs 젖/양모/알 판매 ROI — CON-006 + ARC-019 후속)~~ — DONE (중복 항목 — 섹션 119 참조) |
 | ~~ARC-022~~ | ~~2~~ | ~~UI 시스템 MCP 태스크 시퀀스 독립 문서화 (ui-architecture.md Part II → docs/mcp/ui-tasks.md)~~ — DONE → `docs/mcp/ui-tasks.md` |
 | ~~DES-012~~ | ~~2~~ | ~~농장 확장 시스템 설계 (구역 해금, 타일 구매, 신규 땅 개간 메카닉 — ARC-023 선행 요건)~~ — DONE → `docs/systems/farm-expansion.md` (7구역 Zone A~G, 576타일, 총 16,000G 해금 비용) |
 | ~~CON-008~~ | ~~1~~ | ~~추가 NPC 상세 설계 (마을 상인/농업 전문가 등 blacksmith 외 NPC 대화 및 서비스 내용 상세화)~~ — DONE → `docs/content/merchant-npc.md`, `docs/content/carpenter-npc.md`, `docs/content/traveler-npc.md`, `docs/systems/npc-shop-architecture.md` 섹션 9~13 (Part III) |
@@ -120,7 +120,7 @@
 | ~~ARC-025~~ | ~~1~~ | ~~농장 확장(Zone) 시스템 MCP 태스크 시퀀스 문서화 (FarmZoneManager, ZoneData SO 구현 시퀀스 — ARC-023 후속)~~ — DONE → `docs/mcp/farm-expansion-tasks.md` (9개 태스크 그룹, ~99회 MCP 호출) |
 | ~~FIX-056~~ | ~~3~~ | ~~farm-expansion-architecture.md 섹션 5.2 도구-장애물 매핑 표에서 SmallRock/LargeRock 간 등급 기준(Basic vs Reinforced)을 farm-expansion.md 섹션 3.1과 동기화 확인 후 canonical 등록~~ — DONE: HP 수치 canonical 확인(DES-012 섹션 3.1), 아키텍처 참조 동기화, FIX-068과 통합 처리 |
 | ~~DES-013~~ | ~~1~~ | ~~낚시 시스템 설계 (Zone F 연못 구역 활용 — 낚시 메카닉, 어종 목록, 계절별 분포)~~ — DONE → `docs/systems/fishing-system.md` |
-| CON-009 | 2 | 치즈 공방 레시피 정의 (processing-system.md에 치즈 공방 레시피 4~6종 확정 추가 — BAL-008 GAP-1 후속, CON-006 완료로 선행 조건 해소됨) |
+| ~~CON-009~~ | ~~2~~ | ~~치즈 공방 레시피 정의 (processing-system.md에 치즈 공방 레시피 4~6종 확정 추가 — BAL-008 GAP-1 후속, CON-006 완료로 선행 조건 해소됨)~~ — DONE → `docs/content/processing-system.md` 섹션 3.6 치즈 공방 레시피 5종(치즈/염소치즈/버터/에이지드치즈/크림) 추가, ProcessingType.Cheese enum 추가 |
 | ~~FIX-044~~ | ~~1~~ | ~~economy-architecture.md에 동물 생산물 수급 변동 적용 정책 명시 (작물과 동일 풀 vs 별도 카테고리 결정 — BAL-008 GAP-3 후속)~~ — DONE → SupplyCategory enum(Crop/AnimalProduct/Fish/ProcessedGoods), 카테고리별 수급 파라미터, 섹션 3.11 정책 문서 추가 |
 | ~~ARC-026~~ | ~~3~~ | ~~fishing-architecture.md 문서 ID 등록 — 낚시 시스템 기술 아키텍처 (DES-013 후속, ARC-026으로 확정)~~ — DONE → `docs/systems/fishing-architecture.md` (devlog 051에서 생성 완료) |
 | ~~FIX-049~~ | ~~3~~ | ~~economy-architecture.md 섹션 3.10.2 HarvestOrigin에 `Fishing = 3` 추가, 섹션 3.10.3 switch 문에 Fishing case 추가 (ARC-026 후속)~~ — DONE |

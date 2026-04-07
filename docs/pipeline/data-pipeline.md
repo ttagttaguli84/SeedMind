@@ -275,13 +275,14 @@ SO_Tool_Hoe_Legendary    (tier=3, nextTier=null)
 | Mill | 제분 | 제분소 (building_mill) | (-> see `docs/content/processing-system.md` 섹션 3.2) |
 | Fermentation | 발효 | 발효실 (building_fermentation) | (-> see `docs/content/processing-system.md` 섹션 3.3) |
 | Bake | 요리 | 베이커리 (building_bakery) | (-> see `docs/content/processing-system.md` 섹션 3.4) |
+| Cheese | 유제품 | 치즈 공방 (building_cheese_workshop) | (-> see `docs/content/processing-system.md` 섹션 3.6) |
 
 (-> see `docs/content/processing-system.md` 섹션 3 for canonical 가공 공식, 파라미터, 레시피 전체 목록)
 (-> see `docs/systems/economy-system.md` 섹션 2.5 for 가공 배수 공식 canonical)
 
-**레시피 에셋 목록**: (-> see `docs/content/processing-system.md` 섹션 3.5 for 전체 레시피 32종 및 에셋 ID 목록 canonical)
+**레시피 에셋 목록**: (-> see `docs/content/processing-system.md` 섹션 3.7 for 전체 레시피 42종 및 에셋 ID 목록 canonical)
 
-총 32개 레시피 에셋 (가공소 18종 + 제분소 4종 + 발효실 5종 + 베이커리 5종). 에셋명 패턴: `SO_Recipe_<Type>_<Crop>`. 해바라기는 Special 카테고리로 가공 불가.
+총 42개 레시피 에셋 (가공소 21종 + 제분소 4종 + 발효실 5종 + 베이커리 7종 + 치즈 공방 5종). 에셋명 패턴: `SO_Recipe_<Type>_<Crop>`. 해바라기는 Special 카테고리로 가공 불가.
 
 [OPEN] 가공 레시피를 작물별 개별 에셋으로 할지, ProcessingType별 에셋(3개)으로 만들고 입력 카테고리로 필터할지. 개별 에셋이면 작물별 커스텀 아이콘/이름이 가능하지만 에셋 수가 많아진다. 현재는 개별 에셋 방식 채택.
 

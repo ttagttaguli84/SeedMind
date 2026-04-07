@@ -843,7 +843,8 @@ namespace SeedMind.Building.Data
         Pickle,         // 절임
         Mill,           // 제분 (제분소)
         Fermentation,   // 발효 (발효실)
-        Bake            // 베이킹 (베이커리)
+        Bake,           // 베이킹 (베이커리)
+        Cheese          // 유제품 -- 치즈 공방 전용 (-> see docs/pipeline/data-pipeline.md 섹션 2.5)
     }
 }
 ```
