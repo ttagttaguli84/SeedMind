@@ -11,7 +11,7 @@ Agent selection is determined by task type (see `start.md` Phase 2/3 for full cr
 
 | Task type | Phase 2 agent | Phase 3 reviewer |
 |-----------|---------------|-----------------|
-| DES-* new system | designer + architect in parallel | Required |
+| DES-* new system | designer → architect (sequential) | Required |
 | ARC-* architecture only | architect only | Required |
 | BAL-* balance analysis | designer only | Required |
 | CON-* content addition | designer only | Required |
@@ -24,7 +24,9 @@ Agent selection is determined by task type (see `start.md` Phase 2/3 for full cr
 
 ## Reviewer Checklist
 
-The reviewer must check all items below when reviewing documents:
+The reviewer must check items below when reviewing documents.
+Scope varies by task type — see `start.md` Phase 3 for the per-task-type checklist range.
+For DES-*/ARC-* tasks, all 14 items are required.
 
 1. [ ] Do all figures (prices, growth days, probabilities, thresholds) have a canonical source reference?
 2. [ ] Does the architecture document avoid independently copying figures from the design document?

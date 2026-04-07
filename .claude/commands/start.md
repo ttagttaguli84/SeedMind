@@ -17,13 +17,13 @@ Determine task type from `TODO.md` first, then load only what is needed:
 
 | Task type | Additional files to read |
 |-----------|--------------------------|
-| `DES-*` | `README.md`, latest `docs/devlog/*.md`, `docs/design.md`, `docs/architecture.md`, task-relevant system docs |
+| `DES-*` | `README.md`, latest `docs/devlog/*.md`, task-relevant system docs — design.md/architecture.md are read by agents directly, not injected |
 | `ARC-*` | `README.md`, latest `docs/devlog/*.md`, relevant design doc, `docs/architecture.md` |
 | `BAL-*` | latest `docs/devlog/*.md`, relevant balance/economy docs |
 | `CON-*` | latest `docs/devlog/*.md`, relevant content/design docs |
 | `FIX-*` | only the specific document(s) to be fixed |
 
-**Step 3 — Save all read content in memory for agent injection (Phase 2).**
+**Step 3 — Save read content for agent injection (Phase 2). Only task-relevant files — do NOT include large base documents (design.md, architecture.md) unless the task directly modifies them.**
 
 **Step 4 — Print a 3-line status summary:**
 ```
@@ -43,21 +43,19 @@ Select the agent strategy based on task type:
 
 | Task type | Strategy | Notes |
 |-----------|----------|-------|
-| `DES-*` (new system design) | designer + architect in parallel | Design and architecture simultaneously |
+| `DES-*` (new system design) | designer → architect (sequential) | Designer completes first; architect reads confirmed design, no sync pass needed |
 | `ARC-*` (architecture only) | architect only | Design document already exists |
 | `BAL-*` (balance analysis) | designer only | Figure-heavy, no structural changes |
 | `FIX-*` (document fix) | direct edit, no agent | Simple field addition/sync/reference fix |
 | `CON-*` (content addition) | designer only | Filling content into existing structures |
 
-**Parallel agent condition**: Spawn designer+architect simultaneously only for DES-* tasks where the system architecture document does not yet exist.
-
-**DES-* parallel execution + PATTERN-010 reconciliation**: When architect runs in parallel with designer, design figures are not yet confirmed. Architect MUST use `[OPEN - to be filled after DES-XXX is confirmed]` tags for all unconfirmed values. After the designer finishes, run a **sync pass** — architect reads the completed design document and fills in all `[OPEN]` placeholders before the reviewer runs.
+**DES-* sequential execution**: Run designer first. After designer completes, architect reads the confirmed design document directly (no injection needed for large docs) and writes the architecture document. This eliminates the PATTERN-010 sync pass entirely.
 
 **When running architect agent solo**: Must read the relevant design documents (DES, CON) first before writing. Check the Canonical Data Mapping in `doc-standards.md` and do not record figures directly.
 
 ### Agent Context Injection (cost optimization)
 
-When spawning any agent, **prepend the following block to the agent prompt**:
+When spawning any agent, **prepend only task-relevant content** to the agent prompt:
 
 ```
 ## Pre-loaded Documents (do NOT re-read these files)
@@ -67,13 +65,16 @@ Use the content below directly. Do not call Read tool for these files.
 ### TODO.md
 <paste TODO.md content>
 
-### [other files read in Phase 0]
-<paste each file's content>
+### [task-relevant files only — e.g. the specific system doc being worked on]
+<paste content>
 ```
 
-- Only inject files that were actually read in Phase 0.
-- For FIX-* tasks (no agent), this step is skipped entirely.
-- Reviewer agent: inject the newly written document content + any canonical docs checked during Phase 2.
+**Injection rules:**
+- Inject: TODO.md + the specific doc(s) being created or modified
+- Do NOT inject: design.md, architecture.md, devlog files — these are large; let the agent Read them directly if needed (one-time cache_creation, same cost)
+- For FIX-* tasks (no agent), skip entirely
+- Reviewer agent: inject only the newly written document(s) — do NOT inject canonical reference docs; reviewer reads them directly if needed
+- Exception: for BAL-* tasks, reviewer MUST read `docs/systems/economy-system.md` directly to verify fuel cost figures (checklist item 13)
 
 ## Phase 3 — Review
 
@@ -89,7 +90,13 @@ Decide whether to run the reviewer based on task type:
 
 **Conditions to skip FIX-* reviewer**: Skip only when the change is clearly limited to one section of one document and copies an already-confirmed canonical value as-is. Reviewer is required when introducing new figures or modifying multiple documents simultaneously.
 
-**When running the reviewer**: All 14 Reviewer Checklist items must be exhaustively checked. If an item is skipped or marked "not applicable", the reason must be stated.
+**Reviewer checklist scope by task type** (do not exhaustively check items irrelevant to the task):
+
+| Task type | Checklist items to verify |
+|-----------|--------------------------|
+| `FIX-*` | Items 1–4 only |
+| `BAL-*` / `CON-*` | Items 1–8 + task-relevant items from 9–14 |
+| `DES-*` / `ARC-*` | All 14 items |
 
 ## Phase 4 — Wrap Up
 
@@ -106,16 +113,16 @@ Determine how many tasks to handle this session based on the priority of the hig
 | Highest-priority task Priority | Tasks to handle in session | Rationale |
 |-------------------------------|---------------------------|-----------|
 | 3 or above (high urgency) | 1 | High-priority tasks are complex — focus on one |
-| 2 | 2 | Mid-priority tasks are moderately scoped |
-| 1 (low urgency) | 3–4 | Low-priority tasks are small enough to batch |
+| 2 | 1 | Mid-priority tasks require full agent+review cycle |
+| 1 (low urgency) | 2 | Low-priority tasks are small enough to pair |
 
-After completing Phase 4, **if budget remains**:
+After completing Phase 4, **if budget remains (Priority-1 only)**:
 1. Re-read `TODO.md` only (do not re-read other Phase 0 files)
 2. Repeat Phase 1→4 for the next highest-priority item
-3. End when budget is exhausted or only Priority-2+ items remain
+3. End when budget is exhausted or a Priority-2+ item is encountered
 
 ## Rules
-- Designer and architect must reference each other's output
+- For DES-* tasks: architect must read and reference the designer's completed output before writing. Designer writes independently; architect references confirmed design.
 - Reviewer has final say on consistency issues
 - All output in Korean. Document content in Korean (technical terms in English where natural).
-- Looping is allowed within budget. Must stop when budget is exhausted.
+- Looping is allowed only within Priority-1 budget. Must stop when budget is exhausted.
