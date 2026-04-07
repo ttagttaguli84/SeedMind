@@ -708,7 +708,7 @@ DialogueEntry {
 
 5. [OPEN] **목공소 동시 건설 제한**: 현재 1건씩만 의뢰 가능하도록 설계했으나, 후반 플레이어의 대기 시간 불만이 우려됨. 동시 2건까지 허용할지, 혹은 추가 비용으로 급행 건설을 도입할지 검토 필요.
 
-6. [OPEN] **대장간 영업시간 (tool-upgrade.md와의 불일치 해소)**: `docs/systems/tool-upgrade.md` 섹션 6.1에서 대장간 영업시간을 09:00~18:00으로 기재하고 있으나, `docs/systems/economy-system.md` 섹션 3.2에서는 10:00~16:00으로 기재되어 있다. economy-system.md가 상점 영업시간의 canonical이므로, tool-upgrade.md 섹션 6.1의 영업시간을 10:00~16:00으로 수정해야 한다.
+6. ~~[OPEN] **대장간 영업시간 (tool-upgrade.md와의 불일치 해소)**~~ — **RESOLVED (FIX-067)**: `docs/systems/tool-upgrade.md` 섹션 6.1 영업시간이 `(→ see docs/systems/economy-system.md 섹션 3.2)` canonical 참조로 교체됨. 불일치 해소.
 
 ---
 
@@ -722,7 +722,7 @@ DialogueEntry {
 
 4. [RISK] **영업시간/휴무일에 의한 접근성 문제**: 특히 대장간(10:00~16:00, 6시간 영업)이 너무 짧아 방문 기회가 제한될 수 있다. 게임 내 1일 = 실시간 10분이므로 대장간 영업시간은 실시간 약 2.5분에 해당. 편의성과 전략성의 균형 모니터링 필요.
 
-5. [RISK] **tool-upgrade.md와의 영업시간 불일치**: Open Question 6에서 기술한 바와 같이, tool-upgrade.md의 대장간 영업시간(09:00~18:00)이 economy-system.md의 canonical 값(10:00~16:00)과 불일치한다. 본 문서는 economy-system.md를 따르지만, tool-upgrade.md 수정이 지연되면 혼란 가능.
+5. ~~[RISK] **tool-upgrade.md와의 영업시간 불일치**~~ — **해소 (FIX-067)**: tool-upgrade.md 섹션 6.1이 canonical 참조로 교체됨.
 
 ---
 

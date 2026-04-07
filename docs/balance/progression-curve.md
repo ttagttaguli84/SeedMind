@@ -39,7 +39,8 @@
 | 퀘스트 완료 | ~10% | ~900 XP / 1년차 (-> see `docs/balance/xp-integration.md`) |
 | 업적 달성 | ~5% | ~2,250 XP / 전체 (-> see `docs/content/achievements.md` 섹션 2.4) |
 | **목축 활동** | **별도 가산** | 레벨 6 해금 이후 추가 XP 소스 (-> see 섹션 1.2.6) |
-| **합계** | **~100% + 목축** | canonical XP 기준: 9,029 XP + 목축 XP (-> see 섹션 2.4.1, 1.2.6) |
+| **낚시 활동** | **별도 가산** | Zone F 해금 이후 추가 XP 소스 (-> see 섹션 1.2.7) |
+| **합계** | **~100% + 목축 + 낚시** | canonical XP 기준: 9,029 XP + 목축 XP + 낚시 XP (-> see 섹션 2.4.1, 1.2.6, 1.2.7) |
 
 #### 1.2.1 작물 수확 XP (주요 소스, 전체 XP의 약 55%)
 
@@ -175,6 +176,51 @@
 - 레벨 8→9 필요 XP: 2,147 XP (-> see 섹션 2.4.1). 중간 투자(닭 x4 + 소 x1) 시 목축 XP(28일 1,064 XP)만으로는 한 계절 내 달성 불가. 작물 XP 합산 필요.
 
 [OPEN] 목축 XP가 레벨 6~10 구간의 레벨업 속도를 과도하게 가속시킬 수 있다. 기존 XP 소스(작물+경작+시설)와 합산 시 레벨 9~10 도달이 너무 빨라지면, 목축 XP에 일일 상한(예: 50 XP/일)을 도입하거나, 레벨 9~10 필요 XP를 상향 조정해야 할 수 있다.
+
+#### 1.2.7 낚시 활동 XP (Zone F 해금 이후 추가 소스)
+
+> **[FIX-064]** 낚시 XP는 Zone F 해금 이후에만 획득 가능하므로, 기존 레벨 1~5 진행 곡선에 영향을 주지 않는다. 목축 XP와 마찬가지로 기존 XP 소스 배분(~100%)에 **별도 가산**되는 구조이다.
+
+**XPSource enum**: `FishingCatch` (-> see `docs/systems/fishing-architecture.md` 섹션 6.1, `docs/systems/progression-architecture.md` 섹션 2.2)
+
+##### 1.2.7.1 희귀도별 기본 XP (FishingCatch)
+
+| 희귀도 (FishRarity) | 기본 XP (expReward) | 근거 |
+|---------------------|---------------------|------|
+| Common | 10 XP | 작물 기초 수확 XP(5~8)의 약 1.5배. 낚시 미니게임 노력 보상 |
+| Uncommon | 20 XP | Common의 2배. 중급 작물(옥수수 12 XP)보다 약간 높음 |
+| Rare | 40 XP | Uncommon의 2배. 고급 작물(수박 25 XP)보다 높지만, 출현 빈도가 매우 낮음 |
+| Legendary | 80 XP | Rare의 2배. 전설 어종은 특수 조건 필요하므로 최고 보상 |
+
+**XP 산출 근거**: 희귀도 단계마다 2배 증가하는 등비 패턴. 낚시는 미니게임 스킬을 요구하므로 동일 시간 투자 대비 작물 수확보다 약간 높은 XP를 부여하되, 총 일일 XP가 작물 XP를 압도하지 않도록 설계한다.
+
+##### 1.2.7.2 낚시 XP 계산 공식
+
+```
+낚시_XP = floor(fishData.expReward * qualityExpBonus[quality])
+```
+
+**품질 보정 배율**: 작물 수확과 **동일한 테이블을 공유**한다 (-> see 섹션 1.2.2 for canonical 테이블).
+
+**예시**:
+- Common 물고기 (Normal): floor(10 * 1.0) = 10 XP
+- Common 물고기 (Gold): floor(10 * 1.5) = 15 XP
+- Rare 물고기 (Silver): floor(40 * 1.2) = 48 XP
+- Legendary 물고기 (Iridium): floor(80 * 2.0) = 160 XP
+
+##### 1.2.7.3 낚시 XP 일일 시뮬레이션 (28일 = 1계절)
+
+> 1일 낚시 가능 횟수를 에너지 제한 기반으로 약 8~12회로 가정 (-> see `docs/systems/farming-system.md` 섹션 3.2 for 에너지 시스템).
+
+| 시나리오 | 일일 낚시 횟수 | 평균 희귀도 구성 | 일일 XP (추정) | 28일 합계 |
+|---------|-------------|-----------------|---------------|----------|
+| 캐주얼 (틈틈이) | 4회 | Common x3 + Uncommon x1 | 50 XP | 1,400 XP |
+| 보통 (절반 시간) | 8회 | Common x5 + Uncommon x2 + Rare x1 | 130 XP | 3,640 XP |
+| 집중 (전담) | 12회 | Common x7 + Uncommon x3 + Rare x1.5 + Legendary x0.5 | 210 XP | 5,880 XP |
+
+**밸런스 판단**: "집중" 시나리오에서도 28일 5,880 XP는 레벨 6→7 필요 XP(839)를 크게 초과하므로, 낚시 전담 플레이 시 레벨업이 빠를 수 있다. 그러나 낚시 전담 시 작물 XP를 포기하는 기회비용이 있어 균형이 맞는다.
+
+[OPEN] 낚시 XP가 목축 XP와 합산 시 레벨 7~10 구간 레벨업 속도를 과도하게 가속시킬 가능성이 있다. 필요 시 낚시 XP 일일 상한(예: 100 XP/일) 도입을 검토한다.
 
 ### 1.3 레벨별 필요 XP 테이블
 
@@ -899,6 +945,7 @@ G
 - `docs/pipeline/data-pipeline.md` -- 진행 밸런스 포인트(섹션 5.2)
 - `docs/balance/livestock-economy.md` -- 목축/낙농 ROI 분석(BAL-008); 목축 XP 기여 요약(섹션 6)이 본 문서 섹션 1.2.6을 canonical로 참조
 - `docs/systems/livestock-architecture.md` -- 목축 기술 아키텍처(ARC-019); XPSource.AnimalCare/AnimalHarvest enum 정의(섹션 7.1)이 본 문서 섹션 1.2.6에서 참조됨
+- `docs/systems/fishing-architecture.md` -- 낚시 기술 아키텍처(ARC-025); XPSource.FishingCatch enum 정의(섹션 6.1), FishData.expReward(섹션 3)이 본 문서 섹션 1.2.7을 canonical로 참조 (FIX-064)
 
 ---
 

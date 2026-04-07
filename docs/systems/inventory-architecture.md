@@ -222,7 +222,7 @@ namespace SeedMind
 {
     /// <summary>
     /// 인벤토리에 저장 가능한 아이템의 공통 계약.
-    /// CropData, ToolData, FertilizerData 등이 구현한다.
+    /// CropData, ToolData, FertilizerData, FishData 등이 구현한다.
     /// </summary>
     public interface IInventoryItem
     {
@@ -433,7 +433,31 @@ public class FertilizerData : GameDataSO, IInventoryItem
 }
 ```
 
-### 4.4 ProcessingRecipeData의 IInventoryItem 구현
+### 4.4 FishData의 IInventoryItem 구현
+
+```csharp
+// FishData는 낚시로 획득한 물고기의 인벤토리 항목 역할을 한다.
+// → see docs/systems/fishing-architecture.md 섹션 3 for FishData canonical 필드
+// → see docs/pipeline/data-pipeline.md Part I 섹션 2.4 for ItemType.Fish
+
+public class FishData : GameDataSO, IInventoryItem
+{
+    // --- IInventoryItem 구현 ---
+    public string ItemId => dataId;                         // "fish_carp", "fish_goldfish" 등
+    public string ItemName => displayName;
+    public ItemType ItemType => SeedMind.ItemType.Fish;     // 물고기 타입
+    public Sprite Icon => icon;
+    public int MaxStackSize => maxStackSize;                // 어종별 개별 설정 (→ see docs/pipeline/data-pipeline.md 섹션 2.7)
+    public bool Sellable => true;
+
+    // --- 어종 고유 필드 (→ see docs/systems/fishing-architecture.md 섹션 3) ---
+    // rarity, basePrice, seasonAvailability, timeWeights,
+    // weatherBonus, minigameDifficulty, targetZoneWidthMul,
+    // moveSpeed, expReward 등은 FishData SO에 정의
+}
+```
+
+### 4.5 ProcessingRecipeData의 IInventoryItem 구현
 
 ```csharp
 // 가공품은 ProcessingRecipeData를 통해 인벤토리에 등록된다.
@@ -744,9 +768,10 @@ Step A-4: SCN_Farm 씬에 "InventoryManager" 빈 GameObject 생성
           → MCP: AddComponent<InventoryManager>()
           → MCP: SetPosition(0, 0, 0) (매니저이므로 위치 무관)
 
-Step A-5: 기존 CropData, ToolData, FertilizerData, ProcessingRecipeData에 IInventoryItem 구현 추가
+Step A-5: 기존 CropData, ToolData, FertilizerData, ProcessingRecipeData, FishData에 IInventoryItem 구현 추가
           → 각 클래스에 인터페이스 멤버 구현
           → MaxStackSize, Sellable 값은 ItemType에 따라 결정
+          → FishData: ItemType.Fish, MaxStackSize=maxStackSize(어종별), Sellable=true
 ```
 
 ### Phase B: PlayerInventory 연결
@@ -934,6 +959,7 @@ Assets/_Project/Scripts/
 - `docs/systems/progression-architecture.md` -- 해금 시스템, UnlockRegistry (BAL-002)
 - `docs/pipeline/data-pipeline.md` -- IInventoryItem 인터페이스, InventorySaveData JSON 스키마, GameDataSO 베이스 (ARC-004)
 - `docs/systems/crop-growth.md` -- CropQuality enum, 품질 시스템 (DES-002)
+- `docs/systems/fishing-architecture.md` -- FishData SO 정의 (섹션 3), IInventoryItem 구현 (FIX-063)
 
 ---
 

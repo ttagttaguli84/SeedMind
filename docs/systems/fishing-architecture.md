@@ -258,7 +258,7 @@ namespace SeedMind.Fishing
 |  + targetZoneWidthMul: float         // 타깃 존 폭 배율 (1.0 = 기본) |
 |  + moveSpeed: float                  // 타깃 존 이동 속도      |
 |  + maxStackSize: int                 // 인벤토리 스택 한도     |
-|       // -> see docs/systems/inventory-architecture.md 섹션 1.1 |
+|       // -> see docs/pipeline/data-pipeline.md 섹션 2.7        |
 |  + expReward: int                    // 잡았을 때 XP          |
 |       // -> see docs/balance/progression-curve.md (canonical)  |
 |                                                              |
@@ -437,7 +437,7 @@ public enum XPSource
 }
 ```
 
-### 6.2 GetExpForSource() 확장
+### 6.2 GetExpForSource() 확장 및 낚시 XP 계산 공식
 
 `progression-architecture.md` 섹션 2.3의 switch 문에 다음 case를 추가해야 한다:
 
@@ -445,14 +445,40 @@ public enum XPSource
 // illustrative — progression-architecture.md 섹션 2.3에 추가
 case XPSource.FishingCatch:
     // 낚시 XP는 FishData.expReward 기반, 품질 보정 적용
-    // -> see docs/balance/progression-curve.md for canonical XP 값
+    // -> see docs/balance/progression-curve.md 섹션 1.2.7 for canonical XP 값
     var (fishData, fishQuality) = ((FishData, CropQuality))context;
     return CalculateFishingExp(fishData, fishQuality);
 ```
 
+**CalculateFishingExp() 메서드 정의**:
+
+```csharp
+// illustrative — progression-architecture.md에 추가
+private int CalculateFishingExp(FishData fishData, CropQuality quality)
+{
+    // 공식: floor(fishData.expReward * qualityExpBonus[quality])
+    // → see docs/balance/progression-curve.md 섹션 1.2.7.2 for canonical 공식
+    // → qualityExpBonus 테이블은 작물 수확과 공유 (섹션 1.2.2)
+    float qualityBonus = GetQualityExpBonus(quality);
+    // → see docs/balance/progression-curve.md 섹션 1.2.2 for qualityExpBonus 배율
+    return Mathf.FloorToInt(fishData.expReward * qualityBonus);
+}
+```
+
+**희귀도별 expReward canonical 값** (-> see `docs/balance/progression-curve.md` 섹션 1.2.7.1):
+
+| FishRarity | expReward |
+|------------|-----------|
+| Common | 10 |
+| Uncommon | 20 |
+| Rare | 40 |
+| Legendary | 80 |
+
+**품질 보정 배율**: 작물 수확과 동일한 테이블 공유 (-> see `docs/balance/progression-curve.md` 섹션 1.2.2)
+
 **FIX 태스크**: `progression-architecture.md` 섹션 2.2 XPSource enum에 `FishingCatch` 추가, 섹션 2.3 `GetExpForSource()` switch 문에 `FishingCatch` case 추가, `CalculateFishingExp()` 메서드 정의 추가 (FIX-050 권고).
 
-[OPEN] 낚시 XP 계산 공식이 미정. 기본 공식 후보: `fishData.expReward * qualityExpBonus[quality]`. 품질 보정 배율은 작물 수확과 동일한 테이블 사용 가능 `(-> see docs/balance/progression-curve.md)`.
+[RESOLVED-FIX-064] 낚시 XP 계산 공식 확정: `floor(fishData.expReward * qualityExpBonus[quality])`. 희귀도별 기본 XP(Common=10, Uncommon=20, Rare=40, Legendary=80)와 품질 보정 배율(작물 수확과 동일 테이블)이 `docs/balance/progression-curve.md` 섹션 1.2.7에 canonical 등록되었다.
 
 ### 6.3 이벤트 구독 확장
 
@@ -542,6 +568,7 @@ FarmZoneManager.TryUnlockZone("zone_pond")
     "dataId": "fish_carp",
     "displayName": "잉어",
     "description": "연못에서 흔히 잡히는 민물고기. 사계절 잡을 수 있다.",
+    "icon": "(Sprite 에셋 참조 -- JSON 직렬화 대상 아님, Unity Inspector에서 할당)",
     "fishId": "fish_carp",
     "rarity": "Common",
     "basePrice": 0,
@@ -559,13 +586,14 @@ FarmZoneManager.TryUnlockZone("zone_pond")
 ```
 
 **필드 설명**:
+- `icon`: Sprite 에셋 참조. Unity SO에서 Inspector로 할당하며, JSON 직렬화 대상이 아님. C# 클래스(섹션 3) `GameDataSO.icon` 필드에 대응. (PATTERN-005 동기화 항목)
 - `basePrice`: `0`으로 표기 -- canonical 값은 `(-> see docs/systems/fishing-system.md)`. 아직 미확정이므로 플레이스홀더.
 - `seasonAvailability`: `15` = `0b1111` (Spring|Summer|Fall|Winter) -- 사계절 출현 `(-> see docs/systems/time-season.md for SeasonFlag)`
 - `timeWeights`: 5개 시간대 가중치 [Dawn, Morning, Afternoon, Evening, Night] `(-> see docs/systems/time-season.md 섹션 1.2 for 시간대 정의)`
 - `weatherBonus`: `2` = `WeatherFlag.Rain` -- 비 올 때 출현율 증가
-- `expReward`: `0`으로 표기 -- canonical 값은 `(-> see docs/balance/progression-curve.md)`. 아직 미확정이므로 플레이스홀더.
+- `expReward`: `0`으로 표기 -- canonical 값은 `(-> see docs/balance/progression-curve.md 섹션 1.2.7.1)`. Common 어종의 실제 값은 10. JSON 예시에서는 canonical 문서 참조용 플레이스홀더로 유지한다.
 
-[OPEN] basePrice, expReward 등 밸런스 수치는 fishing-system.md (디자인 문서) 작성 시 확정 필요.
+[OPEN] basePrice 등 일부 밸런스 수치는 fishing-system.md (디자인 문서)에서 확정 필요. expReward는 FIX-064에서 확정 완료 (-> see `docs/balance/progression-curve.md` 섹션 1.2.7).
 
 ## 10. FishingSaveData C# 클래스
 
@@ -805,7 +833,7 @@ SaveManager.LoadAsync()
 
 ## 13. MCP 구현 태스크 시퀀스
 
-> 상세 태스크는 `docs/mcp/fishing-tasks.md`에서 별도 작성 예정
+> 상세 태스크는 `docs/mcp/fishing-tasks.md` (ARC-028)에서 별도 관리된다. 이 섹션은 Phase 요약 개요를 제공한다.
 
 ### Phase A: 데이터 레이어 (SO 생성)
 
@@ -885,14 +913,14 @@ SaveManager.LoadAsync()
 | `docs/systems/time-season.md` | 섹션 1.2 시간대, SeasonFlag | 어종 출현 조건 |
 | `docs/systems/project-structure.md` | 네임스페이스 규칙 | SeedMind.Fishing 배치 |
 | `docs/systems/fishing-system.md` (DES-013) | 어종 목록, 가격, 밸런스 | FishData canonical 수치 |
-| `docs/balance/progression-curve.md` | 낚시 XP 값 | FishingCatch XP canonical — FIX-050 완료 후 등록 예정 |
+| `docs/balance/progression-curve.md` | 낚시 XP 값 | FishingCatch XP canonical — 섹션 1.2.7에 등록 완료 (FIX-064) |
 
 ---
 
 ## Open Questions
 
 1. [RESOLVED] `docs/systems/fishing-system.md` (DES-013) 작성 완료. 어종 목록 15종, 기본 판매가, 희귀도별 출현 가중치, 미니게임 난이도 파라미터 확정. basePrice 및 expReward 등 일부 밸런스 수치는 `docs/balance/progression-curve.md` canonical 등록 후 FishData SO에 반영 필요.
-2. [OPEN] 낚시 XP 계산 공식 미확정. 작물 수확 XP 공식(`harvestExpBase + floor(growthDays * harvestExpPerGrowthDay) * qualityBonus`)을 물고기에 어떻게 적용할지 (rarity 기반? basePrice 기반?) 결정 필요.
+2. [RESOLVED-FIX-064] 낚시 XP 계산 공식 확정: `floor(fishData.expReward * qualityExpBonus[quality])`. rarity 기반(Common=10, Uncommon=20, Rare=40, Legendary=80). canonical 등록 완료 (-> see `docs/balance/progression-curve.md` 섹션 1.2.7).
 3. [RESOLVED-FIX-053] `ItemType` enum에 `Fish` 값 추가 완료. data-pipeline.md, inventory-architecture.md 섹션 3.2, inventory-tasks.md Step 1-01에 반영.
 4. [OPEN] 물고기 전용 가격 변동 시스템 분리 여부. 초기 버전은 기존 PriceFluctuationSystem 공유, 추후 분리 검토.
 5. [OPEN] 낚시 에너지 소모량 미확정. 캐스팅 1회당 에너지 소모를 `(-> see docs/systems/farming-system.md 섹션 3.2)` 기존 도구 사용 에너지와 동일 레벨로 할지 별도 설정할지 결정 필요.
@@ -923,3 +951,5 @@ SaveManager.LoadAsync()
 | FIX-051 | `data-pipeline.md` | Part I 섹션 3.2 JSON 스키마 및 Part II GameSaveData C# 클래스에 `fishing` 필드 추가 | RESOLVED |
 | FIX-052 | `save-load-architecture.md` | 섹션 7 SaveLoadOrder 할당표에 `FishingManager \| 52` 추가 | RESOLVED |
 | FIX-053 | `pipeline/data-pipeline.md`, `inventory-architecture.md`, `inventory-tasks.md` | ItemType enum에 `Fish` 값 추가 | RESOLVED |
+| FIX-063 | `inventory-architecture.md` | 섹션 4에 FishData IInventoryItem 구현 예시 추가 (섹션 4.4) | RESOLVED |
+| FIX-064 | `fishing-architecture.md`, `balance/progression-curve.md` | 낚시 XP 계산 공식 확정, 섹션 6.2 업데이트 + progression-curve.md 섹션 1.2.7 canonical 등록 | RESOLVED |

@@ -136,12 +136,16 @@
 | ~~FIX-060~~ | ~~3~~ | ~~economy-architecture.md PriceCategory enum에 `Consumable`, `Decoration` 값 추가 후 관련 switch 문 업데이트 (BAL-005 아키텍처 분석 후속)~~ — DONE: PriceCategory enum에 Consumable/Decoration 추가 (switch 문 없음) |
 | ~~FIX-061~~ | ~~2~~ | ~~npc-shop-architecture.md 섹션 7.2의 구버전 TravelingMerchantSaveData(4필드)를 섹션 9.4 확장판(7필드)으로 대체 또는 명시적 deprecated 표기 (BAL-005 아키텍처 분석 후속)~~ — DONE: 섹션 7.1/7.2에 [DEPRECATED] 배너 추가, 섹션 9.4(7필드) 참조 명시 |
 | ~~FIX-062~~ | ~~3~~ | ~~npc-shop-architecture.md 섹션 3.5 TravelingMerchantScheduler 클래스 다이어그램에 `_affinityPoints`, `GetAffinityLevel()`, `ApplyAffinityBonus()` 추가 (BAL-005 아키텍처 분석 후속)~~ — DONE: _affinityPoints 필드 + 메서드 2개 + OnAffinityChanged 이벤트 구독 추가 |
-| FIX-063 | 2 | inventory-architecture.md 섹션 4에 FishData의 IInventoryItem 구현 예시 추가 (ItemType 프로퍼티 `Fish` 반환 — ARC-026 후속, 리뷰어 INFO-1) |
-| FIX-064 | 2 | fishing-architecture.md 섹션 5.2 또는 balance 문서에 낚시 XP 계산 공식 확정 및 canonical 등록 (rarity 기반 vs basePrice 기반 — ARC-026 후속, 리뷰어 INFO-2) |
-| FIX-067 | 3 | tool-upgrade.md 섹션 6.1 대장간 영업시간 09:00~18:00 → 10:00~16:00 수정 (economy-system.md 섹션 3.2가 canonical — npcs.md [OPEN] 6 후속) |
+| ~~FIX-063~~ | ~~2~~ | ~~inventory-architecture.md 섹션 4에 FishData의 IInventoryItem 구현 예시 추가 (ItemType 프로퍼티 `Fish` 반환 — ARC-026 후속, 리뷰어 INFO-1)~~ — DONE: 섹션 4.4 신규 추가 (MaxStackSize canonical 참조 data-pipeline.md 섹션 2.7), 리뷰어 WARNING 수정 포함 |
+| ~~FIX-064~~ | ~~2~~ | ~~fishing-architecture.md 섹션 5.2 또는 balance 문서에 낚시 XP 계산 공식 확정 및 canonical 등록 (rarity 기반 vs basePrice 기반 — ARC-026 후속, 리뷰어 INFO-2)~~ — DONE: progression-curve.md 섹션 1.2.7 (Common=10/Uncommon=20/Rare=40/Legendary=80), fishing-architecture.md 섹션 6.2 CalculateFishingExp() 정의, [OPEN] 해소 |
+| ~~FIX-067~~ | ~~3~~ | ~~tool-upgrade.md 섹션 6.1 대장간 영업시간 09:00~18:00 → 10:00~16:00 수정 (economy-system.md 섹션 3.2가 canonical — npcs.md [OPEN] 6 후속)~~ — DONE: tool-upgrade.md는 이미 canonical 참조로 교체됨 확인; npcs.md [OPEN]-6 및 [RISK]-5 RESOLVED 처리 |
 | DES-014 | 2 | 겨울 온실 전용 씨앗 판매 경로 확정 (여행 상인 독점 vs 잡화 상점 겨울 판매 — npcs.md [OPEN] 1 후속, crops.md 섹션 3.9~3.11 반영) |
-| ARC-028 | 2 | 낚시 시스템 MCP 태스크 시퀀스 문서화 (fishing-architecture.md Part II → docs/mcp/fishing-tasks.md — ARC-026 후속) |
+| ~~ARC-028~~ | ~~2~~ | ~~낚시 시스템 MCP 태스크 시퀀스 문서화 (fishing-architecture.md Part II → docs/mcp/fishing-tasks.md — ARC-026 후속)~~ — DONE → `docs/mcp/fishing-tasks.md` (7개 태스크 그룹, ~278회 MCP 호출) |
 | FIX-068 | 2 | farm-expansion-architecture.md [RISK] 해소: ToolType enum에 Axe/Pickaxe 추가 여부 확정 (Hoe 등급별 개간 능력으로 대체 유지 vs 전용 도구 추가 — farming-architecture.md 섹션 4.3 동기화 포함) |
 | ~~FIX-065~~ | ~~2~~ | ~~sound-design.md 섹션 3.5에 SFX 풀 총 크기(poolSize=16) canonical 수치 추가 (AUD-001 리뷰어 WARNING-002 후속)~~ — DONE: 섹션 3.5 풀 크기 테이블 추가 (poolSize=16, 산출 근거 포함), sound-architecture.md 섹션 3.2 참조 `섹션 3.5`로 구체화 |
 | ~~FIX-066~~ | ~~2~~ | ~~sound-design.md 섹션 1에 TitleScreen/GameOver BGM 트랙 추가 또는 sound-architecture.md BGMTrack에서 해당 값 제거 결정 (AUD-001 리뷰어 INFO-001 후속)~~ — DONE: sound-design.md 섹션 1.3에 bgm_title_screen/bgm_game_over 추가; 섹션 1.4 우선순위 스택 6단계로 확장(TitleScreen/GameOver 최우선); sound-architecture.md BGMTrack 주석 참조 추가 |
 | ~~ARC-027~~ | ~~2~~ | ~~사운드 시스템 MCP 태스크 시퀀스 독립 문서화 (sound-architecture.md Part II → docs/mcp/sound-tasks.md 상세 분리)~~ — DONE → `docs/mcp/sound-tasks.md` (6단계 태스크 그룹, ~148회 MCP 호출) |
+| BAL-012 | 2 | 낚시 경제 밸런스 분석 (어종별 기본 판매가 ROI 분석 → fishing-system.md basePrice 확정, fishing-architecture.md basePrice 0 플레이스홀더 해소 — ARC-028 후속) |
+| FIX-069 | 2 | fishing-system.md 섹션 2.1 "낚시 포인트 약 20개소" vs fishing-architecture.md 섹션 8.1 "FishingPoint 3개" 불일치 해소 (20개소=물리 위치, 3개=MonoBehaviour 오브젝트 개념 명확화) |
+| CON-010 | 2 | 낚시 관련 업적/퀘스트 콘텐츠 추가 (achievements.md에 낚시 업적 3~5종, quest-system.md에 낚시 퀘스트 항목 추가 — ARC-028 완료 후 downstream) |
+| ARC-029 | 1 | 낚시 숙련도 시스템 아키텍처 (fishing-system.md 섹션 5 FishingProficiency 설계 → FishingManager 통합, 낚싯대 해금 조건 연동 — DES-013 후속) |
