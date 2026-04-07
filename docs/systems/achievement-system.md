@@ -51,7 +51,7 @@
 
 ## 1. 업적 분류 체계
 
-SeedMind의 업적은 **7개 카테고리**로 분류된다. 각 카테고리는 게임의 핵심 시스템과 대응한다.
+SeedMind의 업적은 **9개 카테고리**로 분류된다. 각 카테고리는 게임의 핵심 시스템과 대응한다.
 
 | 카테고리 | 영문 ID | 대응 시스템 | 업적 수 |
 |----------|---------|------------|---------|
@@ -61,9 +61,11 @@ SeedMind의 업적은 **7개 카테고리**로 분류된다. 각 카테고리는
 | 도구 장인 | `Tool` | 도구 업그레이드 | 3개 |
 | 탐험가 | `Explorer` | NPC/상점/계절 | 4개 |
 | 퀘스트 영웅 | `Quest` | 퀘스트/미션 | 4개 |
+| 낚시사 | `Angler` | 낚시/어종 수집 | 4개 |
+| 채집가 | `Gatherer` | 채집/채집물 수집 | 5개 |
 | 숨겨진 업적 | `Hidden` | 특수 행동/이스터에그 | 6개 |
 
-**총 업적 수: 30개**
+**총 업적 수: 39개**
 
 ### 1.1 업적 유형
 
@@ -219,7 +221,36 @@ AchievementProgress {
 | Silver | 누적 30개 퀘스트 완료 | 칭호: "퀘스트 사냥꾼", 골드 (-> see 섹션 4.1) |
 | Gold | 누적 100개 퀘스트 완료 | 칭호: "퀘스트 영웅", 아이템: 영웅의 증표 장식품 x1, 골드 (-> see 섹션 4.1) |
 
-### 3.7 숨겨진 업적 (Hidden)
+### 3.7 낚시사 (Angler)
+
+| ID | 이름 | 유형 | 조건 | 보상 | 숨김 |
+|----|------|------|------|------|------|
+| `ach_fish_01` | 첫 낚시 | Single | 물고기 1마리 포획 | 칭호: "초보 낚시꾼" | N |
+| `ach_fish_02` | 낚시 애호가 | Tiered | 누적 물고기 포획 | 아래 참조 | N |
+| `ach_fish_03` | 낚시꾼 | Single | 누적 200마리 포획 | 칭호: "낚시꾼", 아이템: 숙련도 XP 보너스 | N |
+| `ach_fish_04` | 전설의 낚시사 | Single | 어종 도감 15/15종 완성 (-> see `docs/systems/fishing-system.md` 섹션 4.2) | 칭호: "전설의 낚시사", 아이템: 황금 낚싯대 장식품 | N |
+
+**ach_fish_02 단계 상세**: (-> see `docs/content/achievements.md` 섹션 9.2 for 확정 수치)
+
+### 3.8 채집가 (Gatherer)
+
+| ID | 이름 | 유형 | 조건 | 보상 | 숨김 |
+|----|------|------|------|------|------|
+| `ach_gather_01` | 첫 채집 | Single | 채집물 1개 수집 | 칭호: "초보 채집꾼" | N |
+| `ach_gather_02` | 채집 애호가 | Tiered | 누적 채집물 수집 | 아래 참조 | N |
+| `ach_gather_03` | 채집 도감 완성 | Single | 채집물 도감 27/27종 완성 (-> see `docs/systems/gathering-system.md` 섹션 3.9) | 칭호: "채집 박사", 아이템: 채집 도감 장식품 | N |
+| `ach_gather_04` | 전설의 채집가 | Single | Legendary 채집물 누적 5개 수집 (-> see `docs/systems/gathering-system.md` 섹션 3.3~3.7) | 칭호: "전설의 채집가" | N |
+| `ach_gather_05` | 채집 낫의 진화 | Single | 채집 낫을 Legendary 등급으로 업그레이드 (-> see `docs/systems/gathering-system.md` 섹션 5.2) | 칭호: "낫의 장인" | N |
+
+**ach_gather_02 단계 상세**:
+
+| 단계 | 조건 | 보상 |
+|------|------|------|
+| Bronze | 누적 20개 수집 | 골드 (-> see `docs/content/achievements.md` 섹션 9.5.2) |
+| Silver | 누적 100개 수집 | 칭호: "채집 애호가", 골드 (-> see `docs/content/achievements.md` 섹션 9.5.2) |
+| Gold | 누적 500개 수집 | 칭호: "숙련 채집꾼", 아이템: 채집 숙련도 XP 보너스, 골드 (-> see `docs/content/achievements.md` 섹션 9.5.2) |
+
+### 3.9 숨겨진 업적 (Hidden)
 
 숨겨진 업적은 달성 전까지 업적 패널에서 이름/조건이 `"???"` 으로 표시된다. 달성 시 전체 내용이 공개된다.
 
@@ -265,8 +296,8 @@ AchievementProgress {
 **숨겨진 업적 보상**: 기본 100G + 30 XP (난이도 무관 균일). 숨겨진 업적의 가치는 칭호와 발견의 즐거움에 있으므로 골드/XP는 적정 수준으로 억제한다.
 
 **업적 보상 XP 총량 추정**:
-- 전 업적(30개) 완료 시 총 XP: 약 1,500~2,000 XP
-- 이는 전체 필요 누적 XP 4,609 (-> see `docs/balance/progression-curve.md` 섹션 1.3.2)의 약 33~43%에 해당
+- 전 업적(39개) 완료 시 총 XP: (-> see `docs/content/achievements.md` 섹션 13.1 — 확정 합계 3,130 XP)
+- 이는 전체 필요 누적 XP 9,029 (-> see `docs/balance/progression-curve.md` 섹션 1.3.2)의 약 34.7%에 해당 (-> see `docs/content/achievements.md` 섹션 2.4)
 - 단, 전 업적 완료는 게임 후반(2년차 이후)에나 가능하므로 실질적 XP 가속 효과는 제한적
 
 [RISK] 업적 XP가 퀘스트 XP(계절당 500~1,100 XP, -> see `docs/systems/quest-system.md` 섹션 7.3)와 합산 시 레벨업 속도를 과도하게 가속할 수 있다. 출시 전 시뮬레이션으로 검증 필요.
@@ -327,8 +358,21 @@ AchievementProgress {
 | 역전의 농부 | `ach_hidden_04` | Hidden |
 | 거대 작물의 주인 | `ach_hidden_05` | Hidden |
 | 통큰 농부 | `ach_hidden_06` | Hidden |
+| 초보 낚시꾼 | `ach_fish_01` | Angler |
+| 낚시 애호가 | `ach_fish_02` Silver | Angler |
+| 숙련 낚시꾼 | `ach_fish_02` Gold | Angler |
+| 낚시꾼 | `ach_fish_03` | Angler |
+| 전설의 낚시사 | `ach_fish_04` | Angler |
+| 낚시 마스터 | 어종 도감 100% + 숙련도 Lv.10 | Angler |
+| 초보 채집꾼 | `ach_gather_01` | Gatherer |
+| 채집 애호가 | `ach_gather_02` Silver | Gatherer |
+| 숙련 채집꾼 | `ach_gather_02` Gold | Gatherer |
+| 채집 박사 | `ach_gather_03` | Gatherer |
+| 전설의 채집가 | `ach_gather_04` | Gatherer |
+| 낫의 장인 | `ach_gather_05` | Gatherer |
+| 채집 마스터 | 채집 도감 100% + 숙련도 Lv.10 | Gatherer |
 
-**총 칭호 수: 36개** (기본 칭호 포함)
+**총 칭호 수: 49개** (기본 칭호 포함, Angler 6 + Gatherer 7 추가, 확정 목록은 -> see `docs/content/achievements.md` 섹션 11.1)
 
 ### 4.3 아이템 보상
 
@@ -345,6 +389,11 @@ AchievementProgress {
 | 바람이 특별 할인권 x1 | `ach_explorer_02` | 바람이 상점에서 1회 20% 할인 적용 |
 | 상인의 뱃지 장식품 x1 | `ach_explorer_04` Gold | 농장 배치 가능 장식 오브젝트. 기능 없음 |
 | 영웅의 증표 장식품 x1 | `ach_quest_02` Gold | 농장 배치 가능 장식 오브젝트. 기능 없음 |
+| 미끼통 x1 | `ach_fish_02` Silver | 미끼 자동 장착 소품 [OPEN] (-> see `docs/systems/fishing-system.md` 섹션 8.3) |
+| 낚시 숙련도 XP 보너스 | `ach_fish_03` | 다음 50회 포획 시 숙련도 XP +25% (-> see `docs/systems/fishing-system.md` 섹션 7) |
+| 황금 낚싯대 장식품 x1 | `ach_fish_04` | 농장 배치 가능 장식 오브젝트. 기능 없음 |
+| 채집 숙련도 XP 보너스 | `ach_gather_02` Gold | 다음 50회 채집 시 숙련도 XP +25% (-> see `docs/systems/gathering-system.md` 섹션 4) |
+| 채집 도감 장식품 x1 | `ach_gather_03` | 농장 배치 가능 장식 오브젝트. 기능 없음 |
 | 거대 씨앗 x1 | `ach_hidden_05` | 심으면 거대 작물 생성 확률 50% 상승 (해당 작물 1회). (-> see `docs/systems/crop-growth.md` 섹션 5.1 for 거대 작물) |
 
 > 아이템 보상 전체 목록(10종) canonical 출처는 `docs/content/achievements.md` 섹션 11.
@@ -518,6 +567,7 @@ AchievementProgress {
 | `OnTimeAdvanced` | 게임 시간 진행 시 발생 | currentHour, playerLocation | ach_hidden_02 |
 | `OnToolUsed` | 도구 사용 시 발생 | toolId, usageCount | ach_hidden_03 |
 | `OnGoldChanged` | 골드 변동 시 발생 | previousGold, currentGold, delta | ach_hidden_04 |
+| `GatheringEvents.OnItemGathered` | 채집물 수집 시 발생 ([TODO] `GatherCount`, `GatherSpeciesCollected`, `GatherSickleUpgraded` enum 추가 후 구독 — -> see `docs/content/achievements.md` 섹션 9.5.1) | itemId, rarity, location | ach_gather_01~05 |
 
 ### 7.2 복합 조건 추적
 
@@ -584,7 +634,7 @@ AchievementSaveData {
 
 ### 8.2 업적 보상과 경제 균형
 
-업적 보상 골드 총합(전 업적 완료 기준): 약 3,000~4,000G
+업적 보상 골드 총합(전 업적 완료 기준): (-> see `docs/content/achievements.md` 섹션 13.1 — 확정 합계 10,950G, 39종)
 
 이는 게임 전체 플레이(2년+)의 누적 수입 대비 미미한 수준이다 (-> see `docs/balance/progression-curve.md` 섹션 3 for 자금 곡선). 업적 보상은 "보너스" 성격이며, 경제 밸런스를 좌우하지 않는다.
 
@@ -614,6 +664,8 @@ AchievementSaveData {
 | `docs/systems/time-season.md` | 계절 전환, 날씨 시스템, 기절 시간대 참조 |
 | `docs/content/processing-system.md` | 가공품 레시피, 연료 시스템 참조 |
 | `docs/systems/farming-system.md` | 비료 효과, 에너지 시스템 참조 |
+| `docs/systems/gathering-system.md` | 채집물 27종 목록(섹션 3.9), Legendary 채집물(섹션 3.3~3.7), 채집 낫 등급(섹션 5.2), 채집 숙련도(섹션 4) — 채집가 업적 조건 참조 |
+| `docs/content/gathering-items.md` | 채집 아이템 상세 (27종 아이템 속성) — 채집 도감 업적 조건 참조 |
 
 ---
 

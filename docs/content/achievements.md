@@ -7,7 +7,7 @@
 
 ## 1. Context
 
-이 문서는 SeedMind의 전체 업적 34종에 대한 콘텐츠 상세 정보를 기술한다. 각 업적의 고유 ID, 이름, 조건 타입, 목표 수치, 보상(골드/XP/칭호/아이템)을 확정 테이블로 정리하며, 칭호 42종의 canonical 목록과 보상 기준 테이블을 포함한다.
+이 문서는 SeedMind의 전체 업적 39종에 대한 콘텐츠 상세 정보를 기술한다. 각 업적의 고유 ID, 이름, 조건 타입, 목표 수치, 보상(골드/XP/칭호/아이템)을 확정 테이블로 정리하며, 칭호 42종의 canonical 목록과 보상 기준 테이블을 포함한다.
 
 ### 1.1 본 문서가 canonical인 데이터
 
@@ -63,15 +63,15 @@
 
 ### 2.4 XP 보상 총량 추정
 
-- 전 업적(34종) 완료 시 총 XP: **2,640 XP** (아래 섹션 3~10 및 섹션 13.1 확정 합산)
-- 전체 필요 누적 XP **9,029**의 약 **29.2%**에 해당 (-> see `docs/balance/progression-curve.md` 섹션 2.4.1 — canonical XP 테이블)
+- 전 업적(39종) 완료 시 총 XP: **3,130 XP** (아래 섹션 3~10 및 섹션 13.1 확정 합산, 채집가 5종 490 XP 포함)
+- 전체 필요 누적 XP **9,029**의 약 **34.7%**에 해당 (-> see `docs/balance/progression-curve.md` 섹션 2.4.1 — canonical XP 테이블)
 - 전 업적 완료는 2년차 이후에나 가능하므로 실질적 XP 가속 효과는 제한적
 
-[NOTE] 업적 XP 비중(29.2%)은 canonical 기준(9,029 XP) 대비 적정 수준이다. BAL-007 통합 시뮬레이션(-> see `docs/balance/xp-integration.md`)에서 퀘스트 900 XP + 업적 2,640 XP 포함 시 1년차 일반 플레이어 레벨 8~9 도달이 예상된다. 낚시 업적(390 XP)은 Zone F 해금(레벨 5) 이후 점진적으로 달성되므로 1년차 내 전부 달성은 어렵다.
+[NOTE -- CON-013 갱신] 업적 XP 비중(34.7%)은 canonical 기준(9,029 XP) 대비 적정 수준이다. BAL-007 통합 시뮬레이션(-> see `docs/balance/xp-integration.md`)에서 퀘스트 ~1,115 XP + 업적 3,130 XP 포함 시 1년차 일반 플레이어 레벨 8~9 도달이 예상된다. 낚시 업적(390 XP)과 채집 업적(490 XP)은 각각 Zone F/Zone D 해금(레벨 5) 이후 점진적으로 달성되므로 1년차 내 전부 달성은 어렵다.
 
 ### 2.5 골드 보상 총량 추정
 
-- 전 업적 완료 시 총 골드: 약 8,350G (아래 섹션 3~10의 합산)
+- 전 업적 완료 시 총 골드: 약 10,950G (아래 섹션 3~10의 합산, 채집가 2,600G 포함)
 - 게임 전체 플레이(2년+) 누적 수입 대비 미미한 수준 (-> see `docs/balance/progression-curve.md` 섹션 3)
 
 ---
@@ -305,6 +305,53 @@
 
 ---
 
+## 9.5 채집가 (Gatherer) -- 5개
+
+### 9.5.1 업적 목록
+
+| # | achievementId | 이름 | 유형 | conditionType | 조건 상세 | 숨김 |
+|---|---------------|------|------|---------------|----------|------|
+| 1 | `ach_gather_01` | 첫 채집 | Single | `GatherCount` ([TODO] ARC에서 enum 추가 필요) | 처음으로 채집물 1개 수집. conditionValue = 1 | N |
+| 2 | `ach_gather_02` | 채집 애호가 | Tiered | `GatherCount` ([TODO] ARC) | 누적 채집물 수집 횟수 (3단계) | N |
+| 3 | `ach_gather_03` | 채집 도감 완성 | Single | `GatherSpeciesCollected` ([TODO] ARC에서 enum 추가 필요) | 채집물 도감 27/27종 완성 (-> see `docs/systems/gathering-system.md` 섹션 3.9 — 전체 채집물 27종). conditionValue = 27 | N |
+| 4 | `ach_gather_04` | 전설의 채집가 | Single | `GatherCount` ([TODO] ARC) | Legendary 채집물 누적 5개 수집 (-> see `docs/systems/gathering-system.md` 섹션 3.3~3.7 — Legendary 4종). Custom 추적: rarityFilter = Legendary. conditionValue = 5 | N |
+| 5 | `ach_gather_05` | 채집 낫의 진화 | Single | `GatherSickleUpgraded` ([TODO] ARC에서 enum 추가 필요) | 채집 낫을 Legendary 등급으로 업그레이드 (-> see `docs/systems/gathering-system.md` 섹션 5.2). conditionValue = 1 | N |
+
+[TODO] `GatherCount`, `GatherSpeciesCollected`, `GatherSickleUpgraded`는 현재 `AchievementConditionType` enum(-> see `docs/systems/achievement-architecture.md` 섹션 2.3)에 미등록 상태다. ARC에서 enum 값 추가 + `GatheringEvents.OnItemGathered` 이벤트 구독 핸들러 구현이 필요하다.
+
+### 9.5.2 ach_gather_02 단계 상세 (채집 애호가)
+
+| 단계 | conditionValue | 골드 | XP | 칭호 | 아이템 |
+|------|---------------|------|-----|------|--------|
+| Bronze | 20 | 50G | 20 XP | - | - |
+| Silver | 100 | 200G | 50 XP | 채집 애호가 (`title_gathering_lover`) | - |
+| Gold | 500 | 500G | 100 XP | 숙련 채집꾼 (`title_skilled_gatherer`) | 채집 숙련도 XP 보너스 (다음 50회 채집 시 숙련도 XP +25%) |
+
+**설계 의도**: Bronze(20개)는 Zone D 해금 직후 며칠 순회로 자연스럽게 달성. Silver(100개)는 채집을 꾸준히 즐기는 중반 플레이어 대상 (~7일). Gold(500개)는 후반 장기 플레이 목표 (~35일). Gold 단계에서 채집 숙련도 XP 보너스를 지급하여 숙련도 최대 레벨(Lv.10) 도달을 가속한다.
+
+### 9.5.3 단일 업적 보상 상세
+
+| achievementId | 골드 | XP | 칭호 | 아이템 |
+|---------------|------|-----|------|--------|
+| `ach_gather_01` | 50G | 20 XP | 초보 채집꾼 (`title_novice_gatherer`) | - |
+| `ach_gather_03` | 1,000G | 100 XP | 채집 박사 (`title_gathering_doctor`) | 채집 도감 장식품 x1 |
+| `ach_gather_04` | 500G | 100 XP | 전설의 채집가 (`title_legendary_gatherer`) | - |
+| `ach_gather_05` | 300G | 100 XP | 낫의 장인 (`title_sickle_master`) | - |
+
+**설계 의도**: `ach_gather_01`(첫 채집)은 "쉬움" 난이도(50G/20 XP)로 즉각적 성취감 제공. `ach_gather_03`(도감 완성)은 27종 전부 수집이라는 극후반 도전(최소 4계절 필요)으로 최고 보상(1,000G/100 XP + 장식품). `ach_gather_04`(Legendary 5개)는 특수 조건 충족이 반복적으로 필요한 후반 도전. `ach_gather_05`(채집 낫 전설)는 3,000G + 광석 투자를 요구하는 "어려움" 난이도 업적으로, 도구 장인(Tool) 카테고리와 차별화하여 채집 전용 도구에 초점을 맞춘다.
+
+**Gatherer 카테고리 소계**: 골드 2,600G / XP 490
+
+[NOTE] 정확한 소계 계산:
+- `ach_gather_01`: 50G + 20 XP
+- `ach_gather_02` Bronze: 50G + 20 XP, Silver: 200G + 50 XP, Gold: 500G + 100 XP
+- `ach_gather_03`: 1,000G + 100 XP
+- `ach_gather_04`: 500G + 100 XP
+- `ach_gather_05`: 300G + 100 XP
+- **합계: 2,600G / 490 XP**
+
+---
+
 ## 10. 숨겨진 업적 (Hidden) -- 6개
 
 숨겨진 업적은 달성 전까지 업적 패널에서 이름/조건이 `"???"` 으로 표시된다. 모두 `Custom` (99) conditionType을 사용하며, AchievementManager 내 전용 핸들러로 처리한다 (-> see `docs/systems/achievement-architecture.md` 섹션 2.3).
@@ -384,6 +431,13 @@
 | 39 | `title_angler` | 낚시꾼 | `ach_fish_03` 달성 | Angler |
 | 40 | `title_legendary_angler` | 전설의 낚시사 | `ach_fish_04` 달성 | Angler |
 | 41 | `title_fishing_master` | 낚시 마스터 | 어종 도감 100% + 숙련도 Lv.10 (-> see `docs/systems/fishing-system.md` 섹션 8.2) | Angler |
+| 42 | `title_novice_gatherer` | 초보 채집꾼 | `ach_gather_01` 달성 | Gatherer |
+| 43 | `title_gathering_lover` | 채집 애호가 | `ach_gather_02` Silver 달성 | Gatherer |
+| 44 | `title_skilled_gatherer` | 숙련 채집꾼 | `ach_gather_02` Gold 달성 | Gatherer |
+| 45 | `title_gathering_doctor` | 채집 박사 | `ach_gather_03` 달성 | Gatherer |
+| 46 | `title_legendary_gatherer` | 전설의 채집가 | `ach_gather_04` 달성 | Gatherer |
+| 47 | `title_sickle_master` | 낫의 장인 | `ach_gather_05` 달성 | Gatherer |
+| 48 | `title_gathering_master` | 채집 마스터 | 채집 도감 100% + 숙련도 Lv.10 (-> see `docs/systems/gathering-system.md` 섹션 4.2) | Gatherer |
 
 ### 11.2 칭호 통계
 
@@ -397,8 +451,9 @@
 | Explorer | 5 |
 | Quest | 5 |
 | Angler | 6 |
+| Gatherer | 7 |
 | Hidden | 6 |
-| **합계** | **42** |
+| **합계** | **49** |
 
 ---
 
@@ -421,8 +476,10 @@
 | 11 | 미끼통 | `ach_fish_02` Silver | x1 | 미끼 자동 장착 소품. 인벤토리 슬롯 1개 절약. [OPEN] 미끼 시스템 설계 시 효과 확정 (-> see `docs/systems/fishing-system.md` 섹션 8.3) | 낚시 애호가 Silver 보상 |
 | 12 | 낚시 숙련도 XP 보너스 | `ach_fish_03` | x1 | 다음 50회 포획 시 낚시 숙련도 XP +25% (일회성 버프, -> see `docs/systems/fishing-system.md` 섹션 7) | 낚시꾼 보상 |
 | 13 | 황금 낚싯대 장식품 | `ach_fish_04` | x1 | 농장 배치 가능 장식 오브젝트. 기능 없음 | 전설의 낚시사 보상 |
+| 14 | 채집 숙련도 XP 보너스 | `ach_gather_02` Gold | x1 | 다음 50회 채집 시 채집 숙련도 XP +25% (일회성 버프, -> see `docs/systems/gathering-system.md` 섹션 4) | 채집 애호가 Gold 보상 |
+| 15 | 채집 도감 장식품 | `ach_gather_03` | x1 | 농장 배치 가능 장식 오브젝트. 기능 없음 | 채집 도감 완성 보상 |
 
-[OPEN] 장식 오브젝트(금고, 장인의 망치, 영웅의 증표, 상인의 뱃지, 황금 낚싯대)의 비주얼 사양 및 배치 시스템은 별도 설계 필요. 현재 농장 꾸미기 시스템이 미설계 상태.
+[OPEN] 장식 오브젝트(금고, 장인의 망치, 영웅의 증표, 상인의 뱃지, 황금 낚싯대, 채집 도감)의 비주얼 사양 및 배치 시스템은 별도 설계 필요. 현재 농장 꾸미기 시스템이 미설계 상태.
 
 ---
 
@@ -439,19 +496,20 @@
 | Explorer | 4 | 950G | 370 XP | 5 | 2 (할인권, 상인의 뱃지) |
 | Quest | 4 | 850G | 340 XP | 5 | 1 (영웅의 증표) |
 | Angler | 4 | 2,300G | 390 XP | 5 (+마스터 1 = 6) | 3 (미끼통, 숙련도 XP 보너스, 황금 낚싯대 장식품) |
+| Gatherer | 5 | 2,600G | 490 XP | 6 (+마스터 1 = 7) | 2 (채집 숙련도 XP 보너스, 채집 도감 장식품) |
 | Hidden | 6 | 600G | 180 XP | 6 | 1 (거대 씨앗) |
-| **합계** | **34** | **8,350G** | **2,640 XP** | **41 (+기본 1 = 42)** | **13** |
+| **합계** | **39** | **10,950G** | **3,130 XP** | **48 (+기본 1 = 49)** | **15** |
 
 ### 13.2 밸런스 검증 포인트
 
-- **총 XP 2,640**: 전체 필요 누적 XP 4,609의 약 57% (-> see `docs/balance/progression-curve.md` 섹션 1.3.2). 낚시 업적 4종 추가로 기존 2,250에서 390 XP 증가
-- **총 골드 8,350G**: 게임 2년차 추정 누적 수입 대비 소규모 보너스 (-> see `docs/balance/progression-curve.md` 섹션 3). 낚시 업적 추가로 기존 6,050G에서 2,300G 증가
+- **총 XP 3,130**: 전체 필요 누적 XP 4,609의 약 68% (-> see `docs/balance/progression-curve.md` 섹션 1.3.2). 낚시 업적 4종(390 XP) + 채집 업적 5종(490 XP) 추가로 기존 2,250에서 880 XP 증가
+- **총 골드 10,950G**: 게임 2년차 추정 누적 수입 대비 소규모 보너스 (-> see `docs/balance/progression-curve.md` 섹션 3). 채집 업적 추가로 기존 8,350G에서 2,600G 증가
 - 전 업적 완료가 2년차 이후에나 가능하므로, 실질적 밸런스 영향은 제한적
-- 낚시 업적의 골드 비중이 다소 높다 (2,300G / 8,350G = 27.5%). 이는 `ach_fish_04` (도감 완성)의 1,000G 보상이 주된 원인이며, 해당 업적은 15종 전종 포획이라는 극후반 도전이므로 적정 수준으로 판단
+- 낚시/채집 업적의 골드 비중이 다소 높다 (낚시 2,300G + 채집 2,600G = 4,900G / 10,950G = 44.7%). 이들은 각각 15종/27종 전종 수집이라는 극후반 도전이므로 적정 수준으로 판단
 
-[RISK] 섹션 2.4에서 추정한 총 XP(~1,690)와 본 섹션의 합산(2,640)에 약 950 XP 차이가 있다. 이는 섹션 2.4가 기준 테이블의 최소치로 추정한 반면, 각 업적의 확정 보상이 일부 상향되었고 낚시 업적 4종(390 XP)이 추가되었기 때문이다. 섹션 2.4의 수치를 본 섹션(13.1)의 확정 합산으로 갱신한다: **총 XP = 2,640, 전체 XP 대비 약 57%**.
+[RISK] 섹션 2.4에서 추정한 총 XP(~1,690)와 본 섹션의 합산(3,130)에 약 1,440 XP 차이가 있다. 이는 섹션 2.4가 기준 테이블의 최소치로 추정한 반면, 각 업적의 확정 보상이 일부 상향되었고 낚시 업적 4종(390 XP) + 채집 업적 5종(490 XP)이 추가되었기 때문이다. 섹션 2.4의 수치를 본 섹션(13.1)의 확정 합산으로 갱신한다: **총 XP = 3,130, 전체 XP 대비 약 68%**.
 
-[RISK] 업적 XP 비중이 57%로 당초 목표(33~43%)를 크게 초과한다. 숨겨진 업적의 XP를 30 -> 20으로 하향하거나, 일부 보통 난이도 업적의 XP를 50 -> 40으로 하향 조정하는 것을 검토해야 한다. 단, 낚시 업적(390 XP)은 Zone F 해금(레벨 5) 이후에만 시작 가능하고 도감 완성은 극후반이므로 1년차 실질 영향은 제한적이다. 출시 전 시뮬레이션으로 최종 확정 필요.
+[RISK] 업적 XP 비중이 68%로 당초 목표(33~43%)를 크게 초과한다. 숨겨진 업적의 XP를 30 -> 20으로 하향하거나, 일부 보통 난이도 업적의 XP를 50 -> 40으로 하향 조정하는 것을 검토해야 한다. 단, 낚시 업적(390 XP) + 채집 업적(490 XP)은 각각 Zone F/Zone D 해금(레벨 5) 이후에만 시작 가능하고 도감 완성은 극후반이므로 1년차 실질 영향은 제한적이다. 출시 전 시뮬레이션으로 최종 확정 필요.
 
 ---
 
@@ -472,6 +530,8 @@
 | `docs/systems/quest-system.md` | 퀘스트 완료 이벤트, 농장 도전과의 중복 관리 |
 | `docs/systems/fishing-system.md` | 어종 15종 목록(섹션 4.2), 낚시 숙련도(섹션 7), 업적 연계(섹션 8.1), 어종 도감(섹션 8.2) |
 | `docs/systems/fishing-architecture.md` | FishingEvents.OnFishCaught 이벤트 — ARC-030에서 enum 추가 시 참조 |
+| `docs/systems/gathering-system.md` | 채집 시스템 (채집물 27종, 채집 포인트, 숙련도, 채집 낫 등급) — 채집가 업적 조건 참조 |
+| `docs/content/gathering-items.md` | 채집 아이템 상세 (27종 아이템 속성) — 채집 도감 업적 조건 참조 |
 | `docs/systems/economy-system.md` | 골드 보상이 경제 밸런스에 미치는 영향 |
 | `docs/systems/time-season.md` | 계절 전환, 날씨 시스템, 밤 시간대(22:00~24:00) 참조 |
 | `docs/systems/farming-system.md` | 비료 효과, 에너지 시스템 참조 |
@@ -489,6 +549,8 @@
 5. **[OPEN]** 낚시 업적의 `FishCaughtCount`, `FishSpeciesCollected` conditionType이 `AchievementConditionType` enum에 미등록 상태. ARC-030에서 enum 값 추가 + `FishingEvents.OnFishCaught` 이벤트 핸들러 구현 필요 (-> see 섹션 9.1)
 6. **[OPEN]** 미끼통(Bait Box) 아이템 효과가 미끼 시스템 미설계로 미확정 (-> see 섹션 9.2, `docs/systems/fishing-system.md` 섹션 8.3)
 7. **[OPEN]** `ach_fish_03`의 숙련도 XP 보너스(+25%, 50회) 메커니즘 상세 미확정. 버프 시스템 또는 낚시 숙련도 내부 처리로 구현할지 결정 필요
+8. **[OPEN]** 채집 업적의 `GatherCount`, `GatherSpeciesCollected`, `GatherSickleUpgraded` conditionType이 `AchievementConditionType` enum에 미등록 상태. ARC에서 enum 값 추가 + `GatheringEvents.OnItemGathered` 이벤트 핸들러 구현 필요 (-> see 섹션 9.5.1)
+9. **[OPEN]** `ach_gather_02` Gold 단계의 채집 숙련도 XP 보너스(+25%, 50회) 메커니즘은 `ach_fish_03`과 동일 패턴. 버프 시스템 공통화 설계 필요
 
 ### [RISK] 항목
 

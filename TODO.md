@@ -170,15 +170,23 @@
 | ~~ARC-032~~ | ~~2~~ | ~~채집 시스템 MCP 태스크 시퀀스 독립 문서화 (gathering-architecture.md Phase A~G → docs/mcp/gathering-tasks.md 분리, 패턴: facilities-tasks.md 참조)~~ — DONE: docs/mcp/gathering-tasks.md 신규 (Phase G-A~G-G, ~136회 MCP 호출, 16개 스크립트 정의) |
 | ~~BAL-016~~ | ~~3~~ | ~~채집 아이템 판매가 하향 조정 확정 (BAL-015 조정안 D — 전체 채집물 판매가 40% 하향, gathering-system.md 섹션 3.3~3.7 수정, gathering-economy.md 섹션 8 미확정 수치 확정)~~ — DONE: 27종 판매가 40% 하향, 섹션 6.1/6.2 시뮬레이션 업데이트, gathering-economy.md 히스토리 배너 추가 및 섹션 4/6.2/Risks 갱신 |
 | ~~DES-017~~ | ~~2~~ | ~~채집 낫 업그레이드 경로 상세 설계 (기본/강화/전설 채집 낫 비용·효과·재료 — 도구 업그레이드 시스템과 통합 방안 포함 → gathering-system.md 섹션 업데이트 또는 독립 문서)~~ — DONE: gathering-system.md 섹션 5.4(비용 ROI), 5.5(재료 수급), 5.6(tool-upgrade 통합) + 섹션 7.3 대화 9건 확장 |
-| ARC-033 | 1 | 채집 시스템 data-pipeline.md 반영 (GatheringPointData/GatheringItemData/GatheringConfig SO 에셋 테이블 섹션 2.4에 추가, PATTERN-007 준수) |
-| CON-013 | 1 | 채집 퀘스트/업적 콘텐츠 (채집 관련 퀘스트 5종 + 업적 5종 → quest-system.md 및 achievements.md 업데이트, con-010 낚시 패턴 참조) |
+| ~~ARC-033~~ | ~~1~~ | ~~채집 시스템 data-pipeline.md 반영 (GatheringPointData/GatheringItemData/GatheringConfig SO 에셋 테이블 섹션 2.4에 추가, PATTERN-007 준수)~~ — DONE: 섹션 2.10~2.12 신규(GatheringPointData 12필드, GatheringItemData 16필드, GatheringConfig 14필드), SO 에셋 경로 추가, Cross-references 갱신 |
+| ~~CON-013~~ | ~~1~~ | ~~채집 퀘스트/업적 콘텐츠 (채집 관련 퀘스트 5종 + 업적 5종 → quest-system.md 및 achievements.md 업데이트, con-010 낚시 패턴 참조)~~ — DONE: 퀘스트 5종(NPC 2+일일 2+농장 도전 1), 업적 5종(A-031~A-035), achievement-system.md Gatherer 카테고리 추가 |
 | ~~FIX-083~~ | ~~2~~ | ~~gathering-items.md 섹션 9.1 신규 제안 가공 레시피를 processing-system.md에 공식 추가 (섹션 3.7 채집물 가공 신규 생성 — 봄나물 비빔밥/야생 베리잼/건조 버섯/머루 와인/도토리묵 등)~~ — DONE: processing-system.md 섹션 3.7 채집물 레시피 13종 추가 (42→55종), ProcessingRecipeData 스키마 확장 (inputs[], unlockType, 신규 ProcessingType 4종) |
 | ~~FIX-084~~ | ~~2~~ | ~~gathering-economy.md 섹션 4.1~4.3 FIX-083 확정 수치 반영~~ — DONE: [OPEN] 제거, 확정 ROI 테이블, 베이커리 연료비 반영(봄 가공 -18G), 4.3.3/4.3.4/Risks 갱신 |
 | ~~BAL-017~~ | ~~2~~ | ~~채집물 가공품 ROI 밸런스 분석 신규~~ — DONE: processing-economy.md 섹션 2.8~2.13 신규 (채집물 가공 13종 ROI, 작물 가공 비교, 밸런스 이슈 3건) |
 | ~~FIX-085~~ | ~~1~~ | ~~processing-economy.md 레시피 총계 42→55종 갱신~~ — DONE: 32→55종 갱신, 분석 범위 명시(45종 직접 분석, 낚시/치즈공방 추후 추가) |
 | DES-018 | 1 | 도감 시스템 설계 (채집 도감 + 어종 도감 통합 여부 결정 — gathering-system.md 섹션 9 [OPEN], fish-catalog.md ARC-030 패턴 참조) |
 | ~~FIX-086~~ | ~~2~~ | ~~tool-upgrade.md에 채집 낫 통합 반영 (ToolUpgradeRecipe 스키마에 levelReqType 필드 추가)~~ — DONE: LevelReqType enum(PlayerLevel/GatheringMastery/FishingMastery), UpgradeCostInfo 확장, CanUpgrade 분기 |
-| FIX-087 | 1 | npcs.md 대장간(철수) 섹션에 채집 낫 업그레이드 대화 9건 반영 (DES-017 섹션 7.3 확정 대화 → npcs.md 동기화) |
+| ~~FIX-087~~ | ~~1~~ | ~~npcs.md 대장간(철수) 섹션에 채집 낫 업그레이드 대화 9건 반영 (DES-017 섹션 7.3 확정 대화 → npcs.md 동기화)~~ — DONE: 섹션 4.3 업그레이드 대상 4종 갱신, 섹션 4.4 채집 낫 관련 대화 9건 추가 |
 | ~~DES-019~~ | ~~2~~ | ~~베이커리 채집물 레시피 경제 조정 설계~~ — DONE: 조정안 (b)+(a) 채택 — 봄나물 비빔밥 30→60G, 송이 구이 55→70G 상향 확정 |
 | BAL-018 | 1 | 낚시 가공 + 치즈공방 가공 ROI 분석 (processing-economy.md 섹션 2.14~2.15 신규 추가 — FIX-085에서 "추후 추가 예정"으로 명시) |
-| CON-014 | 1 | npcs.md 여행 상인 아이템 풀에 수정 원석 추가 (DES-017 섹션 5.5.2 [OPEN] — 전설 낫 재료 대안 공급 경로 확보) |
+| ~~CON-014~~ | ~~1~~ | ~~npcs.md 여행 상인 아이템 풀에 수정 원석 추가 (DES-017 섹션 5.5.2 [OPEN] — 전설 낫 재료 대안 공급 경로 확보)~~ — DONE: 160G(직판가 32G x5), 등장 확률 10%, 재고 1개, gathering-system.md [OPEN] 해소 |
+| FIX-088 | 2 | achievement-architecture.md AchievementConditionType enum에 GatherCount/GatherSpeciesCollected/GatherSickleUpgraded 3종 추가 (CON-013 [TODO] 후속) |
+| FIX-089 | 2 | xp-integration.md 채집 퀘스트 XP ~105 + 채집 업적 XP 490 추가분 시뮬레이션 반영 (CON-013 후속) |
+| BAL-019 | 2 | 업적 XP 비중 재검증 및 조정 결정 (업적 39종 3,130 XP, 비중 ~68% — 목표 33~43% 초과 이슈. 업적 XP 하향 또는 레벨 테이블 상향 결정) |
+| FIX-090 | 2 | npcs.md 여행 상인 아이템 풀에 구리 광석/금 광석 공식 추가 (gathering-system.md 섹션 8.1 [OPEN] 후속 — 수정 원석 외 광석 2종 추가 필요) |
+| ARC-034 | 1 | quest-architecture.md QuestObjectiveType enum에 Gather 추가 및 quest-tasks.md 반영 (CON-013 후속) |
+| ARC-035 | 1 | achievement-tasks.md에 A-031~A-035 업적 5종 MCP 태스크 추가 (CON-013 후속) |
+| CON-016 | 1 | gathering-system.md 강화 채집 낫 ROI 과다 이슈 해소 (섹션 9.1 [OPEN]: ~468일 ROI → 비용 500~700G 하향 또는 Gold 품질 확률 20~25% 상향 결정) |
+| ARC-036 | 1 | gathering-tasks.md에 GatheringPointData/GatheringItemData/GatheringConfig SO 생성 태스크 추가 (ARC-033 data-pipeline 반영 후속) |
