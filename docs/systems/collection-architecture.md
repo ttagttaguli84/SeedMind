@@ -768,7 +768,7 @@ SeedMind.Collection (신규)
     +-- FishCatalogManager (SeedMind.Fishing.Catalog)    // 읽기 전용
     +-- GatheringEvents (SeedMind.Gathering)              // 이벤트 구독
     +-- GatheringItemData (SeedMind.Gathering)            // SO 참조
-    +-- GatheringRarity (SeedMind.Gathering)              // enum 참조
+    +-- GatheringRarity (SeedMind.Gathering)              // enum 참조 -- FishRarity(SeedMind.Fishing.Catalog)와 별도 유지 [ARC-038 확정]
     | calls
     +-- EconomyManager (초회 보상 골드)
     +-- ProgressionManager (초회 보상 XP)
@@ -823,7 +823,12 @@ SeedMind.Collection (신규)
 | Q-1 | EditScript `GameSaveData.cs` | `public GatheringCatalogSaveData gatheringCatalog;` 필드 추가 |
 | Q-2 | EditScript `SaveManager.cs` | GatheringCatalogManager ISaveable 등록 확인, SaveLoadOrder=56 |
 | Q-3 | CreateGameObject `GatheringCatalogManager` | 싱글턴 오브젝트, GatheringCatalogData[] 할당 |
-| Q-4 | 기존 FishCatalogPanel을 CollectionPanel 하위로 이동 | 섹션 6.4 씬 계층 반영 |
+| Q-4a | `FishCatalogPanel` 프리팹을 `FishPanel`로 이름 변경 | In-place migration step 1 [ARC-039] |
+| Q-4b | FishPanel을 CollectionPanel 하위 자식으로 이동 | 씬 계층 반영, 섹션 6.4 |
+| Q-4c | FishPanel/Header/CloseButton 비활성화 (SetActive false) | CollectionPanel 공통 CloseButton 사용 |
+| Q-4d | FishPanel/Header 완성도 표시 비활성화 | CollectionUIController에 위임 |
+| Q-4e | FishCatalogUI.cs Inspector 참조 재연결 (FishPanel 기준으로) | 기존 스크립트 코드 변경 없음 |
+| Q-4f | 구버전 FishCatalogPanel.prefab → `DEPRECATED_FishCatalogPanel` 리네이밍, Legacy/ 이동 | 참조 깨짐 방지 |
 
 ### Phase R: 검증
 
@@ -844,7 +849,7 @@ SeedMind.Collection (신규)
 
 | 문서 | 관련 섹션 | 연관 |
 |------|----------|------|
-| `docs/systems/fishing-architecture.md` (ARC-026/ARC-030) | Part VII 섹션 15~21 | FishCatalogData, FishCatalogManager, FishCatalogEntry, FishCatalogSaveData -- 본 문서의 GatheringCatalog* 패턴 원본 |
+| `docs/systems/fishing-architecture.md` (ARC-026/ARC-030) | Part VII 섹션 15~21 | FishCatalogData, FishCatalogManager, FishCatalogEntry, FishCatalogSaveData -- 본 문서의 GatheringCatalog* 패턴 원본. 섹션 21.5 씬 계층은 Q-4 마이그레이션 후 CollectionPanel/FishPanel로 통합됨 [ARC-039] |
 | `docs/systems/gathering-architecture.md` (ARC-031) | 섹션 1, 2.2 | GatheringManager, GatheringItemData, GatheringRarity, GatheringEvents.OnItemGathered -- 이벤트 소스 |
 | `docs/content/fish-catalog.md` (CON-011) | 섹션 3.1, 4.1 | 어종별 도감 데이터, 마일스톤 보상 -- fish catalog canonical |
 | `docs/content/gathering-items.md` (CON-012) | 섹션 3~7 | 채집 아이템 힌트 텍스트, 희귀도 -- gathering catalog canonical |
@@ -861,9 +866,9 @@ SeedMind.Collection (신규)
 
 2. ~~[OPEN] (ARC-037) **firstDiscoverGold / firstDiscoverXP 희귀도별 스케일**~~ — **[DES-018 완료]** Common=5G/2XP, Uncommon=15G/5XP, Rare=50G/15XP, Legendary=200G/50XP 확정. (-> see docs/systems/collection-system.md 섹션 3.3). 필드명도 `firstDiscoverGold`/`firstDiscoverXP`로 통일.
 
-3. [OPEN] (ARC-037) **GatheringRarity와 FishRarity 통합 여부**: 두 enum이 동일 구조(Common/Uncommon/Rare/Legendary)이다. `SeedMind.ItemRarity`로 통합하면 CollectionUIController에서 희귀도 UI를 일원화할 수 있지만, 시스템 결합도가 높아진다. (-> see `docs/systems/gathering-architecture.md` 섹션 9 OPEN 항목 2)
+3. ~~[OPEN] (ARC-037) **GatheringRarity와 FishRarity 통합 여부**: 두 enum이 동일 구조(Common/Uncommon/Rare/Legendary)이다. `SeedMind.ItemRarity`로 통합하면 CollectionUIController에서 희귀도 UI를 일원화할 수 있지만, 시스템 결합도가 높아진다. (-> see `docs/systems/gathering-architecture.md` 섹션 9 OPEN 항목 2)~~ — **[ARC-038 확정]** 분리 유지. 이유: (1) 섹션 1 설계 원칙 "FishCatalogManager 변경 없음" — FishRarity를 공통 enum으로 이동하면 FishCatalogManager 내부 수정 필요, 원칙 위반. (2) CollectionUIController 탭이 FishPanel/GatheringPanel으로 이미 분리되어 있어 공통 enum 없이도 탭별 독립 렌더링 가능. (3) 두 시스템의 향후 독립 진화 여지 보존 (FishRarity: isGiant 연동, GatheringRarity: weatherBonus 연동 등). ICatalogProvider 인터페이스 도입 없음 — CollectionUIController가 FishCatalogManager와 GatheringCatalogManager를 직접 참조하는 현 설계 유지.
 
-4. [OPEN] (ARC-037) **CollectionPanel과 기존 FishCatalogPanel 통합 시 씬 재구성 범위**: 기존 FishCatalogPanel이 독립 프리팹이므로, CollectionPanel 하위로 이동 시 기존 참조가 깨질 수 있다. Phase Q-4에서 신중한 마이그레이션 필요.
+4. ~~[OPEN] (ARC-037) **CollectionPanel과 기존 FishCatalogPanel 통합 시 씬 재구성 범위**: 기존 FishCatalogPanel이 독립 프리팹이므로, CollectionPanel 하위로 이동 시 기존 참조가 깨질 수 있다. Phase Q-4에서 신중한 마이그레이션 필요.~~ — **[ARC-039 확정]** 참조 재연결 방식(In-place migration) 채택. 단계: (1) FishCatalogPanel 프리팹을 FishPanel로 이름 변경, (2) FishPanel을 CollectionPanel 자식으로 이동, (3) FishPanel 내 CloseButton 비활성화(CollectionPanel 공통 CloseButton 사용), (4) FishPanel Header 완성도 표시 비활성화(CollectionUIController 위임), (5) FishCatalogUI.cs Inspector 참조 재연결, (6) 구버전 FishCatalogPanel.prefab은 DEPRECATED 접두사 후 Legacy/ 이동. FishCatalogToast는 기존대로 독립 유지(섹션 6.4 현행 유지). 세부 단계는 Phase Q-4a~Q-4f 참조.
 
 5. [OPEN] (ARC-037) **GatheringCatalogData와 GatheringItemData 1:1 관계 유지 방안**: FishCatalogData와 FishData의 동일 이슈(-> see `docs/systems/fishing-architecture.md` Open Question 10). itemId 문자열 연결 vs SO 직접 참조. 구현 시 결정.
 
