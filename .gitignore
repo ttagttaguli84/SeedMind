@@ -53,5 +53,8 @@ venv/
 *.swp
 *~
 
+# ===== seedmind.py (not version controlled) =====
+scripts/seedmind.py
+
 # ===== Worktrees =====
 .claude/worktrees/

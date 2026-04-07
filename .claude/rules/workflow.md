@@ -46,16 +46,6 @@ The reviewer must check all items below when reviewing documents:
 - **툴(seedmind.py GUI) 실행 중에는 `git push --force` 금지.**
   sync 기준점이 달라져 merge 충돌 발생. 툴을 Stop한 후 force-push할 것.
 
-## seedmind.py Amend Policy
-
-`scripts/seedmind.py`는 히스토리에 항상 커밋 1개만 유지한다.
-
-**수정 시:**
-1. `git add scripts/seedmind.py && git commit --amend --no-edit`
-2. `git push --force origin main`
-
-`.claude/**`, `CLAUDE.md`, `.gitignore` 등 다른 파일은 일반 커밋(amend 아님).
-
 ## Git Working Directory
 
 **CRITICAL: Never use `cd <absolute-path> && git ...` for git operations.**
