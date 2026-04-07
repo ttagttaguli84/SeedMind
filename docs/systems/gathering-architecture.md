@@ -971,7 +971,7 @@ SaveManager.LoadAsync()
 
 ## 8. MCP 구현 태스크 시퀀스
 
-> 상세 태스크는 별도 MCP 문서(`docs/mcp/gathering-tasks.md`)에서 관리될 수 있다. 이 섹션은 Phase 요약 개요를 제공한다.
+> 상세 태스크 시퀀스는 [별도 문서](docs/mcp/gathering-tasks.md)로 관리된다. 이 섹션은 Phase 요약만 제공한다.
 
 ### Phase A: SO 에셋 생성 (데이터 레이어)
 

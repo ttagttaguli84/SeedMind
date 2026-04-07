@@ -167,9 +167,9 @@
 | ~~FIX-082~~ | ~~1~~ | ~~gathering-system.md Cross-references 섹션에 economy-architecture.md(FIX-076), progression-architecture.md(FIX-077), inventory-architecture.md(FIX-078), save-load-architecture.md(FIX-079) 참조 추가~~ — DONE: 섹션 8 Cross-references에 6개 참조 추가 |
 | ~~CON-012~~ | ~~2~~ | ~~채집 아이템 콘텐츠 상세 (27종 아이템 상세 스펙 — 판매가, 가공 레시피 연계, 낚싯대 재료 공급 역할 명세 → docs/content/gathering-items.md)~~ — DONE → `docs/content/gathering-items.md` (CON-012): 27종 maxStack/힌트텍스트/NPC선물/SFX 확정, 가공 레시피 연계 정의, 광석 업그레이드 재료 역할 명세 |
 | ~~BAL-015~~ | ~~2~~ | ~~채집 경제 밸런스 시트 (22개 포인트 일일 채집 수입 시뮬레이션, 농업·낚시·목축 대비 채집 수입 비중 검증 → docs/balance/gathering-economy.md)~~ — DONE → `docs/balance/gathering-economy.md`: 일일 수입 봄~가을 220~402G(Lv.1), Critical 이슈 발견(비중 45%), 조정안 D(판매가 40% 하향) 추천 |
-| ARC-032 | 2 | 채집 시스템 MCP 태스크 시퀀스 독립 문서화 (gathering-architecture.md Phase A~G → docs/mcp/gathering-tasks.md 분리, 패턴: facilities-tasks.md 참조) |
+| ~~ARC-032~~ | ~~2~~ | ~~채집 시스템 MCP 태스크 시퀀스 독립 문서화 (gathering-architecture.md Phase A~G → docs/mcp/gathering-tasks.md 분리, 패턴: facilities-tasks.md 참조)~~ — DONE: docs/mcp/gathering-tasks.md 신규 (Phase G-A~G-G, ~136회 MCP 호출, 16개 스크립트 정의) |
 | ~~BAL-016~~ | ~~3~~ | ~~채집 아이템 판매가 하향 조정 확정 (BAL-015 조정안 D — 전체 채집물 판매가 40% 하향, gathering-system.md 섹션 3.3~3.7 수정, gathering-economy.md 섹션 8 미확정 수치 확정)~~ — DONE: 27종 판매가 40% 하향, 섹션 6.1/6.2 시뮬레이션 업데이트, gathering-economy.md 히스토리 배너 추가 및 섹션 4/6.2/Risks 갱신 |
-| DES-017 | 2 | 채집 낫 업그레이드 경로 상세 설계 (기본/강화/전설 채집 낫 비용·효과·재료 — 도구 업그레이드 시스템과 통합 방안 포함 → gathering-system.md 섹션 업데이트 또는 독립 문서) |
+| ~~DES-017~~ | ~~2~~ | ~~채집 낫 업그레이드 경로 상세 설계 (기본/강화/전설 채집 낫 비용·효과·재료 — 도구 업그레이드 시스템과 통합 방안 포함 → gathering-system.md 섹션 업데이트 또는 독립 문서)~~ — DONE: gathering-system.md 섹션 5.4(비용 ROI), 5.5(재료 수급), 5.6(tool-upgrade 통합) + 섹션 7.3 대화 9건 확장 |
 | ARC-033 | 1 | 채집 시스템 data-pipeline.md 반영 (GatheringPointData/GatheringItemData/GatheringConfig SO 에셋 테이블 섹션 2.4에 추가, PATTERN-007 준수) |
 | CON-013 | 1 | 채집 퀘스트/업적 콘텐츠 (채집 관련 퀘스트 5종 + 업적 5종 → quest-system.md 및 achievements.md 업데이트, con-010 낚시 패턴 참조) |
 | ~~FIX-083~~ | ~~2~~ | ~~gathering-items.md 섹션 9.1 신규 제안 가공 레시피를 processing-system.md에 공식 추가 (섹션 3.7 채집물 가공 신규 생성 — 봄나물 비빔밥/야생 베리잼/건조 버섯/머루 와인/도토리묵 등)~~ — DONE: processing-system.md 섹션 3.7 채집물 레시피 13종 추가 (42→55종), ProcessingRecipeData 스키마 확장 (inputs[], unlockType, 신규 ProcessingType 4종) |
@@ -177,3 +177,8 @@
 | ~~BAL-017~~ | ~~2~~ | ~~채집물 가공품 ROI 밸런스 분석 신규~~ — DONE: processing-economy.md 섹션 2.8~2.13 신규 (채집물 가공 13종 ROI, 작물 가공 비교, 밸런스 이슈 3건) |
 | ~~FIX-085~~ | ~~1~~ | ~~processing-economy.md 레시피 총계 42→55종 갱신~~ — DONE: 32→55종 갱신, 분석 범위 명시(45종 직접 분석, 낚시/치즈공방 추후 추가) |
 | DES-018 | 1 | 도감 시스템 설계 (채집 도감 + 어종 도감 통합 여부 결정 — gathering-system.md 섹션 9 [OPEN], fish-catalog.md ARC-030 패턴 참조) |
+| FIX-086 | 2 | tool-upgrade.md에 채집 낫 통합 반영 (ToolUpgradeRecipe 스키마에 levelReqType 필드 추가, 채집 숙련도 기반 해금 조건 지원 — DES-017 섹션 5.6.2 [OPEN] 후속) |
+| FIX-087 | 1 | npcs.md 대장간(철수) 섹션에 채집 낫 업그레이드 대화 9건 반영 (DES-017 섹션 7.3 확정 대화 → npcs.md 동기화) |
+| DES-019 | 2 | 베이커리 채집물 레시피 경제 조정 설계 (봄나물 비빔밥/송이 구이 연료비 손해 해소 방안 결정 — processing-economy.md 섹션 2.11 [RISK] 3가지 조정안 중 채택) |
+| BAL-018 | 1 | 낚시 가공 + 치즈공방 가공 ROI 분석 (processing-economy.md 섹션 2.14~2.15 신규 추가 — FIX-085에서 "추후 추가 예정"으로 명시) |
+| CON-014 | 1 | npcs.md 여행 상인 아이템 풀에 수정 원석 추가 (DES-017 섹션 5.5.2 [OPEN] — 전설 낫 재료 대안 공급 경로 확보) |
