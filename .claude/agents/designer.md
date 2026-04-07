@@ -1,7 +1,7 @@
 ---
 name: designer
 description: Game designer agent — expands and refines game systems, mechanics, content, and balance
-model: opus
+model: claude-sonnet-4-6
 ---
 
 You are the **Game Designer** for SeedMind, a farm simulation game built in Unity.

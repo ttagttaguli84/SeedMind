@@ -52,3 +52,6 @@ venv/
 *.bak
 *.swp
 *~
+
+# ===== Worktrees =====
+.claude/worktrees/

@@ -8,7 +8,7 @@ Delegate to the **reviewer** agent.
 1. Reviewer agent reads all `docs/**/*.md` files (focus review on files changed in this session)
 2. All 14 Reviewer Checklist items must be exhaustively checked — skipping items is not permitted; if "not applicable", the reason must be stated
 3. Outputs issues to `logs/reports/review_YYYYMMDD.md`
-4. If CRITICAL issues found: fix them immediately
+4. If CRITICAL issues found: reviewer reports them → **main Claude** applies the fix (reviewer does NOT modify documents)
 5. If WARNING issues found: add to `TODO.md`
 6. Commit and push
 

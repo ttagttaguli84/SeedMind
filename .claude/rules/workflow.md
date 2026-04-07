@@ -41,6 +41,39 @@ The reviewer must check all items below when reviewing documents:
 13. [ ] (PATTERN-BAL-COST) In economy/balance documents, are fuel cost and material cost fully deducted when computing processing ROI and profit? — Calculating only "processed item price - raw material direct sale price" while omitting fuel cost is considered a miscalculation. Bakery/fermentation recipes must always include fuel cost when computing net profit.
 14. [ ] (PATTERN-010) When an architecture document records unconfirmed values or IDs as placeholders, are they explicitly marked with the `[OPEN]` tag, and are design-unconfirmed values not recorded as if they were canonical values?
 
+## Operational Rules (Human)
+
+- **툴(seedmind.py GUI) 실행 중에는 `git push --force` 금지.**
+  sync 기준점이 달라져 merge 충돌 발생. 툴을 Stop한 후 force-push할 것.
+
+## seedmind.py Amend Policy
+
+`scripts/seedmind.py`는 히스토리에 항상 커밋 1개만 유지한다.
+
+**수정 시:**
+1. `git add scripts/seedmind.py && git commit --amend --no-edit`
+2. `git push --force origin main`
+
+`.claude/**`, `CLAUDE.md`, `.gitignore` 등 다른 파일은 일반 커밋(amend 아님).
+
+## Git Working Directory
+
+**CRITICAL: Never use `cd <absolute-path> && git ...` for git operations.**
+
+All git commands must run relative to the current working directory (`cwd`), which may be a worktree and not the main repository root. Using an absolute path overrides the worktree isolation and commits directly to `main`.
+
+Correct:
+```bash
+git add docs/foo.md && git commit -m "..." && git push
+```
+
+Forbidden:
+```bash
+cd "C:/UE/SeedMind" && git add ...   # bypasses worktree — never do this
+```
+
+If a git command requires a repo path, use `-C .` (current dir) or omit the path entirely.
+
 ## Commit Cadence
 - Commit after each logical unit of work (one system expansion, one review pass)
 - Push after every commit

@@ -37,6 +37,8 @@ Select the agent strategy based on task type:
 
 **Parallel agent condition**: Spawn designer+architect simultaneously only for DES-* tasks where the system architecture document does not yet exist.
 
+**DES-* parallel execution + PATTERN-010 reconciliation**: When architect runs in parallel with designer, design figures are not yet confirmed. Architect MUST use `[OPEN - to be filled after DES-XXX is confirmed]` tags for all unconfirmed values. After the designer finishes, run a **sync pass** — architect reads the completed design document and fills in all `[OPEN]` placeholders before the reviewer runs.
+
 **When running architect agent solo**: Must read the relevant design documents (DES, CON) first before writing. Check the Canonical Data Mapping in `doc-standards.md` and do not record figures directly.
 
 ## Phase 3 — Review
@@ -67,11 +69,11 @@ Decide whether to run the reviewer based on task type:
 
 Determine how many tasks to handle this session based on the priority of the highest-priority task selected in Phase 0:
 
-| Highest-priority task Priority | Tasks to handle in session |
-|-------------------------------|---------------------------|
-| 3 or above | 1 |
-| 2 | 2 |
-| 1 | 3–4 |
+| Highest-priority task Priority | Tasks to handle in session | Rationale |
+|-------------------------------|---------------------------|-----------|
+| 3 or above (high urgency) | 1 | High-priority tasks are complex — focus on one |
+| 2 | 2 | Mid-priority tasks are moderately scoped |
+| 1 (low urgency) | 3–4 | Low-priority tasks are small enough to batch |
 
 After completing Phase 4, **if budget remains**:
 1. Re-read `TODO.md` only (do not re-read other Phase 0 files)
