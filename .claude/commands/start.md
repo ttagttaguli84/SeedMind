@@ -43,8 +43,8 @@ Apply any fixes the reviewer identifies.
 5. Commit and push
 
 ## Rules
-- One system per session — depth over breadth
+- One task per /start call — depth over breadth
 - Designer and architect must reference each other's output
 - Reviewer has final say on consistency issues
 - All output in Korean. Document content in Korean (technical terms in English where natural).
-- If time/context allows after completing the main task, pick the next TODO item and repeat Phase 1→4.
+- After Phase 4 completes, stop. Do not loop. Each /start call is a fresh session with full context.
