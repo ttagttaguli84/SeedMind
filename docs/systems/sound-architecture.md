@@ -71,9 +71,10 @@ namespace SeedMind.Audio
         Rain,           // bgm_rain: Rain/HeavyRain 날씨
         Storm,          // bgm_storm: Storm 날씨 (Blizzard도 이 트랙 재사용 — [OPEN] bgm_blizzard 별도 트랙 검토 필요)
 
-        // 시스템 BGM
-        TitleScreen,
-        GameOver,
+        // 시스템 BGM (→ see docs/systems/sound-design.md 섹션 1.3)
+        // ForceTrack()으로만 전환. BGMScheduler 자동 전환 대상 아님.
+        TitleScreen,    // bgm_title_screen: 메인 메뉴/타이틀 화면
+        GameOver,       // bgm_game_over: 게임 오버/세이브 슬롯 화면
 
         None        // BGM 없음 (정지 상태)
     }
@@ -462,7 +463,7 @@ namespace SeedMind.Audio
 
 | 항목 | 설명 |
 |------|------|
-| 풀 크기 | (-> see docs/systems/sound-design.md) |
+| 풀 크기 | (-> see docs/systems/sound-design.md 섹션 3.5) |
 | 동시 재생 상한 | 풀 크기와 동일 -- 풀 고갈 시 oldest-replace 정책 적용 |
 | 교체 정책 | **Oldest-replace**: 모든 슬롯이 사용 중이면 가장 먼저 시작된 SFX를 중단하고 새 SFX에 할당 |
 | 교체 정책 근거 | 무시(skip) 정책은 중요 SFX가 누락될 수 있어 부적합. oldest는 이미 재생 완료에 가까워 중단 시 위화감이 최소 |

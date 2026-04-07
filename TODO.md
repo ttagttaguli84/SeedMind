@@ -138,6 +138,6 @@
 | FIX-062 | 3 | npc-shop-architecture.md 섹션 3.5 TravelingMerchantScheduler 클래스 다이어그램에 `_affinityPoints`, `GetAffinityLevel()`, `ApplyAffinityBonus()` 추가 (BAL-005 아키텍처 분석 후속) |
 | FIX-063 | 2 | inventory-architecture.md 섹션 4에 FishData의 IInventoryItem 구현 예시 추가 (ItemType 프로퍼티 `Fish` 반환 — ARC-026 후속, 리뷰어 INFO-1) |
 | FIX-064 | 2 | fishing-architecture.md 섹션 5.2 또는 balance 문서에 낚시 XP 계산 공식 확정 및 canonical 등록 (rarity 기반 vs basePrice 기반 — ARC-026 후속, 리뷰어 INFO-2) |
-| FIX-065 | 2 | sound-design.md 섹션 3.2에 SFX 풀 총 크기(poolSize) canonical 수치 추가 (AUD-001 리뷰어 WARNING-002 후속 — SoundManager 풀 크기 결정) |
-| FIX-066 | 2 | sound-design.md 섹션 1에 TitleScreen/GameOver BGM 트랙 추가 또는 sound-architecture.md BGMTrack에서 해당 값 제거 결정 (AUD-001 리뷰어 INFO-001 후속 — 문서 간 BGMTrack 일치 필요) |
-| ARC-027 | 2 | 사운드 시스템 MCP 태스크 시퀀스 독립 문서화 (sound-architecture.md Part II → docs/mcp/sound-tasks.md 상세 분리 — AUD-001 후속) |
+| ~~FIX-065~~ | ~~2~~ | ~~sound-design.md 섹션 3.5에 SFX 풀 총 크기(poolSize=16) canonical 수치 추가 (AUD-001 리뷰어 WARNING-002 후속)~~ — DONE: 섹션 3.5 풀 크기 테이블 추가 (poolSize=16, 산출 근거 포함), sound-architecture.md 섹션 3.2 참조 `섹션 3.5`로 구체화 |
+| ~~FIX-066~~ | ~~2~~ | ~~sound-design.md 섹션 1에 TitleScreen/GameOver BGM 트랙 추가 또는 sound-architecture.md BGMTrack에서 해당 값 제거 결정 (AUD-001 리뷰어 INFO-001 후속)~~ — DONE: sound-design.md 섹션 1.3에 bgm_title_screen/bgm_game_over 추가; 섹션 1.4 우선순위 스택 6단계로 확장(TitleScreen/GameOver 최우선); sound-architecture.md BGMTrack 주석 참조 추가 |
+| ~~ARC-027~~ | ~~2~~ | ~~사운드 시스템 MCP 태스크 시퀀스 독립 문서화 (sound-architecture.md Part II → docs/mcp/sound-tasks.md 상세 분리)~~ — DONE → `docs/mcp/sound-tasks.md` (6단계 태스크 그룹, ~148회 MCP 호출) |
