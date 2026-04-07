@@ -152,8 +152,9 @@
 | ~~BAL-013~~ | ~~3~~ | ~~낚시 성공률 하향 조정 (Lv.1: 80%→50%, Lv.5: 65%, Lv.10: 80% — BAL-012 RISK 후속: 초보 낚시 일일 수익 591G > 수박 최고 수익 350G 초과 해소)~~ — DONE: fishing-system.md 섹션 7.4 canonical 등록, fishing-economy.md 시뮬레이션 전면 재계산(Lv.1: 394G/315G), fishing-architecture.md 4A 업데이트 |
 | ~~FIX-071~~ | ~~2~~ | ~~fishing-system.md [OPEN] 겨울 낚시 허용 여부 결정 (time-season.md 섹션 2.3 "낚시/채집 불가" 규칙 변경 여부 — 겨울 빙어/얼음 빙어왕 어종 존재하므로 허용 방향 검토)~~ — DONE: 얼음 낚시 허용 확정, time-season.md 섹션 2.2 규칙 변경 + fishing-architecture.md 섹션 8A 신규 추가 |
 | DES-015 | 1 | 낚싯대 업그레이드 재료 공급 경로 확정 (구리 광석·금 광석 조달 방안 — 광산 미설계 상태, 여행 상인 구매 vs 별도 채집 활동 결정 필요: fishing-system.md 섹션 1.1 [OPEN] 후속) |
-| CON-011 | 1 | 낚시 도감 콘텐츠 정의 (15종 어종 도감 항목 상세 — 힌트 텍스트, 최대 크기 범위, 포획 달성 시 특수 보상 목록: fishing-system.md 섹션 8.2 후속) |
+| ~~CON-011~~ | ~~1~~ | ~~낚시 도감 콘텐츠 정의 (15종 어종 도감 항목 상세 — 힌트 텍스트, 최대 크기 범위, 포획 달성 시 특수 보상 목록: fishing-system.md 섹션 8.2 후속)~~ — DONE → `docs/content/fish-catalog.md` (CON-011) |
+| ~~FIX-075~~ | ~~3~~ | ~~크기 시스템 데이터 모델 통일: sizeMinCm/sizeMaxCm 절대값 채택, hintLocked/hintUnlocked 통일, firstCatchGold/XP 추가, GetSizePriceMultiplier 3등급 이산 교체~~ — DONE: fishing-architecture.md 섹션 15/18 + fish-catalog.md 섹션 7 동시 수정 완료 |
 | FIX-072 | 1 | economy-system.md 섹션 1.3 골드 획득 경로에 "낚시 직판/가공" 항목 추가 (BAL-012 완료 후 downstream — economy-system.md 골드 수입원 목록 미반영) |
-| ARC-030 | 1 | 낚시 도감 아키텍처 (FishCatalog 클래스, 세이브 연동 — FishingStats.caughtByFishId 활용, fishing-architecture.md 섹션 신규 추가) |
+| ~~ARC-030~~ | ~~1~~ | ~~낚시 도감 아키텍처 (FishCatalog 클래스, 세이브 연동 — FishingStats.caughtByFishId 활용, fishing-architecture.md 섹션 신규 추가)~~ — DONE: fishing-architecture.md Part VII (섹션 14~23) 추가, save-load-architecture.md fishCatalog 필드 추가 |
 | BAL-014 | 1 | 낚시 숙련도 XP 획득 밸런스 검증 (BAL-013 성공률 조정 후 레벨 10 도달 일수 재시뮬레이션 — 기존 추산 45일 유지 여부 확인) |
 | DES-016 | 1 | 채집 시스템 기본 설계 (낚시와 유사한 보조 활동 — 농장 주변 채집 포인트, 계절별 식물/버섯/광물 채집, 독립 숙련도 패턴 적용 여부) |

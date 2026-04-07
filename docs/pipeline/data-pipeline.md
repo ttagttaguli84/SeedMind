@@ -1129,6 +1129,7 @@ namespace SeedMind.Core
         public NPCSaveData npc;              // NPC 상태 (null 허용, → see docs/systems/npc-shop-architecture.md 섹션 7.1)
         public TutorialSaveData tutorial;    // 튜토리얼 진행 (null 허용, → see docs/systems/tutorial-architecture.md 섹션 7)
         public FishingSaveData fishing;      // 낚시 상태 (null 허용 — 구버전 호환, → see docs/systems/fishing-architecture.md, FIX-051)
+        public FishCatalogSaveData fishCatalog; // 낚시 도감 상태 (null 허용 — 구버전 호환, → see docs/systems/fishing-architecture.md 섹션 20, ARC-030)
     }
 }
 ```
