@@ -10,7 +10,7 @@ You are running a **planning session** for SeedMind.
 2. Read `TODO.md` — current backlog
 3. Read `README.md` — current phase/status
 4. Read the latest `docs/devlog/*.md` — what happened last session
-5. Read `docs/design.md` and `docs/architecture.md` — current state
+5. `docs/design.md` and `docs/architecture.md`는 **최우선 태스크가 신규 시스템 설계(DES-*)인 경우에만** 읽는다. BAL/FIX/CON/ARC 태스크인 경우 해당 태스크의 관련 문서만 읽는다.
 6. Print a 3-line status summary to the user:
    ```
    [SeedMind] Phase N | TODO: N items | 최근 작업: <last devlog title>
@@ -25,14 +25,35 @@ You are running a **planning session** for SeedMind.
 
 ## Phase 2 — Design Expansion
 
-Spawn two agents in parallel:
-- **designer** agent: expand the game design for the target system
-- **architect** agent: expand the technical architecture for the same system
+태스크 유형에 따라 에이전트 전략을 선택한다:
+
+| 태스크 유형 | 전략 | 설명 |
+|------------|------|------|
+| `DES-*` (신규 시스템 설계) | designer + architect 병렬 | 디자인과 아키텍처를 동시에 |
+| `ARC-*` (아키텍처 단독) | architect만 | 디자인 문서 이미 존재 |
+| `BAL-*` (밸런스 분석) | designer만 | 수치 계산 집약, 구조 변경 없음 |
+| `FIX-*` (문서 수정) | 에이전트 없이 직접 편집 | 단순 필드 추가/동기화/참조 수정 |
+| `CON-*` (콘텐츠 추가) | designer만 | 기존 구조에 콘텐츠 채우기 |
+
+**병렬 에이전트 사용 조건**: DES-* 태스크이면서 해당 시스템 아키텍처 문서가 아직 없는 경우에만 designer+architect를 동시에 스폰한다.
+
+**architect 에이전트 단독 실행 시**: 반드시 designer 결과물 또는 관련 디자인 문서를 먼저 읽은 후 작성한다. `doc-standards.md`의 Canonical 데이터 매핑을 확인하고 수치 직접 기재를 금지한다.
 
 ## Phase 3 — Review
 
-Spawn **reviewer** agent to check consistency across all docs.
-Apply any fixes the reviewer identifies.
+태스크 유형에 따라 리뷰어 실행 여부를 결정한다:
+
+| 태스크 유형 | 리뷰어 실행 여부 | 리유 |
+|------------|----------------|------|
+| `DES-*` 신규 시스템 | 필수 | 신규 문서 전체 검증 필요 |
+| `ARC-*` 신규 아키텍처 | 필수 | JSON/C# 불일치, enum 동기화 등 |
+| `BAL-*` 밸런스 분석 | 필수 | 연료비 계산 오류, 수치 불일치 빈발 |
+| `CON-*` 콘텐츠 추가 | 필수 | cross-reference 및 canonical 참조 누락 빈발 |
+| `FIX-*` 단순 수정 (1~2 필드 동기화) | 생략 가능 | 변경 범위가 단일 필드/참조에 한정될 때 |
+
+**FIX-* 리뷰어 생략 조건**: 변경이 명확히 한 문서의 한 섹션에 국한되고, canonical 출처가 이미 확정된 수치를 그대로 옮기는 경우에만 생략한다. 신규 수치 도입 또는 여러 문서 동시 수정 시 리뷰어 필수.
+
+**리뷰어 실행 시**: Reviewer Checklist 12개 항목을 전수 확인한다. 체크리스트 항목을 생략하거나 "해당 없음"으로 처리할 경우 그 이유를 명시해야 한다.
 
 ## Phase 4 — Wrap Up
 

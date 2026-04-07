@@ -6,9 +6,20 @@
 - Code snippets in docs are illustrative, not executable
 
 ## Agent Collaboration
-- **Designer** and **Architect** work in parallel on the same system
+
+에이전트 선택은 태스크 유형에 따라 결정한다 (자세한 기준은 `start.md` Phase 2/3 참조):
+
+| 태스크 유형 | Phase 2 에이전트 | Phase 3 리뷰어 |
+|------------|----------------|---------------|
+| DES-* 신규 시스템 | designer + architect 병렬 | 필수 |
+| ARC-* 아키텍처 단독 | architect만 | 필수 |
+| BAL-* 밸런스 분석 | designer만 | 필수 |
+| CON-* 콘텐츠 추가 | designer만 | 필수 |
+| FIX-* 단순 수정 | 에이전트 없이 직접 편집 | 생략 가능 (조건 있음) |
+
 - **Architect** 에이전트는 문서 작성 전 반드시 `doc-standards.md`의 Canonical 데이터 매핑을 확인한다. 수치 직접 기재 금지, 참조 표기 필수
-- **Reviewer** always runs after Designer+Architect complete
+- **Architect** 에이전트가 단독 실행될 때는 관련 디자인 문서(DES, CON)를 먼저 읽은 후 작성을 시작한다. 플레이스홀더 수치/ID 사용 금지 — 디자인이 확정된 후에만 아키텍처를 작성한다 (PATTERN-010)
+- **Designer** 에이전트가 BAL-* 또는 CON-* 작업 시 연료비·연산 오류 등 경제 수치 계산은 단계별로 명시하여 리뷰어가 검증 가능하도록 한다 (PATTERN-BAL-COST)
 - **Self-Improve** runs when triggered (3+ same-type issues, or user request)
 
 ## Reviewer Checklist
@@ -27,6 +38,8 @@
 10. [ ] (PATTERN-006) MCP 태스크 문서(Part II 포함)에 배열·테이블 형태의 수치를 직접 기재한 경우, `(→ see canonical)` 참조 주석이 함께 기재되어 있는가? — 직접 기재 시 canonical 문서와 동시 수정 여부를 확인한다.
 11. [ ] (PATTERN-007) SO 에셋 데이터 테이블(data-pipeline.md 섹션 2.4 등)에서 tileSize/buildTimeDays/effectRadius/recipeCount 등 콘텐츠 정의 파라미터를 직접 수치로 기재했을 경우, canonical 콘텐츠 문서(docs/content/facilities.md 등) 참조로 교체되었는가? — 직접 기재된 구체적 수치는 반드시 참조 표기로 대체한다.
 12. [ ] (PATTERN-008) 시설 문서(facilities.md 등)의 가공소 섹션에 레시피 목록(재료/산출물/가격)을 직접 기재했을 경우, canonical 문서(processing-system.md) 참조로 교체되었는가? — 시설 문서에 허용되는 것은 슬롯 수·연료 타입·처리 속도 배율 등 구조적 파라미터뿐이다.
+13. [ ] (PATTERN-BAL-COST) 경제/밸런스 문서에서 가공 ROI·수익 계산 시 연료비·재료비가 빠짐없이 차감되었는가? — "가공품 가격 - 재료 직판가"만 계산하고 연료비를 누락한 경우 오계산으로 간주한다. 베이커리/발효실 레시피는 반드시 연료비를 포함하여 순이익을 산출해야 한다.
+14. [ ] (PATTERN-010) 아키텍처 문서에서 디자인 문서가 확정하지 않은 수치·ID를 플레이스홀더로 기재한 경우, `[OPEN]` 태그와 함께 명시적으로 표기하고 디자인 확정 전 수치를 canonical 값인 것처럼 기재하지 않았는가?
 
 ## Commit Cadence
 - Commit after each logical unit of work (one system expansion, one review pass)
