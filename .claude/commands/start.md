@@ -42,9 +42,23 @@ Apply any fixes the reviewer identifies.
 4. Write a devlog entry in `docs/devlog/NNN-<title>.md`
 5. Commit and push
 
+## Session Task Budget
+
+Phase 0에서 선택한 최우선 태스크의 Priority로 이번 세션 처리 개수를 결정한다:
+
+| 최우선 태스크 Priority | 세션 내 처리 개수 |
+|----------------------|----------------|
+| 3 이상 | 1개 |
+| 2 | 2개 |
+| 1 | 3~4개 |
+
+Phase 4 완료 후 **남은 budget이 있으면**:
+1. `TODO.md`만 재읽기 (Phase 0의 다른 파일은 재읽지 않는다)
+2. 다음 최우선 항목으로 Phase 1→4 반복
+3. Budget 소진 또는 Priority-2+ 항목만 남으면 종료
+
 ## Rules
-- One task per /start call — depth over breadth
 - Designer and architect must reference each other's output
 - Reviewer has final say on consistency issues
 - All output in Korean. Document content in Korean (technical terms in English where natural).
-- After Phase 4 completes, stop. Do not loop. Each /start call is a fresh session with full context.
+- Budget 내에서는 루프 가능. Budget 소진 시 반드시 종료.
