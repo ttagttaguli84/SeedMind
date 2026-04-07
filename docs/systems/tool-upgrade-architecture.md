@@ -421,7 +421,26 @@ ToolUpgradeSystem.CompleteUpgrade(toolType)
     ├── 2) InventoryManager.SetToolbarItem(index, targetToolId) → 새 도구 장착
     ├── 3) _pendingUpgrades에서 제거
     └── 4) OnUpgradeCompleted 이벤트 발행
+            └── ProgressionManager가 구독하여 XP 부여 (→ see 섹션 5.1.1)
 ```
+
+#### 5.1.1 업그레이드 완료 시 XP 부여 흐름
+
+`ToolUpgradeEvents.OnUpgradeCompleted` 이벤트를 `ProgressionManager`가 구독하여 XP를 부여한다.
+
+```
+// illustrative — ProgressionManager 내 이벤트 구독 흐름
+ToolUpgradeEvents.OnUpgradeCompleted += (ToolUpgradeInfo info) =>
+{
+    // XP 수치는 ProgressionData SO의 toolUpgradeExp 필드에서 조회
+    // → see docs/balance/tool-upgrade-xp.md for canonical XP 값
+    // → see docs/systems/progression-architecture.md 섹션 2.3 (GetExpForSource)
+    int xp = GetExpForSource(XPSource.ToolUpgrade, null);
+    AddExp(xp, XPSource.ToolUpgrade);
+};
+```
+
+**호출 시점**: `ToolUpgradeSystem.CompleteUpgrade()` → `OnUpgradeCompleted` 이벤트 발행 → `ProgressionManager` 수신 → `AddExp()` 호출.
 
 ### 5.2 업그레이드 중 도구 사용 불가 처리
 

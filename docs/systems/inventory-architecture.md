@@ -250,6 +250,7 @@ namespace SeedMind
         Consumable,     // 소모품(음식 등) -- 스택 가능 (→ see inventory-system.md 섹션 1.1 for Consumable 정의)
         Processed,      // 가공품 -- 스택 가능
         Material,       // 건축 재료 -- 스택 가능 (향후 확장)
+        Fish,           // 물고기 -- 스택 가능, 품질별 별도 슬롯 (→ see docs/systems/fishing-system.md, FIX-053)
         Special         // 특수 아이템 -- 스택 불가 (이벤트 보상 등)
     }
 }

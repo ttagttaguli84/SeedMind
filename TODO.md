@@ -93,7 +93,7 @@
 | ~~ARC-020~~ | ~~2~~ | ~~대장간 NPC MCP 태스크 시퀀스 독립 문서화 (blacksmith-architecture.md Part II → docs/mcp/blacksmith-tasks.md)~~ — DONE → `docs/mcp/blacksmith-tasks.md` |
 | ~~FIX-027~~ | ~~2~~ | ~~blacksmith-architecture.md 섹션 1 NPCAffinityTracker 클래스 다이어그램에 메서드 4개 추가 (HasTriggeredDialogue, MarkDialogueTriggered, CanGiveDailyAffinity, MarkDailyVisit — ARC-020 리뷰 INFO-1 후속)~~ — DONE: 메서드 4개 추가, AffinityEntry.triggeredDialogues bool[] → string[] triggeredDialogueIds 타입 수정 |
 | ~~FIX-028~~ | ~~2~~ | ~~blacksmith-architecture.md Part II Step A-4에 추가된 4개 메서드(HasTriggeredDialogue 등)의 AffinitySaveData 필드(triggeredDialogueIds, dailyVisitDates) 스키마 확장 검토 (save-load-architecture.md AffinityEntry 동기화 여부 — CRITICAL-5 후속)~~ — DONE: blacksmith-tasks.md AffinityEntry/NPCAffinityTracker 동기화, _lastVisitDayMap/_triggeredDialogueMap 다이어그램 추가, dailyVisitDates 불필요 결정 명시 |
-| BAL-009 | 1 | 도구 업그레이드 XP 밸런스 분석 (ToolUpgrade XPSource 추가 후 — progression-curve.md toolUpgradeExp 수치 결정) |
+| ~~BAL-009~~ | ~~1~~ | ~~도구 업그레이드 XP 밸런스 분석 (ToolUpgrade XPSource 추가 후 — progression-curve.md toolUpgradeExp 수치 결정)~~ — DONE → `docs/balance/tool-upgrade-xp.md` (90 XP 확정: 15 XP × 6회, progression-curve.md 기존값 일치 확인) |
 | ~~BAL-010~~ | ~~2~~ | ~~겨울 전용 작물 온실 경쟁력 조정 (B-09 후속 — 제안 E 비주 계절 온실 페널티 또는 겨울 전용 작물 시너지 보너스 설계 확정, crop-growth.md/economy-system.md 반영)~~ — DONE → `docs/balance/crop-economy.md` 섹션 4.3.10 (제안 E x0.8 + 시너지 x1.2 + 제안 F + B-11 확정) |
 | ~~FIX-029~~ | ~~3~~ | ~~crop-growth.md 섹션 3.3 온실 규칙 테이블에 "비주 계절 판매가 x0.8" 및 "겨울 전용 작물 시너지 판매가 x1.2" 행 추가 (BAL-010 후속)~~ — DONE: crop-growth.md 섹션 3.3 두 행 추가 + 트레이드오프 업데이트 + 섹션 4.2 표고버섯 재수확 5일 + 섹션 8 파라미터 추가 |
 | ~~FIX-030~~ | ~~3~~ | ~~economy-system.md 판매가 계산 공식에 온실 비주 계절 페널티(x0.8) 및 겨울 전용 시너지(x1.2) 배수 반영 (BAL-010 후속)~~ — DONE: economy-system.md 섹션 2.6.5~2.6.6 확정 반영 (리뷰어 수정) |
@@ -123,11 +123,11 @@
 | CON-009 | 2 | 치즈 공방 레시피 정의 (processing-system.md에 치즈 공방 레시피 4~6종 확정 추가 — BAL-008 GAP-1 후속, CON-006 완료로 선행 조건 해소됨) |
 | ~~FIX-044~~ | ~~1~~ | ~~economy-architecture.md에 동물 생산물 수급 변동 적용 정책 명시 (작물과 동일 풀 vs 별도 카테고리 결정 — BAL-008 GAP-3 후속)~~ — DONE → SupplyCategory enum(Crop/AnimalProduct/Fish/ProcessedGoods), 카테고리별 수급 파라미터, 섹션 3.11 정책 문서 추가 |
 | ~~ARC-026~~ | ~~3~~ | ~~fishing-architecture.md 문서 ID 등록 — 낚시 시스템 기술 아키텍처 (DES-013 후속, ARC-026으로 확정)~~ — DONE → `docs/systems/fishing-architecture.md` (devlog 051에서 생성 완료) |
-| FIX-049 | 3 | economy-architecture.md 섹션 3.10.2 HarvestOrigin에 `Fishing = 3` 추가, 섹션 3.10.3 switch 문에 Fishing case 추가 (ARC-026 후속) |
-| FIX-050 | 3 | progression-architecture.md 섹션 2.2 XPSource에 `FishingCatch` 추가, 섹션 2.3 GetExpForSource() switch 문에 FishingCatch case 추가 (ARC-026 후속) |
-| FIX-051 | 3 | data-pipeline.md Part I 섹션 2.1 GameSaveData에 `public FishingSaveData fishing;` 필드 추가 (ARC-026 후속) |
-| FIX-052 | 2 | save-load-architecture.md 섹션 7 SaveLoadOrder 할당표에 `FishingManager \| 52` 행 추가 (ARC-026 후속) |
-| FIX-053 | 3 | data-pipeline.md Part I ItemType enum에 `Fish` 값 추가 (ARC-026 후속) |
+| ~~FIX-049~~ | ~~3~~ | ~~economy-architecture.md 섹션 3.10.2 HarvestOrigin에 `Fishing = 3` 추가, 섹션 3.10.3 switch 문에 Fishing case 추가 (ARC-026 후속)~~ — DONE |
+| ~~FIX-050~~ | ~~3~~ | ~~progression-architecture.md 섹션 2.2 XPSource에 `FishingCatch` 추가, 섹션 2.3 GetExpForSource() switch 문에 FishingCatch case 추가 (ARC-026 후속)~~ — DONE |
+| ~~FIX-051~~ | ~~3~~ | ~~data-pipeline.md Part I 섹션 3.2 JSON 스키마 및 Part II GameSaveData C# 클래스에 `fishing` 필드 추가 (ARC-026 후속)~~ — DONE |
+| ~~FIX-052~~ | ~~2~~ | ~~save-load-architecture.md 섹션 7 SaveLoadOrder 할당표에 `FishingManager \| 52` 행 추가 (ARC-026 후속)~~ — DONE |
+| ~~FIX-053~~ | ~~3~~ | ~~data-pipeline.md Part I ItemType enum에 `Fish` 값 추가 (ARC-026 후속)~~ — DONE: data-pipeline.md, inventory-architecture.md 섹션 3.2, inventory-tasks.md Step 1-01에 동시 반영 |
 | FIX-054 | 2 | processing-system.md에 생선 가공 레시피 섹션 추가 후 fishing-system.md 섹션 6.2 테이블 제거 및 참조 교체 (PATTERN-008 이전 — DES-013 후속) |
 | ~~FIX-055~~ | ~~5~~ | ~~낚시 미니게임 방식 결정 및 통일: fishing-system.md 섹션 3(Oscillating Bar 가로 커서)과 fishing-architecture.md 섹션 2(ExcitementGauge 세로 게이지)가 불일치. 한 방식으로 확정 후 두 문서를 동시 수정 (CRITICAL — ARC-026 후속)~~ — DONE: ExcitementGauge 방식으로 통일, fishing-system.md 섹션 3 전면 재작성 (FishData SO targetZoneWidthMul/moveSpeed 필드 정합) |
 | FIX-057 | 3 | npcs.md 섹션 9.3 `luckyCharmIridiumBonus` 조정 범위 0.03~0.10 → 0.03~0.20 확장 (BAL-005 섹션 8 Open Question 6 후속 — 권장 값 0.15 수용 위해 상한 확장 필요) |
@@ -136,3 +136,5 @@
 | FIX-060 | 3 | economy-architecture.md PriceCategory enum에 `Consumable`, `Decoration` 값 추가 후 관련 switch 문 업데이트 (BAL-005 아키텍처 분석 후속) |
 | FIX-061 | 2 | npc-shop-architecture.md 섹션 7.2의 구버전 TravelingMerchantSaveData(4필드)를 섹션 9.4 확장판(7필드)으로 대체 또는 명시적 deprecated 표기 (BAL-005 아키텍처 분석 후속) |
 | FIX-062 | 3 | npc-shop-architecture.md 섹션 3.5 TravelingMerchantScheduler 클래스 다이어그램에 `_affinityPoints`, `GetAffinityLevel()`, `ApplyAffinityBonus()` 추가 (BAL-005 아키텍처 분석 후속) |
+| FIX-063 | 2 | inventory-architecture.md 섹션 4에 FishData의 IInventoryItem 구현 예시 추가 (ItemType 프로퍼티 `Fish` 반환 — ARC-026 후속, 리뷰어 INFO-1) |
+| FIX-064 | 2 | fishing-architecture.md 섹션 5.2 또는 balance 문서에 낚시 XP 계산 공식 확정 및 canonical 등록 (rarity 기반 vs basePrice 기반 — ARC-026 후속, 리뷰어 INFO-2) |

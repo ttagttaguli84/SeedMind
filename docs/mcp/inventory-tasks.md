@@ -161,6 +161,7 @@ create_script
             Consumable,     // 소모품(음식 등)
             Processed,      // 가공품
             Material,       // 건축 재료 (향후 확장)
+            Fish,           // 물고기 (→ see docs/systems/fishing-system.md, FIX-053)
             Special         // 특수 아이템
         }
     }

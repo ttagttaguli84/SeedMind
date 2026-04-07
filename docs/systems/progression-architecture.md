@@ -210,6 +210,11 @@ namespace SeedMind.Level.Data
         public int buildingConstructExp;        // 시설 건설 시 XP (→ see docs/balance/progression-curve.md)
         public int toolUseExp;                  // 도구 사용 시 XP (→ see docs/balance/progression-curve.md)
         public int facilityProcessExp;          // 가공 완료 시 XP (→ see docs/balance/progression-curve.md)
+        public int toolUpgradeExp;              // 도구 업그레이드 완료 시 XP (→ see docs/balance/tool-upgrade-xp.md, docs/systems/tool-upgrade.md 섹션 8)
+        public int animalCareExp;               // 동물 돌봄(먹이/쓰다듬기) 시 XP (→ see docs/balance/progression-curve.md, docs/systems/livestock-architecture.md 섹션 7)
+        public int animalHarvestBaseExp;        // 동물 생산물 수집 기본 XP (→ see docs/systems/livestock-architecture.md 섹션 7.2, ARC-019)
+        // FishingCatch XP는 fishData.expReward 기반 계산이므로 단일 필드가 아님
+        // → see docs/systems/fishing-architecture.md, docs/balance/progression-curve.md (FIX-050)
 
         [Header("해금 테이블")]
         public LevelUnlockEntry[] unlockTable;  // 레벨별 해금 목록
@@ -242,6 +247,7 @@ namespace SeedMind.Level
         ToolUpgrade,        // 도구 업그레이드 완료 (→ see docs/balance/progression-curve.md)
         AnimalCare,         // 동물 돌봄 (먹이, 쓰다듬기) (→ see docs/systems/livestock-architecture.md 섹션 7, ARC-019)
         AnimalHarvest,      // 동물 생산물 수집 (→ see docs/systems/livestock-architecture.md 섹션 7, ARC-019)
+        FishingCatch,       // 낚시 포획 (→ see docs/systems/fishing-architecture.md, ARC-026/FIX-050)
     }
 }
 ```
@@ -306,6 +312,13 @@ namespace SeedMind.Level
                     // → see docs/systems/livestock-architecture.md 섹션 7.2 (ARC-019)
                     var animalInst = (AnimalInstance)context;
                     return CalculateAnimalHarvestExp(animalInst);
+
+                case XPSource.FishingCatch:
+                    // 낚시 포획 XP — 물고기 등급/희귀도에 따라 차등
+                    // → see docs/balance/progression-curve.md for value (FIX-050)
+                    // → see docs/systems/fishing-architecture.md for 포획 흐름
+                    var fishData = (FishData)context;
+                    return CalculateFishingCatchExp(fishData);
 
                 default:
                     return 0;

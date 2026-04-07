@@ -923,6 +923,7 @@ namespace SeedMind.Save
 | FarmZoneManager | 45 | FarmGrid(40) 복원 후 구역 해금 상태 적용 (ARC-023) |
 | AnimalManager | 48 | FarmZoneManager(45) 이후 — Zone E 해금 상태 복원 후 동물 상태 로드 (ARC-019) |
 | PlayerController | 50 | 인벤토리 SO 참조 필요 |
+| FishingManager | 52 | PlayerController(50) 이후 — 낚시 상태 복원 (→ see docs/systems/fishing-architecture.md, FIX-052) |
 | InventoryManager | 55 | 별도 인벤토리 상태 복원 |
 | BuildingManager | 60 | 시설 SO 참조 복원 |
 | ProgressionManager | 70 | 해금/마일스톤 복원 |

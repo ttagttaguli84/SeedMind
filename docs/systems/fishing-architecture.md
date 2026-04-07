@@ -280,7 +280,7 @@ namespace SeedMind.Fishing
 }
 ```
 
-[OPEN] `ItemType` enum에 `Fish` 값 추가가 필요하다. 현재 ItemType 정의는 `(-> see docs/pipeline/data-pipeline.md Part I)`. FIX-053으로 추적.
+[RESOLVED-FIX-053] `ItemType` enum에 `Fish` 값이 추가되었다. `docs/pipeline/data-pipeline.md` Part I 섹션 2.4 및 `docs/systems/inventory-architecture.md` 섹션 3.2, `docs/mcp/inventory-tasks.md` Step 1-01에 동시 반영. (→ see docs/systems/inventory-architecture.md 섹션 3.2)
 
 ---
 
@@ -889,7 +889,7 @@ SaveManager.LoadAsync()
 
 1. [RESOLVED] `docs/systems/fishing-system.md` (DES-013) 작성 완료. 어종 목록 15종, 기본 판매가, 희귀도별 출현 가중치, 미니게임 난이도 파라미터 확정. basePrice 및 expReward 등 일부 밸런스 수치는 `docs/balance/progression-curve.md` canonical 등록 후 FishData SO에 반영 필요.
 2. [OPEN] 낚시 XP 계산 공식 미확정. 작물 수확 XP 공식(`harvestExpBase + floor(growthDays * harvestExpPerGrowthDay) * qualityBonus`)을 물고기에 어떻게 적용할지 (rarity 기반? basePrice 기반?) 결정 필요.
-3. [OPEN] `ItemType` enum에 `Fish` 값 추가 필요. 현재 ItemType 정의에 Fish가 없다.
+3. [RESOLVED-FIX-053] `ItemType` enum에 `Fish` 값 추가 완료. data-pipeline.md, inventory-architecture.md 섹션 3.2, inventory-tasks.md Step 1-01에 반영.
 4. [OPEN] 물고기 전용 가격 변동 시스템 분리 여부. 초기 버전은 기존 PriceFluctuationSystem 공유, 추후 분리 검토.
 5. [OPEN] 낚시 에너지 소모량 미확정. 캐스팅 1회당 에너지 소모를 `(-> see docs/systems/farming-system.md 섹션 3.2)` 기존 도구 사용 에너지와 동일 레벨로 할지 별도 설정할지 결정 필요.
 6. [OPEN] 날씨 보너스 배율(잠정 1.5)이 미확정. fishing-system.md에서 canonical 값을 설정해야 한다.
@@ -900,8 +900,8 @@ SaveManager.LoadAsync()
 
 ## Risks
 
-1. [RISK] **HarvestOrigin enum 확장 파급**: `Fishing = 3` 추가 시 economy-architecture.md의 `GetGreenhouseMultiplier()` switch 문, inventory-architecture.md의 스택 분리 로직, data-pipeline.md의 직렬화 등 여러 문서에 동시 업데이트가 필요하다. FIX-049로 추적.
-2. [RISK] **XPSource enum 확장 파급**: `FishingCatch` 추가 시 progression-architecture.md의 `GetExpForSource()` switch 문과 ProgressionData SO에 `fishingCatchExp` 필드 추가가 필요하다. FIX-050으로 추적.
+1. [RESOLVED-FIX-049] **HarvestOrigin enum 확장 파급**: `Fishing = 3`이 economy-architecture.md 섹션 3.10.2에 추가되었고, `GetGreenhouseMultiplier()` pseudocode(섹션 3.10.3)에도 Fishing case가 반영되었다.
+2. [RESOLVED-FIX-050/부분] **XPSource enum 확장 파급**: `FishingCatch`가 progression-architecture.md 섹션 2.2 XPSource enum 및 섹션 2.3 `GetExpForSource()` switch 문에 추가되었다. 단, ProgressionData SO의 `fishingCatchExp` 필드는 FishData.expReward 기반 계산으로 대체되므로 별도 필드 불필요 — progression-architecture.md 섹션 2.1 클래스 정의에 주석으로 명시됨.
 3. [RISK] **SaveLoadOrder 52 충돌 가능성**: PlayerController(50)와 InventoryManager(55) 사이의 좁은 간격에 배치. 향후 다른 시스템이 51~54 범위를 사용하면 충돌 가능. save-load-architecture.md 할당표를 반드시 갱신해야 한다.
 4. [RISK] **FishData SO와 IInventoryItem 통합**: FishData가 GameDataSO를 상속하고 IInventoryItem을 구현해야 하므로, 기존 IInventoryItem 인터페이스에 Fish 타입이 누락되면 런타임 오류 발생.
 5. [RISK] **미니게임 프레임 의존성**: FishingMinigame.Update()가 매 프레임 호출되므로, deltaTime 기반 보정이 없으면 프레임레이트에 따라 난이도가 달라질 수 있다. 모든 시간 계산에 deltaTime을 반드시 적용해야 한다.
@@ -912,10 +912,10 @@ SaveManager.LoadAsync()
 
 > **주의**: FIX-044는 TODO.md에 economy-architecture.md 동물 수급 변동 정책 건으로 이미 배정됨. 낚시 시스템 관련 FIX는 FIX-049부터 시작.
 
-| FIX ID | 대상 문서 | 변경 내용 | 우선순위 |
-|--------|----------|----------|:--------:|
-| FIX-049 | `economy-architecture.md` | 섹션 3.10.2 HarvestOrigin에 `Fishing = 3` 추가, 섹션 3.10.3 switch 문에 Fishing case 추가 | 4 |
-| FIX-050 | `progression-architecture.md` | 섹션 2.2 XPSource에 `FishingCatch` 추가, 섹션 2.3 `GetExpForSource()` switch 문에 FishingCatch case 추가 | 4 |
-| FIX-051 | `data-pipeline.md` | Part I 섹션 2.1 GameSaveData에 `public FishingSaveData fishing;` 추가 | 4 |
-| FIX-052 | `save-load-architecture.md` | 섹션 7 SaveLoadOrder 할당표에 `FishingManager | 52` 추가 | 3 |
-| FIX-053 | `pipeline/data-pipeline.md` | Part I ItemType enum에 `Fish` 값 추가 | 4 |
+| FIX ID | 대상 문서 | 변경 내용 | 상태 |
+|--------|----------|----------|:----:|
+| FIX-049 | `economy-architecture.md` | 섹션 3.10.2 HarvestOrigin에 `Fishing = 3` 추가, 섹션 3.10.3 switch 문에 Fishing case 추가 | RESOLVED |
+| FIX-050 | `progression-architecture.md` | 섹션 2.2 XPSource에 `FishingCatch` 추가, 섹션 2.3 `GetExpForSource()` switch 문에 FishingCatch case 추가 | RESOLVED |
+| FIX-051 | `data-pipeline.md` | Part I 섹션 3.2 JSON 스키마 및 Part II GameSaveData C# 클래스에 `fishing` 필드 추가 | RESOLVED |
+| FIX-052 | `save-load-architecture.md` | 섹션 7 SaveLoadOrder 할당표에 `FishingManager \| 52` 추가 | RESOLVED |
+| FIX-053 | `pipeline/data-pipeline.md`, `inventory-architecture.md`, `inventory-tasks.md` | ItemType enum에 `Fish` 값 추가 | RESOLVED |

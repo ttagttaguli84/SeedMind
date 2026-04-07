@@ -27,6 +27,7 @@
 | 비료/소모품 | `Consumable` | `Fertilizer` + `Consumable` | FertilizerData | C-3: 기존 에셋 4종 | **주의** |
 | 가공품 | `Processed` | `Processed` | ProcessingRecipeData | 명시적 언급 없음 | **누락** |
 | 건설 재료 | `Material` | `Material` | 미정 | 언급 없음 | Phase 2 예정, OK |
+| 물고기 | `Fish` | `Fish` | FishData | (→ see fishing-system.md, FIX-053) | OK |
 
 **발견 사항**:
 
