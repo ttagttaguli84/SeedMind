@@ -435,9 +435,9 @@ fish-catalog.md(CON-011)의 **콘텐츠 데이터**(어종 항목, 힌트 텍스
 
 ### 7.3 추가 업적 필요 여부
 
-현재 `docs/content/achievements.md` 섹션 9.5에 채집 업적 5종이 이미 정의되어 있으므로, DES-018 범위 내에서 추가 업적은 필요하지 않다. 다만 아래 항목은 향후 검토 가능하다:
+현재 `docs/content/achievements.md` 섹션 9.5에 채집 업적 5종이 이미 정의되어 있으므로, DES-018 범위 내에서 추가 업적은 필요하지 않다.
 
-[OPEN] "통합 수집 마스터" 업적 — 어종 도감(15종) + 채집 도감(27종) 모두 100% 완성 시 부여하는 특별 업적. 통합 도감 시스템 도입에 따른 새로운 최종 목표가 될 수 있으나, 현재 업적 총 수(39종)에 추가하면 보상 총합 밸런스 재검토가 필요하다.
+**[RESOLVED — CON-017]** "통합 수집 마스터" 업적을 숨겨진 업적(`ach_hidden_07`)으로 도입 결정. 어종 도감 15/15종(`ach_fish_04`) + 채집 도감 27/27종(`ach_gather_03`) 모두 달성 시 자동 해금. 보상: 100G / 30 XP / 칭호 "수집의 대가" (`title_collection_master`) / 도감 배경: 전설의 자연 x1. 업적 총 수 39 -> 40종, XP 총합 3,130 -> 3,160 (+30 XP, 전체 대비 +0.3%p)으로 밸런스 영향 무시 가능. 상세는 `docs/content/achievements.md` 섹션 10.1 참조.
 
 ---
 
@@ -464,10 +464,11 @@ fish-catalog.md(CON-011)의 **콘텐츠 데이터**(어종 항목, 힌트 텍스
 | `docs/content/fish-catalog.md` | 어종 도감 콘텐츠 canonical. 본 문서는 통합 UI 프레임워크를 정의하며, 어종 데이터는 fish-catalog.md를 참조 |
 | `docs/systems/gathering-system.md` | 채집 아이템 27종 목록(섹션 3), 숙련도(섹션 4) canonical. 본 문서의 OPEN#3 해소 |
 | `docs/systems/fishing-system.md` | 어종 목록(섹션 4.2), 낚시 숙련도(섹션 7). 낚시 마스터 칭호 해금 조건 참조 |
-| `docs/content/achievements.md` | 낚시 업적(섹션 9), 채집 업적(섹션 9.5), 칭호 목록(섹션 11). 도감 완성 업적 보상과의 합산 검증 |
+| `docs/content/achievements.md` | 낚시 업적(섹션 9), 채집 업적(섹션 9.5), 숨겨진 업적(섹션 10 — `ach_hidden_07` 통합 수집 마스터), 칭호 목록(섹션 11). 도감 완성 업적 보상과의 합산 검증 |
 | `docs/balance/progression-curve.md` | XP 테이블, 진행 곡선. 도감 XP 보상의 전체 진행 속도 영향 검증 |
 | `docs/systems/economy-system.md` | 경제 수치 참조. 도감 보상 골드가 경제 밸런스에 미치는 영향 |
 | `docs/systems/fishing-architecture.md` | FishCatalogData SO, FishCatalogManager 아키텍처. 통합 인터페이스 리팩터링 시 영향 |
+| `docs/systems/achievement-architecture.md` | AchievementConditionType enum, AchievementEvents.OnAchievementUnlocked 이벤트 — ach_hidden_07 연쇄 해금 조건 구현 시 참조 |
 
 ---
 
@@ -476,7 +477,7 @@ fish-catalog.md(CON-011)의 **콘텐츠 데이터**(어종 항목, 힌트 텍스
 1. **[OPEN]** fish-catalog.md 섹션 5의 UI 접근 경로("메뉴 > 도감 > 어종 도감 탭")를 "메뉴 > 수집 도감 > 어종 탭"으로 수정하는 FIX 태스크가 필요하다.
 2. **[OPEN]** 통합 도감 단축키 바인딩 미확정. fish-catalog.md 섹션 5.1과 동일 이슈.
 3. **[OPEN]** 채집 낫 수리 키트(10종 마일스톤 보상)가 도구 내구도 시스템 미설계로 인해 효용이 불확실하다. 도구 내구도 시스템 도입 여부에 따라 대체 보상 결정 필요.
-4. **[OPEN]** "통합 수집 마스터" 업적(어종 15종 + 채집 27종 전종 완성) 도입 여부. 보상 총합 밸런스 재검토 필요.
+4. ~~**[OPEN]** "통합 수집 마스터" 업적(어종 15종 + 채집 27종 전종 완성) 도입 여부.~~ — **RESOLVED (CON-017)**: `ach_hidden_07`로 도입 확정. 상세는 `docs/content/achievements.md` 섹션 10.1 참조.
 5. **[OPEN]** 통합 도감 아키텍처(ICatalogProvider 인터페이스, CollectionManager 등)는 별도 ARC 태스크로 설계해야 한다. 기존 FishCatalogManager(ARC-030)의 리팩터링 범위 평가 필요.
 
 ---

@@ -7,13 +7,13 @@
 
 ## 1. Context
 
-이 문서는 SeedMind의 전체 업적 39종에 대한 콘텐츠 상세 정보를 기술한다. 각 업적의 고유 ID, 이름, 조건 타입, 목표 수치, 보상(골드/XP/칭호/아이템)을 확정 테이블로 정리하며, 칭호 42종의 canonical 목록과 보상 기준 테이블을 포함한다.
+이 문서는 SeedMind의 전체 업적 40종에 대한 콘텐츠 상세 정보를 기술한다. 각 업적의 고유 ID, 이름, 조건 타입, 목표 수치, 보상(골드/XP/칭호/아이템)을 확정 테이블로 정리하며, 칭호 50종의 canonical 목록과 보상 기준 테이블을 포함한다.
 
 ### 1.1 본 문서가 canonical인 데이터
 
-- 업적 34종 전체 목록의 확정 보상 수치 (골드, XP, 아이템)
+- 업적 40종 전체 목록의 확정 보상 수치 (골드, XP, 아이템)
 - 단계형 업적 Bronze/Silver/Gold 각 단계별 목표 수치 및 보상
-- 칭호 42종 canonical 매핑 테이블 (칭호 ID, 이름, 해금 조건)
+- 칭호 43종 canonical 매핑 테이블 (칭호 ID, 이름, 해금 조건)
 - 보상 기준 테이블 (난이도/단계별 골드/XP 범위)
 - 아이템 보상 전체 목록 및 효과
 
@@ -63,15 +63,15 @@
 
 ### 2.4 XP 보상 총량 추정
 
-- 전 업적(39종) 완료 시 총 XP: **3,130 XP** (아래 섹션 3~10 및 섹션 13.1 확정 합산, 채집가 5종 490 XP 포함)
-- 전체 필요 누적 XP **9,029**의 약 **34.7%**에 해당 (-> see `docs/balance/progression-curve.md` 섹션 2.4.1 — canonical XP 테이블)
+- 전 업적(40종) 완료 시 총 XP: **3,160 XP** (아래 섹션 3~10 및 섹션 13.1 확정 합산, 채집가 5종 490 XP + 통합 수집 마스터 1종 30 XP 포함)
+- 전체 필요 누적 XP **9,029**의 약 **35.0%**에 해당 (-> see `docs/balance/progression-curve.md` 섹션 2.4.1 — canonical XP 테이블)
 - 전 업적 완료는 2년차 이후에나 가능하므로 실질적 XP 가속 효과는 제한적
 
-[NOTE -- CON-013 갱신] 업적 XP 비중(34.7%)은 canonical 기준(9,029 XP) 대비 적정 수준이다. BAL-007 통합 시뮬레이션(-> see `docs/balance/xp-integration.md`)에서 퀘스트 ~1,115 XP + 업적 3,130 XP 포함 시 1년차 일반 플레이어 레벨 8~9 도달이 예상된다. 낚시 업적(390 XP)과 채집 업적(490 XP)은 각각 Zone F/Zone D 해금(레벨 5) 이후 점진적으로 달성되므로 1년차 내 전부 달성은 어렵다.
+[NOTE -- CON-013/CON-017 갱신] 업적 XP 비중(35.0%)은 canonical 기준(9,029 XP) 대비 적정 수준이다. BAL-007 통합 시뮬레이션(-> see `docs/balance/xp-integration.md`)에서 퀘스트 ~1,115 XP + 업적 3,160 XP 포함 시 1년차 일반 플레이어 레벨 8~9 도달이 예상된다. 낚시 업적(390 XP)과 채집 업적(490 XP)은 각각 Zone F/Zone D 해금(레벨 5) 이후 점진적으로 달성되므로 1년차 내 전부 달성은 어렵다. 통합 수집 마스터(`ach_hidden_07`, 30 XP)는 두 도감 모두 완성해야 하는 극후반 업적이므로 XP 영향 무시 가능.
 
 ### 2.5 골드 보상 총량 추정
 
-- 전 업적 완료 시 총 골드: 약 10,950G (아래 섹션 3~10의 합산, 채집가 2,600G 포함)
+- 전 업적 완료 시 총 골드: 약 11,050G (아래 섹션 3~10의 합산, 채집가 2,600G + 통합 수집 마스터 100G 포함)
 - 게임 전체 플레이(2년+) 누적 수입 대비 미미한 수준 (-> see `docs/balance/progression-curve.md` 섹션 3)
 
 ---
@@ -352,7 +352,7 @@
 
 ---
 
-## 10. 숨겨진 업적 (Hidden) -- 6개
+## 10. 숨겨진 업적 (Hidden) -- 7개
 
 숨겨진 업적은 달성 전까지 업적 패널에서 이름/조건이 `"???"` 으로 표시된다. 모두 `Custom` (99) conditionType을 사용하며, AchievementManager 내 전용 핸들러로 처리한다 (-> see `docs/systems/achievement-architecture.md` 섹션 2.3).
 
@@ -366,6 +366,7 @@
 | 4 | `ach_hidden_04` | 빈손의 부자 | 소지 골드 0G 상태에서 작물 판매로 단일 거래 500G 이상 달성 | `OnGoldChanged` + `OnSingleShipment` | 100G / 30 XP | 역전의 농부 (`title_comeback_farmer`) |
 | 5 | `ach_hidden_05` | 거대 작물의 주인 | 거대 작물(Giant Crop) 수확 (-> see `docs/systems/crop-growth.md` 섹션 5.1) | `OnCropHarvested` (isGiant = true) | 100G / 30 XP | 거대 작물의 주인 (`title_giant_crop_owner`) |
 | 6 | `ach_hidden_06` | 전부 다 팔아! | 인벤토리의 모든 슬롯에 작물이 있는 상태에서 한 번에 전부 출하 | `OnSingleShipment` (fullInventory = true) | 100G / 30 XP | 통큰 농부 (`title_generous_farmer`) |
+| 7 | `ach_hidden_07` | 통합 수집 마스터 | 어종 도감 15/15종 완성(`ach_fish_04` 달성) + 채집 도감 27/27종 완성(`ach_gather_03` 달성). 두 업적 모두 달성 시 자동 해금 | `OnAchievementUnlocked` (achievementId = `ach_fish_04` AND `ach_gather_03`) | 100G / 30 XP | 수집의 대가 (`title_collection_master`) |
 
 ### 10.2 아이템 보상
 
@@ -374,14 +375,20 @@
 | achievementId | 아이템 | 효과 |
 |---------------|--------|------|
 | `ach_hidden_05` | 거대 씨앗 x1 | 심으면 거대 작물 생성 확률 50% 상승 (해당 작물 1회). (-> see `docs/systems/crop-growth.md` 섹션 5.1) |
+| `ach_hidden_07` | 도감 배경: 전설의 자연 x1 | 수집 도감 화면 배경이 전설의 자연 일러스트로 변경 (-> see `docs/systems/collection-system.md` 섹션 5.2 — 채집 도감 마일스톤 27종 보상과 동일 비주얼, 별도 획득 경로) |
 
-나머지 5개 숨겨진 업적은 칭호+골드+XP만 지급한다.
+나머지 5개 숨겨진 업적(`ach_hidden_01`~`ach_hidden_04`, `ach_hidden_06`)은 칭호+골드+XP만 지급한다.
 
-**Hidden 카테고리 소계**: 골드 600G / XP 180
+**Hidden 카테고리 소계**: 골드 700G / XP 210
+
+[NOTE] 정확한 소계 계산:
+- `ach_hidden_01`~`ach_hidden_06`: 각 100G + 30 XP = 600G + 180 XP
+- `ach_hidden_07`: 100G + 30 XP
+- **합계: 700G / 210 XP**
 
 ---
 
-## 11. 칭호 전체 목록 (42종)
+## 11. 칭호 전체 목록 (43종)
 
 칭호는 플레이어 이름 앞에 표시되는 순수 장식 수식어이다. 게임플레이에 영향을 주지 않는다. (-> see `docs/systems/achievement-system.md` 섹션 4.2 for 표시 규칙)
 
@@ -425,19 +432,20 @@
 | 33 | `title_comeback_farmer` | 역전의 농부 | `ach_hidden_04` 달성 | Hidden |
 | 34 | `title_giant_crop_owner` | 거대 작물의 주인 | `ach_hidden_05` 달성 | Hidden |
 | 35 | `title_generous_farmer` | 통큰 농부 | `ach_hidden_06` 달성 | Hidden |
-| 36 | `title_novice_angler` | 초보 낚시꾼 | `ach_fish_01` 달성 | Angler |
-| 37 | `title_fishing_lover` | 낚시 애호가 | `ach_fish_02` Silver 달성 | Angler |
-| 38 | `title_skilled_angler` | 숙련 낚시꾼 | `ach_fish_02` Gold 달성 | Angler |
-| 39 | `title_angler` | 낚시꾼 | `ach_fish_03` 달성 | Angler |
-| 40 | `title_legendary_angler` | 전설의 낚시사 | `ach_fish_04` 달성 | Angler |
-| 41 | `title_fishing_master` | 낚시 마스터 | 어종 도감 100% + 숙련도 Lv.10 (-> see `docs/systems/fishing-system.md` 섹션 8.2) | Angler |
-| 42 | `title_novice_gatherer` | 초보 채집꾼 | `ach_gather_01` 달성 | Gatherer |
-| 43 | `title_gathering_lover` | 채집 애호가 | `ach_gather_02` Silver 달성 | Gatherer |
-| 44 | `title_skilled_gatherer` | 숙련 채집꾼 | `ach_gather_02` Gold 달성 | Gatherer |
-| 45 | `title_gathering_doctor` | 채집 박사 | `ach_gather_03` 달성 | Gatherer |
-| 46 | `title_legendary_gatherer` | 전설의 채집가 | `ach_gather_04` 달성 | Gatherer |
-| 47 | `title_sickle_master` | 낫의 장인 | `ach_gather_05` 달성 | Gatherer |
-| 48 | `title_gathering_master` | 채집 마스터 | 채집 도감 100% + 숙련도 Lv.10 (-> see `docs/systems/gathering-system.md` 섹션 4.2) | Gatherer |
+| 36 | `title_collection_master` | 수집의 대가 | `ach_hidden_07` 달성 | Hidden |
+| 37 | `title_novice_angler` | 초보 낚시꾼 | `ach_fish_01` 달성 | Angler |
+| 38 | `title_fishing_lover` | 낚시 애호가 | `ach_fish_02` Silver 달성 | Angler |
+| 39 | `title_skilled_angler` | 숙련 낚시꾼 | `ach_fish_02` Gold 달성 | Angler |
+| 40 | `title_angler` | 낚시꾼 | `ach_fish_03` 달성 | Angler |
+| 41 | `title_legendary_angler` | 전설의 낚시사 | `ach_fish_04` 달성 | Angler |
+| 42 | `title_fishing_master` | 낚시 마스터 | 어종 도감 100% + 숙련도 Lv.10 (-> see `docs/systems/fishing-system.md` 섹션 8.2) | Angler |
+| 43 | `title_novice_gatherer` | 초보 채집꾼 | `ach_gather_01` 달성 | Gatherer |
+| 44 | `title_gathering_lover` | 채집 애호가 | `ach_gather_02` Silver 달성 | Gatherer |
+| 45 | `title_skilled_gatherer` | 숙련 채집꾼 | `ach_gather_02` Gold 달성 | Gatherer |
+| 46 | `title_gathering_doctor` | 채집 박사 | `ach_gather_03` 달성 | Gatherer |
+| 47 | `title_legendary_gatherer` | 전설의 채집가 | `ach_gather_04` 달성 | Gatherer |
+| 48 | `title_sickle_master` | 낫의 장인 | `ach_gather_05` 달성 | Gatherer |
+| 49 | `title_gathering_master` | 채집 마스터 | 채집 도감 100% + 숙련도 Lv.10 (-> see `docs/systems/gathering-system.md` 섹션 4.2) | Gatherer |
 
 ### 11.2 칭호 통계
 
@@ -452,8 +460,8 @@
 | Quest | 5 |
 | Angler | 6 |
 | Gatherer | 7 |
-| Hidden | 6 |
-| **합계** | **49** |
+| Hidden | 7 |
+| **합계** | **50** |
 
 ---
 
@@ -478,6 +486,7 @@
 | 13 | 황금 낚싯대 장식품 | `ach_fish_04` | x1 | 농장 배치 가능 장식 오브젝트. 기능 없음 | 전설의 낚시사 보상 |
 | 14 | 채집 숙련도 XP 보너스 | `ach_gather_02` Gold | x1 | 다음 50회 채집 시 채집 숙련도 XP +25% (일회성 버프, -> see `docs/systems/gathering-system.md` 섹션 4) | 채집 애호가 Gold 보상 |
 | 15 | 채집 도감 장식품 | `ach_gather_03` | x1 | 농장 배치 가능 장식 오브젝트. 기능 없음 | 채집 도감 완성 보상 |
+| 16 | 도감 배경: 전설의 자연 | `ach_hidden_07` | x1 | 수집 도감 화면 배경이 전설의 자연 일러스트로 변경 (-> see `docs/systems/collection-system.md` 섹션 5.2) | 통합 수집 마스터 보상 |
 
 [OPEN] 장식 오브젝트(금고, 장인의 망치, 영웅의 증표, 상인의 뱃지, 황금 낚싯대, 채집 도감)의 비주얼 사양 및 배치 시스템은 별도 설계 필요. 현재 농장 꾸미기 시스템이 미설계 상태.
 
@@ -497,19 +506,19 @@
 | Quest | 4 | 850G | 340 XP | 5 | 1 (영웅의 증표) |
 | Angler | 4 | 2,300G | 390 XP | 5 (+마스터 1 = 6) | 3 (미끼통, 숙련도 XP 보너스, 황금 낚싯대 장식품) |
 | Gatherer | 5 | 2,600G | 490 XP | 6 (+마스터 1 = 7) | 2 (채집 숙련도 XP 보너스, 채집 도감 장식품) |
-| Hidden | 6 | 600G | 180 XP | 6 | 1 (거대 씨앗) |
-| **합계** | **39** | **10,950G** | **3,130 XP** | **48 (+기본 1 = 49)** | **15** |
+| Hidden | 7 | 700G | 210 XP | 7 | 2 (거대 씨앗, 도감 배경: 전설의 자연) |
+| **합계** | **40** | **11,050G** | **3,160 XP** | **49 (+기본 1 = 50)** | **16** |
 
 ### 13.2 밸런스 검증 포인트
 
-- **총 XP 3,130**: 전체 필요 누적 XP 4,609의 약 68% (-> see `docs/balance/progression-curve.md` 섹션 1.3.2). 낚시 업적 4종(390 XP) + 채집 업적 5종(490 XP) 추가로 기존 2,250에서 880 XP 증가
-- **총 골드 10,950G**: 게임 2년차 추정 누적 수입 대비 소규모 보너스 (-> see `docs/balance/progression-curve.md` 섹션 3). 채집 업적 추가로 기존 8,350G에서 2,600G 증가
+- **총 XP 3,160**: 전체 필요 누적 XP 9,029의 약 35.0% (-> see `docs/balance/progression-curve.md` 섹션 2.4.1 — canonical XP 테이블). CON-017에서 `ach_hidden_07`(30 XP) 추가로 기존 3,130에서 30 XP 증가
+- **총 골드 11,050G**: 게임 2년차 추정 누적 수입 대비 소규모 보너스 (-> see `docs/balance/progression-curve.md` 섹션 3). CON-017에서 `ach_hidden_07`(100G) 추가로 기존 10,950G에서 100G 증가
 - 전 업적 완료가 2년차 이후에나 가능하므로, 실질적 밸런스 영향은 제한적
-- 낚시/채집 업적의 골드 비중이 다소 높다 (낚시 2,300G + 채집 2,600G = 4,900G / 10,950G = 44.7%). 이들은 각각 15종/27종 전종 수집이라는 극후반 도전이므로 적정 수준으로 판단
+- 낚시/채집 업적의 골드 비중이 다소 높다 (낚시 2,300G + 채집 2,600G = 4,900G / 11,050G = 44.3%). 이들은 각각 15종/27종 전종 수집이라는 극후반 도전이므로 적정 수준으로 판단
 
-[RISK] 섹션 2.4에서 추정한 총 XP(~1,690)와 본 섹션의 합산(3,130)에 약 1,440 XP 차이가 있다. 이는 섹션 2.4가 기준 테이블의 최소치로 추정한 반면, 각 업적의 확정 보상이 일부 상향되었고 낚시 업적 4종(390 XP) + 채집 업적 5종(490 XP)이 추가되었기 때문이다. 섹션 2.4의 수치를 본 섹션(13.1)의 확정 합산으로 갱신한다: **총 XP = 3,130, 전체 XP 대비 약 68%**.
+[RISK] 섹션 2.4에서 추정한 총 XP(~1,690)와 본 섹션의 합산(3,160)에 약 1,470 XP 차이가 있다. 이는 섹션 2.4가 기준 테이블의 최소치로 추정한 반면, 각 업적의 확정 보상이 일부 상향되었고 낚시 업적 4종(390 XP) + 채집 업적 5종(490 XP) + 통합 수집 마스터 1종(30 XP)이 추가되었기 때문이다. 섹션 2.4의 수치를 본 섹션(13.1)의 확정 합산으로 갱신한다: **총 XP = 3,160, 전체 XP 대비 약 35.0%** (canonical 기준 9,029 XP).
 
-[RISK] 업적 XP 비중이 68%로 당초 목표(33~43%)를 크게 초과한다. 숨겨진 업적의 XP를 30 -> 20으로 하향하거나, 일부 보통 난이도 업적의 XP를 50 -> 40으로 하향 조정하는 것을 검토해야 한다. 단, 낚시 업적(390 XP) + 채집 업적(490 XP)은 각각 Zone F/Zone D 해금(레벨 5) 이후에만 시작 가능하고 도감 완성은 극후반이므로 1년차 실질 영향은 제한적이다. 출시 전 시뮬레이션으로 최종 확정 필요.
+[NOTE] CON-013에서 canonical XP 기준이 4,609에서 9,029로 변경되었으므로 업적 XP 비중은 35.0%로 당초 목표(33~43%) 범위 내이다. 출시 전 시뮬레이션으로 최종 확정 필요.
 
 ---
 
@@ -530,6 +539,7 @@
 | `docs/systems/quest-system.md` | 퀘스트 완료 이벤트, 농장 도전과의 중복 관리 |
 | `docs/systems/fishing-system.md` | 어종 15종 목록(섹션 4.2), 낚시 숙련도(섹션 7), 업적 연계(섹션 8.1), 어종 도감(섹션 8.2) |
 | `docs/systems/fishing-architecture.md` | FishingEvents.OnFishCaught 이벤트 — ARC-030에서 enum 추가 시 참조 |
+| `docs/systems/collection-system.md` | 통합 수집 도감 시스템 (DES-018). `ach_hidden_07` 통합 수집 마스터 업적 조건 및 도감 배경 보상 참조 |
 | `docs/systems/gathering-system.md` | 채집 시스템 (채집물 27종, 채집 포인트, 숙련도, 채집 낫 등급) — 채집가 업적 조건 참조 |
 | `docs/content/gathering-items.md` | 채집 아이템 상세 (27종 아이템 속성) — 채집 도감 업적 조건 참조 |
 | `docs/systems/economy-system.md` | 골드 보상이 경제 밸런스에 미치는 영향 |
@@ -551,10 +561,11 @@
 7. **[OPEN]** `ach_fish_03`의 숙련도 XP 보너스(+25%, 50회) 메커니즘 상세 미확정. 버프 시스템 또는 낚시 숙련도 내부 처리로 구현할지 결정 필요
 8. **[OPEN]** 채집 업적의 `GatherCount`, `GatherSpeciesCollected`, `GatherSickleUpgraded` conditionType이 `AchievementConditionType` enum에 미등록 상태. ARC에서 enum 값 추가 + `GatheringEvents.OnItemGathered` 이벤트 핸들러 구현 필요 (-> see 섹션 9.5.1)
 9. **[OPEN]** `ach_gather_02` Gold 단계의 채집 숙련도 XP 보너스(+25%, 50회) 메커니즘은 `ach_fish_03`과 동일 패턴. 버프 시스템 공통화 설계 필요
+10. **[OPEN]** `ach_hidden_07`(통합 수집 마스터)의 추적 방식: 기존 숨겨진 업적은 `Custom` (99) conditionType으로 개별 핸들러를 사용하지만, `ach_hidden_07`은 다른 업적 2종(`ach_fish_04`, `ach_gather_03`)의 달성 여부를 조합하는 메타 조건이다. `OnAchievementUnlocked` 이벤트가 기존 아키텍처에 존재하는지 확인 필요 (-> see `docs/systems/achievement-architecture.md` 섹션 2.3). 존재하지 않으면 ARC 태스크로 추가해야 한다.
 
 ### [RISK] 항목
 
-1. **[RISK]** 업적 XP 총합(2,250)이 전체 필요 XP(4,609)의 약 49%로, 당초 목표 범위(33~43%)를 초과한다. XP 하향 조정 또는 레벨 테이블 상향 검토 필요 (-> see 섹션 12.2)
+1. ~~**[RISK]** 업적 XP 총합(2,250)이 전체 필요 XP(4,609)의 약 49%로, 당초 목표 범위(33~43%)를 초과한다.~~ — **RESOLVED (CON-013/CON-017)**: canonical XP 기준이 9,029로 변경되어 업적 XP 비중은 35.0%(3,160/9,029)로 목표 범위(33~43%) 내 (-> see 섹션 2.4)
 2. **[RISK]** 업적 XP + 퀘스트 XP 합산 시 레벨업 속도 과도 가속 가능성. 출시 전 수치 시뮬레이션 필수 (-> see `docs/balance/progression-curve.md`)
 3. **[RISK]** 세이브 데이터 마이그레이션: 업적 추가/수정 시 기존 세이브 파일 호환성 유지 필요 (-> see `docs/systems/achievement-architecture.md`)
 

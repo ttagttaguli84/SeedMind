@@ -171,7 +171,9 @@ namespace SeedMind.Achievement
         GatherSickleUpgraded    = 17,  // 채집 낫 업그레이드 단계 달성 (targetValue = 티어, 1=강화/2=전설)
         Custom                  = 99   // 숨겨진 업적 전용 복합 조건 (AchievementManager 내 하드코딩 핸들러)
         // Custom 조건 적용 업적: ach_hidden_01(비 오는 날 수확), ach_hidden_02(밤 시간대 활동),
-        //                        ach_hidden_03(특정 도구만 30일), ach_hidden_04(잔액 0 판매)
+        //                        ach_hidden_03(특정 도구만 30일), ach_hidden_04(잔액 0 판매),
+        //                        ach_hidden_05(거대 작물 수확), ach_hidden_06(전 인벤토리 출하),
+        //                        ach_hidden_07(통합 수집 마스터 — ach_fish_04 AND ach_gather_03 달성)
         // → see docs/systems/achievement-system.md 섹션 7.1
     }
 }
@@ -244,6 +246,9 @@ namespace SeedMind.Achievement
 │  - ProcessingEvents.OnProcessingCompleted → HandleProcessing     │
 │  - TimeManager.OnDayChanged → HandleDayChanged                   │
 │  - TimeManager.OnSeasonChanged → HandleSeasonChanged             │
+│  - AchievementEvents.OnAchievementUnlocked → HandleAchievementChain │
+│    // ach_hidden_07: ach_fish_04 AND ach_gather_03 모두 달성 시  │
+│    // Custom(99) 핸들러 내에서 두 업적 달성 여부 확인 후 자동 해금 │
 └──────────────────────────────────────────────────────────────────┘
 ```
 
