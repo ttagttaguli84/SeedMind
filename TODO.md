@@ -176,7 +176,11 @@
 | ~~FIX-084~~ | ~~2~~ | ~~gathering-economy.md 섹션 4.1~4.3 FIX-083 확정 수치 반영~~ — DONE: [OPEN] 제거, 확정 ROI 테이블, 베이커리 연료비 반영(봄 가공 -18G), 4.3.3/4.3.4/Risks 갱신 |
 | ~~BAL-017~~ | ~~2~~ | ~~채집물 가공품 ROI 밸런스 분석 신규~~ — DONE: processing-economy.md 섹션 2.8~2.13 신규 (채집물 가공 13종 ROI, 작물 가공 비교, 밸런스 이슈 3건) |
 | ~~FIX-085~~ | ~~1~~ | ~~processing-economy.md 레시피 총계 42→55종 갱신~~ — DONE: 32→55종 갱신, 분석 범위 명시(45종 직접 분석, 낚시/치즈공방 추후 추가) |
-| DES-018 | 1 | 도감 시스템 설계 (채집 도감 + 어종 도감 통합 여부 결정 — gathering-system.md 섹션 9 [OPEN], fish-catalog.md ARC-030 패턴 참조) |
+| ~~DES-018~~ | ~~1~~ | ~~도감 시스템 설계 (채집 도감 + 어종 도감 통합 여부 결정 — gathering-system.md 섹션 9 [OPEN], fish-catalog.md ARC-030 패턴 참조)~~ — DONE: 통합 도감 채택. collection-system.md(설계) + collection-architecture.md(ARC-037) 신규. 채집 도감 27종, 초회 보상/마일스톤 확정. PATTERN-005/006/010 리뷰 CRITICAL 4건 수정 완료 |
+| FIX-093 | 2 | save-load-architecture.md에 GatheringCatalogManager SaveLoadOrder=56 추가 (ARC-037 후속) |
+| FIX-094 | 2 | data-pipeline.md GameSaveData에 gatheringCatalog 필드 추가 (ARC-037 후속) |
+| FIX-095 | 2 | project-structure.md에 SeedMind.Collection 네임스페이스/폴더 추가 (ARC-037 후속) |
+| FIX-096 | 2 | fish-catalog.md UI 경로 문구 수정: "메뉴 > 어종 도감" → "메뉴 > 수집 도감 > 어종 탭" (DES-018 통합 도감 채택 후속) |
 | ~~FIX-086~~ | ~~2~~ | ~~tool-upgrade.md에 채집 낫 통합 반영 (ToolUpgradeRecipe 스키마에 levelReqType 필드 추가)~~ — DONE: LevelReqType enum(PlayerLevel/GatheringMastery/FishingMastery), UpgradeCostInfo 확장, CanUpgrade 분기 |
 | ~~FIX-087~~ | ~~1~~ | ~~npcs.md 대장간(철수) 섹션에 채집 낫 업그레이드 대화 9건 반영 (DES-017 섹션 7.3 확정 대화 → npcs.md 동기화)~~ — DONE: 섹션 4.3 업그레이드 대상 4종 갱신, 섹션 4.4 채집 낫 관련 대화 9건 추가 |
 | ~~DES-019~~ | ~~2~~ | ~~베이커리 채집물 레시피 경제 조정 설계~~ — DONE: 조정안 (b)+(a) 채택 — 봄나물 비빔밥 30→60G, 송이 구이 55→70G 상향 확정 |
