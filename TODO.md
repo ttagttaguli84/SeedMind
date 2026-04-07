@@ -88,7 +88,7 @@
 | BAL-008 | 1 | 목축/낙농 경제 밸런스 분석 (동물 구매/사료 비용 vs 젖/양모/알 판매 ROI — CON-006 + ARC-019 후속) |
 | ~~ARC-022~~ | ~~2~~ | ~~UI 시스템 MCP 태스크 시퀀스 독립 문서화 (ui-architecture.md Part II → docs/mcp/ui-tasks.md)~~ — DONE → `docs/mcp/ui-tasks.md` |
 | ~~DES-012~~ | ~~2~~ | ~~농장 확장 시스템 설계 (구역 해금, 타일 구매, 신규 땅 개간 메카닉 — ARC-023 선행 요건)~~ — DONE → `docs/systems/farm-expansion.md` (7구역 Zone A~G, 576타일, 총 16,000G 해금 비용) |
-| CON-008 | 1 | 추가 NPC 상세 설계 (마을 상인/농업 전문가 등 blacksmith 외 NPC 대화 및 서비스 내용 상세화) |
+| ~~CON-008~~ | ~~1~~ | ~~추가 NPC 상세 설계 (마을 상인/농업 전문가 등 blacksmith 외 NPC 대화 및 서비스 내용 상세화)~~ — DONE → `docs/content/merchant-npc.md`, `docs/content/carpenter-npc.md`, `docs/content/traveler-npc.md`, `docs/systems/npc-shop-architecture.md` 섹션 9~13 (Part III) |
 | ~~FIX-026~~ | ~~2~~ | ~~time-season-tasks.md 작성 예정 항목 우선순위 확인 (time-season-architecture.md Cross-references에 '작성 예정'으로 등재됨)~~ — DONE → `docs/mcp/time-season-tasks.md` (ARC-021) 신규 생성, Cross-references 업데이트 |
 | ~~ARC-020~~ | ~~2~~ | ~~대장간 NPC MCP 태스크 시퀀스 독립 문서화 (blacksmith-architecture.md Part II → docs/mcp/blacksmith-tasks.md)~~ — DONE → `docs/mcp/blacksmith-tasks.md` |
 | ~~FIX-027~~ | ~~2~~ | ~~blacksmith-architecture.md 섹션 1 NPCAffinityTracker 클래스 다이어그램에 메서드 4개 추가 (HasTriggeredDialogue, MarkDialogueTriggered, CanGiveDailyAffinity, MarkDailyVisit — ARC-020 리뷰 INFO-1 후속)~~ — DONE: 메서드 4개 추가, AffinityEntry.triggeredDialogues bool[] → string[] triggeredDialogueIds 타입 수정 |

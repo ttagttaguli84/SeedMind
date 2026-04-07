@@ -79,11 +79,15 @@ Assets/_Project/                    # (→ see docs/systems/project-structure.md
 │   │   ├── NPCController.cs    # 개별 NPC 행동 제어
 │   │   ├── DialogueSystem.cs   # 대화 흐름 관리
 │   │   ├── TravelingMerchantScheduler.cs  # 여행 상인 스케줄
+│   │   ├── NPCHintSystem.cs    # 농업 전문가 힌트 판정 (CON-008)
+│   │   ├── OperatingScheduleEvaluator.cs  # 영업 시간 판정 (CON-008)
 │   │   ├── NPCEvents.cs        # 정적 이벤트 허브
 │   │   └── Data/
 │   │       ├── NPCData.cs      # NPC 데이터 (ScriptableObject)
 │   │       ├── DialogueData.cs # 대화 데이터 (ScriptableObject)
-│   │       └── TravelingShopPoolData.cs
+│   │       ├── TravelingShopPoolData.cs
+│   │       ├── TravelingMerchantData.cs   # 여행 상인 스케줄 설정 (CON-008)
+│   │       └── NPCHintData.cs  # 농업 전문가 힌트 데이터 (CON-008)
 │   │
 │   ├── Level/                   # 진행 시스템 (→ see docs/systems/progression-architecture.md)
 │   │   ├── ProgressionManager.cs # XP/레벨/해금/마일스톤 관리
@@ -122,6 +126,7 @@ Assets/_Project/                    # (→ see docs/systems/project-structure.md
 │   ├── Recipes/                 # 가공 레시피 데이터 에셋 (→ see docs/systems/processing-architecture.md)
 │   ├── Tools/                   # 도구별 데이터 에셋
 │   ├── NPCs/                    # NPC 데이터 에셋
+│   ├── Hints/                   # 농업 전문가 힌트 데이터 에셋 (CON-008)
 │   └── Dialogues/               # 대화 데이터 에셋
 │
 ├── Prefabs/
@@ -286,7 +291,7 @@ Release Build (최적화)
 - `docs/systems/facilities-architecture.md` — 시설 시스템 기술 아키텍처: 물탱크/온실/창고/가공소 (ARC-007)
 - `docs/content/facilities.md` — 시설 콘텐츠 상세: 메카닉/업그레이드/가공 레시피 canonical (CON-002)
 - `docs/systems/tool-upgrade-architecture.md` — 도구 업그레이드 시스템 기술 아키텍처: 업그레이드 흐름/효과 계산/세이브 확장 (DES-007)
-- `docs/systems/npc-shop-architecture.md` — NPC/상점 시스템 기술 아키텍처: NPC 관리/대화/대장간 연계/여행 상인 (ARC-008)
+- `docs/systems/npc-shop-architecture.md` — NPC/상점 시스템 기술 아키텍처: NPC 관리/대화/대장간 연계/여행 상인 (ARC-008), 추가 NPC 확장(마을 상인/농업 전문가/여행 상인 스케줄/힌트 시스템/운영 시간) (CON-008)
 - `docs/systems/tutorial-architecture.md` — 튜토리얼/온보딩 시스템 기술 아키텍처: 튜토리얼 매니저/트리거/UI/상황별 힌트 (DES-006)
 - `docs/systems/save-load-architecture.md` — 세이브/로드 시스템 기술 아키텍처: SaveManager, GameSaveData 통합 루트, 자동저장 트리거, 비동기 API, 오류 처리 (ARC-011)
 - `docs/systems/save-load-system.md` — 세이브/로드 UX 설계: 자동저장 트리거, 수동 저장, 멀티슬롯 구조, 게임 종료/시작 흐름 (DES-008)

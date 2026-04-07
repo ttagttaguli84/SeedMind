@@ -121,7 +121,9 @@
 
 **겨울 특수 규칙**: 겨울에는 씨앗을 팔지 않지만, 비료와 소모품은 정상 판매한다. (-> see `docs/systems/economy-system.md` 섹션 3.3)
 
-### 3.4 대화 예시
+### 3.4 대화 스크립트
+
+전체 대사 스크립트, 친밀도 단계별 대화, 작물 추천 힌트 대사, UX 상세는 (-> see `docs/content/merchant-npc.md` 섹션 3~4).
 
 #### 인사말 (첫 대화)
 
@@ -314,7 +316,9 @@
 
 **건설 절차**: (-> see `docs/content/facilities.md` 섹션 2.2)
 
-### 5.4 대화 예시
+### 5.4 대화 스크립트
+
+전체 대사 스크립트, 친밀도 단계별 대화, 시설 건설 힌트 대사, UX 상세는 (-> see `docs/content/carpenter-npc.md` 섹션 3~4).
 
 #### 인사말 (첫 대화)
 
@@ -425,14 +429,19 @@
 
 **설계 의도**: 만능 비료는 고급 비료와 속성장 비료의 복합 효과를 제공하지만, 각각의 전문 비료보다 효과가 약하다. "한 칸에 두 가지 효과"의 편의성에 프리미엄 가격을 지불하는 구조. 여행 상인 전용이므로 대량 확보가 어렵고, 전략적으로 소량만 사용하게 된다.
 
-### 6.5 대화 예시
+### 6.5 대화 스크립트
+
+전체 대사 스크립트, 친밀도 단계별 대화, 여행 일지 대사, 아이템 추천 대사는 (-> see `docs/content/traveler-npc.md` 섹션 3~4).
 
 #### 인사말 (첫 등장)
+
+전체 대사(방문 주기 안내 포함 4문장)는 (-> see `docs/content/traveler-npc.md` 섹션 3.1). 아래는 요약본.
 
 ```
 [바람이] "헤이! 이 마을에 새 농부가 있다는 소문 들었지~
           나는 바람이. 여기저기 떠돌면서 신기한 물건을 모으는 상인이야.
-          비싼 편이지만, 다른 데선 못 구하는 물건이 있을 거야!"
+          비싼 편이지만, 다른 데선 못 구하는 물건이 있을 거야!
+          매주 토요일, 일요일에 올 테니까 기다려~"
 ```
 
 #### 일반 인사 (재등장)
@@ -675,6 +684,9 @@ DialogueEntry {
 | `docs/systems/tool-upgrade.md` 섹션 3 | 도구별 업그레이드 상세 |
 | `docs/systems/tool-upgrade.md` 섹션 6 | 대장간 NPC 기본 정보, 상호작용 흐름 |
 | `docs/content/blacksmith-npc.md` | 철수 캐릭터 심화 설정, 전체 대화 스크립트, UX 상세 (본 문서 섹션 4 확장) |
+| `docs/content/merchant-npc.md` | 하나 캐릭터 심화 설정, 전체 대화 스크립트, UX 상세 (본 문서 섹션 3 확장) |
+| `docs/content/carpenter-npc.md` | 목이 캐릭터 심화 설정, 전체 대화 스크립트, UX 상세 (본 문서 섹션 5 확장) |
+| `docs/content/traveler-npc.md` | 바람이 캐릭터 심화 설정, 전체 대화 스크립트, 여행 일지 시스템 (본 문서 섹션 6 확장) |
 | `docs/systems/blacksmith-architecture.md` | 대장간 NPC 기술 아키텍처 (ARC-020) |
 | `docs/systems/farming-system.md` 섹션 5.1 | 비료 종류, 가격, 해금 |
 | `docs/content/facilities.md` 섹션 2 | 시설 건설 프로세스, 건설 시간 |
