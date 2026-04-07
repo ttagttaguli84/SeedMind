@@ -6,117 +6,139 @@ You are the **cost monitor** for SeedMind. Your job is to read all unanalyzed co
 
 ## Step 1 — Read All Cost Reports
 
-Read every file matching `logs/reports/cost-monitor-[0-9]*.md` (날짜로 시작하는 배치 리포트만). `cost-monitor-analysis-*.md`는 이전 분석 요약본이므로 제외. If no matching files exist, print "분석할 리포트 없음" and stop.
+Read every file matching `logs/reports/cost-monitor-[0-9]*.md`. These are batch reports whose names begin with a date. Exclude any file matching `cost-monitor-analysis-*.md` — those are prior analysis summaries, not raw batch data.
 
-Each report covers one batch of sessions (10개 단위). Extract from each report:
-- 대상 기간 (date range)
-- 총 세션 수
-- 총 비용 / 세션 평균 비용
-- 최고 비용 세션
-- cache_creation 비율 (%)
-- 세션별 상세 테이블 (파일명, 비용, stop_reason)
+If no matching batch report files exist, print "분석할 리포트 없음" and stop.
+
+Each report covers one batch of sessions (typically 10 sessions). Extract from each report:
+- Date range covered
+- Total session count
+- Total cost and average cost per session
+- Highest-cost session (filename and cost)
+- cache_creation token percentage (%)
+- Per-session detail table (filename, cost, stop_reason)
 
 ## Step 2 — Aggregate & Detect Anomalies
 
-Combine all reports into a unified view, then check each threshold:
+Combine all extracted data into a unified view across all batches. Check every metric against the thresholds below:
 
 | Metric | Warning | Critical |
 |--------|---------|----------|
-| 세션 평균 비용 | > $6.00 | > $10.00 |
-| 최고 비용 세션 | > $10.00 | > $15.00 |
+| Average cost per session | > $6.00 | > $10.00 |
+| Highest-cost session | > $10.00 | > $15.00 |
 | cache_creation % | > 12% | > 18% |
-| 배치 내 Warning 초과 세션 수 | > 3/10 | > 6/10 |
+| Sessions exceeding Warning threshold within a batch | > 3 of 10 | > 6 of 10 |
 
 For each threshold exceeded, record:
-- 어느 배치(리포트)에서 발생했는가
-- 어느 세션이 트리거했는가
-- 추정 원인 (루프 과다, 대형 문서 주입, 병렬 에이전트 등)
+- Which batch (report file) triggered it
+- Which session(s) triggered it
+- Estimated cause (excessive loops, large document injection, parallel agent spawns, etc.)
 
-**충분성 판단 — JSONL 폴백 조건:**
+**Sufficiency check — JSONL fallback conditions:**
 
-리포트만으로 분석이 충분하지 않은 경우:
-- 배치가 1개뿐이라 추세 판단 불가
-- Warning/Critical 임계치 초과 세션이 있으나 리포트 상세 테이블에 원인이 불명확
-- 최고 비용 세션이 평균의 2배 이상이나 비용 외 데이터가 없음
+Proceed to Step 2.5 if any of the following are true:
+- Only one batch is available, making trend analysis impossible
+- A Warning or Critical threshold was exceeded but the report detail table does not clarify the cause
+- The highest-cost session is more than 2x the batch average but no breakdown data is available in the report
 
-이 경우 Step 2.5로 이동.
+If none of these conditions apply, skip Step 2.5 and proceed directly to Step 3.
 
-## Step 2.5 — JSONL 폴백 분석 (조건부)
+## Step 2.5 — JSONL Fallback Analysis (conditional)
 
-Step 2에서 폴백 조건에 해당하는 경우에만 실행.
+Run this step only when Step 2's sufficiency check determined fallback is needed.
 
-**분석 대상 JSONL 선택 기준:**
-- 최고 비용 세션 → 해당 배치의 `logs/backup/<YYYYMMDD_HHMMSS>/run_*.jsonl` 중 해당 파일
-- 평균 초과 세션이 여럿인 배치 → 해당 배치 폴더 전체 JSONL
+**Selecting target JSONL files:**
+- For the single highest-cost session: locate the corresponding `logs/backup/<YYYYMMDD_HHMMSS>/run_*.jsonl` file from that session's batch folder.
+- For batches with multiple above-average sessions: read all JSONL files in that batch's backup folder.
+- If a JSONL file cannot be opened or is unreadable, skip it and note the filename in the analysis report. Do not abort the entire step.
 
-**JSONL에서 추출할 정보:**
+**Run the following with the Bash tool:**
 
 ```python
-import json
+import json, sys
+from pathlib import Path
 
-# 각 세션별 per-message 통계
-for fp in target_jsonl_files:
+for path_str in sys.argv[1:]:
+    fp = Path(path_str)
+    if not fp.exists():
+        print(f"SKIP (not found): {fp}")
+        continue
     turns = []
-    with open(fp) as f:
-        for line in f:
-            d = json.loads(line)
-            if d.get('type') == 'assistant':
-                u = d.get('message', {}).get('usage', {})
-                cc = u.get('cache_creation_input_tokens', 0)
-                cr = u.get('cache_read_input_tokens', 0)
-                out = u.get('output_tokens', 0)
-                # agent spawn 감지: cc가 갑자기 큰 턴
-                turns.append({'cc': cc, 'cr': cr, 'out': out})
-    # cc 급등 턴 = agent spawn 시점
+    try:
+        with open(fp, encoding='utf-8') as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    d = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
+                if d.get('type') == 'assistant':
+                    u = d.get('message', {}).get('usage', {})
+                    turns.append({
+                        'cc': u.get('cache_creation_input_tokens', 0),
+                        'cr': u.get('cache_read_input_tokens', 0),
+                        'out': u.get('output_tokens', 0),
+                    })
+    except OSError as e:
+        print(f"SKIP (unreadable): {fp} — {e}")
+        continue
     spikes = [i for i, t in enumerate(turns) if t['cc'] > 50_000]
-    print(f"{fp.name}: {len(turns)} turns, {len(spikes)} agent spawns")
+    large_injections = [i for i, t in enumerate(turns) if t['cc'] > 200_000]
+    print(f"{fp.name}: {len(turns)} turns, {len(spikes)} agent spawns, "
+          f"{len(large_injections)} large injections (cc>200k)")
 ```
 
-Run this with the Bash tool on the target files. Extract:
-- 총 턴 수 (세션 길이)
-- Agent spawn 횟수 (cc 급등 구간 수)
-- 각 spawn 시점의 cc 크기 (주입 문서 규모 추정)
-- output 집중 구간 (긴 문서 작성 = 높은 out)
+From the output, extract:
+- Total turn count (session length)
+- Number of agent spawns (turns where cc > 50,000)
+- cc size at each spawn (used to estimate injected document size)
+- Output-heavy turns (high `out` values indicate large document generation)
 
-**판단 기준:**
-- Agent spawn 3회 이상 → Session Task Budget 초과 실행 의심
-- 단일 spawn cc > 200,000 → 대형 문서 주입 의심
-- 총 턴 > 300 → 루프 초과 실행 의심
+**Interpretation thresholds:**
+- 3 or more agent spawns → suspected Session Task Budget overrun
+- Any single spawn with cc > 200,000 → suspected large document injection
+- Total turns > 300 → suspected loop overrun
 
 ## Step 3 — Root Cause Analysis
 
-Cross-reference anomalies with current `start.md` rules:
+Read `.claude/commands/start.md` first to confirm which rules are currently active before drawing any conclusions.
+
+Cross-reference anomalies with `start.md` using the table below:
 
 | Symptom | Likely cause in start.md |
 |---------|--------------------------|
-| 평균 비용 상승 추세 | Session Task Budget 재완화 여부 확인 |
-| 특정 배치에서 cc% 급등 | Agent Context Injection 규칙 위반 |
-| 최고 비용 세션 반복 출현 | DES-* 순차 실행 미준수 (병렬 spawn) |
-| Reviewer 턴 비정상적 증가 | Checklist 범위 한정 미준수 |
+| Rising average cost trend across batches | Session Task Budget may have been relaxed |
+| cc% spike in a specific batch | Agent Context Injection rule violated |
+| Same session repeatedly appearing as highest-cost | DES-* sequential execution not enforced (parallel spawns) |
+| Reviewer turn count abnormally high | Reviewer checklist scope limit not enforced |
 
-Read `start.md` to verify which rules are currently in place before drawing conclusions.
+State which specific rule in `start.md` appears to be the failure point, or state that no correlation was found.
 
 ## Step 4 — Apply Optimizations (only if warranted)
 
-Apply changes **only when data clearly supports them**. One root cause → one fix per run.
+Apply edits **only when data clearly supports them**. Maximum one file edited per run.
 
 **Decision criteria:**
-- 2개 이상 배치에서 동일 임계치 초과 → 해당 규칙 강화
-- 단일 배치의 이상값 → 리포트에 기록만, 편집 없음
-- 모든 임계치 정상 → 리포트만 작성, 편집 없음
+- Same threshold exceeded across 2 or more batches → tighten the corresponding rule
+- Anomaly appears in only one batch → record in report only, no edits
+- All thresholds normal → write report only, no edits
 
 **Allowed edits:**
 - `start.md`: Session Task Budget, Agent Context Injection, Reviewer checklist scope
-- `CLAUDE.md`: Agent 테이블 레이블
-- `workflow.md`: Agent Collaboration 테이블, Reviewer Checklist 헤더
+- `CLAUDE.md`: Agent table labels
+- `workflow.md`: Agent Collaboration table, Reviewer Checklist header
 
-**Forbidden edits:**
-- `doc-standards.md`, `docs/`, `TODO.md`, 설계 문서 일체
-- Reviewer Checklist 14개 항목 자체 (scope 규칙만 변경 가능)
+**Forbidden edits (do not touch under any circumstances):**
+- `doc-standards.md`
+- Any file under `docs/`
+- `TODO.md`
+- The 14 Reviewer Checklist items themselves (only the scope enforcement rule around them may be changed)
 
 ## Step 5 — Write Analysis Report
 
-Write to `logs/reports/cost-monitor-analysis-<YYYYMMDD>.md`:
+Write to `logs/reports/cost-monitor-analysis-<YYYYMMDD>.md`. Use today's date for the filename. If a file with that name already exists, append a suffix (`-2`, `-3`, etc.) rather than overwriting.
 
 ```markdown
 # Cost Monitor 분석 리포트 — <date>
@@ -142,27 +164,37 @@ Write to `logs/reports/cost-monitor-analysis-<YYYYMMDD>.md`:
 
 ## Step 6 — Move Analyzed Reports to Backup
 
-After writing the analysis report, move all `cost-monitor-*.md` files (분석 대상이었던 배치 리포트들) to their corresponding backup folders:
+After writing the analysis report, move each batch report file to its corresponding backup folder:
 
-- `logs/reports/cost-monitor-YYYYMMDD_HHMMSS.md` → `logs/backup/YYYYMMDD_HHMMSS/cost-monitor-YYYYMMDD_HHMMSS.md`
-- 백업 폴더가 없으면 생성
+- Source: `logs/reports/cost-monitor-YYYYMMDD_HHMMSS.md`
+- Destination: `logs/backup/YYYYMMDD_HHMMSS/cost-monitor-YYYYMMDD_HHMMSS.md`
 
-`cost-monitor-analysis-*.md`(분석 요약본)는 `logs/reports/`에 유지.
+The `YYYYMMDD_HHMMSS` segment in the destination path must match the segment in the source filename exactly.
+
+If the destination folder does not exist, create it with `mkdir -p` before moving. If a file with the same name already exists at the destination, do not overwrite it — record a warning in the analysis report and leave the source file in place.
+
+Do not move `cost-monitor-analysis-*.md` files. Those remain in `logs/reports/`.
 
 ## Step 7 — Commit
 
-`logs/` 전체가 `.gitignore` 대상이므로 로그/리포트 파일은 커밋하지 않는다.
-편집이 발생한 경우에만 커밋:
+`.gitignore` rules for `logs/`:
+- `logs/reports/*.md` and `logs/backup/**/*.md` — **tracked** (committed)
+- `logs/backup/**/*.jsonl` and `logs/session_*.log` — ignored (not committed)
+
+Always stage and commit the analysis report. If a rule file was also edited in Step 4, include it in the same commit.
 
 ```bash
-git add .claude/commands/start.md .claude/rules/workflow.md CLAUDE.md
+# Always include the analysis report
+git add logs/reports/cost-monitor-analysis-<YYYYMMDD>.md
+
+# Add edited rule files only if Step 4 made changes
+git add .claude/commands/start.md .claude/rules/workflow.md CLAUDE.md  # only if edited
+
 git commit -m "CHORE: cost-monitor 분석 — <한 줄 요약>"
 git push
 ```
 
-편집 없음(이상 없음)인 경우: 커밋 스킵.
-
 ## Rules
 - All output in Korean. Report content in Korean (technical terms in English where natural).
-- 보수적으로 판단: 데이터가 명확하지 않으면 편집하지 않는다.
-- 한 번 실행에 최대 1개 파일 편집.
+- Be conservative: do not edit any file unless the data clearly and repeatedly supports it.
+- Maximum one file edited per run.
