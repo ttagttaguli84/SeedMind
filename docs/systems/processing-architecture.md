@@ -115,17 +115,37 @@ namespace SeedMind.Building.Data
         public string description;                        // UI 설명 텍스트
 
         [Header("가공")]
-        public ProcessingType processingType;             // 가공 유형 (Jam, Juice, Pickle)
-        public CropCategory inputCategory;                // 입력 가능 작물 카테고리
-        public string inputItemId;                        // 입력 아이템 식별자 (예: "potato")
-        public int inputQuantity;                         // 입력 수량 (기본 1)
-        public float priceMultiplier;                     // 원재료 기본가 대비 배수 (-> see docs/systems/economy-system.md 섹션 2.5)
+        public ProcessingType processingType;             // 가공 유형 (-> see docs/pipeline/data-pipeline.md 섹션 2.5)
+        public RecipeInput[] inputs;                      // 복합 재료 배열 (n>=1, FIX-083) — 단일 재료도 배열 1개 원소로 표현
+        public float priceMultiplier;                     // 원재료 기본가 대비 배수 (-> see docs/systems/economy-system.md 섹션 2.5); 0이면 priceBonus만 사용
         public int priceBonus;                            // 고정 가격 보너스 (-> see docs/systems/economy-system.md 섹션 2.5)
         public float processingTimeHours;                 // 가공 소요 시간, 게임 내 시간 (-> see docs/content/facilities.md 섹션 6.2)
         public int fuelCost;                              // 연료 비용 (0 = 불필요, -> see docs/content/processing-system.md 섹션 4)
         public int requiredFacilityTier;                  // 필요 가공소 등급 (0 = Tier 1)
-        public string outputItemId;                       // 출력 아이템 식별자 (예: "jam_potato")
+        public RecipeUnlockType unlockType;               // 해금 조건 유형 (FIX-083)
+        public int unlockValue;                           // 해금 조건 값 (레벨/숙련도 수치, FIX-083)
+        public string outputItemId;                       // 출력 아이템 식별자 (예: "item_wild_berry_jam")
         public int outputQuantity;                        // 출력 수량 (기본 1)
+    }
+
+    /// <summary>
+    /// 레시피 단일 입력 재료 (복합 재료 지원, FIX-083).
+    /// </summary>
+    [System.Serializable]
+    public struct RecipeInput
+    {
+        public string itemId;   // 아이템 ID (예: "gather_wild_berry", "potato")
+        public int quantity;     // 필요 수량
+    }
+
+    /// <summary>
+    /// 레시피 해금 조건 유형 (FIX-083).
+    /// </summary>
+    public enum RecipeUnlockType
+    {
+        FacilityBuild    = 0,  // 해당 가공소 건설 시 자동 해금
+        PlayerLevel      = 1,  // 플레이어 레벨 unlockValue 이상
+        GatheringMastery = 2,  // 채집 숙련도 unlockValue 이상 (-> see docs/systems/gathering-system.md 섹션 4)
     }
 
     /// <summary>
@@ -139,12 +159,16 @@ namespace SeedMind.Building.Data
         Mill,         // 제분 -- 제분소 전용 (-> see docs/pipeline/data-pipeline.md 섹션 2.5)
         Fermentation, // 발효 -- 발효실 전용 (-> see docs/pipeline/data-pipeline.md 섹션 2.5)
         Bake,         // 요리 -- 베이커리 전용 (-> see docs/pipeline/data-pipeline.md 섹션 2.5)
-        Cheese        // 유제품 -- 치즈 공방 전용 (-> see docs/pipeline/data-pipeline.md 섹션 2.5)
+        Cheese,       // 유제품 -- 치즈 공방 전용 (-> see docs/pipeline/data-pipeline.md 섹션 2.5)
+        Dried,        // 건조 -- 채집물 건조 가공 (FIX-083)
+        Tea,          // 차/음료 -- 채집물 차 가공 (FIX-083)
+        Pill,         // 환/약제 -- 채집물 약제 가공 (FIX-083)
+        Food,         // 일반 음식 -- 채집물 묵 등 단순 음식 가공 (FIX-083)
     }
 }
 ```
 
-#### PATTERN-005 필드 동기화 검증
+#### PATTERN-005 필드 동기화 검증 (FIX-083 확장 후)
 
 | JSON 키 | C# 필드 | 소속 |
 |---------|---------|------|
@@ -153,18 +177,20 @@ namespace SeedMind.Building.Data
 | icon | GameDataSO.icon | 부모 클래스 |
 | description | description | ProcessingRecipeData |
 | processingType | processingType | ProcessingRecipeData |
-| inputCategory | inputCategory | ProcessingRecipeData |
-| inputItemId | inputItemId | ProcessingRecipeData |
-| inputQuantity | inputQuantity | ProcessingRecipeData |
+| inputs | inputs (RecipeInput[]) | ProcessingRecipeData |
 | priceMultiplier | priceMultiplier | ProcessingRecipeData |
 | priceBonus | priceBonus | ProcessingRecipeData |
 | processingTimeHours | processingTimeHours | ProcessingRecipeData |
 | fuelCost | fuelCost | ProcessingRecipeData |
 | requiredFacilityTier | requiredFacilityTier | ProcessingRecipeData |
+| unlockType | unlockType (RecipeUnlockType) | ProcessingRecipeData |
+| unlockValue | unlockValue | ProcessingRecipeData |
 | outputItemId | outputItemId | ProcessingRecipeData |
 | outputQuantity | outputQuantity | ProcessingRecipeData |
 
-총 15 필드: JSON 15개 = C# 15개 (부모 3 + 자체 12). 일치 확인 완료.
+총 15 필드: JSON 15개 = C# 15개 (부모 3 + 자체 12). **FIX-083으로 `inputCategory`/`inputItemId`/`inputQuantity` 3개 제거, `inputs[]`/`unlockType`/`unlockValue` 3개 추가 — 총 수 동일, 구조 변경.**
+
+> **[FIX-083 스키마 변경]** 기존 `inputCategory`(CropCategory) + `inputItemId`(string) + `inputQuantity`(int) 3개 필드를 `inputs: RecipeInput[]` 1개 배열로 교체. 복합 재료(봄나물 비빔밥 등 2종 재료)를 지원하기 위한 확장. 채집물 레시피는 `CropCategory`에 속하지 않으므로 `inputCategory` 제거. 단일 재료 기존 레시피는 `inputs[0]`만 사용.
 
 > **참고**: 본 문서는 `facilities-architecture.md` 섹션 7.1의 ProcessingRecipeData에 `inputItemId`, `inputQuantity`, `fuelCost`, `requiredFacilityTier`, `outputQuantity`, `description` 필드를 추가 확장한다. facilities-architecture.md 원본에서는 `inputCategory`로 카테고리 필터만 수행했으나, 실제 레시피는 특정 작물 ID를 지정하므로 `inputItemId`가 필요하다. 두 문서 간 필드 차이는 [OPEN] 항목으로 관리한다.
 
@@ -832,7 +858,7 @@ ProcessingSystem은 별도 GameObject가 아니라 BuildingManager 내부의 Pla
 
 에셋 배치 경로: `Assets/_Project/Data/Recipes/`
 
-(-> see `docs/content/processing-system.md` 섹션 3.5 for 전체 레시피 32종 canonical — 에셋명 패턴: `SO_Recipe_<Type>_<Crop>.asset`, dataId 패턴: `recipe_<type>_<crop>`)
+(-> see `docs/content/processing-system.md` 섹션 3.8 for 전체 레시피 55종 canonical — 에셋명 패턴: `SO_Recipe_<Type>_<ID>.asset`, dataId 패턴: `recipe_<type>_<id>`)
 
 총 32개 레시피 에셋 (가공소 18종 + 제분소 4종 + 발효실 5종 + 베이커리 5종).
 
@@ -894,7 +920,10 @@ Phase E: 통합 테스트
 - `docs/systems/save-load-architecture.md` -- GameSaveData.processing[], SaveLoadOrder 할당표
 - `docs/pipeline/data-pipeline.md` 섹션 2.5 -- ProcessingRecipeData canonical 필드 정의
 - `docs/pipeline/data-pipeline.md` Part II 섹션 2.6 -- ProcessingSaveData canonical 정의
-- `docs/content/processing-system.md` -- 레시피 32종 canonical, 연료 시스템, 특화 가공소 3종 (CON-005)
+- `docs/content/processing-system.md` -- 레시피 55종 canonical, 연료 시스템, 특화 가공소 3종 (CON-005), 채집물 레시피 13종 (FIX-083)
+- `docs/systems/gathering-system.md` 섹션 4 -- 채집 숙련도 레벨 정의 (GatheringMastery 해금 조건 기준)
+- `docs/content/gathering-items.md` 섹션 9 -- 채집 아이템별 가공 연계 방향
+- `docs/balance/gathering-economy.md` 섹션 4 -- 채집물 가공 ROI 분석
 - `docs/content/facilities.md` 섹션 6 -- 가공소(일반) 업그레이드, 슬롯 확장 설계
 - `docs/systems/project-structure.md` -- 네임스페이스, 폴더 구조, 의존성 규칙
 
