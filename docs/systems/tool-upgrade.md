@@ -346,6 +346,7 @@ Reinforced 업그레이드 기준 (총 비용 1,100G = 골드 800G + 재료 300G
 | `docs/content/npcs.md` (CON-003) | 대장간 NPC 상세 (철수, 대화, 영업시간) |
 | `docs/systems/gathering-system.md` 섹션 4, 5.2~5.6 | 채집 숙련도 테이블, 채집 낫 등급/해금 조건 (FIX-086) |
 | `docs/systems/tool-upgrade-architecture.md` 섹션 3.4, 3.6 | LevelReqType enum, UpgradeCostInfo.levelReqType 필드 (FIX-086) |
+| `docs/content/processing-system.md` 섹션 3.7.4 | 철 광석 → 철 조각 제련 레시피 (`recipe_smelt_iron`) (DES-020) |
 
 ---
 
