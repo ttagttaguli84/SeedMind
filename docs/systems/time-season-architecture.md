@@ -499,6 +499,7 @@ public class TimeManager : MonoBehaviour
 | **30** | FestivalManager | 축제 시작/종료 체크 | 날짜 확정 후 판정 |
 | **40** | EconomyManager | 계절/축제 가격 변동 반영 | 축제 정보 필요 |
 | **50** | SaveManager | 자동 저장 | 모든 시스템 처리 완료 후 |
+| **55** | FishingManager | 만료된 얼음 구멍 제거(`RemoveExpiredHoles()`), FishingPoint 일일 카운트 리셋 (FIX-071) | 자동 저장 이후, UI 갱신 이전 |
 | **90** | HUDController | UI 갱신 (날짜, 계절, 날씨 표시) | 최종 상태 반영 |
 
 ### 4.4 OnSeasonChanged 구독자 실행 순서
@@ -509,6 +510,7 @@ public class TimeManager : MonoBehaviour
 | **10** | GrowthSystem | 계절 부적합 작물 고사 처리 (-> crop-growth-architecture.md 4.4) |
 | **20** | WeatherSystem | 새 계절의 WeatherData로 교체 |
 | **30** | EconomyManager | 계절별 가격 테이블 교체 |
+| **55** | FishingManager | 얼음 구멍 전체 제거(겨울 종료 시), 결빙 VFX 적용(겨울 시작 시) (FIX-071) |
 | **90** | HUDController | 계절 UI 갱신 |
 
 ### 4.5 레이스 컨디션 방지 전략
@@ -933,6 +935,7 @@ Assets/_Project/
 - `docs/balance/weather.md` (계절별 날씨 확률 밸런스, 작성 예정)
 - `docs/mcp/tutorial-tasks.md` (Step 07: `TimeManager.OnSleepCompleted` 구독 — FIX-025)
 - `docs/mcp/save-load-tasks.md` (T-6: `TimeManager.OnDayChanged`/`OnSeasonChanged` 자동저장 트리거 — ARC-012)
+- `docs/systems/fishing-architecture.md` (섹션 8A.4: FishingManager의 OnSeasonChanged 구독, priority 55 — FIX-071)
 
 ---
 
