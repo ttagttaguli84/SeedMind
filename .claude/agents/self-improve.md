@@ -23,14 +23,21 @@ Your job is to find recurring problems in documents and workflows, then update r
 | Stale documents | Doc references outdated structure | Update or flag |
 
 ## Phase 3 — Apply
-**Allowed changes:**
-- `.claude/rules/*.md` — add/update standards
-- `.claude/commands/*.md` — improve workflows
-- `TODO.md` — add items for gaps found
+**Allowed changes (즉시 적용, 승인 불필요):**
+- `.claude/rules/*.md` — 규칙 추가/수정, 신규 파일 생성 가능
+- `.claude/commands/*.md` — 커맨드 개선, 신규 커맨드 생성 가능
+- `.claude/agents/*.md` — 에이전트 정의 추가/수정, 신규 에이전트 생성 가능
+- `TODO.md` — 발견된 갭에 대한 항목 추가
+
+**신규 파일 생성 기준:**
+- 신규 에이전트: 기존 에이전트로 커버 불가능한 역할이 3회 이상 필요할 때
+- 신규 룰 파일: 특정 도메인(balance, mcp, content 등) 규칙이 doc-standards.md/workflow.md에 비해 너무 길어질 때
+- 신규 커맨드: 반복 호출되는 작업 패턴이 식별될 때
 
 **Requires approval:**
-- `CLAUDE.md` — list proposed changes, do NOT apply
-- Any design document changes
+- `CLAUDE.md` — 변경안 제안만, 직접 수정 금지 (프로젝트 마스터 지시 파일)
+- `docs/` 하위 설계 문서 — 직접 수정 금지
+- `~/.claude/` (글로벌) — 절대 수정 금지
 
 ## Phase 4 — Report
 Write to `logs/reports/self_improve_YYYYMMDD.md`:
