@@ -157,19 +157,19 @@ namespace SeedMind.Farm
     // 장애물 종류 및 도구 요건 → see docs/systems/farm-expansion.md 섹션 3.1
     public enum ObstacleType
     {
-        Weed,           // debris_weed    — 낫 Basic+, HP 1
-        SmallRock,      // debris_small_rock  — 곡괭이*, HP 2/1/1
-        LargeRock,      // debris_large_rock  — 곡괭이 Reinforced+, HP -/5/2
-        Stump,          // debris_stump   — 도끼*, HP 3/2/1
-        SmallTree,      // debris_small_tree  — 도끼*, HP 2/1/1
-        LargeTree,      // debris_large_tree  — 도끼 Reinforced+, HP -/6/3
-        Bush            // debris_bush    — 낫 Basic+, HP 2/1/1
+        Weed,           // debris_weed    — 낫(Sickle) Basic+, HP 1/1/1 (→ see DES-012 섹션 3.1)
+        SmallRock,      // debris_small_rock  — 호미(Hoe) Basic+, HP 2/1/1 (→ see DES-012 섹션 3.1)
+        LargeRock,      // debris_large_rock  — 호미(Hoe) Reinforced+, HP -/5/2 (→ see DES-012 섹션 3.1)
+        Stump,          // debris_stump   — 호미(Hoe) Basic+, HP 3/2/1 (→ see DES-012 섹션 3.1)
+        SmallTree,      // debris_small_tree  — 호미(Hoe) Basic+, HP 2/1/1 (→ see DES-012 섹션 3.1)
+        LargeTree,      // debris_large_tree  — 호미(Hoe) Reinforced+, HP -/6/3 (→ see DES-012 섹션 3.1)
+        Bush            // debris_bush    — 낫(Sickle) Basic+, HP 2/1/1 (→ see DES-012 섹션 3.1)
     }
-    // *곡괭이(Pickaxe)/도끼(Axe): ToolType 미확장 상태. 현재는 호미 등급별 대체. → see [RISK] 섹션 2.3
+    // FIX-068 확정: 접근법 A — ToolType 확장 없음. Sickle(Weed/Bush), Hoe(나머지 장애물)로 처리.
 }
 ```
 
-[RISK] 도끼(Axe)와 곡괭이(Pickaxe)가 ToolType enum에 없다. 현재 ToolType은 Hoe, WateringCan, SeedBag, Sickle, Hand만 정의되어 있다(farming-architecture.md 섹션 4.3). 개간 전용 도구 추가 여부를 결정해야 한다. 현재 설계에서는 호미(Hoe)의 등급별 개간 능력으로 대체하되, ToolType 확장은 [OPEN]으로 남긴다.
+[RESOLVED] FIX-068: ToolType 확장 없음으로 확정. Sickle로 식물 장애물(Weed/Bush), Hoe로 지형 장애물(Rock/Stump/Tree) 처리. farming-architecture.md ToolType enum 변경 불필요.
 
 ---
 
@@ -339,13 +339,13 @@ namespace SeedMind.Farm
 
 | 장애물 (ObstacleType) | 필요 도구 | 최소 도구 등급 | HP | 드랍 |
 |----------------------|-----------|---------------|-----|------|
-| Weed (잡초) | Hoe / Hand | Basic | (→ see DES-012 섹션 3.1) | 없음 또는 섬유 |
-| Bush (덤불) | Hoe / Hand | Basic | (→ see DES-012 섹션 3.1) | 없음 또는 섬유 |
+| Weed (잡초) | Sickle | Basic | (→ see DES-012 섹션 3.1) | 없음 또는 섬유 |
+| Bush (덤불) | Sickle | Basic | (→ see DES-012 섹션 3.1) | 없음 또는 섬유 |
 | SmallRock (소형 돌) | Hoe | Basic | (→ see DES-012 섹션 3.1) | 돌 조각 |
 | LargeRock (대형 바위) | Hoe | Reinforced | (→ see DES-012 섹션 3.1) | 돌 조각 다수 |
 | Stump (그루터기) | Hoe | Basic | (→ see DES-012 섹션 3.1) | 목재 |
 | SmallTree (소형 나무) | Hoe | Basic | (→ see DES-012 섹션 3.1) | 목재 |
-| LargeTree (대형 나무) | -- | -- | -- | 제거 불가 (향후 도끼 도입 시 변경) → see [RISK] 섹션 2.3 |
+| LargeTree (대형 나무) | Hoe | Reinforced | (→ see DES-012 섹션 3.1) | 목재 다수 |
 
 (HP, 드랍 아이템의 구체적 수치 → see docs/systems/farm-expansion.md 섹션 3.1, DES-012)
 
@@ -407,7 +407,7 @@ private bool CanToolClear(ObstacleType obstacle, ToolType tool, int toolTier)
     {
         case ObstacleType.Weed:
         case ObstacleType.Bush:
-            return tool == ToolType.Hoe || tool == ToolType.Hand; // Basic+
+            return tool == ToolType.Sickle; // FIX-068: Sickle Basic+
         case ObstacleType.SmallRock:
             return tool == ToolType.Hoe && toolTier >= 1; // Basic+
         case ObstacleType.LargeRock:
@@ -416,7 +416,7 @@ private bool CanToolClear(ObstacleType obstacle, ToolType tool, int toolTier)
         case ObstacleType.SmallTree:
             return tool == ToolType.Hoe && toolTier >= 1; // Basic+
         case ObstacleType.LargeTree:
-            return false; // 현재 제거 불가 (향후 도끼 도입 시 변경) → see [RISK] 섹션 2.3
+            return tool == ToolType.Hoe && toolTier >= 2; // FIX-068: Reinforced+로 제거 가능
         default:
             return false;
     }
@@ -877,20 +877,20 @@ Step E-3: GameSaveData에 farmZones 필드 추가
 ## Open Questions
 
 1. [OPEN] ZoneType의 Orchard/Pasture/Greenhouse/Pond는 Phase 1에서 미구현. 콘텐츠 확장 시점 미정 (섹션 2.2)
-2. [OPEN] Tree/Boulder 장애물의 처리 방식 -- 영구 사용 불가 vs 자동 제거 vs 향후 도구 도입 (섹션 5.2)
-3. [OPEN] 도끼(Axe)/곡괭이(Pickaxe) ToolType 추가 여부. 현재는 호미 등급별 개간으로 대체 (섹션 2.3)
-4. [OPEN] 구역 확장 방향/레이아웃은 DES-012(게임 디자인)에서 확정 필요. 현재 East/South로 가정 (Phase A Step A-3)
+2. [RESOLVED] FIX-068: LargeTree/LargeRock는 Hoe Reinforced+로 제거 가능. 섹션 5.2 테이블 및 CanToolClear() 업데이트 완료.
+3. [RESOLVED] FIX-068: 도끼/곡괭이 ToolType 추가 없음 확정. Sickle(식물 장애물), Hoe(지형 장애물) 분리 처리.
+4. [RESOLVED] DES-012(farm-expansion.md 섹션 1.2~1.3)에서 Zone A~G 전체 레이아웃 확정 완료.
 5. [OPEN] 초기 구역(zone_home)에도 장애물을 배치할지 여부. 배치 시 튜토리얼에서 개간을 학습시킬 수 있으나, 게임 시작이 느려질 수 있음 (→ see docs/systems/farm-expansion.md 섹션 1.4: Zone A 장애물 소형 돌 x3, 잡초 x5)
 
 ---
 
 ## Risks
 
-1. [RISK] **ToolType enum 미확장**: 도끼/곡괭이 없이 호미로 모든 장애물을 처리하면 게임플레이가 단조로워질 수 있다. ToolType 확장 시 farming-architecture.md의 ToolType enum과 모든 switch 문 업데이트 필요 (섹션 2.3)
+1. [RESOLVED] **FIX-068**: ToolType 확장 없음 확정. Sickle/Hoe 분리로 도구별 역할 유지. farming-architecture.md 변경 불필요.
 2. [RISK] **FarmGrid 16x16 사전 할당**: 비활성 타일 192개(256-64)의 메모리 부담은 미미하나, 각 타일에 부착된 MonoBehaviour가 많으면 초기 로드 시간 증가 가능. 프로파일링 필요 (섹션 3)
 3. [RISK] **asmdef 순환 참조**: FarmZoneManager → EconomyManager/ProgressionManager 직접 참조 시 발생. 인터페이스 분리 또는 Singleton 런타임 접근으로 회피하되, 코드 리뷰에서 감시 필요 (섹션 10.1)
 4. [RISK] **static event 구독 누수**: ZoneEvents도 FarmEvents와 동일한 위험. 씬 전환 시 이벤트 초기화 루틴에 ZoneEvents 포함 필요 (→ see farming-architecture.md 섹션 6.3)
-5. [RISK] **DES-012 미완성**: 이 아키텍처 문서는 DES-012(농장 확장 게임 디자인)와 병렬 작성 중이다. DES-012의 수치/레이아웃 확정 후 본 문서의 ZoneData SO 인스턴스와 MCP 태스크를 업데이트해야 한다
+5. [RESOLVED] **DES-012 완성**: DES-012(farm-expansion.md) 완성 완료. 본 문서의 ZoneData SO 인스턴스 수치는 DES-012 섹션 2.1 참조.
 
 ---
 

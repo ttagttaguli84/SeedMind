@@ -216,18 +216,14 @@ Zone A (시작)
 | 장애물 | 영문 ID | 점유 타일 | 제거 도구 | 제거 횟수 (Basic) | 제거 횟수 (Reinforced) | 제거 횟수 (Legendary) |
 |--------|---------|----------|----------|------------------|---------------------|---------------------|
 | 잡초 | `debris_weed` | 1x1 | 낫 | 1회 | 1회 | 1회 |
-| 소형 돌 | `debris_small_rock` | 1x1 | 곡괭이* | 2회 | 1회 | 1회 |
-| 대형 바위 | `debris_large_rock` | 2x2 | 곡괭이* | - (제거 불가) | 5회 | 2회 |
-| 나무 그루터기 | `debris_stump` | 1x1 | 도끼* | 3회 | 2회 | 1회 |
-| 소형 나무 | `debris_small_tree` | 1x1 | 도끼* | 2회 | 1회 | 1회 |
-| 대형 나무 | `debris_large_tree` | 2x2 | 도끼* | - (제거 불가) | 6회 | 3회 |
+| 소형 돌 | `debris_small_rock` | 1x1 | 호미(Hoe) | 2회 | 1회 | 1회 |
+| 대형 바위 | `debris_large_rock` | 2x2 | 호미(Hoe) | - (제거 불가) | 5회 | 2회 |
+| 나무 그루터기 | `debris_stump` | 1x1 | 호미(Hoe) | 3회 | 2회 | 1회 |
+| 소형 나무 | `debris_small_tree` | 1x1 | 호미(Hoe) | 2회 | 1회 | 1회 |
+| 대형 나무 | `debris_large_tree` | 2x2 | 호미(Hoe) | - (제거 불가) | 6회 | 3회 |
 | 덤불 | `debris_bush` | 1x1 | 낫 | 2회 | 1회 | 1회 |
 
-*곡괭이(Pickaxe)와 도끼(Axe)는 현재 farming-system.md의 도구 목록에 포함되어 있지 않다.
-
-[OPEN] 곡괭이와 도끼가 기존 도구 시스템에 없다. 두 가지 접근법 중 하나를 선택해야 한다: (A) 호미로 모든 장애물을 제거할 수 있게 단순화하되 제거 횟수를 늘리거나, (B) 곡괭이/도끼를 새 도구로 추가한다. 도구 추가 시 tool-upgrade.md 업데이트 필요.
-
-[RISK] 접근법 (B)를 채택할 경우 도구 슬롯(현재 5개)이 부족해진다. UI 도구바 재설계가 필요할 수 있다.
+[RESOLVED] FIX-068 확정: 접근법 A 채택 — ToolType 확장 없음. 잡초/덤불은 낫(Sickle), 나머지 장애물(돌/바위/그루터기/나무)은 호미(Hoe) 등급별 처리. Hoe Reinforced+(tier 2+)로 대형 바위/대형 나무 제거 가능.
 
 ### 3.2 구역별 장애물 분포
 
@@ -250,12 +246,9 @@ Zone A (시작)
 | 도구 | 에너지/회 | 참조 |
 |------|----------|------|
 | 낫 | 1 | (-> see `docs/systems/farming-system.md` 섹션 3.1) |
-| 곡괭이 (Basic) | 3 | 본 문서 canonical |
-| 곡괭이 (Reinforced) | 2 | 본 문서 canonical |
-| 곡괭이 (Legendary) | 1 | 본 문서 canonical |
-| 도끼 (Basic) | 3 | 본 문서 canonical |
-| 도끼 (Reinforced) | 2 | 본 문서 canonical |
-| 도끼 (Legendary) | 1 | 본 문서 canonical |
+| 호미 (Basic) | 3 | 본 문서 canonical (FIX-068) |
+| 호미 (Reinforced) | 2 | 본 문서 canonical (FIX-068) |
+| 호미 (Legendary) | 1 | 본 문서 canonical (FIX-068) |
 
 ### 3.4 개간 보상
 
@@ -449,12 +442,9 @@ Zone A (시작)
 | `wetlandEvaporationHour` | 12 | Zone F 습지 타일 물 증발 시각 (12:00) |
 | `fruitTreeMaturityDays` | 28 | 과일나무 기본 성숙 기간 (1계절) |
 | `fruitTreeSpacing` | 3 | 과일나무 간격 (3x3) |
-| `pickaxeEnergy_basic` | 3 | 곡괭이 (Basic) 에너지 소모 |
-| `pickaxeEnergy_reinforced` | 2 | 곡괭이 (Reinforced) 에너지 소모 |
-| `pickaxeEnergy_legendary` | 1 | 곡괭이 (Legendary) 에너지 소모 |
-| `axeEnergy_basic` | 3 | 도끼 (Basic) 에너지 소모 |
-| `axeEnergy_reinforced` | 2 | 도끼 (Reinforced) 에너지 소모 |
-| `axeEnergy_legendary` | 1 | 도끼 (Legendary) 에너지 소모 |
+| `hoeEnergy_basic` | 3 | 호미 (Basic) 개간 에너지 소모 (FIX-068) |
+| `hoeEnergy_reinforced` | 2 | 호미 (Reinforced) 개간 에너지 소모 (FIX-068) |
+| `hoeEnergy_legendary` | 1 | 호미 (Legendary) 개간 에너지 소모 (FIX-068) |
 
 ---
 
@@ -483,7 +473,7 @@ Zone A (시작)
 ## Open Questions
 
 1. [OPEN] farming-system.md 섹션 1의 4x8 블록 확장 방식과 본 문서의 구역(Zone) 기반 확장 방식이 충돌한다. farming-system.md와 economy-system.md 섹션 3.3을 본 문서에 맞춰 업데이트해야 한다. progression-curve.md의 "농장 확장 4단계" 기술도 6단계(Zone B~G)로 변경 필요.
-2. [OPEN] 곡괭이(Pickaxe)와 도끼(Axe)를 새 도구로 추가할지, 기존 호미로 모든 장애물을 제거하게 할지 결정 필요. 도구 추가 시 tool-upgrade.md, farming-system.md 동시 업데이트 필요.
+2. [RESOLVED] FIX-068: 접근법 A 확정 — 곡괭이/도끼 미추가. 낫(Sickle)으로 식물 장애물(잡초/덤불), 호미(Hoe)로 지형 장애물(돌/바위/그루터기/나무) 처리.
 3. [OPEN] MVP에서 개간 보상(목재/돌)을 건설 재료로 사용할지, 판매 전용 아이템으로만 둘지 결정 필요.
 4. [OPEN] 동물 사육 시스템(CON-006)이 미설계 상태. Zone E의 상세 메카닉은 CON-006 완료 후 확정.
 5. [RESOLVED] 낚시 시스템 설계 완료 (DES-013 -> `docs/systems/fishing-system.md`).

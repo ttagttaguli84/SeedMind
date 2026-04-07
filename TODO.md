@@ -118,7 +118,7 @@
 | ~~BAL-011~~ | ~~1~~ | ~~목축 XP canonical 등록 (livestock-system.md 섹션 7.3 제안값을 progression-curve.md에 공식 포함 — devlog 048 INFO-1 후속)~~ — DONE → progression-curve.md 섹션 1.2.6 신규 추가 |
 | ~~BAL-008~~ | ~~1~~ | ~~목축/낙농 경제 밸런스 분석 (동물 구매/사료 비용 vs 젖/양모/알 판매 ROI — CON-006 + ARC-019 후속)~~ — DONE → `docs/balance/livestock-economy.md` (410줄, 동물별 ROI/가공 체인/초기 투자 분석) |
 | ~~ARC-025~~ | ~~1~~ | ~~농장 확장(Zone) 시스템 MCP 태스크 시퀀스 문서화 (FarmZoneManager, ZoneData SO 구현 시퀀스 — ARC-023 후속)~~ — DONE → `docs/mcp/farm-expansion-tasks.md` (9개 태스크 그룹, ~99회 MCP 호출) |
-| FIX-056 | 3 | farm-expansion-architecture.md 섹션 5.2 도구-장애물 매핑 표에서 SmallRock/LargeRock 간 등급 기준(Basic vs Reinforced)을 farm-expansion.md 섹션 3.1과 동기화 확인 후 canonical 등록 (DES-012 섹션 3.1이 아직 미완성 — HP 수치 확정 필요) |
+| ~~FIX-056~~ | ~~3~~ | ~~farm-expansion-architecture.md 섹션 5.2 도구-장애물 매핑 표에서 SmallRock/LargeRock 간 등급 기준(Basic vs Reinforced)을 farm-expansion.md 섹션 3.1과 동기화 확인 후 canonical 등록~~ — DONE: HP 수치 canonical 확인(DES-012 섹션 3.1), 아키텍처 참조 동기화, FIX-068과 통합 처리 |
 | ~~DES-013~~ | ~~1~~ | ~~낚시 시스템 설계 (Zone F 연못 구역 활용 — 낚시 메카닉, 어종 목록, 계절별 분포)~~ — DONE → `docs/systems/fishing-system.md` |
 | CON-009 | 2 | 치즈 공방 레시피 정의 (processing-system.md에 치즈 공방 레시피 4~6종 확정 추가 — BAL-008 GAP-1 후속, CON-006 완료로 선행 조건 해소됨) |
 | ~~FIX-044~~ | ~~1~~ | ~~economy-architecture.md에 동물 생산물 수급 변동 적용 정책 명시 (작물과 동일 풀 vs 별도 카테고리 결정 — BAL-008 GAP-3 후속)~~ — DONE → SupplyCategory enum(Crop/AnimalProduct/Fish/ProcessedGoods), 카테고리별 수급 파라미터, 섹션 3.11 정책 문서 추가 |
@@ -141,7 +141,7 @@
 | ~~FIX-067~~ | ~~3~~ | ~~tool-upgrade.md 섹션 6.1 대장간 영업시간 09:00~18:00 → 10:00~16:00 수정 (economy-system.md 섹션 3.2가 canonical — npcs.md [OPEN] 6 후속)~~ — DONE: tool-upgrade.md는 이미 canonical 참조로 교체됨 확인; npcs.md [OPEN]-6 및 [RISK]-5 RESOLVED 처리 |
 | DES-014 | 2 | 겨울 온실 전용 씨앗 판매 경로 확정 (여행 상인 독점 vs 잡화 상점 겨울 판매 — npcs.md [OPEN] 1 후속, crops.md 섹션 3.9~3.11 반영) |
 | ~~ARC-028~~ | ~~2~~ | ~~낚시 시스템 MCP 태스크 시퀀스 문서화 (fishing-architecture.md Part II → docs/mcp/fishing-tasks.md — ARC-026 후속)~~ — DONE → `docs/mcp/fishing-tasks.md` (7개 태스크 그룹, ~278회 MCP 호출) |
-| FIX-068 | 2 | farm-expansion-architecture.md [RISK] 해소: ToolType enum에 Axe/Pickaxe 추가 여부 확정 (Hoe 등급별 개간 능력으로 대체 유지 vs 전용 도구 추가 — farming-architecture.md 섹션 4.3 동기화 포함) |
+| ~~FIX-068~~ | ~~2~~ | ~~farm-expansion-architecture.md [RISK] 해소: ToolType enum에 Axe/Pickaxe 추가 여부 확정~~ — DONE: 접근법 A 확정. Sickle(식물)/Hoe(지형) 분리, ToolType 미확장. farm-expansion.md + architecture 전수 업데이트 |
 | ~~FIX-065~~ | ~~2~~ | ~~sound-design.md 섹션 3.5에 SFX 풀 총 크기(poolSize=16) canonical 수치 추가 (AUD-001 리뷰어 WARNING-002 후속)~~ — DONE: 섹션 3.5 풀 크기 테이블 추가 (poolSize=16, 산출 근거 포함), sound-architecture.md 섹션 3.2 참조 `섹션 3.5`로 구체화 |
 | ~~FIX-066~~ | ~~2~~ | ~~sound-design.md 섹션 1에 TitleScreen/GameOver BGM 트랙 추가 또는 sound-architecture.md BGMTrack에서 해당 값 제거 결정 (AUD-001 리뷰어 INFO-001 후속)~~ — DONE: sound-design.md 섹션 1.3에 bgm_title_screen/bgm_game_over 추가; 섹션 1.4 우선순위 스택 6단계로 확장(TitleScreen/GameOver 최우선); sound-architecture.md BGMTrack 주석 참조 추가 |
 | ~~ARC-027~~ | ~~2~~ | ~~사운드 시스템 MCP 태스크 시퀀스 독립 문서화 (sound-architecture.md Part II → docs/mcp/sound-tasks.md 상세 분리)~~ — DONE → `docs/mcp/sound-tasks.md` (6단계 태스크 그룹, ~148회 MCP 호출) |
