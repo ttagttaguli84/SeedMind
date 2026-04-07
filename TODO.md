@@ -190,6 +190,6 @@
 | ~~ARC-035~~ | ~~1~~ | ~~achievement-tasks.md에 A-031~A-035 업적 5종 MCP 태스크 추가 (CON-013 후속)~~ — DONE: T-7 섹션 신규(SO 에셋 5종, 이벤트 연결, ~80회 MCP 호출), AchievementCategory Angler/Gatherer 추가, SubscribeAll 12이벤트 |
 | CON-016 | 1 | gathering-system.md 강화 채집 낫 ROI 과다 이슈 해소 (섹션 9.1 [OPEN]: ~468일 ROI → 비용 500~700G 하향 또는 Gold 품질 확률 20~25% 상향 결정) |
 | ~~ARC-036~~ | ~~1~~ | ~~gathering-tasks.md에 GatheringPointData/GatheringItemData/GatheringConfig SO 생성 태스크 추가 (ARC-033 data-pipeline 반영 후속)~~ — DONE: G-C 섹션 상세화(~136→~220회 MCP 호출), SO 에셋 60개, 전체 필드 canonical 참조 |
-| FIX-091 | 2 | economy-architecture.md SupplyCategory enum에 Forage=4 추가 + HarvestOrigin enum에 Wild 추가 (gathering-system.md 섹션 9 OPEN#6 — 채집물 경제 시스템 통합) |
+| ~~FIX-091~~ | ~~2~~ | ~~economy-architecture.md SupplyCategory enum에 Forage=4 추가 + HarvestOrigin enum에 Wild 추가 (gathering-system.md 섹션 9 OPEN#6 — 채집물 경제 시스템 통합)~~ — DONE: FIX-076에서 이미 추가 완료됨 확인. gathering-system.md 섹션 6.3 [OPEN] 및 섹션 9 OPEN#6 완료 처리 |
 | ~~DES-020~~ | ~~1~~ | ~~철 광석 도구 업그레이드 대체 재료 여부 결정 (gathering-system.md 섹션 9 OPEN#4 — 채집 철 광석을 철 조각 대체/원료로 쓸지 결정, 밸런스 영향 평가)~~ — DONE: 방안 A(가공소 제련) 채택. 철 광석 x3 -> 철 조각 x1 레시피(`recipe_smelt_iron`) 추가. processing-system.md 56종, gathering-system/gathering-items/tool-upgrade 동기화 완료 |
 | ~~FIX-092~~ | ~~2~~ | ~~DES-020 리뷰 WARNING 후속 — processing-system.md 섹션 3.7.4 철 광석 판매가 인라인 참조 주석 추가, gathering-items.md 섹션 10.2 테이블 셀 canonical 참조 추가, tool-upgrade.md/processing-system.md Cross-references 상호 추가~~ — DONE: 인라인 수치 3개 canonical 참조 추가, 테이블 셀 3개 참조 추가, Cross-references 상호 등록 완료 |

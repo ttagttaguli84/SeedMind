@@ -524,9 +524,9 @@ Zone D 15개 포인트 순회:
 
 ### 6.3 수급 변동
 
-채집물은 `SupplyCategory.Fish`(낚시 생산물과 동일한 보조 수입 카테고리)를 임시 활용하되, 별도 `Forage` 카테고리 추가가 권장된다.
+채집물은 `SupplyCategory.Forage = 4` 독립 카테고리를 사용한다 (→ see `docs/systems/economy-architecture.md` 섹션 3.11).
 
-[OPEN] `economy-architecture.md`의 `SupplyCategory` enum (섹션 3.11)에는 현재 `Crop`, `AnimalProduct`, `Fish`, `ProcessedGoods` 4개 값만 존재한다. 채집물 전용 `Forage = 4` 값을 추가하여 독립 수급 파라미터를 적용해야 한다 (FIX-076 범위에 포함 권고).
+~~[OPEN] `economy-architecture.md`의 `SupplyCategory` enum (섹션 3.11)에는 현재 `Crop`, `AnimalProduct`, `Fish`, `ProcessedGoods` 4개 값만 존재한다. 채집물 전용 `Forage = 4` 값을 추가하여 독립 수급 파라미터를 적용해야 한다.~~ **[FIX-076 완료]** `SupplyCategory.Forage = 4` 추가 및 독립 수급 파라미터 설정 완료 (→ see `docs/systems/economy-architecture.md` 섹션 3.11).
 
 임시 파라미터 (Fish 카테고리 공유 시):
 
@@ -653,7 +653,7 @@ fishing-system.md의 [OPEN] 항목(광석 획득 경로)을 해소하기 위해,
 3. [OPEN] **채집 도감 UI**: 채집 아이템 27종의 도감을 별도 탭으로 구현할지, 기존 어종 도감과 통합 "도감" 시스템으로 관리할지 결정 필요. 통합 도감이 UX 관점에서 유리하나, 아키텍처 영향 범위 평가 필요.
 4. ~~[OPEN] **철 광석의 도구 업그레이드 대체 재료 여부**~~ — **[DES-020 완료]** 철 광석 x3을 가공소(일반)에서 제련하여 철 조각 x1을 생산하는 레시피(`recipe_smelt_iron`) 추가 확정. 상점 구매(100G/개)와 제련(철 광석 3개 직판가 36G 포기 + 가공 2시간)의 트레이드오프 설계. 상세: (-> see `docs/content/processing-system.md` 섹션 3.7.4).
 5. [OPEN] **겨울 채집 포인트 수**: 현재 겨울에 숲 바닥 2개소만 활성화하도록 설계. 겨울 채집이 너무 빈약할 경우 동굴 입구 외에 추가 포인트 필요성 검토.
-6. [OPEN] **economy-architecture.md의 `HarvestOrigin.Wild` 추가**: 채집물이 경제 시스템에 통합되려면 아키텍처에 Wild origin 값이 필요하다 (기존 [OPEN] 항목과 연결).
+6. ~~[OPEN] **economy-architecture.md의 `HarvestOrigin.Wild` 추가**~~ — **[FIX-076 완료]** `HarvestOrigin.Gathering = 4`로 구현됨 (Wild 대신 Gathering 명칭 사용). 채집물 판매 시 Gathering origin으로 경제 시스템과 통합 완료 (→ see `docs/systems/economy-architecture.md` 섹션 3.10.2).
 7. [OPEN] **업적 시스템 연계**: 채집 관련 업적(첫 채집, 도감 완성, 숙련도 달성 등)을 achievements.md에 추가해야 한다.
 8. [OPEN] **퀘스트 시스템 연계**: 채집물 납품 퀘스트(예: "능이버섯 3개 모아오기")를 quest-system.md에 추가해야 한다.
 9. [OPEN] **강화 낫 ROI 과다** (DES-017): 강화 채집 낫의 ROI가 ~468일로 과도하게 길다. 비용 하향(500~700G) 또는 Gold 품질 확률 상향(20~25%)으로 ROI 100~150일 수준 조정 검토 필요 (-> see 섹션 5.4.3).
