@@ -23,7 +23,7 @@ author: Claude Code (Opus 4.6)
 - 낚싯대 등급 및 획득 조건
 - 낚시 숙련도 시스템
 - 낚시 관련 업적/퀘스트 유형
-- 생선 가공 레시피 (본 문서에서 정의, processing-system.md 연계 예정)
+- ~~생선 가공 레시피~~ -> canonical 이전 완료 (-> see `docs/content/processing-system.md` 섹션 3.5)
 
 **본 문서가 canonical이 아닌 데이터 (참조만)**:
 
@@ -73,7 +73,7 @@ author: Claude Code (Opus 4.6)
 | 강 | `water_river` | 향후 확장 예정 | - | [OPEN] 마을 맵 확장 시 추가 |
 | 바다 | `water_ocean` | 향후 확장 예정 | - | [OPEN] 해안 맵 확장 시 추가 |
 
-**Zone F 연못 상세**: 96타일 중 30타일이 물 타일(개간/경작 불가). 물 타일 가장자리에 인접한 육지 타일에서 물을 향해 낚싯대를 사용할 수 있다. 유효 낚시 포인트는 약 20개소.
+**Zone F 연못 상세**: 96타일 중 30타일이 물 타일(개간/경작 불가). 물 타일 가장자리에 인접한 육지 타일에서 물을 향해 낚싯대를 사용할 수 있다. 유효 낚시 포인트는 약 20개소 (물리적으로 낚싯대를 던질 수 있는 육지 타일 수. 아키텍처 상 이 20개소는 3개의 FishingPoint MonoBehaviour 오브젝트가 구역별로 관할한다 — -> see `docs/systems/fishing-architecture.md` 섹션 4, 8.1).
 
 ### 2.2 낚시 프로세스 플로우
 
@@ -344,21 +344,9 @@ Giant 변이가 가능한 어종: 잉어, 산천어, 황금 잉어, 무지개송
 
 ### 6.2 가공 연계
 
-생선은 가공소(-> see `docs/content/processing-system.md`)에서 가공 가능하다.
+생선은 가공소 및 베이커리에서 가공 가능하다. 생선 가공 레시피 5종(구운 생선, 훈제 생선, 생선 초밥, 생선 스튜, 생선 파이)의 상세 사양(재료, 판매가 공식, 가공 시간, 해금 조건)은 (-> see `docs/content/processing-system.md` 섹션 3.5).
 
-> **[OPEN] PATTERN-008 이전 예정**: 아래 레시피 목록은 processing-system.md에 생선 가공 섹션이 추가될 때까지 본 문서에서 **잠정 canonical**로 관리한다. processing-system.md에 생선 가공 레시피가 추가되면 이 섹션의 테이블을 제거하고 `(-> see docs/content/processing-system.md 섹션 X.X)` 참조로 교체해야 한다. TODO FIX-054 권고.
-
-생선 전용 가공 레시피 (잠정 canonical — 이전 전까지만 유효):
-
-| 가공품 | 영문 ID | 원재료 | 가공 시설 | 가공 시간 | 판매가 공식 | 비고 |
-|--------|---------|--------|----------|----------|-----------|------|
-| 구운 생선 | `grilled_fish` | 생선 x1 (Common/Uncommon) | 가공소 | 2시간 | 원재료 판매가 x1.8 + 20G | 가장 기본적인 생선 가공 |
-| 훈제 생선 | `smoked_fish` | 생선 x1 (아무 등급) + 목재 x2 | 가공소 | 4시간 | 원재료 판매가 x2.2 + 40G | 목재 소모, 높은 수익 |
-| 생선 초밥 | `fish_sushi` | 생선 x1 (Uncommon+) + 쌀 x1 | 베이커리 | 3시간 | 원재료 판매가 x2.5 + 60G | 베이커리 해금 필요 (레벨 9) |
-| 생선 스튜 | `fish_stew` | 생선 x2 + 감자 x1 | 가공소 | 5시간 | 고정 180G | 복수 재료 조합 |
-| 생선 파이 | `fish_pie` | 생선 x1 + 밀가루 x2 | 베이커리 | 6시간 | 고정 250G | 고급 가공품 |
-
-[OPEN] 쌀(Rice)과 밀가루(Flour)는 현재 작물 목록에 없다. 향후 콘텐츠 확장 시 곡물 작물 추가 필요. 또는 상점 구매 전용 재료로 처리 가능 (예: 잡화 상점에서 쌀 30G, 밀가루 25G).
+생선 가공의 경제 밸런스(ROI, 시간당 부가가치)는 (-> see `docs/balance/fishing-economy.md` 섹션 4).
 
 ### 6.3 요리 재료 활용
 
@@ -545,13 +533,7 @@ Giant 변이가 가능한 어종: 잉어, 산천어, 황금 잉어, 무지개송
 
 ### 9.2 생선 가공 수익 분석
 
-| 가공품 | 원재료 (Common 평균 25G) | 가공 시간 | 판매가 | 순이익 | 시간 효율 |
-|--------|----------------------|----------|--------|--------|----------|
-| 구운 생선 | 붕어 (20G) | 2시간 | 20x1.8+20 = 56G | +36G | 18G/게임시간 |
-| 훈제 생선 | 잉어 (30G) + 목재x2 | 4시간 | 30x2.2+40 = 106G | +76G (목재 비용 무시) | 19G/게임시간 |
-| 생선 초밥 | 송어 (50G) + 쌀 | 3시간 | 50x2.5+60 = 185G | +135G (쌀 30G 가정 시 +105G) | 35G/게임시간 |
-
-**관찰**: 생선 가공은 작물 가공(잼 기준 ~28G/게임시간, -> see `docs/balance/processing-economy.md`)과 유사한 수준이다. 생선 초밥은 높은 수익을 내지만 베이커리(레벨 9 해금)와 쌀이라는 추가 요건이 있어, 후반부 보상으로서 적절하다.
+생선 가공 레시피 상세는 (-> see `docs/content/processing-system.md` 섹션 3.5). 생선 가공 ROI 정밀 분석(어종별 부가가치, 시간당 효율, 작물 가공 대비 비교)은 (-> see `docs/balance/fishing-economy.md` 섹션 4).
 
 ---
 
@@ -608,6 +590,7 @@ Giant 변이가 가능한 어종: 잉어, 산천어, 황금 잉어, 무지개송
 | `docs/systems/tool-upgrade.md` | 도구 업그레이드 3단계 구조 참조 |
 | `docs/content/processing-system.md` | 가공소 해금, 기존 레시피 구조 |
 | `docs/balance/crop-economy.md` | 작물 수익 비교 기준 |
+| `docs/balance/fishing-economy.md` | 낚시 경제 밸런스 분석 (basePrice 확정, ROI, 가공 체인, 수급 영향) |
 | `docs/balance/progression-curve.md` | 레벨/해금 테이블 |
 | `docs/balance/xp-integration.md` | XP 배분 구조 (낚시 독립 숙련도 근거) |
 | `docs/systems/achievement-system.md` | 업적 시스템 구조 (낚시 업적 8종 추가) |
