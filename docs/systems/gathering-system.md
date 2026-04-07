@@ -455,17 +455,10 @@ tool-upgrade.md 섹션 2.1의 `ToolUpgradeRecipe` 구조:
 |------|------|:----------:|------|
 | `goldCost` | int | O | 200G / 1,000G / 3,000G |
 | `materials[]` | MaterialRequirement[] | O | 구리 광석 x3 / 금 광석 x2 + 수정 원석 x1 |
-| `levelReq` | int | **변경 필요** | 기존: 플레이어 레벨. 채집 낫: 채집 숙련도 레벨 |
+| `levelReq` | int | O | 채집 숙련도 레벨 (-> see 섹션 5.2, FIX-086 방안 A 채택) |
 | `craftDays` | int | O | 1일 / 2일 |
 
-[OPEN] `levelReq` 필드는 현재 플레이어 메인 레벨을 참조하도록 설계되어 있다. 채집 낫은 채집 숙련도 레벨을 참조해야 하므로, 다음 두 가지 방안 중 하나를 선택해야 한다:
-
-| 방안 | 설명 | 장점 | 단점 |
-|------|------|------|------|
-| **A: levelReqType 필드 추가** | `enum LevelReqType { PlayerLevel, GatheringMastery, FishingMastery }` 필드를 ToolUpgradeRecipe에 추가 | 확장성 높음, 향후 낚싯대 등 다른 숙련도 도구에도 적용 가능 | 기존 스키마 변경 필요 |
-| **B: 분기 처리** | 도구 ID에 `gather_` 접두사가 있으면 채집 숙련도 참조로 하드코딩 | 스키마 변경 없음 | 확장성 낮음, 하드코딩 |
-
-**권장**: 방안 A. 낚싯대 업그레이드도 향후 낚시 숙련도 조건을 사용할 가능성이 있으므로 범용적 설계가 바람직하다.
+**[FIX-086 해결됨 — 2026-04-07]** 방안 A 채택: `LevelReqType` enum(`PlayerLevel=0`, `GatheringMastery=1`, `FishingMastery=2`)과 `levelReqType` 필드를 `UpgradeCostInfo`에 추가. 기존 농업 도구는 기본값 `PlayerLevel`을 유지하며 하위 호환성 보장. 채집 낫은 `GatheringMastery`로 설정. (-> see `docs/systems/tool-upgrade-architecture.md` 섹션 3.6)
 
 #### 5.6.3 기본 채집 낫의 특수 케이스
 
@@ -554,8 +547,8 @@ Zone D 15개 포인트 순회:
 | 동충하초 x2 (80G) | 동충하초 환 | `recipe_gather09` | 가공소 | 140G | 1.75x |
 | 머루 x5 (45G) | 머루 와인 | `recipe_gather10` | 발효실 | 90G | 2.00x |
 | 산삼 x1 (80G) | 산삼주 | `recipe_gather11` | 발효실 | 280G | 3.50x |
-| 달래x2+봄나물x1 (18G) | 봄나물 비빔밥 | `recipe_gather12` | 베이커리 | 30G | 1.67x |
-| 송이버섯 x1 (32G) | 송이 구이 | `recipe_gather13` | 베이커리 | 55G | 1.72x |
+| 달래x2+봄나물x1 (18G) | 봄나물 비빔밥 | `recipe_gather12` | 베이커리 | 60G | 3.33x |
+| 송이버섯 x1 (32G) | 송이 구이 | `recipe_gather13` | 베이커리 | 70G | 2.19x |
 
 ---
 
@@ -657,7 +650,7 @@ fishing-system.md의 [OPEN] 항목(광석 획득 경로)을 해소하기 위해,
 8. [OPEN] **퀘스트 시스템 연계**: 채집물 납품 퀘스트(예: "능이버섯 3개 모아오기")를 quest-system.md에 추가해야 한다.
 9. [OPEN] **강화 낫 ROI 과다** (DES-017): 강화 채집 낫의 ROI가 ~468일로 과도하게 길다. 비용 하향(500~700G) 또는 Gold 품질 확률 상향(20~25%)으로 ROI 100~150일 수준 조정 검토 필요 (-> see 섹션 5.4.3).
 10. [OPEN] **수정 원석 여행 상인 판매** (DES-017): 수정 원석이 전설 채집 낫 전용 재료인데, 여행 상인 풀에 미포함. npcs.md 섹션 6.3에 추가 검토 필요 (-> see 섹션 5.5.2).
-11. [OPEN] **ToolUpgradeRecipe.levelReqType 필드 추가** (DES-017): 채집 낫은 채집 숙련도를 해금 조건으로 사용하므로, tool-upgrade.md의 ToolUpgradeRecipe 스키마에 `levelReqType` enum 필드 추가가 필요하다. 낚싯대 업그레이드에도 적용 가능 (-> see 섹션 5.6.2).
+11. [RESOLVED: FIX-086] **ToolUpgradeRecipe.levelReqType 필드 추가** (DES-017): `LevelReqType` enum(`PlayerLevel`, `GatheringMastery`, `FishingMastery`) 및 `UpgradeCostInfo.levelReqType` 필드를 `tool-upgrade-architecture.md` 섹션 3.4, 3.6에 추가 완료. `ToolUpgradeFailReason.MasteryTooLow` 추가, `CanUpgrade()` 분기 반영. `tool-upgrade.md` 섹션 2.4에 채집 낫 GatheringMastery 기반 해금 조건 기술 완료.
 
 ---
 

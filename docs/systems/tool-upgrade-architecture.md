@@ -134,6 +134,7 @@
 │  + upgradeMaterials: UpgradeMaterial[]                            │
 │  + upgradeGoldCost: int      // → see docs/systems/tool-upgrade.md│
 │  + upgradeTimeDays: int      // → see docs/systems/tool-upgrade.md│
+│  + levelReqType: LevelReqType // 해금 조건 타입 (FIX-086) → see 섹션 3.6│
 │  + specialEffect: ToolSpecialEffect // [Flags] enum, Unity Inspector에서 멀티셀렉트 체크박스로 표시 → see docs/systems/tool-upgrade.md│
 │                                                                  │
 │  [IInventoryItem 구현]                                            │
@@ -221,7 +222,8 @@ namespace SeedMind.Player
         InsufficientMaterials,  // 재료 부족
         AlreadyUpgrading,       // 해당 도구가 이미 업그레이드 중
         ToolNotOwned,           // 해당 도구를 소유하지 않음
-        LevelTooLow             // 플레이어 레벨 부족
+        LevelTooLow,            // 플레이어 레벨 부족 (PlayerLevel)
+        MasteryTooLow           // 숙련도 레벨 부족 (GatheringMastery 등, FIX-086)
     }
 }
 ```
@@ -237,7 +239,9 @@ namespace SeedMind.Player
         public int goldCost;                // → see docs/systems/tool-upgrade.md
         public UpgradeMaterial[] materials;  // → see docs/systems/tool-upgrade.md
         public int timeDays;                // → see docs/systems/tool-upgrade.md
-        public int requiredLevel;           // → see docs/systems/tool-upgrade.md
+        public LevelReqType levelReqType;   // 해금 조건 타입 (기본값 PlayerLevel, FIX-086)
+                                            // → see docs/systems/tool-upgrade-architecture.md 섹션 3.6
+        public int requiredLevel;           // 해금 조건 값 → see docs/systems/tool-upgrade.md
     }
 }
 ```
@@ -271,6 +275,27 @@ namespace SeedMind.Player
 `ToolSpecialEffect.DoubleHarvest | ToolSpecialEffect.QualityBoost | ToolSpecialEffect.SeedRecovery`
 → 비트값: `0b111000` (= 56)
 → `HasFlag(ToolSpecialEffect.DoubleHarvest)` → true
+
+### 3.6 LevelReqType enum (FIX-086)
+
+```csharp
+// illustrative
+namespace SeedMind.Player
+{
+    /// <summary>
+    /// 업그레이드 해금 조건의 레벨 타입.
+    /// 도구에 따라 플레이어 메인 레벨 또는 특정 숙련도 레벨을 참조한다.
+    /// </summary>
+    public enum LevelReqType
+    {
+        PlayerLevel      = 0,  // 기본: 플레이어 메인 레벨 (→ see docs/balance/progression-curve.md)
+        GatheringMastery = 1,  // 채집 숙련도 (→ see docs/systems/gathering-system.md 섹션 4)
+        FishingMastery   = 2,  // 낚시 숙련도 (→ see docs/systems/fishing-system.md) — 예약, 미사용
+    }
+}
+```
+
+**설계 근거**: 채집 낫은 채집 숙련도 레벨을 해금 조건으로 사용한다 (→ see `docs/systems/gathering-system.md` 섹션 5.6.2). 기존 농업 도구(호미/물뿌리개/낫)는 `PlayerLevel`을 사용하므로 기본값 0으로 하위 호환성을 유지한다. `FishingMastery`는 향후 낚싯대 숙련도 기반 해금 시 사용할 수 있도록 예약한다.
 
 ---
 
@@ -384,7 +409,16 @@ ToolUpgradeSystem.CanUpgrade(currentTool) 호출
     │
     ├── currentTool.nextTier == null? → AlreadyMaxTier
     ├── _pendingUpgrades에 해당 toolType 존재? → AlreadyUpgrading
-    ├── 플레이어 레벨 < requiredLevel? → LevelTooLow
+    ├── 레벨 검증 (FIX-086: levelReqType 분기)
+    │       switch (cost.levelReqType)
+    │           case PlayerLevel:
+    │               플레이어 레벨 < requiredLevel? → LevelTooLow
+    │           case GatheringMastery:
+    │               GatheringManager.GetProficiencyLevel() < requiredLevel? → MasteryTooLow
+    │               (→ see docs/systems/gathering-architecture.md)
+    │           case FishingMastery:
+    │               FishingManager.GetMasteryLevel() < requiredLevel? → MasteryTooLow
+    │               (→ see docs/systems/fishing-architecture.md) — 예약
     ├── 골드 < upgradeGoldCost? → InsufficientGold
     ├── 재료 부족? → InsufficientMaterials
     └── 모두 통과 → canUpgrade = true, cost 정보 반환
@@ -668,6 +702,7 @@ namespace SeedMind.Player
 | `Scripts/Player/Data/PendingUpgrade.cs` | PendingUpgrade | SeedMind.Player |
 | `Scripts/Player/Data/ToolUpgradeInfo.cs` | ToolUpgradeInfo, UpgradeCheckResult, ToolUpgradeFailReason, UpgradeCostInfo | SeedMind.Player |
 | `Scripts/Player/Data/ToolSpecialEffect.cs` | ToolSpecialEffect | SeedMind.Player |
+| `Scripts/Player/Data/LevelReqType.cs` | LevelReqType | SeedMind.Player |
 | `Scripts/Player/Data/ToolUpgradeSaveData.cs` | ToolUpgradeSaveData, PendingUpgradeSaveEntry | SeedMind.Player |
 | `Scripts/UI/BlacksmithPanelUI.cs` | BlacksmithPanelUI | SeedMind.UI |
 | `Scripts/UI/ToolUpgradeSlotUI.cs` | ToolUpgradeSlotUI | SeedMind.UI |
@@ -704,12 +739,16 @@ Step A-1: Scripts/Player/Data/ToolSpecialEffect.cs 작성
           → namespace SeedMind.Player
           → enum ToolSpecialEffect 정의
 
+Step A-1.5: Scripts/Player/Data/LevelReqType.cs 작성 (FIX-086)
+          → namespace SeedMind.Player
+          → enum LevelReqType { PlayerLevel=0, GatheringMastery=1, FishingMastery=2 }
+
 Step A-2: Scripts/Player/Data/ToolUpgradeInfo.cs 작성
           → namespace SeedMind.Player
           → ToolUpgradeInfo struct
           → UpgradeCheckResult struct
-          → ToolUpgradeFailReason enum
-          → UpgradeCostInfo struct
+          → ToolUpgradeFailReason enum (MasteryTooLow 포함, FIX-086)
+          → UpgradeCostInfo struct (levelReqType 필드 포함, FIX-086)
 
 Step A-3: Scripts/Player/Data/PendingUpgrade.cs 작성
           → namespace SeedMind.Player
@@ -772,9 +811,14 @@ Step B-1: Assets/_Project/Data/Tools/ 폴더에 ToolData SO 에셋 생성
           B-1-08: create_asset → SO_Tool_Sickle_Reinforced  (tier=2)
           B-1-09: create_asset → SO_Tool_Sickle_Legendary   (tier=3)
 
+          채집 낫 체인 (FIX-086, levelReqType=GatheringMastery):
+          B-1-10: create_asset → SO_Tool_GatheringSickle_Basic       (tier=1, levelReqType=PlayerLevel)
+          B-1-11: create_asset → SO_Tool_GatheringSickle_Reinforced  (tier=2, levelReqType=GatheringMastery)
+          B-1-12: create_asset → SO_Tool_GatheringSickle_Legendary   (tier=3, levelReqType=GatheringMastery)
+
           단일 등급 도구:
-          B-1-10: create_asset → SO_Tool_SeedBag  (tier=1, nextTier=null)
-          B-1-11: create_asset → SO_Tool_Hand     (tier=1, nextTier=null)
+          B-1-13: create_asset → SO_Tool_SeedBag  (tier=1, nextTier=null)
+          B-1-14: create_asset → SO_Tool_Hand     (tier=1, nextTier=null)
 
 Step B-2: nextTier 참조 체인 연결
           B-2-01: set_property → SO_Tool_Hoe_Basic.nextTier = SO_Tool_Hoe_Reinforced
@@ -783,7 +827,9 @@ Step B-2: nextTier 참조 체인 연결
           B-2-04: set_property → SO_Tool_WateringCan_Reinforced.nextTier = SO_Tool_WateringCan_Legendary
           B-2-05: set_property → SO_Tool_Sickle_Basic.nextTier = SO_Tool_Sickle_Reinforced
           B-2-06: set_property → SO_Tool_Sickle_Reinforced.nextTier = SO_Tool_Sickle_Legendary
-          (각 체인 2개씩, 총 6개)
+          B-2-07: set_property → SO_Tool_GatheringSickle_Basic.nextTier = SO_Tool_GatheringSickle_Reinforced (FIX-086)
+          B-2-08: set_property → SO_Tool_GatheringSickle_Reinforced.nextTier = SO_Tool_GatheringSickle_Legendary (FIX-086)
+          (각 체인 2개씩, 총 8개)
 
           [RISK] MCP의 SO 간 참조 설정 지원 여부 사전 검증 필요.
           대안: nextTier 대신 nextTierId(string)를 사용하고 런타임에 DataRegistry로 조회.
@@ -865,6 +911,7 @@ Step E-5: 세이브/로드 테스트
 - [OPEN] 씨앗봉투(SeedBag)의 업그레이드 가능 여부. "한 번에 여러 타일에 심기" 확장 가능성 있음 (-> see data-pipeline.md 섹션 2.3).
 - [OPEN] ToolEffectResolver의 GetTilePattern() 반환 패턴이 방향 의존적인지. 플레이어 facing 방향에 따라 패턴을 회전시킬지.
 - [RESOLVED: FIX-007] `ToolSpecialEffect` enum에 `[System.Flags]` 적용 및 `SeedRecovery = 1 << 5` 신규 추가. `ToolData.specialEffect` 필드 타입 `string` → `ToolSpecialEffect`로 변경. 전설 낫은 `DoubleHarvest | QualityBoost | SeedRecovery` 조합 사용. (→ see 섹션 3.5)
+- [RESOLVED: FIX-086] `UpgradeCostInfo`에 `levelReqType` 필드 추가. `LevelReqType` enum 신규 정의 (PlayerLevel, GatheringMastery, FishingMastery). `ToolUpgradeFailReason`에 `MasteryTooLow` 추가. `CanUpgrade()` 흐름에 levelReqType 분기 반영. ToolData SO에 `levelReqType` 필드 추가. 채집 낫 SO 에셋 및 nextTier 체인 MCP 태스크 반영. (→ see 섹션 3.4, 3.6, 5.1)
 
 ## Risks
 
@@ -884,6 +931,8 @@ Step E-5: 세이브/로드 테스트
 - `docs/systems/project-structure.md` 2절 (네임스페이스), 3절 (의존성 규칙), 4절 (asmdef)
 - `docs/pipeline/data-pipeline.md` 섹션 2.3 (ToolData 확장 필드), 섹션 2.2 (PlayerSaveData)
 - `docs/systems/tool-upgrade.md` (디자인 canonical -- 디자이너 작성 예정, 모든 수치의 단일 출처)
+- `docs/systems/gathering-system.md` 섹션 4 (채집 숙련도 테이블), 섹션 5 (채집 낫 등급/해금 조건) — FIX-086 연동
+- `docs/systems/gathering-architecture.md` (GatheringManager.GetProficiencyLevel() 참조) — FIX-086 연동
 - `docs/systems/progression-architecture.md` (업그레이드 완료 시 XP 부여 연동)
 - `docs/mcp/farming-tasks.md` (기존 ToolSystem MCP 태스크 -- Phase C-2)
 - `docs/systems/blacksmith-architecture.md` (ARC-020 — 대장간 NPC, ToolUpgradeUI, 친밀도 시스템 연동)

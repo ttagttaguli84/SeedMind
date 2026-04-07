@@ -78,6 +78,31 @@
 
 **도구 부재 기간의 설계 의도**: 업그레이드 타이밍을 전략적으로 고르게 만든다. 비 오는 날(물뿌리개 불필요)에 물뿌리개를 맡기거나, 수확 직후(낫 불필요 기간)에 낫을 맡기는 등 플레이어의 계획 능력을 보상한다.
 
+### 2.4 채집 낫 업그레이드 조건 (GatheringMastery 기반) (FIX-086)
+
+채집 낫은 기존 농업 도구(호미/물뿌리개/낫)와 달리 **채집 숙련도(GatheringMastery)** 를 해금 조건으로 사용한다. 플레이어 메인 레벨이 아닌 채집 숙련도 레벨을 요구하므로, 업그레이드 스키마에 `levelReqType` 필드가 추가되었다 (→ see `docs/systems/tool-upgrade-architecture.md` 섹션 3.6).
+
+**해금 조건 타입 비교**:
+
+| 도구 종류 | levelReqType | requiredLevel 의미 | 비고 |
+|-----------|-------------|-------------------|------|
+| 호미, 물뿌리개, 낫 (농업) | `PlayerLevel` (기본값) | 플레이어 메인 레벨 | 섹션 2.1 참조 |
+| 채집 낫 | `GatheringMastery` | 채집 숙련도 레벨 | → see `docs/systems/gathering-system.md` 섹션 4, 5.2 |
+
+**채집 낫 등급별 해금 조건 요약**:
+
+채집 낫의 등급, 비용, 재료, 해금 조건 상세는 `docs/systems/gathering-system.md` 섹션 5.2가 canonical이다. 여기서는 해금 조건 타입의 차이만 명시한다.
+
+| 업그레이드 | levelReqType | requiredLevel | 비고 |
+|-----------|-------------|:-------------:|------|
+| 없음 -> Basic | (구매, 업그레이드 아님) | Zone D 해금 | → see `docs/systems/gathering-system.md` 섹션 5.2 |
+| Basic -> Reinforced | `GatheringMastery` | (→ see `docs/systems/gathering-system.md` 섹션 5.2) | 채집 숙련도 기반 |
+| Reinforced -> Legendary | `GatheringMastery` | (→ see `docs/systems/gathering-system.md` 섹션 5.2) | 채집 숙련도 기반 |
+
+**UI 표시 차이**: 대장간 업그레이드 메뉴에서 채집 낫의 해금 조건은 "플레이어 레벨 N" 대신 "채집 숙련도 Lv.N"으로 표시해야 한다. `levelReqType`에 따라 UI 텍스트를 분기한다 (→ see `docs/systems/tool-upgrade-architecture.md` 섹션 5.1).
+
+**도구 부재 기간 차이**: 채집 낫 업그레이드 중에도 맨손 채집이 가능하므로, 농업 도구에 비해 도구 부재 페널티가 완화된다 (→ see `docs/systems/gathering-system.md` 섹션 5.3).
+
 ---
 
 ## 3. 도구별 업그레이드 상세
@@ -317,6 +342,8 @@ Reinforced 업그레이드 기준 (총 비용 1,100G = 골드 800G + 재료 300G
 | `docs/balance/progression-curve.md` 섹션 1.2.4 | 도구 업그레이드 XP 보상 |
 | `docs/balance/progression-curve.md` 섹션 1.3.2 | 레벨 테이블 (레벨 3, 레벨 7 해금) |
 | `docs/content/npcs.md` (CON-003) | 대장간 NPC 상세 (철수, 대화, 영업시간) |
+| `docs/systems/gathering-system.md` 섹션 4, 5.2~5.6 | 채집 숙련도 테이블, 채집 낫 등급/해금 조건 (FIX-086) |
+| `docs/systems/tool-upgrade-architecture.md` 섹션 3.4, 3.6 | LevelReqType enum, UpgradeCostInfo.levelReqType 필드 (FIX-086) |
 
 ---
 

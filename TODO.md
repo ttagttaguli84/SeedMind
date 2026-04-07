@@ -177,8 +177,8 @@
 | ~~BAL-017~~ | ~~2~~ | ~~채집물 가공품 ROI 밸런스 분석 신규~~ — DONE: processing-economy.md 섹션 2.8~2.13 신규 (채집물 가공 13종 ROI, 작물 가공 비교, 밸런스 이슈 3건) |
 | ~~FIX-085~~ | ~~1~~ | ~~processing-economy.md 레시피 총계 42→55종 갱신~~ — DONE: 32→55종 갱신, 분석 범위 명시(45종 직접 분석, 낚시/치즈공방 추후 추가) |
 | DES-018 | 1 | 도감 시스템 설계 (채집 도감 + 어종 도감 통합 여부 결정 — gathering-system.md 섹션 9 [OPEN], fish-catalog.md ARC-030 패턴 참조) |
-| FIX-086 | 2 | tool-upgrade.md에 채집 낫 통합 반영 (ToolUpgradeRecipe 스키마에 levelReqType 필드 추가, 채집 숙련도 기반 해금 조건 지원 — DES-017 섹션 5.6.2 [OPEN] 후속) |
+| ~~FIX-086~~ | ~~2~~ | ~~tool-upgrade.md에 채집 낫 통합 반영 (ToolUpgradeRecipe 스키마에 levelReqType 필드 추가)~~ — DONE: LevelReqType enum(PlayerLevel/GatheringMastery/FishingMastery), UpgradeCostInfo 확장, CanUpgrade 분기 |
 | FIX-087 | 1 | npcs.md 대장간(철수) 섹션에 채집 낫 업그레이드 대화 9건 반영 (DES-017 섹션 7.3 확정 대화 → npcs.md 동기화) |
-| DES-019 | 2 | 베이커리 채집물 레시피 경제 조정 설계 (봄나물 비빔밥/송이 구이 연료비 손해 해소 방안 결정 — processing-economy.md 섹션 2.11 [RISK] 3가지 조정안 중 채택) |
+| ~~DES-019~~ | ~~2~~ | ~~베이커리 채집물 레시피 경제 조정 설계~~ — DONE: 조정안 (b)+(a) 채택 — 봄나물 비빔밥 30→60G, 송이 구이 55→70G 상향 확정 |
 | BAL-018 | 1 | 낚시 가공 + 치즈공방 가공 ROI 분석 (processing-economy.md 섹션 2.14~2.15 신규 추가 — FIX-085에서 "추후 추가 예정"으로 명시) |
 | CON-014 | 1 | npcs.md 여행 상인 아이템 풀에 수정 원석 추가 (DES-017 섹션 5.5.2 [OPEN] — 전설 낫 재료 대안 공급 경로 확보) |
