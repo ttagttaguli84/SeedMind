@@ -7,13 +7,13 @@
 
 ## 1. Context
 
-이 문서는 SeedMind의 전체 업적 30종에 대한 콘텐츠 상세 정보를 기술한다. 각 업적의 고유 ID, 이름, 조건 타입, 목표 수치, 보상(골드/XP/칭호/아이템)을 확정 테이블로 정리하며, 칭호 36종의 canonical 목록과 보상 기준 테이블을 포함한다.
+이 문서는 SeedMind의 전체 업적 34종에 대한 콘텐츠 상세 정보를 기술한다. 각 업적의 고유 ID, 이름, 조건 타입, 목표 수치, 보상(골드/XP/칭호/아이템)을 확정 테이블로 정리하며, 칭호 42종의 canonical 목록과 보상 기준 테이블을 포함한다.
 
 ### 1.1 본 문서가 canonical인 데이터
 
-- 업적 30종 전체 목록의 확정 보상 수치 (골드, XP, 아이템)
+- 업적 34종 전체 목록의 확정 보상 수치 (골드, XP, 아이템)
 - 단계형 업적 Bronze/Silver/Gold 각 단계별 목표 수치 및 보상
-- 칭호 36종 canonical 매핑 테이블 (칭호 ID, 이름, 해금 조건)
+- 칭호 42종 canonical 매핑 테이블 (칭호 ID, 이름, 해금 조건)
 - 보상 기준 테이블 (난이도/단계별 골드/XP 범위)
 - 아이템 보상 전체 목록 및 효과
 
@@ -63,15 +63,15 @@
 
 ### 2.4 XP 보상 총량 추정
 
-- 전 업적(30종) 완료 시 총 XP: **2,250 XP** (아래 섹션 3~9 및 섹션 12.1 확정 합산)
-- 전체 필요 누적 XP **9,029**의 약 **24.9%**에 해당 (-> see `docs/balance/progression-curve.md` 섹션 2.4.1 — canonical XP 테이블)
+- 전 업적(34종) 완료 시 총 XP: **2,640 XP** (아래 섹션 3~10 및 섹션 13.1 확정 합산)
+- 전체 필요 누적 XP **9,029**의 약 **29.2%**에 해당 (-> see `docs/balance/progression-curve.md` 섹션 2.4.1 — canonical XP 테이블)
 - 전 업적 완료는 2년차 이후에나 가능하므로 실질적 XP 가속 효과는 제한적
 
-[NOTE] 업적 XP 비중(24.9%)은 canonical 기준(9,029 XP) 대비 적정 수준이다. BAL-007 통합 시뮬레이션(-> see `docs/balance/xp-integration.md`)에서 퀘스트 900 XP + 업적 2,250 XP 포함 시 1년차 일반 플레이어 레벨 8 중반 도달이 확정되었다. 추가 삭감 불필요.
+[NOTE] 업적 XP 비중(29.2%)은 canonical 기준(9,029 XP) 대비 적정 수준이다. BAL-007 통합 시뮬레이션(-> see `docs/balance/xp-integration.md`)에서 퀘스트 900 XP + 업적 2,640 XP 포함 시 1년차 일반 플레이어 레벨 8~9 도달이 예상된다. 낚시 업적(390 XP)은 Zone F 해금(레벨 5) 이후 점진적으로 달성되므로 1년차 내 전부 달성은 어렵다.
 
 ### 2.5 골드 보상 총량 추정
 
-- 전 업적 완료 시 총 골드: 약 3,800G (아래 섹션 3~9의 합산)
+- 전 업적 완료 시 총 골드: 약 8,350G (아래 섹션 3~10의 합산)
 - 게임 전체 플레이(2년+) 누적 수입 대비 미미한 수준 (-> see `docs/balance/progression-curve.md` 섹션 3)
 
 ---
@@ -259,11 +259,57 @@
 
 ---
 
-## 9. 숨겨진 업적 (Hidden) -- 6개
+## 9. 낚시사 (Angler) -- 4개
+
+### 9.1 업적 목록
+
+| # | achievementId | 이름 | 유형 | conditionType | 조건 상세 | 숨김 |
+|---|---------------|------|------|---------------|----------|------|
+| 1 | `ach_fish_01` | 첫 낚시 | Single | `FishCaughtCount` ([TODO] ARC-030에서 enum 추가 필요) | 처음으로 물고기 1마리 낚기. conditionValue = 1 | N |
+| 2 | `ach_fish_02` | 낚시 애호가 | Tiered | `FishCaughtCount` ([TODO] ARC-030) | 누적 물고기 포획 횟수 (3단계) | N |
+| 3 | `ach_fish_03` | 낚시꾼 | Single | `FishCaughtCount` ([TODO] ARC-030) | 누적 200마리 낚기. conditionValue = 200 | N |
+| 4 | `ach_fish_04` | 전설의 낚시사 | Single | `FishSpeciesCollected` ([TODO] ARC-030에서 enum 추가 필요) | 어종 도감 15/15종 완성 (-> see `docs/systems/fishing-system.md` 섹션 4.2 — 전체 어종 15종). conditionValue = 15 | N |
+
+[TODO] `FishCaughtCount`와 `FishSpeciesCollected`는 현재 `AchievementConditionType` enum(-> see `docs/systems/achievement-architecture.md` 섹션 2.3)에 미등록 상태다. ARC-030에서 enum 값 추가 + `FishingEvents.OnFishCaught` 이벤트 구독 핸들러 구현이 필요하다.
+
+### 9.2 ach_fish_02 단계 상세 (낚시 애호가)
+
+| 단계 | conditionValue | 골드 | XP | 칭호 | 아이템 |
+|------|---------------|------|-----|------|--------|
+| Bronze | 10 | 50G | 20 XP | - | - |
+| Silver | 50 | 200G | 50 XP | 낚시 애호가 (`title_fishing_lover`) | 미끼통 x1 |
+| Gold | 200 | 500G | 100 XP | 숙련 낚시꾼 (`title_skilled_angler`) | - |
+
+**설계 의도**: Bronze(10마리)는 Zone F 해금 직후 자연스럽게 달성. Silver(50마리)는 낚시를 정기적으로 즐기는 중반 플레이어 대상. Gold(200마리)는 후반 장기 플레이 목표. Silver 단계에서 미끼통(미끼를 자동 장착해 주는 소품, 인벤토리 슬롯 절약)을 지급하여 낚시 편의성 향상.
+
+[OPEN] 미끼통(Bait Box) 아이템의 상세 효과 및 아이템 시스템 내 등록은 미끼(Bait) 시스템 설계와 함께 확정 필요 (-> see `docs/systems/fishing-system.md` 섹션 8.3 [OPEN]).
+
+### 9.3 단일 업적 보상 상세
+
+| achievementId | 골드 | XP | 칭호 | 아이템 |
+|---------------|------|-----|------|--------|
+| `ach_fish_01` | 50G | 20 XP | 초보 낚시꾼 (`title_novice_angler`) | - |
+| `ach_fish_03` | 500G | 100 XP | 낚시꾼 (`title_angler`) | 낚시 숙련도 XP 보너스 (다음 50회 포획 시 숙련도 XP +25%) |
+| `ach_fish_04` | 1,000G | 100 XP | 전설의 낚시사 (`title_legendary_angler`) | 황금 낚싯대 장식품 x1 |
+
+**설계 의도**: `ach_fish_01`(첫 낚시)은 "쉬움" 난이도(50G/20 XP)로 즉각적 성취감 제공. `ach_fish_03`(200마리)은 "어려움" 난이도(500G/100 XP)로, 추가로 숙련도 XP 부스트를 지급하여 낚시 마스터리 가속. `ach_fish_04`(도감 완성)는 게임 내 최종 도전급(1,000G/100 XP)으로, 칭호와 장식 아이템을 보상으로 제공한다. 숙련도 XP 보너스의 구체적 메커니즘은 낚시 숙련도 시스템(-> see `docs/systems/fishing-system.md` 섹션 7)을 따른다.
+
+**Angler 카테고리 소계**: 골드 2,300G / XP 390
+
+[NOTE] 정확한 소계 계산:
+- `ach_fish_01`: 50G + 20 XP
+- `ach_fish_02` Bronze: 50G + 20 XP, Silver: 200G + 50 XP, Gold: 500G + 100 XP
+- `ach_fish_03`: 500G + 100 XP
+- `ach_fish_04`: 1,000G + 100 XP
+- **합계: 2,300G / 390 XP**
+
+---
+
+## 10. 숨겨진 업적 (Hidden) -- 6개
 
 숨겨진 업적은 달성 전까지 업적 패널에서 이름/조건이 `"???"` 으로 표시된다. 모두 `Custom` (99) conditionType을 사용하며, AchievementManager 내 전용 핸들러로 처리한다 (-> see `docs/systems/achievement-architecture.md` 섹션 2.3).
 
-### 9.1 업적 목록
+### 10.1 업적 목록
 
 | # | achievementId | 이름 | 조건 상세 | 추적 이벤트 | 보상 | 칭호 |
 |---|---------------|------|----------|------------|------|------|
@@ -274,7 +320,7 @@
 | 5 | `ach_hidden_05` | 거대 작물의 주인 | 거대 작물(Giant Crop) 수확 (-> see `docs/systems/crop-growth.md` 섹션 5.1) | `OnCropHarvested` (isGiant = true) | 100G / 30 XP | 거대 작물의 주인 (`title_giant_crop_owner`) |
 | 6 | `ach_hidden_06` | 전부 다 팔아! | 인벤토리의 모든 슬롯에 작물이 있는 상태에서 한 번에 전부 출하 | `OnSingleShipment` (fullInventory = true) | 100G / 30 XP | 통큰 농부 (`title_generous_farmer`) |
 
-### 9.2 아이템 보상
+### 10.2 아이템 보상
 
 숨겨진 업적 중 아이템 보상이 있는 것:
 
@@ -288,11 +334,11 @@
 
 ---
 
-## 10. 칭호 전체 목록 (36종)
+## 11. 칭호 전체 목록 (42종)
 
 칭호는 플레이어 이름 앞에 표시되는 순수 장식 수식어이다. 게임플레이에 영향을 주지 않는다. (-> see `docs/systems/achievement-system.md` 섹션 4.2 for 표시 규칙)
 
-### 10.1 칭호 canonical 테이블
+### 11.1 칭호 canonical 테이블
 
 | # | 칭호 ID | 칭호 이름 | 해금 조건 | 카테고리 |
 |---|---------|----------|----------|----------|
@@ -332,8 +378,14 @@
 | 33 | `title_comeback_farmer` | 역전의 농부 | `ach_hidden_04` 달성 | Hidden |
 | 34 | `title_giant_crop_owner` | 거대 작물의 주인 | `ach_hidden_05` 달성 | Hidden |
 | 35 | `title_generous_farmer` | 통큰 농부 | `ach_hidden_06` 달성 | Hidden |
+| 36 | `title_novice_angler` | 초보 낚시꾼 | `ach_fish_01` 달성 | Angler |
+| 37 | `title_fishing_lover` | 낚시 애호가 | `ach_fish_02` Silver 달성 | Angler |
+| 38 | `title_skilled_angler` | 숙련 낚시꾼 | `ach_fish_02` Gold 달성 | Angler |
+| 39 | `title_angler` | 낚시꾼 | `ach_fish_03` 달성 | Angler |
+| 40 | `title_legendary_angler` | 전설의 낚시사 | `ach_fish_04` 달성 | Angler |
+| 41 | `title_fishing_master` | 낚시 마스터 | 어종 도감 100% + 숙련도 Lv.10 (-> see `docs/systems/fishing-system.md` 섹션 8.2) | Angler |
 
-### 10.2 칭호 통계
+### 11.2 칭호 통계
 
 | 카테고리 | 칭호 수 |
 |----------|---------|
@@ -344,12 +396,13 @@
 | Tool | 3 |
 | Explorer | 5 |
 | Quest | 5 |
+| Angler | 6 |
 | Hidden | 6 |
-| **합계** | **36** |
+| **합계** | **42** |
 
 ---
 
-## 11. 아이템 보상 전체 목록
+## 12. 아이템 보상 전체 목록
 
 업적 전용 아이템 보상 8종의 canonical 목록이다. (-> see `docs/systems/achievement-system.md` 섹션 4.3 for 설계 원칙)
 
@@ -365,14 +418,17 @@
 | 8 | 영웅의 증표 장식품 | `ach_quest_02` Gold | x1 | 농장 배치 가능 장식 오브젝트. 기능 없음 | 퀘스트 달인 보상 |
 | 9 | 상인의 뱃지 장식품 | `ach_explorer_04` Gold | x1 | 농장 배치 가능 장식 오브젝트. 기능 없음 | 쇼핑 마니아 보상 |
 | 10 | 거대 씨앗 | `ach_hidden_05` | x1 | 심으면 거대 작물 생성 확률 50% 상승 (해당 작물 1회) (-> see `docs/systems/crop-growth.md` 섹션 5.1) | 거대 작물 보상 |
+| 11 | 미끼통 | `ach_fish_02` Silver | x1 | 미끼 자동 장착 소품. 인벤토리 슬롯 1개 절약. [OPEN] 미끼 시스템 설계 시 효과 확정 (-> see `docs/systems/fishing-system.md` 섹션 8.3) | 낚시 애호가 Silver 보상 |
+| 12 | 낚시 숙련도 XP 보너스 | `ach_fish_03` | x1 | 다음 50회 포획 시 낚시 숙련도 XP +25% (일회성 버프, -> see `docs/systems/fishing-system.md` 섹션 7) | 낚시꾼 보상 |
+| 13 | 황금 낚싯대 장식품 | `ach_fish_04` | x1 | 농장 배치 가능 장식 오브젝트. 기능 없음 | 전설의 낚시사 보상 |
 
-[OPEN] 장식 오브젝트(금고, 장인의 망치, 영웅의 증표, 상인의 뱃지)의 비주얼 사양 및 배치 시스템은 별도 설계 필요. 현재 농장 꾸미기 시스템이 미설계 상태.
+[OPEN] 장식 오브젝트(금고, 장인의 망치, 영웅의 증표, 상인의 뱃지, 황금 낚싯대)의 비주얼 사양 및 배치 시스템은 별도 설계 필요. 현재 농장 꾸미기 시스템이 미설계 상태.
 
 ---
 
-## 12. 전체 보상 총괄 테이블
+## 13. 전체 보상 총괄 테이블
 
-### 12.1 카테고리별 보상 합계
+### 13.1 카테고리별 보상 합계
 
 | 카테고리 | 업적 수 | 골드 합계 | XP 합계 | 칭호 수 | 아이템 수 |
 |----------|---------|----------|---------|---------|----------|
@@ -382,18 +438,20 @@
 | Tool | 3 | 500G | 170 XP | 3 | 1 (장인의 망치 장식품) |
 | Explorer | 4 | 950G | 370 XP | 5 | 2 (할인권, 상인의 뱃지) |
 | Quest | 4 | 850G | 340 XP | 5 | 1 (영웅의 증표) |
+| Angler | 4 | 2,300G | 390 XP | 5 (+마스터 1 = 6) | 3 (미끼통, 숙련도 XP 보너스, 황금 낚싯대 장식품) |
 | Hidden | 6 | 600G | 180 XP | 6 | 1 (거대 씨앗) |
-| **합계** | **30** | **6,050G** | **2,250 XP** | **35 (+기본 1 = 36)** | **10** |
+| **합계** | **34** | **8,350G** | **2,640 XP** | **41 (+기본 1 = 42)** | **13** |
 
-### 12.2 밸런스 검증 포인트
+### 13.2 밸런스 검증 포인트
 
-- **총 XP 2,250**: 전체 필요 누적 XP 4,609의 약 49% (-> see `docs/balance/progression-curve.md` 섹션 1.3.2)
-- **총 골드 6,050G**: 게임 2년차 추정 누적 수입 대비 소규모 보너스 (-> see `docs/balance/progression-curve.md` 섹션 3)
+- **총 XP 2,640**: 전체 필요 누적 XP 4,609의 약 57% (-> see `docs/balance/progression-curve.md` 섹션 1.3.2). 낚시 업적 4종 추가로 기존 2,250에서 390 XP 증가
+- **총 골드 8,350G**: 게임 2년차 추정 누적 수입 대비 소규모 보너스 (-> see `docs/balance/progression-curve.md` 섹션 3). 낚시 업적 추가로 기존 6,050G에서 2,300G 증가
 - 전 업적 완료가 2년차 이후에나 가능하므로, 실질적 밸런스 영향은 제한적
+- 낚시 업적의 골드 비중이 다소 높다 (2,300G / 8,350G = 27.5%). 이는 `ach_fish_04` (도감 완성)의 1,000G 보상이 주된 원인이며, 해당 업적은 15종 전종 포획이라는 극후반 도전이므로 적정 수준으로 판단
 
-[RISK] 섹션 2.4에서 추정한 총 XP(~1,690)와 본 섹션의 합산(2,250)에 약 560 XP 차이가 있다. 이는 섹션 2.4가 기준 테이블의 최소치로 추정한 반면, 각 업적의 확정 보상이 일부 상향되었기 때문이다. 섹션 2.4의 수치를 본 섹션(12.1)의 확정 합산으로 갱신한다: **총 XP = 2,250, 전체 XP 대비 약 49%**.
+[RISK] 섹션 2.4에서 추정한 총 XP(~1,690)와 본 섹션의 합산(2,640)에 약 950 XP 차이가 있다. 이는 섹션 2.4가 기준 테이블의 최소치로 추정한 반면, 각 업적의 확정 보상이 일부 상향되었고 낚시 업적 4종(390 XP)이 추가되었기 때문이다. 섹션 2.4의 수치를 본 섹션(13.1)의 확정 합산으로 갱신한다: **총 XP = 2,640, 전체 XP 대비 약 57%**.
 
-[RISK] 업적 XP 비중이 49%로 당초 목표(33~43%)를 초과한다. 숨겨진 업적의 XP를 30 -> 20으로 하향하거나, 일부 보통 난이도 업적의 XP를 50 -> 40으로 하향 조정하는 것을 검토해야 한다. 출시 전 시뮬레이션으로 최종 확정 필요.
+[RISK] 업적 XP 비중이 57%로 당초 목표(33~43%)를 크게 초과한다. 숨겨진 업적의 XP를 30 -> 20으로 하향하거나, 일부 보통 난이도 업적의 XP를 50 -> 40으로 하향 조정하는 것을 검토해야 한다. 단, 낚시 업적(390 XP)은 Zone F 해금(레벨 5) 이후에만 시작 가능하고 도감 완성은 극후반이므로 1년차 실질 영향은 제한적이다. 출시 전 시뮬레이션으로 최종 확정 필요.
 
 ---
 
@@ -412,6 +470,8 @@
 | `docs/systems/crop-growth.md` | 품질 등급(Normal~Iridium), 거대 작물(Giant Crop) 조건 확인 |
 | `docs/content/processing-system.md` | 가공품 레시피, 연료 시스템 참조 |
 | `docs/systems/quest-system.md` | 퀘스트 완료 이벤트, 농장 도전과의 중복 관리 |
+| `docs/systems/fishing-system.md` | 어종 15종 목록(섹션 4.2), 낚시 숙련도(섹션 7), 업적 연계(섹션 8.1), 어종 도감(섹션 8.2) |
+| `docs/systems/fishing-architecture.md` | FishingEvents.OnFishCaught 이벤트 — ARC-030에서 enum 추가 시 참조 |
 | `docs/systems/economy-system.md` | 골드 보상이 경제 밸런스에 미치는 영향 |
 | `docs/systems/time-season.md` | 계절 전환, 날씨 시스템, 밤 시간대(22:00~24:00) 참조 |
 | `docs/systems/farming-system.md` | 비료 효과, 에너지 시스템 참조 |
@@ -426,6 +486,9 @@
 2. **[OPEN]** `ach_facility_04` Gold 단계의 특수 레시피 보상 설계 미정 (-> see 섹션 5.2)
 3. **[OPEN]** 장식 오브젝트(금고, 장인의 망치, 영웅의 증표, 상인의 뱃지)의 비주얼 사양 및 농장 배치 시스템 미설계 (-> see 섹션 11)
 4. ~~**[OPEN]** `ach_explorer_02`/`ach_explorer_04` conditionType 불일치~~ — **RESOLVED (FIX-011)**: `PurchaseCount` (14) 전용 enum 값 추가, `EconomyEvents.OnShopPurchased` 이벤트 구독으로 해소 (-> see `docs/systems/achievement-architecture.md` 섹션 2.3)
+5. **[OPEN]** 낚시 업적의 `FishCaughtCount`, `FishSpeciesCollected` conditionType이 `AchievementConditionType` enum에 미등록 상태. ARC-030에서 enum 값 추가 + `FishingEvents.OnFishCaught` 이벤트 핸들러 구현 필요 (-> see 섹션 9.1)
+6. **[OPEN]** 미끼통(Bait Box) 아이템 효과가 미끼 시스템 미설계로 미확정 (-> see 섹션 9.2, `docs/systems/fishing-system.md` 섹션 8.3)
+7. **[OPEN]** `ach_fish_03`의 숙련도 XP 보너스(+25%, 50회) 메커니즘 상세 미확정. 버프 시스템 또는 낚시 숙련도 내부 처리로 구현할지 결정 필요
 
 ### [RISK] 항목
 

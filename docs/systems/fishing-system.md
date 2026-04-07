@@ -434,18 +434,18 @@ Giant 변이가 가능한 어종: 잉어, 산천어, 황금 잉어, 무지개송
 
 ### 8.1 업적 연계
 
-아래 업적은 업적 시스템(-> see `docs/systems/achievement-system.md`)에 추가 등록한다. 보상 수치는 본 문서가 canonical이다.
+낚시 관련 확정 업적(Angler 카테고리)은 `docs/content/achievements.md` 섹션 9를 canonical로 참조한다. 확정 업적 ID 및 조건·보상 수치는 아래 참조 표기로 대체한다.
 
-| 업적 ID | 업적명 | 조건 | 보상 |
-|---------|--------|------|------|
-| `ach_first_catch` | 첫 물고기 | 물고기 1마리 포획 | 50G |
-| `ach_fish_10` | 낚시 입문 | 물고기 10마리 누적 포획 | 100G |
-| `ach_fish_50` | 숙련 낚시꾼 | 물고기 50마리 누적 포획 | 300G |
-| `ach_fish_100` | 낚시 달인 | 물고기 100마리 누적 포획 | 500G + 미끼 x20 |
-| `ach_all_species` | 어종 수집가 | 15종 전부 1회 이상 포획 | 1,000G + 특수 장식 아이템 |
-| `ach_legendary_catch` | 전설의 낚시꾼 | Legendary 어종 포획 | 200G |
-| `ach_giant_fish` | 대물 낚시 | Giant 변이 어종 포획 | 150G |
-| `ach_treasure_hunter` | 보물 사냥꾼 | 보물 상자 10회 획득 | 500G |
+(-> see `docs/content/achievements.md` 섹션 9 — 낚시사(Angler) 카테고리 업적 4종: `ach_fish_01`~`ach_fish_04`)
+
+| 업적 ID | 업적명 | 조건 요약 | canonical 참조 |
+|---------|--------|----------|---------------|
+| `ach_fish_01` | 첫 낚시 | 물고기 1마리 포획 | (-> see `docs/content/achievements.md` 섹션 9.1~9.3) |
+| `ach_fish_02` | 낚시 애호가 | 누적 포획 횟수 단계형 (Bronze/Silver/Gold) | (-> see `docs/content/achievements.md` 섹션 9.1~9.3) |
+| `ach_fish_03` | 낚시꾼 | 누적 200마리 낚기 | (-> see `docs/content/achievements.md` 섹션 9.1~9.3) |
+| `ach_fish_04` | 전설의 낚시사 | 어종 도감 15/15종 완성 | (-> see `docs/content/achievements.md` 섹션 9.1~9.3) |
+
+[NOTE] 이전 초안에서 사용된 임시 업적 ID(`ach_first_catch`, `ach_fish_10`, `ach_fish_50`, `ach_fish_100`, `ach_all_species`, `ach_legendary_catch`, `ach_giant_fish`, `ach_treasure_hunter`)는 achievements.md 섹션 9에서 확정 ID로 대체되었다. 보상 수치(골드, XP, 칭호, 아이템) canonical은 `docs/content/achievements.md` 섹션 9.3이다.
 
 ### 8.2 어종 도감
 
