@@ -107,6 +107,14 @@ Assets/
 │   │   │       ├── TutorialStepData.cs      # 단계 SO 정의
 │   │   │       └── ContextHintData.cs       # 힌트 SO 정의
 │   │   │
+│   │   ├── Collection/                # 수집 도감 시스템 (→ see docs/systems/collection-architecture.md, ARC-037)
+│   │   │   ├── CollectionUIController.cs  # 통합 도감 UI 컨트롤러
+│   │   │   ├── GatheringCatalogManager.cs # ISaveable, SaveLoadOrder=56
+│   │   │   ├── GatheringCatalogEntry.cs   # 런타임 상태
+│   │   │   ├── GatheringCatalogSaveData.cs
+│   │   │   └── Data/                  # SeedMind.Collection.Data 네임스페이스
+│   │   │       └── GatheringCatalogData.cs  # ScriptableObject 정의
+│   │   │
 │   │   └── UI/                        # UI 시스템 (→ see docs/systems/ui-architecture.md for full details)
 │   │       ├── UIManager.cs           # 싱글턴, Screen FSM, PopupQueue 관리
 │   │       ├── ScreenBase.cs          # Screen 추상 기반 클래스
@@ -222,7 +230,9 @@ SeedMind                          # 최상위 네임스페이스 (공용 인터�
 ├── SeedMind.Save                 # 세이브/로드 시스템 (→ see docs/systems/save-load-architecture.md)
 ├── SeedMind.Save.Data            # GameSaveData, SaveMetaFile, SaveSlotInfo
 ├── SeedMind.UI                   # UI 시스템 (→ see docs/systems/ui-architecture.md)
-└── SeedMind.UI.Data              # UI enum/struct 정의 (ScreenType, PopupPriority, NotificationData 등)
+├── SeedMind.UI.Data              # UI enum/struct 정의 (ScreenType, PopupPriority, NotificationData 등)
+├── SeedMind.Collection           # 수집 도감 시스템 (→ see docs/systems/collection-architecture.md, ARC-037)
+└── SeedMind.Collection.Data      # GatheringCatalogData, GatheringCatalogSaveData, FishCatalogData SO 정의
 ```
 
 ### 네임스페이스 규칙
@@ -314,6 +324,7 @@ Assembly Definition(asmdef)으로 컴파일 단위를 분리하여 빌드 시간
 | `SeedMind.Building.asmdef` | `Scripts/Building/` | Core, Farm, Economy |
 | `SeedMind.Level.asmdef` | `Scripts/Level/` | Core, Farm |
 | `SeedMind.UI.asmdef` | `Scripts/UI/` | Core, Farm, Player, Economy, Building, Level |
+| `SeedMind.Collection.asmdef` | `Scripts/Collection/` | Core, Player (→ see docs/systems/collection-architecture.md, ARC-037) |
 
 ### asmdef 규칙
 

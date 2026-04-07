@@ -504,7 +504,9 @@
 
 #### 2.4.4 통합 시뮬레이션: 퀘스트/업적 XP 포함 (BAL-007 시나리오 A' 기준)
 
-퀘스트 ~1,010 XP + 업적 2,640 XP를 수확/경작 XP에 합산한 1년차 일반 플레이어 시뮬레이션 (-> see `docs/balance/xp-integration.md` 섹션 3.2, 5.2).
+> [History — pre-CON-013/CON-017 analysis] 아래 시뮬레이션은 BAL-007 작성 시점(업적 총 XP가 확정되기 전)의 스냅샷이다. 업적 총 XP 확정값은 CON-013/CON-017 이후 **3,160 XP** (-> see `docs/content/achievements.md` 섹션 13.1)로 변경되었다. 1년차 실현분(~500 XP) 및 레벨 도달 판정은 BAL-007 시나리오 A'의 역사적 기록으로 보존한다. 현행 통합 시뮬레이션은 (-> see `docs/balance/xp-integration.md` 섹션 4.2.2, 5.1)을 참조.
+
+퀘스트 ~1,010 XP + 업적 ~2,250 XP (BAL-007 작성 시점 추정치, 현행 canonical: 3,160 XP → see `docs/content/achievements.md` 섹션 13.1)를 수확/경작 XP에 합산한 1년차 일반 플레이어 시뮬레이션 (-> see `docs/balance/xp-integration.md` 섹션 3.2, 5.2).
 
 | XP 소스 | 1년차 XP | 비율 (9,029 기준) |
 |---------|---------|-----------------|

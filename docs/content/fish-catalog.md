@@ -218,7 +218,7 @@ catchSize = sizeMin + (sizeMax - sizeMin) * weightedRandom()
 
 ### 5.1 도감 접근 경로
 
-- 메뉴 > 도감 > 어종 도감 탭
+- 메뉴 > 수집 도감 > 어종 탭
 - 낚시 중 어종 포획 시 도감 등록 팝업에서 "도감 보기" 버튼
 - 단축키: [OPEN] 키 바인딩 미확정
 

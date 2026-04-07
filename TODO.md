@@ -177,10 +177,10 @@
 | ~~BAL-017~~ | ~~2~~ | ~~채집물 가공품 ROI 밸런스 분석 신규~~ — DONE: processing-economy.md 섹션 2.8~2.13 신규 (채집물 가공 13종 ROI, 작물 가공 비교, 밸런스 이슈 3건) |
 | ~~FIX-085~~ | ~~1~~ | ~~processing-economy.md 레시피 총계 42→55종 갱신~~ — DONE: 32→55종 갱신, 분석 범위 명시(45종 직접 분석, 낚시/치즈공방 추후 추가) |
 | ~~DES-018~~ | ~~1~~ | ~~도감 시스템 설계 (채집 도감 + 어종 도감 통합 여부 결정 — gathering-system.md 섹션 9 [OPEN], fish-catalog.md ARC-030 패턴 참조)~~ — DONE: 통합 도감 채택. collection-system.md(설계) + collection-architecture.md(ARC-037) 신규. 채집 도감 27종, 초회 보상/마일스톤 확정. PATTERN-005/006/010 리뷰 CRITICAL 4건 수정 완료 |
-| FIX-093 | 2 | save-load-architecture.md에 GatheringCatalogManager SaveLoadOrder=56 추가 (ARC-037 후속) |
-| FIX-094 | 2 | data-pipeline.md GameSaveData에 gatheringCatalog 필드 추가 (ARC-037 후속) |
-| FIX-095 | 2 | project-structure.md에 SeedMind.Collection 네임스페이스/폴더 추가 (ARC-037 후속) |
-| FIX-096 | 2 | fish-catalog.md UI 경로 문구 수정: "메뉴 > 어종 도감" → "메뉴 > 수집 도감 > 어종 탭" (DES-018 통합 도감 채택 후속) |
+| ~~FIX-093~~ | ~~2~~ | ~~save-load-architecture.md에 GatheringCatalogManager SaveLoadOrder=56 추가 (ARC-037 후속)~~ — DONE: JSON/C# gatheringCatalog 필드 추가, PATTERN-005 23개 갱신, SaveLoadOrder 행 추가 |
+| ~~FIX-094~~ | ~~2~~ | ~~data-pipeline.md GameSaveData에 gatheringCatalog 필드 추가 (ARC-037 후속)~~ — DONE: JSON 스키마 + C# 클래스 동시 반영 |
+| ~~FIX-095~~ | ~~2~~ | ~~project-structure.md에 SeedMind.Collection 네임스페이스/폴더 추가 (ARC-037 후속)~~ — DONE: 네임스페이스 목록 + Scripts/Collection/ 폴더 + asmdef 테이블 추가 |
+| ~~FIX-096~~ | ~~2~~ | ~~fish-catalog.md UI 경로 문구 수정: "메뉴 > 어종 도감" → "메뉴 > 수집 도감 > 어종 탭" (DES-018 통합 도감 채택 후속)~~ — DONE |
 | ~~FIX-099~~ | ~~1~~ | ~~xp-integration.md에 채집 도감 초회 보상 351 XP 반영 누락 (DES-018 후속 — 섹션 3.1 업적 XP 총합 및 비중 재계산, BAL-019 선행 작업)~~ — DONE: 섹션 3.1/5.1/5.2/5.3/Cross-references 업데이트, 보조 소스 합계 4,275→4,626 XP (51.2%) |
 | ARC-038 | 2 | collection-architecture.md GatheringRarity/FishRarity 통합 enum 확정 및 ICatalogProvider 인터페이스 범위 결정 (ARC-037 OPEN 후속) |
 | ARC-039 | 2 | collection-architecture.md CollectionPanel/FishCatalogPanel 씬 마이그레이션 전략 확정 및 MCP 태스크 보강 (ARC-037 OPEN 후속) |
@@ -194,7 +194,7 @@
 | ~~CON-014~~ | ~~1~~ | ~~npcs.md 여행 상인 아이템 풀에 수정 원석 추가 (DES-017 섹션 5.5.2 [OPEN] — 전설 낫 재료 대안 공급 경로 확보)~~ — DONE: 160G(직판가 32G x5), 등장 확률 10%, 재고 1개, gathering-system.md [OPEN] 해소 |
 | ~~FIX-088~~ | ~~2~~ | ~~achievement-architecture.md AchievementConditionType enum에 GatherCount/GatherSpeciesCollected/GatherSickleUpgraded 3종 추가 (CON-013 [TODO] 후속)~~ — DONE: enum 15→19 값, 이벤트 테이블 GatheringEvents 2행 추가, Step 1-2 16→19개 |
 | ~~FIX-089~~ | ~~2~~ | ~~xp-integration.md 채집 퀘스트 XP ~105 + 채집 업적 XP 490 추가분 시뮬레이션 반영 (CON-013 후속)~~ — DONE: 섹션 3.1 Gatherer 행+합계(2,640→3,130/39종), 섹션 4.2.2 시뮬레이션, 5.1~5.4 전체 수치 갱신 |
-| BAL-019 | 2 | 업적 XP 비중 재검증 및 조정 결정 (업적 39종 3,130 XP, 비중 ~68% — 목표 33~43% 초과 이슈. 업적 XP 하향 또는 레벨 테이블 상향 결정) |
+| ~~BAL-019~~ | ~~2~~ | ~~업적 XP 비중 재검증 및 조정 결정 (업적 39종 3,130 XP, 비중 ~68% — 목표 33~43% 초과 이슈. 업적 XP 하향 또는 레벨 테이블 상향 결정)~~ — DONE: 현상 유지 확정. ~68%는 이전 XP 테이블(4,609) 기준이며 현행(9,029) 기준 35.0%로 목표 범위 내. 목표 범위 33~43% → 30~40% 조정, 1년차 업적 비율 목표 5~10% → 5~15% 조정 |
 | ~~FIX-090~~ | ~~2~~ | ~~npcs.md 여행 상인 아이템 풀에 구리 광석/금 광석 공식 추가 (gathering-system.md 섹션 8.1 [OPEN] 후속 — 수정 원석 외 광석 2종 추가 필요)~~ — DONE: npcs.md 섹션 6.3에 구리 광석 x3(100G, 20%) + 금 광석 x1(120G, 10%) 추가. gathering-system.md 섹션 9 OPEN#2 완료 처리 |
 | ~~ARC-034~~ | ~~1~~ | ~~quest-architecture.md QuestObjectiveType enum에 Gather 추가 및 quest-tasks.md 반영 (CON-013 후속)~~ — DONE: Fish=12/Gather=13 추가, 이벤트 핸들러 2종, quest-tasks.md T-1-04/T-1-15 동기화 |
 | ~~ARC-035~~ | ~~1~~ | ~~achievement-tasks.md에 A-031~A-035 업적 5종 MCP 태스크 추가 (CON-013 후속)~~ — DONE: T-7 섹션 신규(SO 에셋 5종, 이벤트 연결, ~80회 MCP 호출), AchievementCategory Angler/Gatherer 추가, SubscribeAll 12이벤트 |
@@ -206,3 +206,8 @@
 | ~~FIX-100~~ | ~~2~~ | ~~achievement-tasks.md에 ach_hidden_07 SO 에셋 생성 및 HandleAchievementChain 구현 태스크 추가 (ARC-040 후속 — CON-017에서 업적 추가됐으나 MCP 태스크 문서 미반영)~~ — DONE: SO 에셋 목록 A-36 추가, T-2-32 태스크 상세 추가, 업적 총개수 39→40 수정 |
 | ~~FIX-101~~ | ~~2~~ | ~~achievement-system.md 섹션 7.1 OnItemGathered 행 [TODO] 태그 제거 및 구독 확정 표기 (FIX-088에서 GatherCount/GatherSpeciesCollected/GatherSickleUpgraded enum 추가 완료됨 — [TODO] 잔존 상태)~~ — DONE |
 | ARC-041 | 2 | collection-tasks.md MCP 태스크 시퀀스 문서화 (collection-architecture.md Part II → docs/mcp/collection-tasks.md — ARC-038/ARC-039 완료 후 선행 조건) |
+| ARC-042 | 1 | collection-architecture.md GatheringCatalogData↔GatheringItemData SO 참조 방식 확정 (OPEN#5 — itemId 문자열 연결 vs SO 직접 참조, 구현 시 결정) |
+| DES-021 | 1 | 보조 XP 소스 합산 비중 상한 기준 설계 원칙 문서화 (BAL-019 OPEN — 보조 소스 51.2%, 60% 초과 시 재검토 기준 명시) |
+| CON-015 | 2 | collection-system.md 채집 도감 통합 UI CollectionPanel 씬 배치 확정 (DES-018 — CollectionUIController가 FishCatalogPanel을 하위로 흡수하는 마이그레이션 경로, collection-architecture.md OPEN#4 후속) |
+| FIX-102 | 2 | save-load-architecture.md Cross-references에 collection-architecture.md 참조 추가 (FIX-093 후속 — gatheringCatalog 필드 추가로 collection-architecture.md가 연계됨) |
+| ~~FIX-103~~ | ~~1~~ | ~~data-pipeline.md 시스템 데이터 총계 주석 업데이트 (FIX-094 후속)~~ — N/A: data-pipeline.md에 PATTERN-005 카운트 주석 없음, 수정 불필요 |

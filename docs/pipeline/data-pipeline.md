@@ -538,7 +538,8 @@ SO_Tool_Hoe_Legendary    (tier=3, nextTier=null)
   "fishing": { },
   "fishCatalog": { },
   "npc": { },
-  "gathering": { }               // FIX-080: (→ see docs/systems/gathering-system.md 섹션 숙련도)
+  "gathering": { },              // FIX-080: (→ see docs/systems/gathering-system.md 섹션 숙련도)
+  "gatheringCatalog": { }        // FIX-094: (→ see docs/systems/collection-architecture.md 섹션 5.2, ARC-037)
 }
 ```
 
@@ -1285,6 +1286,7 @@ namespace SeedMind.Core
         public FishingSaveData fishing;      // 낚시 상태 (null 허용 — 구버전 호환, → see docs/systems/fishing-architecture.md, FIX-051)
         public FishCatalogSaveData fishCatalog; // 낚시 도감 상태 (null 허용 — 구버전 호환, → see docs/systems/fishing-architecture.md 섹션 20, ARC-030)
         public GatheringSaveData gathering;   // 채집 상태 (null 허용 — 구버전 호환, → see docs/systems/gathering-system.md, ARC-031)
+        public GatheringCatalogSaveData gatheringCatalog; // 채집 도감 상태 (null 허용 — 구버전 호환, → see docs/systems/collection-architecture.md 섹션 5.2, ARC-037)
     }
 }
 ```
