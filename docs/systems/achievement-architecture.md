@@ -136,7 +136,9 @@ namespace SeedMind.Achievement
         Tool        = 3,   // 도구 업그레이드 관련
         Explorer    = 4,   // 탐험/발견 관련
         Quest       = 5,   // 퀘스트 완료 관련
-        Hidden      = 6    // 숨겨진 업적 (달성 전 조건 비공개)
+        Hidden      = 6,   // 숨겨진 업적 (달성 전 조건 비공개)
+        Angler      = 7,   // 낚시 관련 (→ see docs/content/achievements.md 섹션 9)
+        Gatherer    = 8    // 채집 관련 (→ see docs/content/achievements.md 섹션 9.5)
     }
 }
 ```
@@ -838,7 +840,9 @@ Assets/_Project/
 │       ├── Tool/                            # 도구 카테고리
 │       ├── Explorer/                        # 탐험 카테고리
 │       ├── Quest/                           # 퀘스트 카테고리
-│       └── Hidden/                          # 숨겨진 업적
+│       ├── Hidden/                          # 숨겨진 업적
+│       ├── Angler/                          # 낚시 카테고리 (CON-010)
+│       └── Gatherer/                        # 채집 카테고리 (CON-013, ARC-035)
 │
 └── Prefabs/
     └── UI/
@@ -885,7 +889,7 @@ QuestManager(85) 이후로 배치하여 퀘스트 완료 상태가 먼저 복원
 
 | 순서 | 파일 | 유형 | 네임스페이스 | 비고 |
 |:----:|------|------|-------------|------|
-| 1-1 | AchievementCategory.cs | enum | SeedMind.Achievement.Data | 7개 값 |
+| 1-1 | AchievementCategory.cs | enum | SeedMind.Achievement.Data | 9개 값 |
 | 1-2 | AchievementConditionType.cs | enum | SeedMind.Achievement.Data | 19개 값 |
 | 1-3 | AchievementRewardType.cs | enum | SeedMind.Achievement | 4개 값 |
 | 1-4 | AchievementRecord.cs | [Serializable] class | SeedMind.Achievement | 6필드 |

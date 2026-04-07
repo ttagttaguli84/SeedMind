@@ -1,6 +1,7 @@
 # 채집 시스템 MCP 태스크 시퀀스 (ARC-032)
 
 > 작성: Claude Code (Sonnet 4.6) | 2026-04-07 | 문서 ID: ARC-032 | Phase 1
+> 갱신: Claude Code (Opus 4.6) | 2026-04-07 | ARC-036: G-C SO 에셋 태스크 상세화 (data-pipeline.md 2.10~2.12 반영)
 
 ---
 
@@ -69,14 +70,14 @@
 |--------|--------|--------|
 | G-A: 데이터 레이어 스크립트 생성 (14종) | ~16회 | 중 |
 | G-B: 시스템 레이어 스크립트 생성 (2종) | ~4회 | 중 |
-| G-C: SO 에셋 인스턴스 생성 | ~40회 | 고 (아이템/포인트 수에 비례) |
+| G-C: SO 에셋 인스턴스 생성 (Config 1 + Item 27 + Point 5 + Price 27) | ~124회 | 고 |
 | G-D: 씬 배치 (GatheringManager, GatheringPoint) | ~20회 | 중 |
 | G-E: 기존 시스템 확장 (enum/switch 수정) | ~14회 | 중 |
 | G-F: UI 연동 (프롬프트, 팝업, 토스트) | ~18회 | 중 |
 | G-G: 통합 검증 (12개 체크) | ~24회 | 저 |
-| **합계** | **~136회** | |
+| **합계** | **~220회** | |
 
-[RISK] SO 에셋 인스턴스 생성(G-C)의 호출 수는 아이템/포인트 종류에 비례한다. Editor 스크립트(`CreateGatheringAssets.cs`)를 통한 일괄 생성으로 G-C의 ~40회를 ~5회로 압축 가능. MCP 단독 실행 시 시간 비용이 크므로 Editor 스크립트 우회를 권장한다.
+[RISK] SO 에셋 인스턴스 생성(G-C)의 호출 수는 Config 1 + Item 27 + Point 5 + Price 27 = 60개 에셋, 총 ~124회 MCP 호출로 전체의 56%를 차지한다. Editor 스크립트(`CreateGatheringAssets.cs`)를 통한 일괄 생성으로 G-C의 ~124회를 ~5회로 압축 가능. MCP 단독 실행 시 시간 비용이 크므로 Editor 스크립트 우회를 강력히 권장한다.
 
 ---
 
@@ -325,12 +326,12 @@ get_console_logs
 
 ### G-C: SO 에셋 인스턴스 생성 (Phase C)
 
-**목적**: GatheringConfig, GatheringItemData, GatheringPointData, PriceData SO 에셋 인스턴스를 생성하고 필드값을 설정한다.
+**목적**: GatheringConfig, GatheringItemData, GatheringPointData, PriceData SO 에셋 인스턴스를 생성하고 필드값을 설정한다. ARC-033에서 `docs/pipeline/data-pipeline.md` 섹션 2.10~2.12에 확정된 SO 스키마를 기반으로 한다.
 
 **전제 조건**:
 - **G-A, G-B 완료** (SO 클래스 및 Manager 컴파일 완료)
 
-**예상 MCP 호출**: ~40회 (아이템/포인트 수에 비례)
+**예상 MCP 호출**: ~68회 (아이템 27종 + 포인트 5종 + Config 1개 + PriceData 27종)
 
 #### G-C-01: 에셋 폴더 생성
 
@@ -350,7 +351,10 @@ create_folder
 
 - **MCP 호출**: 4회
 
-#### G-C-02: GatheringConfig SO 에셋
+#### G-C-02: GatheringConfig SO 에셋 (1개, 14필드)
+
+SO 스키마: (-> see `docs/pipeline/data-pipeline.md` 섹션 2.12)
+필드값 canonical: (-> see `docs/systems/gathering-system.md` 섹션 2, 4)
 
 ```
 create_scriptable_object
@@ -358,23 +362,35 @@ create_scriptable_object
   asset_path: "Assets/_Project/Data/Gathering/SO_GatheringConfig_Default.asset"
 
 set_property  target: "SO_GatheringConfig_Default"
-  respawnDaysRange = { x: 0, y: 0 }   // (-> see docs/systems/gathering-system.md 섹션 2)
-  baseGatherEnergy = 0                 // (-> see docs/systems/gathering-system.md 섹션 2)
-  maxActivePoints = 0                  // (-> see docs/systems/gathering-system.md 섹션 2)
-  seasonalRefreshOnChange = true       // (-> see docs/systems/gathering-system.md 섹션 3)
-  qualityThresholds = []               // (-> see docs/systems/gathering-system.md 섹션 4.5)
-  // proficiency 관련 필드: (-> see docs/systems/gathering-system.md 섹션 4)
+  baseGatherEnergy = 0                     // (-> see docs/systems/gathering-system.md 섹션 2)
+  gatherAnimationDuration = 0              // 기본 애니메이션 시간
+  maxActivePointsPerZone = 0               // (-> see docs/systems/gathering-system.md 섹션 2)
+  defaultRespawnDays = 0                   // (-> see docs/systems/gathering-system.md 섹션 2)
+  seasonalRefreshOnChange = false          // (-> see docs/systems/gathering-system.md 섹션 3)
+  qualityThresholds = []                   // (-> see docs/systems/gathering-system.md 섹션 4.5)
+  proficiencyXPThresholds = []             // (-> see docs/systems/gathering-system.md 섹션 4.2)
+  proficiencyMaxLevel = 0                  // (-> see docs/systems/gathering-system.md 섹션 4.2)
+  gatherXPByRarity = []                   // (-> see docs/systems/gathering-system.md 섹션 4.3)
+  bonusQuantityByLevel = []                // (-> see docs/systems/gathering-system.md 섹션 4.4)
+  rarityBonusByLevel = []                  // (-> see docs/systems/gathering-system.md 섹션 4.4)
+  energyCostReductionByLevel = []          // (-> see docs/systems/gathering-system.md 섹션 4.2)
+  maxQualityByLevel = []                   // (-> see docs/systems/gathering-system.md 섹션 4.5)
+  gatherSpeedMultiplierByLevel = []        // (-> see docs/systems/gathering-system.md 섹션 4.4)
 ```
 
-> **주의**: 모든 구체적 수치는 MCP 실행 시점에 canonical 문서에서 읽어 입력한다. 본 문서에서 수치를 직접 기재하지 않는다 (PATTERN-006).
+> **주의**: 모든 구체적 수치는 MCP 실행 시점에 canonical 문서에서 읽어 입력한다. 본 문서에서 수치를 직접 기재하지 않는다 (PATTERN-006). 배열 필드(qualityThresholds, proficiencyXPThresholds 등)는 canonical 문서의 테이블 값을 순서대로 입력한다.
 
-- **MCP 호출**: 1(생성) + 6(필드 설정) = ~7회
+- **MCP 호출**: 1(생성) + 1(set_property 일괄) = ~2회
 
-#### G-C-03: GatheringItemData SO 에셋 (아이템별)
+#### G-C-03: GatheringItemData SO 에셋 (27종, 16필드)
 
-아이템 목록 및 각 필드값은 canonical 문서를 참조한다.
-(-> see `docs/systems/gathering-system.md` 섹션 2 for 전체 아이템 목록)
-(-> see `docs/content/gathering-items.md` for 아이템별 상세 파라미터)
+SO 스키마: (-> see `docs/pipeline/data-pipeline.md` 섹션 2.11)
+아이템 목록 및 필드값 canonical: (-> see `docs/content/gathering-items.md`)
+가격 canonical: (-> see `docs/balance/gathering-economy.md`)
+에셋명 패턴: `SO_GItem_<ItemId>` (예: `SO_GItem_mushroom`, `SO_GItem_wild_strawberry`)
+
+총 27종 구성: 봄 6종 + 여름 6종 + 가을 6종 + 겨울 3종 + 광물 6종
+(-> see `docs/systems/gathering-system.md` 섹션 3 for 전체 아이템 카탈로그)
 
 각 아이템에 대해:
 ```
@@ -383,48 +399,77 @@ create_scriptable_object
   asset_path: "Assets/_Project/Data/Gathering/Items/SO_GItem_<ItemId>.asset"
 
 set_property  target: "SO_GItem_<ItemId>"
-  dataId = "<item_id>"                  // (-> see docs/systems/gathering-system.md)
-  displayName = "<이름>"                 // (-> see docs/systems/gathering-system.md)
-  category = <int>                      // (-> see docs/systems/gathering-system.md 섹션 2)
-  rarity = <int>                        // (-> see docs/systems/gathering-system.md 섹션 2)
-  basePrice = 0                         // (-> see docs/balance/economy-balance.md)
-  gatherEnergy = 0                      // (-> see docs/systems/gathering-system.md 섹션 2)
-  requiredTool = <int>                  // (-> see docs/systems/gathering-system.md 섹션 2)
-  availableSeasons = []                 // (-> see docs/systems/gathering-system.md 섹션 3)
-  weatherBonus = 0.0                    // (-> see docs/systems/gathering-system.md 섹션 3)
+  // --- GameDataSO 상속 필드 (4개) ---
+  dataId = "<item_id>"                     // (-> see docs/content/gathering-items.md)
+  displayName = "<이름>"                    // (-> see docs/content/gathering-items.md)
+  description = "<설명>"                    // (-> see docs/content/gathering-items.md)
+  icon = null                              // 에셋 생성 후 스프라이트 수동 할당
+  // --- GatheringItemData 고유 필드 (12개) ---
+  gatheringCategory = <int>                // (-> see docs/content/gathering-items.md)
+  rarity = <int>                           // (-> see docs/content/gathering-items.md)
+  basePrice = 0                            // (-> see docs/balance/gathering-economy.md)
+  seasonAvailability = <flags>             // (-> see docs/content/gathering-items.md)
+  weatherBonus = <flags>                   // (-> see docs/content/gathering-items.md)
+  baseQuantityRange = { x: 0, y: 0 }      // (-> see docs/content/gathering-items.md)
+  qualityEnabled = true                    // (-> see docs/content/gathering-items.md)
+  maxStackSize = 0                         // (-> see docs/pipeline/data-pipeline.md 섹션 2.9)
+  expReward = 0                            // (-> see docs/balance/progression-curve.md)
+  gatherTimeSec = 0.0                      // (-> see docs/systems/gathering-system.md 섹션 2)
+  requiredTool = <int>                     // (-> see docs/systems/gathering-system.md 섹션 2)
+  minProficiencyLevel = 0                  // (-> see docs/systems/gathering-system.md 섹션 4)
 ```
 
-- **MCP 호출**: 아이템 수 x (1 생성 + ~8 필드설정) = 아이템 수 x ~9회
-- 예상 아이템 수: (-> see `docs/systems/gathering-system.md` 섹션 2)
+- **MCP 호출**: 27 x (1 생성 + 1 set_property) = ~54회
+- 에셋 수: 27종 (-> see `docs/systems/gathering-system.md` 섹션 3)
 
-#### G-C-04: GatheringPointData SO 에셋 (포인트별)
+[RISK] 27종 x 2회 = 54회 MCP 호출은 실행 시간이 길다. Editor 스크립트(`CreateGatheringItemAssets.cs`)로 일괄 생성하면 ~2회로 압축 가능.
 
-포인트 목록 및 각 필드값은 canonical 문서를 참조한다.
-(-> see `docs/systems/gathering-system.md` 섹션 3 for 포인트 배치)
+#### G-C-04: GatheringPointData SO 에셋 (5종, 12필드)
+
+SO 스키마: (-> see `docs/pipeline/data-pipeline.md` 섹션 2.10)
+포인트 목록 canonical: (-> see `docs/systems/gathering-system.md` 섹션 3)
+에셋 목록: (-> see `docs/pipeline/data-pipeline.md` 섹션 2.10 에셋 목록 테이블)
+
+| # | 에셋명 | pointId | Zone |
+|---|--------|---------|------|
+| 1 | SO_GatherPoint_ForestFloor | gather_forest_floor | Zone D |
+| 2 | SO_GatherPoint_Bush | gather_bush | Zone D |
+| 3 | SO_GatherPoint_CaveEntrance | gather_cave_entrance | Zone D |
+| 4 | SO_GatherPoint_PondEdge | gather_pond_edge | Zone F |
+| 5 | SO_GatherPoint_Meadow | gather_meadow | Zone E |
 
 각 포인트에 대해:
 ```
 create_scriptable_object
   type: "SeedMind.Gathering.GatheringPointData"
-  asset_path: "Assets/_Project/Data/Gathering/Points/SO_GPoint_<PointId>.asset"
+  asset_path: "Assets/_Project/Data/Gathering/Points/<에셋명>.asset"
 
-set_property  target: "SO_GPoint_<PointId>"
-  pointId = "<point_id>"               // (-> see docs/systems/gathering-system.md 섹션 3)
-  displayName = "<포인트명>"             // (-> see docs/systems/gathering-system.md 섹션 3)
-  zoneId = "<zone_id>"                 // (-> see docs/systems/gathering-system.md 섹션 3)
+set_property  target: "<에셋명>"
+  // --- GatheringPointData 필드 (12개) ---
+  pointId = "<point_id>"                   // 위 테이블 참조
+  displayName = "<포인트명>"                // (-> see docs/systems/gathering-system.md 섹션 3)
+  description = "<설명>"                    // (-> see docs/systems/gathering-system.md 섹션 3)
+  zoneId = "<zone_id>"                     // 위 테이블 참조
   requiredZoneUnlocked = true
-  respawnDays = 0                      // (-> see docs/systems/gathering-system.md 섹션 2)
-  respawnVariance = 0                  // (-> see docs/systems/gathering-system.md 섹션 2)
-  availableItems = []                  // SO 배열 참조 -- 아래 주의 참조
+  availableItems = []                      // GatheringItemEntry[] SO 배열 — 아래 주의 참조
+  seasonOverrides = []                     // SeasonalItemOverride[] — 아래 주의 참조
+  respawnDays = 0                          // (-> see docs/systems/gathering-system.md 섹션 2)
+  respawnVariance = 0                      // (-> see docs/systems/gathering-system.md 섹션 2)
+  pointPrefab = null                       // 프리팹 수동 할당
+  depletedPrefab = null                    // 프리팹 수동 할당
+  gatherVFX = null                         // VFX 프리팹 수동 할당
 ```
 
-> **주의**: `availableItems` (GatheringItemEntry[])와 `seasonOverrides` (SeasonalItemOverride[])는 SO 배열 참조 필드이다. MCP로 SO 배열/참조 설정이 불가능할 경우, `GatheringPoint.Awake()`에서 `Resources.LoadAll<GatheringItemData>()` 패턴으로 우회한다.
+> **주의**: `availableItems` (GatheringItemEntry[])와 `seasonOverrides` (SeasonalItemOverride[])는 SO 배열 참조 필드이다. 각 포인트의 아이템 풀 구성은 (-> see `docs/systems/gathering-system.md` 섹션 3)을 참조한다. MCP로 SO 배열/참조 설정이 불가능할 경우, Editor 스크립트(`AssignGatheringPointItems.cs`)로 일괄 할당하거나 `GatheringPoint.Awake()`에서 `Resources.LoadAll<GatheringItemData>()` 패턴으로 우회한다.
 
 [RISK] MCP로 SO 배열에 다른 SO 참조를 설정하는 것이 가능한지 미확인. 대안: Editor 스크립트로 일괄 할당 또는 런타임 자동 로드.
 
-- **MCP 호출**: 포인트 수 x (1 생성 + ~6 필드설정) = 포인트 수 x ~7회
+- **MCP 호출**: 5 x (1 생성 + 1 set_property) = ~10회
 
-#### G-C-05: PriceData SO 에셋 (채집물별)
+#### G-C-05: PriceData SO 에셋 (채집물별, 27종)
+
+채집 아이템 27종 각각에 대해 PriceData SO를 생성한다.
+가격 canonical: (-> see `docs/balance/gathering-economy.md`, `docs/systems/economy-system.md`)
 
 ```
 create_scriptable_object
@@ -432,10 +477,12 @@ create_scriptable_object
   asset_path: "Assets/_Project/Data/Gathering/Prices/SO_Price_Gather_<ItemId>.asset"
 
 set_property  target: "SO_Price_Gather_<ItemId>"
-  // 가격 필드: (-> see docs/balance/economy-balance.md, docs/systems/economy-system.md)
+  // 가격 필드: (-> see docs/balance/gathering-economy.md, docs/systems/economy-system.md)
 ```
 
-- **MCP 호출**: 아이템 수 x ~3회
+- **MCP 호출**: 27 x (1 생성 + 1 set_property) = ~54회
+
+[RISK] PriceData 27종의 MCP 호출도 Editor 스크립트로 압축 가능.
 
 ---
 
@@ -786,7 +833,7 @@ G-A (데이터 레이어 스크립트) ──┐
 - `docs/systems/gathering-system.md` (DES-016) -- 채집 시스템 디자인 canonical (아이템 목록, 가격, 숙련도 테이블, 포인트 배치)
 - `docs/content/gathering-items.md` (CON-012) -- 채집 아이템 콘텐츠 canonical
 - `docs/balance/economy-balance.md` -- 경제 밸런스 (채집물 가격 canonical)
-- `docs/pipeline/data-pipeline.md` -- ScriptableObject 구조, GameSaveData 루트 클래스
+- `docs/pipeline/data-pipeline.md` -- ScriptableObject 구조, GameSaveData 루트 클래스, **섹션 2.10~2.12: GatheringPointData/GatheringItemData/GatheringConfig SO 스키마 (ARC-033)**
 - `docs/systems/fishing-architecture.md` -- 낚시 아키텍처 (유사 패턴 참조: Proficiency, SaveData, MCP Phase)
 - `docs/mcp/fishing-tasks.md` -- 낚시 MCP 태스크 (UI 토스트 패턴 참조)
 - `docs/systems/progression-architecture.md` -- XPSource enum, AddExp 패턴
@@ -808,7 +855,7 @@ G-A (데이터 레이어 스크립트) ──┐
 |--------------------------|----------------------|
 | Phase A: SO 에셋 생성 (데이터 레이어) | G-A (데이터 레이어 스크립트 14종) |
 | Phase B: GatheringManager 구현 (시스템 레이어) | G-B (GatheringPoint + GatheringManager) |
-| Phase C: SO 에셋 인스턴스 생성 | G-C (Config/Item/Point/Price SO 에셋) |
+| Phase C: SO 에셋 인스턴스 생성 | G-C (Config 1 + Item 27 + Point 5 + Price 27 = 60개 SO 에셋) |
 | Phase D: 포인트 배치 (씬 구성) | G-D (씬 배치) |
 | Phase E: 기존 시스템 확장 | G-E (enum/switch 확장 7건) |
 | Phase F: UI 연동 | G-F (프롬프트, 결과 팝업, 레벨업 토스트) |
@@ -834,7 +881,7 @@ G-A (데이터 레이어 스크립트) ──┐
 - [RISK] MCP로 SO 배열/참조 필드(`availableItems[]`, `seasonOverrides[]`, `_gatheringPoints[]`, `_gatheringConfig`) 설정이 불가능할 수 있다. 대안: `Resources.LoadAll` 또는 `FindObjectsOfType`으로 런타임 자동 로드/수집.
 - [RISK] SerializeField 오브젝트 참조 설정(UI 컴포넌트의 TextMeshPro 참조 등)이 MCP로 불가능할 수 있다. 대안: Awake()에서 `transform.Find()` 또는 `GetComponentInChildren<>()`으로 자동 탐색.
 - [RISK] 스크립트 컴파일 에러 시 후속 `add_component` 실패. 컴파일 순서(G-A -> G-B)와 각 Phase 사이 컴파일 대기가 필수.
-- [RISK] 총 ~136회 MCP 호출은 실행 시간이 길다. Editor 스크립트(`CreateGatheringAssets.cs`)로 SO 에셋(G-C)을 일괄 생성하면 약 40회를 ~5회로 압축 가능. MCP 단독 실행 대비 Editor 스크립트 우회를 권장.
+- [RISK] 총 ~220회 MCP 호출은 실행 시간이 길다. G-C(SO 에셋 생성)가 ~124회로 전체의 56%를 차지하므로, Editor 스크립트(`CreateGatheringAssets.cs`)로 일괄 생성하면 ~124회를 ~5회로 압축하여 총 ~101회로 단축 가능. Editor 스크립트 우회를 강력히 권장.
 - [RISK] **포인트 상태 Dictionary 세이브 크기**: 채집 포인트 수가 수십 개에 달할 경우 세이브 파일 크기 증가. 비활성 포인트만 저장하는 최적화 고려. (-> see `docs/systems/gathering-architecture.md` 섹션 9)
 - [RISK] **GatheringSaveData 구버전 호환**: `gathering` 필드가 null인 구버전 세이브 파일 로드 시 방어 로직 필수. (-> see `docs/systems/gathering-architecture.md` 섹션 9)
 - [RISK] **Zone 미해금 상태에서 포인트 재생성 타이머**: 해금 전 타이머 작동 정책 확정 필요. (-> see `docs/systems/gathering-architecture.md` 섹션 9)

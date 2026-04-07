@@ -241,7 +241,9 @@ create_script
             QualityHarvest  = 8,   // 특정 품질 이상 수확
             UpgradeTool     = 9,   // 도구 업그레이드
             ReachLevel      = 10,  // 레벨 도달
-            Composite       = 11   // 복합 (AND/OR)
+            Composite       = 11,  // 복합 (AND/OR)
+            Fish            = 12,  // 낚시 (어종 포획)
+            Gather          = 13   // 채집 (채집물 수집)
         }
     }
 ```
@@ -682,6 +684,8 @@ create_script
                 // ToolUpgradeEvents.OnUpgradeCompleted += OnToolUpgraded;
                 // ProcessingEvents.OnProcessingCompleted += OnItemProcessed;
                 // NPCEvents.OnItemDelivered += OnItemDelivered;
+                // FishingEvents.OnFishCaught += OnFishCaught;           // ARC-034
+                // GatheringEvents.OnItemGathered += OnItemGathered;     // ARC-034
             }
 
             public void UnsubscribeAll() { /* 전체 구독 해제 */ }
@@ -1994,7 +1998,7 @@ save_scene
 
 1. [RISK] **중첩 배열 SO 설정 난이도**: QuestData의 `objectives[]`, `rewards[]`, `unlockConditions[]`는 모두 Serializable 클래스 배열이다. MCP `set_property`로 중첩 구조의 개별 필드를 설정하는 것이 불가능할 수 있다. **대안**: Editor 스크립트(`CreateQuestAssets.cs`)를 T-2 전체의 대체 경로로 준비해야 한다. 이 경우 T-2의 ~67회를 ~5회로 감소시킬 수 있다.
 
-2. [RISK] **이벤트 구독 누락**: QuestTracker가 12종 ObjectiveType을 추적하기 위해 9개 이상의 외부 이벤트를 구독해야 한다. 하나라도 누락되면 해당 목표 타입이 동작하지 않는다. T-6 테스트에서 각 ObjectiveType별 개별 검증 시나리오를 추가해야 하며, 현재 T-6은 Harvest 위주로만 테스트한다. (-> see `quest-architecture.md` Risks)
+2. [RISK] **이벤트 구독 누락**: QuestTracker가 14종 ObjectiveType을 추적하기 위해 11개 이상의 외부 이벤트를 구독해야 한다. 하나라도 누락되면 해당 목표 타입이 동작하지 않는다. T-6 테스트에서 각 ObjectiveType별 개별 검증 시나리오를 추가해야 하며, 현재 T-6은 Harvest 위주로만 테스트한다. (-> see `quest-architecture.md` Risks)
 
 3. [RISK] **이벤트 페이로드 불일치**: 기존 시스템의 이벤트 페이로드(CropHarvestInfo, SellInfo 등)에 QuestTracker가 필요로 하는 필드가 모두 포함되어 있는지 확인 필요. 누락 시 기존 이벤트 구조를 확장해야 하며, 이는 해당 시스템 아키텍처 문서의 업데이트와 MCP 스크립트 재생성을 수반한다. (-> see `quest-architecture.md` Risks)
 
