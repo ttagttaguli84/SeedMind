@@ -1,0 +1,54 @@
+# ===== Logs =====
+logs/
+
+# ===== Unity =====
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+*.pidb.meta
+*.pdb
+*.mdb
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.sln
+*.csproj
+*.unityproj
+.vs/
+
+# Unity generated
+Assets/AssetStoreTools*
+Assets/Plugins/Editor/JetBrains*
+
+# Unity YAML merge tool
+*.orig
+
+# ===== OS =====
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===== Editor =====
+.idea/
+.vscode/
+*.code-workspace
+
+# ===== Python (scripts/) =====
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.env
+.venv/
+venv/
+
+# ===== Misc =====
+*.bak
+*.swp
+*~
