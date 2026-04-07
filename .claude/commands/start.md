@@ -6,17 +6,31 @@ You are running a **planning session** for SeedMind.
 
 ## Phase 0 — Context Restore (required at every new session)
 
-1. Read `CLAUDE.md` — project rules
-2. Read `TODO.md` — current backlog
-3. Read `README.md` — current phase/status
-4. Read the latest `docs/devlog/*.md` — what happened last session
-5. Read `docs/design.md` and `docs/architecture.md` **only if the highest-priority task is a new system design (DES-*)**. For BAL/FIX/CON/ARC tasks, read only the documents relevant to that task.
-6. Print a 3-line status summary to the user:
-   ```
-   [SeedMind] Phase N | TODO: N items | Last work: <last devlog title>
-   Session goal: <highest-priority TODO item>
-   Proceeding.
-   ```
+> **Note**: CLAUDE.md, doc-standards.md, workflow.md are already loaded in system context. Do NOT read them again.
+
+Determine task type from `TODO.md` first, then load only what is needed:
+
+**Step 1 — Always read (all task types):**
+- `TODO.md` — identify highest-priority task and its type
+
+**Step 2 — Conditional reads by task type:**
+
+| Task type | Additional files to read |
+|-----------|--------------------------|
+| `DES-*` | `README.md`, latest `docs/devlog/*.md`, `docs/design.md`, `docs/architecture.md`, task-relevant system docs |
+| `ARC-*` | `README.md`, latest `docs/devlog/*.md`, relevant design doc, `docs/architecture.md` |
+| `BAL-*` | latest `docs/devlog/*.md`, relevant balance/economy docs |
+| `CON-*` | latest `docs/devlog/*.md`, relevant content/design docs |
+| `FIX-*` | only the specific document(s) to be fixed |
+
+**Step 3 — Save all read content in memory for agent injection (Phase 2).**
+
+**Step 4 — Print a 3-line status summary:**
+```
+[SeedMind] Phase N | TODO: N items | Last work: <last devlog title>
+Session goal: <highest-priority TODO item>
+Proceeding.
+```
 
 ## Phase 1 — Task Selection
 
@@ -40,6 +54,26 @@ Select the agent strategy based on task type:
 **DES-* parallel execution + PATTERN-010 reconciliation**: When architect runs in parallel with designer, design figures are not yet confirmed. Architect MUST use `[OPEN - to be filled after DES-XXX is confirmed]` tags for all unconfirmed values. After the designer finishes, run a **sync pass** — architect reads the completed design document and fills in all `[OPEN]` placeholders before the reviewer runs.
 
 **When running architect agent solo**: Must read the relevant design documents (DES, CON) first before writing. Check the Canonical Data Mapping in `doc-standards.md` and do not record figures directly.
+
+### Agent Context Injection (cost optimization)
+
+When spawning any agent, **prepend the following block to the agent prompt**:
+
+```
+## Pre-loaded Documents (do NOT re-read these files)
+The following documents have already been read by the main session.
+Use the content below directly. Do not call Read tool for these files.
+
+### TODO.md
+<paste TODO.md content>
+
+### [other files read in Phase 0]
+<paste each file's content>
+```
+
+- Only inject files that were actually read in Phase 0.
+- For FIX-* tasks (no agent), this step is skipped entirely.
+- Reviewer agent: inject the newly written document content + any canonical docs checked during Phase 2.
 
 ## Phase 3 — Review
 

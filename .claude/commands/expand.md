@@ -9,13 +9,25 @@ Arguments: $ARGUMENTS
 ## Process
 
 1. Parse system name from arguments (e.g., "farming", "economy", "time", "building")
-2. Read `docs/design.md` for the system's current design
-3. Read `docs/architecture.md` for the system's current architecture
-4. Select the agent based on task type (following `start.md` Phase 2 strategy):
+2. **Main session reads** the following files (do NOT delegate file reading to agents):
+   - `docs/design.md` — system's current design
+   - `docs/architecture.md` — system's current architecture
+   - Any task-relevant system docs under `docs/systems/` or `docs/content/`
+3. Select the agent based on task type (following `start.md` Phase 2 strategy):
    - **New system design (DES-*)**: spawn designer + architect in parallel
-   - **Supplementing existing architecture (ARC-*)**: spawn architect only (read design document first)
+   - **Supplementing existing architecture (ARC-*)**: spawn architect only
    - **Content/balance (CON-*, BAL-*)**: spawn designer only
-5. Spawn **reviewer** to check the new content against existing docs (all 14 checklist items must be verified)
+4. **Inject pre-read content into each agent prompt** using the block below. Agents must NOT re-read files already provided.
+   ```
+   ## Pre-loaded Documents (do NOT re-read these files)
+   ### docs/design.md
+   <paste content>
+   ### docs/architecture.md
+   <paste content>
+   ### [other files read above]
+   <paste content>
+   ```
+5. Spawn **reviewer** — inject the newly written document content + canonical docs into its prompt
 6. Fix any issues found
 7. Update `TODO.md`
 8. Commit and push
