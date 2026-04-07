@@ -254,7 +254,23 @@
 | `sfx_energy_warning` | 에너지 경고 | 에너지 20% 이하 시 | 낮은 톤 심장 박동 "둥둥" + 경고 알림, 0.8초 | 1회만 재생(같은 날) |
 | `sfx_energy_depleted` | 에너지 고갈 | 에너지 0 도달 시 | 무거운 숨소리 + 낮은 경고 징글, 1.0초 | |
 
-### 2.13 시간/계절 (Time/Season)
+### 2.13 채집 (Gathering)
+
+| ID | 이름 | 트리거 조건 | 음향 특성 | 비고 |
+|----|------|------------|-----------|------|
+| `sfx_gather_plant` | 식물 채집 | 꽃/풀/식물류 채집 시 | 풀잎 스치는 "사각" + 가벼운 채취 소리, 0.4초 | |
+| `sfx_gather_herb` | 약초 채집 | 달래/봄나물/쑥/약초류 채집 시 | `sfx_gather_plant` 변형, 약간 더 무거운 느낌, 0.4초 | |
+| `sfx_gather_berry` | 열매 채집 | 산딸기/으름/머루/도토리류 채집 시 | 작은 열매 "뚝" 떨어지는 소리 + 바구니 투입음, 0.3초 | |
+| `sfx_gather_mushroom` | 버섯 채집 | 버섯류 채집 시 | 버섯 줄기 끊기는 부드러운 "툭", 0.4초 | Rain 다음 날 빈도 높음 |
+| `sfx_gather_leaf` | 수생 채집 | 연잎/수생 식물류 채집 시 | 물 떨어지는 "뚝" + 잎 "펄럭", 0.5초 | Zone F 전용 |
+| `sfx_gather_ore` | 광석 채집 | 구리/금/철 광석, 수정 채집 시 | 돌 긁히는 "끽" + 광석 떨어지는 "쨍", 0.6초 | 동굴 입구 전용 |
+| `sfx_gather_stone` | 돌 조각 채집 | 돌 조각(Common 광물) 채집 시 | `sfx_gather_ore` 경량화, 0.4초 | |
+| `sfx_gather_bark` | 수피 채집 | 겨울 나무껍질 채집 시 | 나무껍질 벗기는 "드르륵", 0.5초 | 겨울 전용 |
+| `sfx_gather_legendary` | 전설 채집 | Legendary 채집물 획득 시 | 신비로운 빛 효과 SFX + 부드러운 상승 아르페지오, 1.0초 | `sfx_fish_catch_rare`와 유사 톤 |
+| `sfx_gather_point_empty` | 포인트 소진 | 이미 채집된 포인트 인터랙션 시 | 가벼운 "틱" (아무것도 없음 피드백), 0.2초 | |
+| `sfx_gather_respawn` | 포인트 리스폰 | Dawn 채집 포인트 리스폰 시 | 잔잔한 자연 신호음 (선택적 재생), 0.5초 | 로컬 재생, 거리 감쇠 |
+
+### 2.14 시간/계절 (Time/Season)
 
 | ID | 이름 | 트리거 조건 | 음향 특성 | 비고 |
 |----|------|------------|-----------|------|
@@ -410,11 +426,12 @@ Master
 | 가공 | `sfx_process_start`, `sfx_process_complete`, `sfx_mill_running`, `sfx_ferment_bubble`, `sfx_bakery_oven`, `sfx_cheese_churn` | 6 |
 | 목축 | 전 항목 (`sfx_animal_feed` ~ `sfx_animal_sick`) | 10 |
 | 낚시 | 전 항목 (`sfx_cast_line` ~ `sfx_fish_splash`) | 9 |
+| 채집 | 전 항목 (`sfx_gather_plant` ~ `sfx_gather_respawn`) | 11 |
 | 퀘스트/업적 | 전 항목 (`sfx_quest_accept` ~ `sfx_achievement_toast`) | 5 |
 | BGM | `bgm_summer`, `bgm_autumn`, `bgm_winter` (나머지 계절) | 3 |
 | 환경 | `amb_rain_light`, `amb_rain_heavy`, `amb_snow`, `amb_wind_light`, `amb_birds_day` | 5 |
 | 시간 | `sfx_evening_bell`, `sfx_midnight_warning`, `sfx_pass_out`, `sfx_season_transition` | 4 |
-| **Phase 3 합계** | | **56** |
+| **Phase 3 합계** | | **67** |
 
 ### 4.3 Phase 4~5 -- 폴리싱
 
@@ -437,8 +454,8 @@ Master
 | Phase | 사운드 수 | 누적 | 비고 |
 |-------|----------|------|------|
 | MVP (Phase 2) | 28 | 28 | 핵심 루프 피드백 |
-| Phase 3 | 56 | 84 | 시스템별 확장 |
-| Phase 4~5 | 56 | 140 | 폴리싱, variation |
+| Phase 3 | 67 | 95 | 시스템별 확장 (채집 11종 추가) |
+| Phase 4~5 | 56 | 151 | 폴리싱, variation |
 
 ---
 

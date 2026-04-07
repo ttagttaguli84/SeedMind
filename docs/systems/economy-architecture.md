@@ -453,8 +453,10 @@ Pseudocode:
 
 #### 3.7.1 시나리오 A: 비계절 온실 작물 판매가 페널티
 
+> **[SUPERSEDED by 섹션 3.10.3]** 아래 Pseudocode는 HarvestOrigin 도입(FIX-034) 이전 초안 기록이다. 실제 구현 시그니처는 섹션 3.10.3의 `GetGreenhouseMultiplier(HarvestOrigin origin, CropData cropData, Season currentSeason)`을 사용한다.
+
 ```
-Pseudocode: GetGreenhouseMultiplier(bool isGreenhouse, SeasonFlag cropSeasons, Season currentSeason)
+Pseudocode: GetGreenhouseMultiplier(bool isGreenhouse, SeasonFlag cropSeasons, Season currentSeason)  // ← SUPERSEDED
 
     if !isGreenhouse:
         return 1.0  // 야외 재배 → 보정 없음
@@ -495,8 +497,10 @@ ShopSystem.TrySellCrop(crop, qty, quality, isGreenhouse)
 
 #### 3.7.2 시나리오 B: 겨울 전용 작물 온실 시너지 보너스
 
+> **[SUPERSEDED by 섹션 3.10.3]** 아래 Pseudocode는 HarvestOrigin 도입(FIX-034) 이전 초안 기록이다. 실제 구현 시그니처는 섹션 3.10.3을 참조한다.
+
 ```
-Pseudocode: GetGreenhouseMultiplier(bool isGreenhouse, CropData cropData, Season currentSeason)
+Pseudocode: GetGreenhouseMultiplier(bool isGreenhouse, CropData cropData, Season currentSeason)  // ← SUPERSEDED
 
     if !isGreenhouse:
         return 1.0  // 야외 재배 → 보정 없음

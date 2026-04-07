@@ -484,7 +484,12 @@ fishing-system.md의 [OPEN] 항목(광석 획득 경로)을 해소하기 위해,
 | `docs/content/npcs.md` 섹션 4 (철수) | 대장간에서 채집 낫 구매/업그레이드 |
 | `docs/content/npcs.md` 섹션 6.3 (바람이) | 여행 상인 아이템 풀에 광석 추가 제안 |
 | `docs/content/processing-system.md` | 채집물 가공 레시피 확장 대상 |
-| `docs/systems/economy-architecture.md` | `HarvestOrigin.Wild` 값 추가 필요 ([OPEN] 해소) |
+| `docs/systems/economy-architecture.md` 섹션 3.10.2 | `HarvestOrigin.Gathering = 4` 추가 완료 (FIX-076) |
+| `docs/systems/economy-architecture.md` 섹션 3.11 | `SupplyCategory.Forage = 4` + 수급 파라미터 추가 완료 (FIX-076) |
+| `docs/systems/progression-architecture.md` 섹션 2.2~2.3 | `XPSource.GatheringComplete` 추가, OnEnable() 구독 + 이벤트 흐름 업데이트 (FIX-077) |
+| `docs/systems/inventory-architecture.md` 섹션 3.2 | `ItemType.Gathered` 추가 완료 (FIX-078) |
+| `docs/systems/save-load-architecture.md` 섹션 7 | `GatheringManager \| 54` SaveLoadOrder 추가 완료 (FIX-079) |
+| `docs/pipeline/data-pipeline.md` 섹션 2.1 | `GameSaveData.gathering` 필드 추가 완료 (FIX-080) |
 
 ---
 

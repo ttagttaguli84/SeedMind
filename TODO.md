@@ -163,11 +163,13 @@
 | ~~FIX-078~~ | ~~2~~ | ~~inventory-architecture.md 섹션 3.2 ItemType에 `Gathered` 추가, data-pipeline.md 관련 섹션 동시 업데이트 (ARC-031 후속)~~ — DONE |
 | ~~FIX-079~~ | ~~2~~ | ~~save-load-architecture.md 섹션 7 SaveLoadOrder 할당표에 `GatheringManager \| 54` 행 추가 (ARC-031 후속)~~ — DONE |
 | ~~FIX-080~~ | ~~2~~ | ~~data-pipeline.md Part I 섹션 2.1 GameSaveData에 `public GatheringSaveData gathering;` 필드 추가 (ARC-031 후속)~~ — DONE: JSON 스키마 canonical 참조 주석 추가(CRITICAL-2 해소) |
-| FIX-081 | 2 | economy-architecture.md 섹션 3.7.1/3.7.2의 구버전 `GetGreenhouseMultiplier(bool isGreenhouse)` pseudocode에 `[SUPERSEDED by 섹션 3.10.3]` 주석 추가 또는 삭제 처리 (Reviewer WARNING — HarvestOrigin 도입 전 초안 잔존) |
+| ~~FIX-081~~ | ~~2~~ | ~~economy-architecture.md 섹션 3.7.1/3.7.2의 구버전 `GetGreenhouseMultiplier(bool isGreenhouse)` pseudocode에 `[SUPERSEDED by 섹션 3.10.3]` 주석 추가 또는 삭제 처리 (Reviewer WARNING — HarvestOrigin 도입 전 초안 잔존)~~ — DONE: `[SUPERSEDED by 섹션 3.10.3]` 배너 + pseudocode 헤더 주석 추가 |
+| ~~FIX-082~~ | ~~1~~ | ~~gathering-system.md Cross-references 섹션에 economy-architecture.md(FIX-076), progression-architecture.md(FIX-077), inventory-architecture.md(FIX-078), save-load-architecture.md(FIX-079) 참조 추가~~ — DONE: 섹션 8 Cross-references에 6개 참조 추가 |
+| ~~CON-012~~ | ~~2~~ | ~~채집 아이템 콘텐츠 상세 (27종 아이템 상세 스펙 — 판매가, 가공 레시피 연계, 낚싯대 재료 공급 역할 명세 → docs/content/gathering-items.md)~~ — DONE → `docs/content/gathering-items.md` (CON-012): 27종 maxStack/힌트텍스트/NPC선물/SFX 확정, 가공 레시피 연계 정의, 광석 업그레이드 재료 역할 명세 |
+| ~~BAL-015~~ | ~~2~~ | ~~채집 경제 밸런스 시트 (22개 포인트 일일 채집 수입 시뮬레이션, 농업·낚시·목축 대비 채집 수입 비중 검증 → docs/balance/gathering-economy.md)~~ — DONE → `docs/balance/gathering-economy.md`: 일일 수입 봄~가을 220~402G(Lv.1), Critical 이슈 발견(비중 45%), 조정안 D(판매가 40% 하향) 추천 |
 | ARC-032 | 2 | 채집 시스템 MCP 태스크 시퀀스 독립 문서화 (gathering-architecture.md Phase A~G → docs/mcp/gathering-tasks.md 분리, 패턴: facilities-tasks.md 참조) |
-| BAL-015 | 2 | 채집 경제 밸런스 시트 (22개 포인트 일일 채집 수입 시뮬레이션, 농업·낚시·목축 대비 채집 수입 비중 검증 → docs/balance/gathering-economy.md) |
-| CON-012 | 2 | 채집 아이템 콘텐츠 상세 (27종 아이템 상세 스펙 — 판매가, 가공 레시피 연계, 낚싯대 재료 공급 역할 명세 → docs/content/gathering-items.md) |
+| BAL-016 | 3 | 채집 아이템 판매가 하향 조정 확정 (BAL-015 조정안 D — 전체 채집물 판매가 40% 하향, gathering-system.md 섹션 3.3~3.7 수정, gathering-economy.md 섹션 8 미확정 수치 확정) |
 | DES-017 | 2 | 채집 낫 업그레이드 경로 상세 설계 (기본/강화/전설 채집 낫 비용·효과·재료 — 도구 업그레이드 시스템과 통합 방안 포함 → gathering-system.md 섹션 업데이트 또는 독립 문서) |
 | ARC-033 | 1 | 채집 시스템 data-pipeline.md 반영 (GatheringPointData/GatheringItemData/GatheringConfig SO 에셋 테이블 섹션 2.4에 추가, PATTERN-007 준수) |
-| FIX-082 | 1 | gathering-system.md Cross-references 섹션에 economy-architecture.md(FIX-076), progression-architecture.md(FIX-077), inventory-architecture.md(FIX-078), save-load-architecture.md(FIX-079) 참조 추가 |
 | CON-013 | 1 | 채집 퀘스트/업적 콘텐츠 (채집 관련 퀘스트 5종 + 업적 5종 → quest-system.md 및 achievements.md 업데이트, con-010 낚시 패턴 참조) |
+| FIX-083 | 2 | gathering-items.md 섹션 9.1 신규 제안 가공 레시피를 processing-system.md에 공식 추가 (섹션 3.7 채집물 가공 신규 생성 — 봄나물 비빔밥/야생 베리잼/건조 버섯/머루 와인/도토리묵 등) |
