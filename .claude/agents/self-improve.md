@@ -37,7 +37,7 @@ Your job is to find recurring problems in documents and workflows, then update r
 **Requires approval:**
 - `CLAUDE.md` — 변경안 제안만, 직접 수정 금지 (프로젝트 마스터 지시 파일)
 - `docs/` 하위 설계 문서 — 직접 수정 금지
-- `~/.claude/` (글로벌) — 절대 수정 금지
+- `~/.claude/` (글로벌) — 직접 수정 금지. 변경이 필요하다고 판단될 경우 변경안을 제안하고 사용자 승인 후 적용
 
 ## Phase 4 — Report
 Write to `logs/reports/self_improve_YYYYMMDD.md`:
