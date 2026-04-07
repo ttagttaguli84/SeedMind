@@ -186,7 +186,7 @@
 | ARC-039 | 2 | collection-architecture.md CollectionPanel/FishCatalogPanel 씬 마이그레이션 전략 확정 및 MCP 태스크 보강 (ARC-037 OPEN 후속) |
 | ~~CON-017~~ | ~~3~~ | ~~collection-system.md "통합 수집 마스터" 업적 도입 여부 결정 및 achievements.md 반영 (DES-018 OPEN)~~ — DONE: ach_hidden_07 추가, achievements.md 섹션 10.1/11/12/13 갱신, collection-system.md OPEN#4 RESOLVED |
 | BAL-020 | 3 | 겨울 채집 포인트 수 재검토 (gathering-system.md 섹션 9 OPEN#5 — 현재 숲 바닥 2개소만 활성, 동굴 입구 추가 여부 결정) |
-| ARC-040 | 3 | achievement-architecture.md 섹션 3.2 AchievementManager에 AchievementEvents.OnAchievementUnlocked → HandleAchievementChain 구독 상세 구현 명시 (CON-017 리뷰 CRITICAL — ach_hidden_07 연쇄 해금 로직 하드코딩 핸들러 설계, Custom(99) 핸들러 목록 achievement-system.md 섹션 7.1과 동기화) |
+| ~~ARC-040~~ | ~~3~~ | ~~achievement-architecture.md 섹션 3.2 AchievementManager에 AchievementEvents.OnAchievementUnlocked → HandleAchievementChain 구독 상세 구현 명시 (CON-017 리뷰 CRITICAL — ach_hidden_07 연쇄 해금 로직 하드코딩 핸들러 설계, Custom(99) 핸들러 목록 achievement-system.md 섹션 7.1과 동기화)~~ — DONE: HandleAchievementChain pseudocode 추가, achievement-system.md 섹션 7.1/7.2 동기화, 리뷰 CRITICAL 5건+WARNING 3건 추가 수정 |
 | ~~FIX-086~~ | ~~2~~ | ~~tool-upgrade.md에 채집 낫 통합 반영 (ToolUpgradeRecipe 스키마에 levelReqType 필드 추가)~~ — DONE: LevelReqType enum(PlayerLevel/GatheringMastery/FishingMastery), UpgradeCostInfo 확장, CanUpgrade 분기 |
 | ~~FIX-087~~ | ~~1~~ | ~~npcs.md 대장간(철수) 섹션에 채집 낫 업그레이드 대화 9건 반영 (DES-017 섹션 7.3 확정 대화 → npcs.md 동기화)~~ — DONE: 섹션 4.3 업그레이드 대상 4종 갱신, 섹션 4.4 채집 낫 관련 대화 9건 추가 |
 | ~~DES-019~~ | ~~2~~ | ~~베이커리 채집물 레시피 경제 조정 설계~~ — DONE: 조정안 (b)+(a) 채택 — 봄나물 비빔밥 30→60G, 송이 구이 55→70G 상향 확정 |
@@ -203,3 +203,6 @@
 | ~~FIX-091~~ | ~~2~~ | ~~economy-architecture.md SupplyCategory enum에 Forage=4 추가 + HarvestOrigin enum에 Wild 추가 (gathering-system.md 섹션 9 OPEN#6 — 채집물 경제 시스템 통합)~~ — DONE: FIX-076에서 이미 추가 완료됨 확인. gathering-system.md 섹션 6.3 [OPEN] 및 섹션 9 OPEN#6 완료 처리 |
 | ~~DES-020~~ | ~~1~~ | ~~철 광석 도구 업그레이드 대체 재료 여부 결정 (gathering-system.md 섹션 9 OPEN#4 — 채집 철 광석을 철 조각 대체/원료로 쓸지 결정, 밸런스 영향 평가)~~ — DONE: 방안 A(가공소 제련) 채택. 철 광석 x3 -> 철 조각 x1 레시피(`recipe_smelt_iron`) 추가. processing-system.md 56종, gathering-system/gathering-items/tool-upgrade 동기화 완료 |
 | ~~FIX-092~~ | ~~2~~ | ~~DES-020 리뷰 WARNING 후속 — processing-system.md 섹션 3.7.4 철 광석 판매가 인라인 참조 주석 추가, gathering-items.md 섹션 10.2 테이블 셀 canonical 참조 추가, tool-upgrade.md/processing-system.md Cross-references 상호 추가~~ — DONE: 인라인 수치 3개 canonical 참조 추가, 테이블 셀 3개 참조 추가, Cross-references 상호 등록 완료 |
+| FIX-100 | 2 | achievement-tasks.md에 ach_hidden_07 SO 에셋 생성 및 HandleAchievementChain 구현 태스크 추가 (ARC-040 후속 — CON-017에서 업적 추가됐으나 MCP 태스크 문서 미반영) |
+| FIX-101 | 2 | achievement-system.md 섹션 7.1 OnItemGathered 행 [TODO] 태그 제거 및 구독 확정 표기 (FIX-088에서 GatherCount/GatherSpeciesCollected/GatherSickleUpgraded enum 추가 완료됨 — [TODO] 잔존 상태) |
+| ARC-041 | 2 | collection-tasks.md MCP 태스크 시퀀스 문서화 (collection-architecture.md Part II → docs/mcp/collection-tasks.md — ARC-038/ARC-039 완료 후 선행 조건) |

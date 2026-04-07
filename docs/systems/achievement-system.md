@@ -63,9 +63,9 @@ SeedMind의 업적은 **9개 카테고리**로 분류된다. 각 카테고리는
 | 퀘스트 영웅 | `Quest` | 퀘스트/미션 | 4개 |
 | 낚시사 | `Angler` | 낚시/어종 수집 | 4개 |
 | 채집가 | `Gatherer` | 채집/채집물 수집 | 5개 |
-| 숨겨진 업적 | `Hidden` | 특수 행동/이스터에그 | 6개 |
+| 숨겨진 업적 | `Hidden` | 특수 행동/이스터에그 | 7개 |
 
-**총 업적 수: 39개**
+**총 업적 수: 40개**
 
 ### 1.1 업적 유형
 
@@ -262,6 +262,7 @@ AchievementProgress {
 | `ach_hidden_04` | 빈손의 부자 | 소지 골드 0G 상태에서 작물 판매로 단일 거래 500G 이상 달성 | 칭호: "역전의 농부", 골드 (-> see 섹션 4.1) | 위기 극복 상황 |
 | `ach_hidden_05` | 거대 작물의 주인 | 거대 작물(Giant Crop) 수확 (-> see `docs/systems/crop-growth.md` 섹션 5.1) | 칭호: "거대 작물의 주인", 아이템: 거대 씨앗 x1 (-> see 섹션 4.3) | 희귀 이벤트 보상 |
 | `ach_hidden_06` | 전부 다 팔아! | 인벤토리의 모든 슬롯에 작물이 있는 상태에서 한 번에 전부 출하 | 칭호: "통큰 농부", 골드 (-> see 섹션 4.1) | 대량 출하 이스터에그 |
+| `ach_hidden_07` | 통합 수집 마스터 | 어종 도감 15/15종 완성(`ach_fish_04` 달성) + 채집 도감 27/27종 완성(`ach_gather_03` 달성). 두 업적 모두 달성 시 자동 해금 | 칭호: "수집의 대가", 아이템: 도감 배경: 전설의 자연 x1, 골드 (-> see 섹션 4.1) | 연쇄 해금 — `HandleAchievementChain` (-> see `docs/systems/achievement-architecture.md` 섹션 3.2) |
 
 **숨겨진 업적 설계 원칙**:
 - 모두 "특이한 상황" 또는 "의도적 극단 행동"을 요구
@@ -296,8 +297,8 @@ AchievementProgress {
 **숨겨진 업적 보상**: 기본 100G + 30 XP (난이도 무관 균일). 숨겨진 업적의 가치는 칭호와 발견의 즐거움에 있으므로 골드/XP는 적정 수준으로 억제한다.
 
 **업적 보상 XP 총량 추정**:
-- 전 업적(39개) 완료 시 총 XP: (-> see `docs/content/achievements.md` 섹션 13.1 — 확정 합계 3,130 XP)
-- 이는 전체 필요 누적 XP 9,029 (-> see `docs/balance/progression-curve.md` 섹션 1.3.2)의 약 34.7%에 해당 (-> see `docs/content/achievements.md` 섹션 2.4)
+- 전 업적(40개) 완료 시 총 XP: (-> see `docs/content/achievements.md` 섹션 13.1 — 확정 합계 3,160 XP)
+- 이는 전체 필요 누적 XP 9,029 (-> see `docs/balance/progression-curve.md` 섹션 1.3.2)의 약 35.0%에 해당 (-> see `docs/content/achievements.md` 섹션 2.4)
 - 단, 전 업적 완료는 게임 후반(2년차 이후)에나 가능하므로 실질적 XP 가속 효과는 제한적
 
 [RISK] 업적 XP가 퀘스트 XP(계절당 500~1,100 XP, -> see `docs/systems/quest-system.md` 섹션 7.3)와 합산 시 레벨업 속도를 과도하게 가속할 수 있다. 출시 전 시뮬레이션으로 검증 필요.
@@ -358,6 +359,7 @@ AchievementProgress {
 | 역전의 농부 | `ach_hidden_04` | Hidden |
 | 거대 작물의 주인 | `ach_hidden_05` | Hidden |
 | 통큰 농부 | `ach_hidden_06` | Hidden |
+| 수집의 대가 | `ach_hidden_07` | Hidden |
 | 초보 낚시꾼 | `ach_fish_01` | Angler |
 | 낚시 애호가 | `ach_fish_02` Silver | Angler |
 | 숙련 낚시꾼 | `ach_fish_02` Gold | Angler |
@@ -372,7 +374,7 @@ AchievementProgress {
 | 낫의 장인 | `ach_gather_05` | Gatherer |
 | 채집 마스터 | 채집 도감 100% + 숙련도 Lv.10 | Gatherer |
 
-**총 칭호 수: 49개** (기본 칭호 포함, Angler 6 + Gatherer 7 추가, 확정 목록은 -> see `docs/content/achievements.md` 섹션 11.1)
+**총 칭호 수: 50개** (기본 칭호 포함, Hidden +1 "수집의 대가", Angler 6 + Gatherer 7 추가, 확정 목록은 -> see `docs/content/achievements.md` 섹션 11.1)
 
 ### 4.3 아이템 보상
 
@@ -568,6 +570,7 @@ AchievementProgress {
 | `OnToolUsed` | 도구 사용 시 발생 | toolId, usageCount | ach_hidden_03 |
 | `OnGoldChanged` | 골드 변동 시 발생 | previousGold, currentGold, delta | ach_hidden_04 |
 | `GatheringEvents.OnItemGathered` | 채집물 수집 시 발생 ([TODO] `GatherCount`, `GatherSpeciesCollected`, `GatherSickleUpgraded` enum 추가 후 구독 — -> see `docs/content/achievements.md` 섹션 9.5.1) | itemId, rarity, location | ach_gather_01~05 |
+| `AchievementEvents.OnAchievementUnlocked` | 업적 달성 시 발행 (연쇄 해금 체크용) | achievementData | ach_hidden_07 |
 
 ### 7.2 복합 조건 추적
 
@@ -579,6 +582,7 @@ AchievementProgress {
 | `ach_farming_04` (작물 도감 완성) | `Set<string> harvestedCropTypes`. `OnCropHarvested`에서 cropId를 Set에 추가. Set 크기가 전체 작물 수와 일치하면 달성 |
 | `ach_quest_04` (꾸준한 일꾼) | `int consecutiveDailyDays`. 매일 일일 목표 1개 이상 완료 시 +1, 미완료 시 0으로 리셋. 7 도달 시 달성 |
 | `ach_hidden_03` (물만 주는 농부) | 하루 시작 시 `waterOnlyCount = 0`, `otherToolUsed = false` 초기화. 물주기 시 count++. 다른 도구 사용 시 flag = true. 하루 종료 시 `count >= 30 && !otherToolUsed` 확인 |
+| `ach_hidden_07` (통합 수집 마스터) | `HandleAchievementChain` 내 하드코딩. `OnAchievementUnlocked` 이벤트 수신 시 `IsUnlocked("ach_fish_04") && IsUnlocked("ach_gather_03")` 양쪽 true 확인 후 해금. ach_fish_04 또는 ach_gather_03 달성 이벤트마다 체크 |
 
 ### 7.3 세이브/로드 연동
 
@@ -634,7 +638,7 @@ AchievementSaveData {
 
 ### 8.2 업적 보상과 경제 균형
 
-업적 보상 골드 총합(전 업적 완료 기준): (-> see `docs/content/achievements.md` 섹션 13.1 — 확정 합계 10,950G, 39종)
+업적 보상 골드 총합(전 업적 완료 기준): (-> see `docs/content/achievements.md` 섹션 13.1 — 확정 합계 11,050G, 40종)
 
 이는 게임 전체 플레이(2년+)의 누적 수입 대비 미미한 수준이다 (-> see `docs/balance/progression-curve.md` 섹션 3 for 자금 곡선). 업적 보상은 "보너스" 성격이며, 경제 밸런스를 좌우하지 않는다.
 
@@ -666,6 +670,7 @@ AchievementSaveData {
 | `docs/systems/farming-system.md` | 비료 효과, 에너지 시스템 참조 |
 | `docs/systems/gathering-system.md` | 채집물 27종 목록(섹션 3.9), Legendary 채집물(섹션 3.3~3.7), 채집 낫 등급(섹션 5.2), 채집 숙련도(섹션 4) — 채집가 업적 조건 참조 |
 | `docs/content/gathering-items.md` | 채집 아이템 상세 (27종 아이템 속성) — 채집 도감 업적 조건 참조 |
+| `docs/systems/achievement-architecture.md` | 기술 아키텍처 (AchievementManager, HandleAchievementChain, 이벤트 구독 구조) |
 
 ---
 
