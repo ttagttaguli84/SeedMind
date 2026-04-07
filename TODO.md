@@ -17,7 +17,7 @@
 | ~~CON-002~~ | ~~2~~ | ~~시설 콘텐츠 상세 (건설 요건, 업그레이드 경로)~~ — DONE → `docs/content/facilities.md`, `docs/systems/facilities-architecture.md` |
 | ~~CON-003~~ | ~~2~~ | ~~NPC/상점 콘텐츠 (상인 캐릭터, 대화, 상점 인벤토리)~~ — DONE → `docs/content/npcs.md`, `docs/systems/npc-shop-architecture.md` (ARC-008) |
 | ~~VIS-001~~ | ~~2~~ | ~~비주얼 가이드 (로우폴리 스타일 참고자료, 색상 팔레트)~~ — DONE → `docs/systems/visual-guide.md`, `docs/systems/visual-architecture.md` |
-| AUD-001 | 1 | 사운드 디자인 문서 (필요한 효과음/BGM 목록) |
+| ~~AUD-001~~ | ~~1~~ | ~~사운드 디자인 문서 (필요한 효과음/BGM 목록)~~ — DONE → `docs/systems/sound-design.md`, `docs/systems/sound-architecture.md` (BGM 11트랙, SFX 100+종, AudioMixer 구조, SoundManager/BGMScheduler/SoundEventBridge 아키텍처) |
 | ~~DES-005~~ | ~~3~~ | ~~인벤토리/아이템 시스템 상세 설계 (아이템 분류, 스택, 인벤토리 UI 규칙)~~ — DONE → `docs/systems/inventory-system.md` |
 | ~~DES-006~~ | ~~2~~ | ~~튜토리얼/온보딩 시스템 설계 (첫 플레이 가이드, 단계별 안내)~~ — DONE → `docs/systems/tutorial-system.md`, `docs/systems/tutorial-architecture.md` |
 | ~~ARC-006~~ | ~~3~~ | ~~인벤토리 시스템 기술 아키텍처 (InventoryManager, ItemData SO)~~ — DONE → `docs/systems/inventory-architecture.md` |
@@ -138,3 +138,6 @@
 | FIX-062 | 3 | npc-shop-architecture.md 섹션 3.5 TravelingMerchantScheduler 클래스 다이어그램에 `_affinityPoints`, `GetAffinityLevel()`, `ApplyAffinityBonus()` 추가 (BAL-005 아키텍처 분석 후속) |
 | FIX-063 | 2 | inventory-architecture.md 섹션 4에 FishData의 IInventoryItem 구현 예시 추가 (ItemType 프로퍼티 `Fish` 반환 — ARC-026 후속, 리뷰어 INFO-1) |
 | FIX-064 | 2 | fishing-architecture.md 섹션 5.2 또는 balance 문서에 낚시 XP 계산 공식 확정 및 canonical 등록 (rarity 기반 vs basePrice 기반 — ARC-026 후속, 리뷰어 INFO-2) |
+| FIX-065 | 2 | sound-design.md 섹션 3.2에 SFX 풀 총 크기(poolSize) canonical 수치 추가 (AUD-001 리뷰어 WARNING-002 후속 — SoundManager 풀 크기 결정) |
+| FIX-066 | 2 | sound-design.md 섹션 1에 TitleScreen/GameOver BGM 트랙 추가 또는 sound-architecture.md BGMTrack에서 해당 값 제거 결정 (AUD-001 리뷰어 INFO-001 후속 — 문서 간 BGMTrack 일치 필요) |
+| ARC-027 | 2 | 사운드 시스템 MCP 태스크 시퀀스 독립 문서화 (sound-architecture.md Part II → docs/mcp/sound-tasks.md 상세 분리 — AUD-001 후속) |
