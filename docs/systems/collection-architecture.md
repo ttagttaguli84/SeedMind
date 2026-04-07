@@ -207,7 +207,7 @@ namespace SeedMind.Collection
 
 **필드 설명**:
 - `hintLocked`, `descriptionUnlocked`: canonical 값은 `(-> see docs/content/gathering-items.md)` 아이템별 힌트/설명 텍스트. 공통 필드명은 `(-> see docs/systems/collection-system.md 섹션 3.2)`.
-- `firstDiscoverGold`, `firstDiscoverXP`: 희귀도별 보상은 `(-> see docs/systems/collection-system.md 섹션 3.3)`. Common=5G/2XP, Uncommon=15G/5XP, Rare=50G/15XP, Legendary=200G/50XP.
+- `firstDiscoverGold`, `firstDiscoverXP`: 희귀도별 보상은 `(-> see docs/systems/collection-system.md 섹션 3.3)` — 수치 직접 기재 금지.
 - `catalogIcon`: Sprite 에셋 참조. Unity SO에서 Inspector로 할당. JSON 직렬화 대상 아님 (PATTERN-005).
 
 ### 3.2 PATTERN-005 검증: GatheringCatalogData C# <-> JSON 동기화
@@ -857,6 +857,7 @@ SeedMind.Collection (신규)
 | `docs/systems/achievement-architecture.md` (ARC-024) | 섹션 3 | AchievementManager 패턴 참조, 채집 도감 업적 연동 가능성 |
 | `docs/pipeline/data-pipeline.md` | Part I | GameSaveData에 `gatheringCatalog` 필드 추가 필요 |
 | `docs/systems/project-structure.md` | 섹션 2, 3 | 네임스페이스 규칙, asmdef 구조 |
+| `docs/systems/collection-system.md` (DES-018) | 섹션 3.2, 3.3, 5.2, 5.3.2, 6.4 | 도감 공통 필드명, 희귀도별 보상 수치, 채집 도감 아이템 수, 마일스톤 보상 상세, 채집 탭 필터 유형 — canonical |
 
 ---
 

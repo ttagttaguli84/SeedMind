@@ -1131,6 +1131,7 @@ Step D-3: 메인 메뉴 연동
 - `docs/systems/tool-upgrade-architecture.md` -- ToolUpgradeSaveData (섹션 7.2)
 - `docs/systems/time-season-architecture.md` -- TimeSaveData, WeatherSaveData (섹션 7)
 - `docs/systems/achievement-architecture.md` (ARC-017) -- AchievementSaveData 구조, SaveLoadOrder 90 할당 (섹션 7)
+- `docs/systems/collection-architecture.md` (ARC-037) -- GatheringCatalogSaveData 구조, GatheringCatalogManager SaveLoadOrder 56 할당 (섹션 5.2, 7) — FIX-093에서 gatheringCatalog 필드 추가로 연계됨
 
 ---
 

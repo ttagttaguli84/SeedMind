@@ -182,8 +182,8 @@
 | ~~FIX-095~~ | ~~2~~ | ~~project-structure.md에 SeedMind.Collection 네임스페이스/폴더 추가 (ARC-037 후속)~~ — DONE: 네임스페이스 목록 + Scripts/Collection/ 폴더 + asmdef 테이블 추가 |
 | ~~FIX-096~~ | ~~2~~ | ~~fish-catalog.md UI 경로 문구 수정: "메뉴 > 어종 도감" → "메뉴 > 수집 도감 > 어종 탭" (DES-018 통합 도감 채택 후속)~~ — DONE |
 | ~~FIX-099~~ | ~~1~~ | ~~xp-integration.md에 채집 도감 초회 보상 351 XP 반영 누락 (DES-018 후속 — 섹션 3.1 업적 XP 총합 및 비중 재계산, BAL-019 선행 작업)~~ — DONE: 섹션 3.1/5.1/5.2/5.3/Cross-references 업데이트, 보조 소스 합계 4,275→4,626 XP (51.2%) |
-| ARC-038 | 2 | collection-architecture.md GatheringRarity/FishRarity 통합 enum 확정 및 ICatalogProvider 인터페이스 범위 결정 (ARC-037 OPEN 후속) |
-| ARC-039 | 2 | collection-architecture.md CollectionPanel/FishCatalogPanel 씬 마이그레이션 전략 확정 및 MCP 태스크 보강 (ARC-037 OPEN 후속) |
+| ~~ARC-038~~ | ~~2~~ | ~~collection-architecture.md GatheringRarity/FishRarity 통합 enum 확정 및 ICatalogProvider 인터페이스 범위 결정 (ARC-037 OPEN 후속)~~ — DONE: 분리 유지 확정. ICatalogProvider 도입 없음. gathering-architecture.md 섹션 9 OPEN#2 동기화. |
+| ~~ARC-039~~ | ~~2~~ | ~~collection-architecture.md CollectionPanel/FishCatalogPanel 씬 마이그레이션 전략 확정 및 MCP 태스크 보강 (ARC-037 OPEN 후속)~~ — DONE: In-place migration(Q-4a~Q-4f 6단계) 확정. collection-system.md OPEN#5 동기화. |
 | ~~CON-017~~ | ~~3~~ | ~~collection-system.md "통합 수집 마스터" 업적 도입 여부 결정 및 achievements.md 반영 (DES-018 OPEN)~~ — DONE: ach_hidden_07 추가, achievements.md 섹션 10.1/11/12/13 갱신, collection-system.md OPEN#4 RESOLVED |
 | ~~BAL-020~~ | ~~3~~ | ~~겨울 채집 포인트 수 재검토 (gathering-system.md 섹션 9 OPEN#5 — 현재 숲 바닥 2개소만 활성, 동굴 입구 추가 여부 결정)~~ — DONE: 옵션 A(현상 유지) 채택. 5개소(숲 바닥 2 + 동굴 입구 3) 유지. OPEN#5 RESOLVED. gathering-economy.md 섹션 7.3 PATTERN-009 히스토리 배너 추가 |
 | ~~ARC-040~~ | ~~3~~ | ~~achievement-architecture.md 섹션 3.2 AchievementManager에 AchievementEvents.OnAchievementUnlocked → HandleAchievementChain 구독 상세 구현 명시 (CON-017 리뷰 CRITICAL — ach_hidden_07 연쇄 해금 로직 하드코딩 핸들러 설계, Custom(99) 핸들러 목록 achievement-system.md 섹션 7.1과 동기화)~~ — DONE: HandleAchievementChain pseudocode 추가, achievement-system.md 섹션 7.1/7.2 동기화, 리뷰 CRITICAL 5건+WARNING 3건 추가 수정 |
@@ -208,6 +208,13 @@
 | ARC-041 | 2 | collection-tasks.md MCP 태스크 시퀀스 문서화 (collection-architecture.md Part II → docs/mcp/collection-tasks.md — ARC-038/ARC-039 완료 후 선행 조건) |
 | ARC-042 | 1 | collection-architecture.md GatheringCatalogData↔GatheringItemData SO 참조 방식 확정 (OPEN#5 — itemId 문자열 연결 vs SO 직접 참조, 구현 시 결정) |
 | DES-021 | 1 | 보조 XP 소스 합산 비중 상한 기준 설계 원칙 문서화 (BAL-019 OPEN — 보조 소스 51.2%, 60% 초과 시 재검토 기준 명시) |
-| CON-015 | 2 | collection-system.md 채집 도감 통합 UI CollectionPanel 씬 배치 확정 (DES-018 — CollectionUIController가 FishCatalogPanel을 하위로 흡수하는 마이그레이션 경로, collection-architecture.md OPEN#4 후속) |
-| FIX-102 | 2 | save-load-architecture.md Cross-references에 collection-architecture.md 참조 추가 (FIX-093 후속 — gatheringCatalog 필드 추가로 collection-architecture.md가 연계됨) |
+| ~~CON-015~~ | ~~2~~ | ~~collection-system.md 채집 도감 통합 UI CollectionPanel 씬 배치 확정 (DES-018 — CollectionUIController가 FishCatalogPanel을 하위로 흡수하는 마이그레이션 경로, collection-architecture.md OPEN#4 후속)~~ — DONE: collection-system.md OPEN#5 [ARC-038/ARC-039 확정]으로 닫음. 마이그레이션 전략 collection-architecture.md Q-4a~Q-4f 참조. |
+| ~~FIX-102~~ | ~~2~~ | ~~save-load-architecture.md Cross-references에 collection-architecture.md 참조 추가 (FIX-093 후속 — gatheringCatalog 필드 추가로 collection-architecture.md가 연계됨)~~ — DONE |
 | ~~FIX-103~~ | ~~1~~ | ~~data-pipeline.md 시스템 데이터 총계 주석 업데이트 (FIX-094 후속)~~ — N/A: data-pipeline.md에 PATTERN-005 카운트 주석 없음, 수정 불필요 |
+| FIX-104 | 1 | fishing-architecture.md 섹션 21.5 씬 계층에 ARC-039 마이그레이션 노트 추가 (FishCatalogPanel → CollectionPanel/FishPanel 통합 예정 명시 — collection-architecture.md Cross-references에 이미 Q-4 마이그레이션 언급됨, 역방향 참조 보완) |
+| FIX-105 | 1 | collection-system.md 섹션 6.1 단축키 바인딩 OPEN#2 결정 (fish-catalog.md 섹션 5.1과 동일 이슈 — UI 시스템 단축키 정책 통일, ui-system.md 섹션 7 참조) |
+| BAL-021 | 2 | 연간 수익 흐름 통합 시뮬레이션 — 작물/낚시/채집/가공/목축 5개 수익 소스 합산, 1년차 예상 총수익 범위 확인 (economy-system.md 섹션 6 밸런스 검증 후속) |
+| DES-023 | 2 | 농장 장식/꾸미기 시스템 설계 검토 — 울타리/경로/장식물 배치 메카닉 필요 여부, design.md 4.6 시설 목록에 장식 카테고리 포함 여부 결정 |
+| ARC-044 | 1 | 전체 MCP 태스크 시퀀스 의존성 그래프 문서화 — 각 Phase가 선행하는 Phase를 명시한 빌드 순서 개요 작성 (Phase 2 구현 착수 시 실행 순서 로드맵) |
+| DES-022 | 1 | farm-expansion.md 잔존 [OPEN] 항목 일괄 처리 — 섹션 3.3 이하 미결 항목 검토 및 확정 (ARC-023 후속, Phase 2 착수 전 선행 필요) |
+| FIX-106 | 2 | collection-architecture.md 섹션 2 시스템 다이어그램에 GatheringCatalogManager 박스 추가 (현재 다이어그램이 FishCatalogManager 중심으로 기술되고 GatheringCatalogManager 박스가 누락되어 있는지 확인 후 보완) |

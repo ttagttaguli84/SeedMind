@@ -1072,7 +1072,7 @@ SaveManager.LoadAsync()
 
 1. [OPEN] **간단 미니게임 도입 여부**: 현재 설계는 단순 인터랙션(클릭 -> 수집)이지만, 숙련도 레벨이 높아질 때 또는 Rare/Legendary 아이템 채집 시 간단한 미니게임(타이밍 클릭 등)을 도입할지 여부. Designer와 합의 필요.
 
-2. [OPEN] **GatheringRarity와 FishRarity 통합**: 두 enum이 동일한 구조(Common/Uncommon/Rare/Legendary)를 가진다. `SeedMind.ItemRarity`로 통합하면 코드 중복이 줄지만, 시스템 간 결합도가 높아진다.
+2. ~~[OPEN] **GatheringRarity와 FishRarity 통합**: 두 enum이 동일한 구조(Common/Uncommon/Rare/Legendary)를 가진다. `SeedMind.ItemRarity`로 통합하면 코드 중복이 줄지만, 시스템 간 결합도가 높아진다.~~ — **[ARC-038 확정]** 분리 유지. GatheringRarity는 `SeedMind.Gathering` 네임스페이스에 독립 유지. 이유: (1) FishCatalogManager 변경 없음 원칙(ARC-037 섹션 1) — 공통 enum 이동 시 FishCatalogManager 내부 수정 필요. (2) 탭 분리 설계상 공통 enum 없이도 탭별 독립 렌더링 가능. (3) 향후 독립 진화 여지 보존. (-> see docs/systems/collection-architecture.md Open Questions #3)
 
 3. [OPEN] **채집 도구 시스템**: 일부 채집물이 특정 도구(낫으로 풀 베기, 곡괭이로 광물 캐기 등)를 요구하는 설계이나, 도구별 채집 효과(범위, 속도)의 세부 사양은 `gathering-system.md`에서 확정 필요.
 

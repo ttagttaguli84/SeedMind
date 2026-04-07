@@ -478,7 +478,7 @@ fish-catalog.md(CON-011)의 **콘텐츠 데이터**(어종 항목, 힌트 텍스
 2. **[OPEN]** 통합 도감 단축키 바인딩 미확정. fish-catalog.md 섹션 5.1과 동일 이슈.
 3. **[OPEN]** 채집 낫 수리 키트(10종 마일스톤 보상)가 도구 내구도 시스템 미설계로 인해 효용이 불확실하다. 도구 내구도 시스템 도입 여부에 따라 대체 보상 결정 필요.
 4. ~~**[OPEN]** "통합 수집 마스터" 업적(어종 15종 + 채집 27종 전종 완성) 도입 여부.~~ — **RESOLVED (CON-017)**: `ach_hidden_07`로 도입 확정. 상세는 `docs/content/achievements.md` 섹션 10.1 참조.
-5. **[OPEN]** 통합 도감 아키텍처(ICatalogProvider 인터페이스, CollectionManager 등)는 별도 ARC 태스크로 설계해야 한다. 기존 FishCatalogManager(ARC-030)의 리팩터링 범위 평가 필요.
+5. ~~**[OPEN]** 통합 도감 아키텍처(ICatalogProvider 인터페이스, CollectionManager 등)는 별도 ARC 태스크로 설계해야 한다. 기존 FishCatalogManager(ARC-030)의 리팩터링 범위 평가 필요.~~ — **RESOLVED (ARC-038/ARC-039)**: ICatalogProvider 인터페이스 도입 없음. FishCatalogManager 변경 없음 원칙 유지. CollectionPanel/FishPanel 씬 통합 마이그레이션 전략(Q-4a~Q-4f)은 `docs/systems/collection-architecture.md` OPEN#4 [ARC-039 확정] 참조.
 
 ---
 
