@@ -434,7 +434,9 @@
 | 특수 아이템 | 성장 촉진제 (Growth Accelerator) | `item_growth_accel` | 150G | 15% | 대상 작물 성장 2일 단축 (1회 사용, → see docs/balance/traveler-economy.md) |
 | 특수 아이템 | 행운의 부적 (Lucky Charm) | `item_lucky_charm` | 250G | 10% | 하루 동안 Iridium 품질 확률 +15% (→ see docs/balance/traveler-economy.md) |
 | 겨울 전용 | 온실 전용 씨앗 (겨울무/표고버섯/시금치 중 1종) | `seed_winter_*` | 정가 x1.5 | 20% (겨울만) | 겨울 온실 콘텐츠 진입 경로 |
-| 광석 | 수정 원석 (Crystal Gem) | `gather_crystal_gem` | 160G | 10% | 전설 채집 낫 재료 대안 공급 경로 (→ see `docs/systems/gathering-system.md` 섹션 5.5.2). 직판가 32G의 5배 프리미엄 (금 광석 패턴 동일). 재고 1개 |
+| 광석 | 구리 광석 x3 세트 (Copper Ore Set) | `gather_copper_ore` | 100G | 20% | 강화 낚싯대/강화 채집 낫 재료 대안 공급 경로 (→ see `docs/systems/gathering-system.md` 섹션 7.1). 개당 ~33G, 채집 판매가(10G) 3.3배 프리미엄. 재고 1세트(3개) |
+| 광석 | 금 광석 x1 (Gold Ore) | `gather_gold_ore` | 120G | 10% | 전설 낚싯대/전설 채집 낫 재료 대안 공급 경로 (→ see `docs/systems/gathering-system.md` 섹션 7.1). 채집 판매가(24G) 5배 프리미엄. 재고 1개 |
+| 광석 | 수정 원석 (Crystal Gem) | `gather_crystal_gem` | 160G | 10% | 전설 채집 낫 재료 대안 공급 경로 (→ see `docs/systems/gathering-system.md` 섹션 5.5.2). 직판가 32G의 5배 프리미엄. 재고 1개 |
 
 **아이템 선정 규칙**:
 1. 매 등장 시 아이템 풀에서 등장 확률에 따라 4~6개를 무작위 선정

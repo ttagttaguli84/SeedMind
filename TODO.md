@@ -185,7 +185,7 @@
 | ~~FIX-088~~ | ~~2~~ | ~~achievement-architecture.md AchievementConditionType enum에 GatherCount/GatherSpeciesCollected/GatherSickleUpgraded 3종 추가 (CON-013 [TODO] 후속)~~ — DONE: enum 15→19 값, 이벤트 테이블 GatheringEvents 2행 추가, Step 1-2 16→19개 |
 | ~~FIX-089~~ | ~~2~~ | ~~xp-integration.md 채집 퀘스트 XP ~105 + 채집 업적 XP 490 추가분 시뮬레이션 반영 (CON-013 후속)~~ — DONE: 섹션 3.1 Gatherer 행+합계(2,640→3,130/39종), 섹션 4.2.2 시뮬레이션, 5.1~5.4 전체 수치 갱신 |
 | BAL-019 | 2 | 업적 XP 비중 재검증 및 조정 결정 (업적 39종 3,130 XP, 비중 ~68% — 목표 33~43% 초과 이슈. 업적 XP 하향 또는 레벨 테이블 상향 결정) |
-| FIX-090 | 2 | npcs.md 여행 상인 아이템 풀에 구리 광석/금 광석 공식 추가 (gathering-system.md 섹션 8.1 [OPEN] 후속 — 수정 원석 외 광석 2종 추가 필요) |
+| ~~FIX-090~~ | ~~2~~ | ~~npcs.md 여행 상인 아이템 풀에 구리 광석/금 광석 공식 추가 (gathering-system.md 섹션 8.1 [OPEN] 후속 — 수정 원석 외 광석 2종 추가 필요)~~ — DONE: npcs.md 섹션 6.3에 구리 광석 x3(100G, 20%) + 금 광석 x1(120G, 10%) 추가. gathering-system.md 섹션 9 OPEN#2 완료 처리 |
 | ~~ARC-034~~ | ~~1~~ | ~~quest-architecture.md QuestObjectiveType enum에 Gather 추가 및 quest-tasks.md 반영 (CON-013 후속)~~ — DONE: Fish=12/Gather=13 추가, 이벤트 핸들러 2종, quest-tasks.md T-1-04/T-1-15 동기화 |
 | ~~ARC-035~~ | ~~1~~ | ~~achievement-tasks.md에 A-031~A-035 업적 5종 MCP 태스크 추가 (CON-013 후속)~~ — DONE: T-7 섹션 신규(SO 에셋 5종, 이벤트 연결, ~80회 MCP 호출), AchievementCategory Angler/Gatherer 추가, SubscribeAll 12이벤트 |
 | ~~CON-016~~ | ~~1~~ | ~~gathering-system.md 강화 채집 낫 ROI 과다 이슈 해소 (섹션 9.1 [OPEN]: ~468일 ROI → 비용 500~700G 하향 또는 Gold 품질 확률 20~25% 상향 결정)~~ — DONE: Gold 품질 확률 15%→20% 상향. 강화 낫 ROI ~468일→~134일. gathering-system.md 4곳 + gathering-economy.md 5곳 수정. BAL-016 히스토리 배너 2건 추가 |
