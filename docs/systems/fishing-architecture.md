@@ -376,6 +376,8 @@ FishingProficiency는 낚시 전용 숙련도 XP/레벨을 추적하는 Plain C#
 |       // -> see docs/systems/fishing-system.md 섹션 7.4      |
 |  + GetEnergyCostReduction(): int                             |
 |       // -> see docs/systems/fishing-system.md 섹션 7.2      |
+|  + GetMiniGameSuccessRate(): float                           |
+|       // -> see docs/systems/fishing-system.md 섹션 7.4      |
 |                                                              |
 |  [세이브/로드]                                                 |
 |  + GetSaveData(): (int xp, int level)                        |
@@ -419,6 +421,8 @@ FishingConfig (SO) -- 숙련도 섹션 추가 (ARC-029)
     |       // -> see docs/systems/fishing-system.md 섹션 7.2 (canonical)
     |-- energyCostReductionByLevel: int[]  // 레벨별 에너지 소모 감소량
     |       // -> see docs/systems/fishing-system.md 섹션 7.2 (canonical)
+    |-- successRateByLevel: float[]        // 레벨별 미니게임 성공률
+    |       // -> see docs/systems/fishing-system.md 섹션 7.4 (canonical)
 ```
 
 ### 4A.4 AddXP 알고리즘
@@ -488,6 +492,11 @@ GetEnergyCostReduction(): int
     return _config.energyCostReductionByLevel[_currentLevel - 1]
     // Lv.1~7=0, Lv.8+=1
     // -> see docs/systems/fishing-system.md 섹션 7.2
+
+GetMiniGameSuccessRate(): float
+    return _config.successRateByLevel[_currentLevel - 1]
+    // Lv.1=0.50, Lv.5=0.65, Lv.10=0.80
+    // -> see docs/systems/fishing-system.md 섹션 7.4
 ```
 
 ### 4A.7 FishingManager 통합
@@ -539,6 +548,17 @@ FishingManager에서 숙련도 보정이 적용되는 지점:
     float bonus = _proficiency.GetTreasureChestBonus()
     // -> see docs/systems/fishing-system.md 섹션 7.4
     float finalTreasureChance = baseTreasureChance + bonus
+
+6) FishingMinigame.EvaluateResult():
+    // 미니게임 종료 시 성공/실패 판정
+    float successRate = _proficiency.GetMiniGameSuccessRate()
+    // -> see docs/systems/fishing-system.md 섹션 7.4
+    // 현재 ExcitementGauge 채우기 100% 도달 여부를 기본 판정으로 하되,
+    // 낮은 숙련도에서 RNG 판정 추가로 "실력 있어도 실패 가능" 구현
+    // 설계 의도: Lv.1 50%는 타고난 어려움 (낮은 숙련도 = 불안정한 낚시)
+    bool minigameSuccess = minigame.IsTargetZoneReached() &&
+                           (Random.value < successRate)
+    // FishingManager.OnMinigameComplete(bool success)에 전달
 ```
 
 ### 4A.8 실패 시 XP 부여
