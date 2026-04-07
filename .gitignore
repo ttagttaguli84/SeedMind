@@ -1,13 +1,13 @@
-# ===== Logs =====
-logs/
-
 # ===== Unity =====
 [Ll]ibrary/
 [Tt]emp/
 [Oo]bj/
 [Bb]uild/
 [Bb]uilds/
-[Ll]ogs/
+Logs/
+!logs/
+logs/backup/**/*.jsonl
+logs/session_*.log
 [Uu]ser[Ss]ettings/
 *.pidb.meta
 *.pdb
