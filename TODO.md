@@ -185,7 +185,7 @@
 | ARC-038 | 2 | collection-architecture.md GatheringRarity/FishRarity 통합 enum 확정 및 ICatalogProvider 인터페이스 범위 결정 (ARC-037 OPEN 후속) |
 | ARC-039 | 2 | collection-architecture.md CollectionPanel/FishCatalogPanel 씬 마이그레이션 전략 확정 및 MCP 태스크 보강 (ARC-037 OPEN 후속) |
 | ~~CON-017~~ | ~~3~~ | ~~collection-system.md "통합 수집 마스터" 업적 도입 여부 결정 및 achievements.md 반영 (DES-018 OPEN)~~ — DONE: ach_hidden_07 추가, achievements.md 섹션 10.1/11/12/13 갱신, collection-system.md OPEN#4 RESOLVED |
-| BAL-020 | 3 | 겨울 채집 포인트 수 재검토 (gathering-system.md 섹션 9 OPEN#5 — 현재 숲 바닥 2개소만 활성, 동굴 입구 추가 여부 결정) |
+| ~~BAL-020~~ | ~~3~~ | ~~겨울 채집 포인트 수 재검토 (gathering-system.md 섹션 9 OPEN#5 — 현재 숲 바닥 2개소만 활성, 동굴 입구 추가 여부 결정)~~ — DONE: 옵션 A(현상 유지) 채택. 5개소(숲 바닥 2 + 동굴 입구 3) 유지. OPEN#5 RESOLVED. gathering-economy.md 섹션 7.3 PATTERN-009 히스토리 배너 추가 |
 | ~~ARC-040~~ | ~~3~~ | ~~achievement-architecture.md 섹션 3.2 AchievementManager에 AchievementEvents.OnAchievementUnlocked → HandleAchievementChain 구독 상세 구현 명시 (CON-017 리뷰 CRITICAL — ach_hidden_07 연쇄 해금 로직 하드코딩 핸들러 설계, Custom(99) 핸들러 목록 achievement-system.md 섹션 7.1과 동기화)~~ — DONE: HandleAchievementChain pseudocode 추가, achievement-system.md 섹션 7.1/7.2 동기화, 리뷰 CRITICAL 5건+WARNING 3건 추가 수정 |
 | ~~FIX-086~~ | ~~2~~ | ~~tool-upgrade.md에 채집 낫 통합 반영 (ToolUpgradeRecipe 스키마에 levelReqType 필드 추가)~~ — DONE: LevelReqType enum(PlayerLevel/GatheringMastery/FishingMastery), UpgradeCostInfo 확장, CanUpgrade 분기 |
 | ~~FIX-087~~ | ~~1~~ | ~~npcs.md 대장간(철수) 섹션에 채집 낫 업그레이드 대화 9건 반영 (DES-017 섹션 7.3 확정 대화 → npcs.md 동기화)~~ — DONE: 섹션 4.3 업그레이드 대상 4종 갱신, 섹션 4.4 채집 낫 관련 대화 9건 추가 |
