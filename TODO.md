@@ -173,3 +173,7 @@
 | ARC-033 | 1 | 채집 시스템 data-pipeline.md 반영 (GatheringPointData/GatheringItemData/GatheringConfig SO 에셋 테이블 섹션 2.4에 추가, PATTERN-007 준수) |
 | CON-013 | 1 | 채집 퀘스트/업적 콘텐츠 (채집 관련 퀘스트 5종 + 업적 5종 → quest-system.md 및 achievements.md 업데이트, con-010 낚시 패턴 참조) |
 | ~~FIX-083~~ | ~~2~~ | ~~gathering-items.md 섹션 9.1 신규 제안 가공 레시피를 processing-system.md에 공식 추가 (섹션 3.7 채집물 가공 신규 생성 — 봄나물 비빔밥/야생 베리잼/건조 버섯/머루 와인/도토리묵 등)~~ — DONE: processing-system.md 섹션 3.7 채집물 레시피 13종 추가 (42→55종), ProcessingRecipeData 스키마 확장 (inputs[], unlockType, 신규 ProcessingType 4종) |
+| FIX-084 | 2 | gathering-economy.md 섹션 4.1~4.3 FIX-083 확정 수치 반영 (레시피 확정 전 [OPEN] 해소 — 가공 판매가 확정으로 가공 ROI 재계산, 가공 부가가치 역전 Risk 갱신) |
+| BAL-017 | 2 | 채집물 가공품 ROI 밸런스 분석 신규 (processing-economy.md 섹션 추가 — 채집물 가공 13종 ROI vs 작물 가공 비교, BAL-004 패턴 참조) |
+| FIX-085 | 1 | processing-economy.md 레시피 총계 42→55종 갱신 및 채집물 가공 섹션 참조 추가 (FIX-083 downstream) |
+| DES-018 | 1 | 도감 시스템 설계 (채집 도감 + 어종 도감 통합 여부 결정 — gathering-system.md 섹션 9 [OPEN], fish-catalog.md ARC-030 패턴 참조) |
