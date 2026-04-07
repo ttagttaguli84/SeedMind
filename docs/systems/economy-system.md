@@ -40,10 +40,9 @@
 | 작물 직접 판매 | 출하함 또는 상점에서 작물 판매 | 초반~종반 (핵심) |
 | 가공품 판매 | 가공소에서 만든 잼/주스 등 판매 | 중반~종반 (-> see 섹션 2.5) |
 | 축제 보상 | 축제 참여/미니게임 보상 (-> see `docs/systems/time-season.md` 섹션 4.2) | 전 구간 |
-| 채집물 판매 | 야생 채집물(꽃, 열매 등) 판매 | 초반~중반 |
-| 거대 작물 수확 | 거대 작물 대량 수확물 판매 (-> see `docs/systems/crop-growth.md` 섹션 5.1) | 후반 |
-
-[OPEN] 채집 시스템의 상세 설계가 미정. 채집물 종류와 판매가는 콘텐츠 문서(CON 계열)에서 확정 필요.
+| 낚시 직판/가공 | 낚은 생선 직접 판매 또는 훈제어/생선전 등 가공 판매 (→ see `docs/systems/fishing-system.md` 섹션 4.2, `docs/content/processing-system.md`) | 중반~종반 |
+| 채집물 판매 | 야생 채집물(식물/버섯/광물 등) 판매 (→ see `docs/systems/gathering-system.md` 섹션 6) | 초반~종반 |
+| 거대 작물 수확 | 거대 작물 대량 수확물 판매 (→ see `docs/systems/crop-growth.md` 섹션 5.1) | 후반 |
 
 ### 1.4 골드 소실 경로
 
