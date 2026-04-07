@@ -205,7 +205,7 @@
 | ~~FIX-092~~ | ~~2~~ | ~~DES-020 리뷰 WARNING 후속 — processing-system.md 섹션 3.7.4 철 광석 판매가 인라인 참조 주석 추가, gathering-items.md 섹션 10.2 테이블 셀 canonical 참조 추가, tool-upgrade.md/processing-system.md Cross-references 상호 추가~~ — DONE: 인라인 수치 3개 canonical 참조 추가, 테이블 셀 3개 참조 추가, Cross-references 상호 등록 완료 |
 | ~~FIX-100~~ | ~~2~~ | ~~achievement-tasks.md에 ach_hidden_07 SO 에셋 생성 및 HandleAchievementChain 구현 태스크 추가 (ARC-040 후속 — CON-017에서 업적 추가됐으나 MCP 태스크 문서 미반영)~~ — DONE: SO 에셋 목록 A-36 추가, T-2-32 태스크 상세 추가, 업적 총개수 39→40 수정 |
 | ~~FIX-101~~ | ~~2~~ | ~~achievement-system.md 섹션 7.1 OnItemGathered 행 [TODO] 태그 제거 및 구독 확정 표기 (FIX-088에서 GatherCount/GatherSpeciesCollected/GatherSickleUpgraded enum 추가 완료됨 — [TODO] 잔존 상태)~~ — DONE |
-| ARC-041 | 2 | collection-tasks.md MCP 태스크 시퀀스 문서화 (collection-architecture.md Part II → docs/mcp/collection-tasks.md — ARC-038/ARC-039 완료 후 선행 조건) |
+| ~~ARC-041~~ | ~~2~~ | ~~collection-tasks.md MCP 태스크 시퀀스 문서화 (collection-architecture.md Part II → docs/mcp/collection-tasks.md — ARC-038/ARC-039 완료 후 선행 조건)~~ — DONE → `docs/mcp/collection-tasks.md` (8개 태스크 그룹, ~126회 MCP 호출, Q-A~Q-H) |
 | ARC-042 | 1 | collection-architecture.md GatheringCatalogData↔GatheringItemData SO 참조 방식 확정 (OPEN#5 — itemId 문자열 연결 vs SO 직접 참조, 구현 시 결정) |
 | DES-021 | 1 | 보조 XP 소스 합산 비중 상한 기준 설계 원칙 문서화 (BAL-019 OPEN — 보조 소스 51.2%, 60% 초과 시 재검토 기준 명시) |
 | ~~CON-015~~ | ~~2~~ | ~~collection-system.md 채집 도감 통합 UI CollectionPanel 씬 배치 확정 (DES-018 — CollectionUIController가 FishCatalogPanel을 하위로 흡수하는 마이그레이션 경로, collection-architecture.md OPEN#4 후속)~~ — DONE: collection-system.md OPEN#5 [ARC-038/ARC-039 확정]으로 닫음. 마이그레이션 전략 collection-architecture.md Q-4a~Q-4f 참조. |
@@ -218,3 +218,5 @@
 | ARC-044 | 1 | 전체 MCP 태스크 시퀀스 의존성 그래프 문서화 — 각 Phase가 선행하는 Phase를 명시한 빌드 순서 개요 작성 (Phase 2 구현 착수 시 실행 순서 로드맵) |
 | DES-022 | 1 | farm-expansion.md 잔존 [OPEN] 항목 일괄 처리 — 섹션 3.3 이하 미결 항목 검토 및 확정 (ARC-023 후속, Phase 2 착수 전 선행 필요) |
 | FIX-106 | 2 | collection-architecture.md 섹션 2 시스템 다이어그램에 GatheringCatalogManager 박스 추가 (현재 다이어그램이 FishCatalogManager 중심으로 기술되고 GatheringCatalogManager 박스가 누락되어 있는지 확인 후 보완) |
+| CON-018 | 2 | collection-system.md에 채집 아이템 초회 발견 보상 canonical 정의 (rarity별 firstDiscoverGold/XP 테이블 — ARC-041 Q-C-02에서 [OPEN] 처리된 수치, 구현 전 확정 필요) |
+| ARC-045 | 1 | data-pipeline.md 섹션 2.13에 GatheringCatalogData SO 에셋 스키마 추가 (PATTERN-007 준수 — ARC-041에서 새 SO 타입 도입됨, 기존 섹션 2.10~2.12 패턴 참조) |
