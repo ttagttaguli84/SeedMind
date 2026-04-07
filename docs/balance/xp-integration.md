@@ -100,7 +100,8 @@
 |------|------------------------|
 | 1년차 수확/경작 XP (일반) | (-> see `docs/balance/progression-curve.md` 섹션 2.4.2) |
 | 퀘스트 XP (BAL-006 제안 A 적용 후, 1년차) | (-> see `docs/balance/quest-rewards.md` 섹션 7.2) |
-| 업적 XP (전체 34종 완료) | (-> see `docs/content/achievements.md` 섹션 13.1) |
+| 업적 XP (전체 40종 완료) | (-> see `docs/content/achievements.md` 섹션 13.1) |
+| 채집 도감 초회 보상 XP (전체 27종) | (-> see `docs/systems/collection-system.md` 섹션 5.2.1) |
 | XP 테이블 (조정 후, baseXP/growthFactor/레벨 10 누적 XP) | (-> see `docs/balance/progression-curve.md` 섹션 2.4.1) |
 
 **1년차 업적 실현 추정**:
@@ -341,10 +342,11 @@ BAL-006 제안 A의 퀘스트 XP 총량을 692에서 **900 XP**로 상향한다.
 
 | XP 소스 | 연간 XP 목표 | 비율 | 성격 |
 |---------|------------|------|------|
-| 수확/경작 | ~3,332 XP | **72%** | Soft target (에너지/타일 수로 자연 제한) |
+| 수확/경작 | ~3,332 XP | **71%** | Soft target (에너지/타일 수로 자연 제한) |
 | 퀘스트 (전 카테고리) | ~640 XP | **14%** | Soft target (완료율에 따라 가변). 낚시 퀘스트 +~110, 채집 퀘스트 +~100 추가 후 (-> see `docs/systems/quest-system.md` 섹션 7.3) |
 | 업적 (1년차 실현분) | ~610 XP | **13%** | Soft target (달성 시점 분산). 낚시 업적 4종 +40, 채집 업적 5종 +70 추가 후 |
-| **합계** | **~4,582 XP** | **100%** | 레벨 8 중후반 도달 (낚시 + 채집 퀘스트/업적 추가 반영) |
+| 수집 도감 초회 보상 (1년차 실현분) | ~100 XP | **2%** | Soft target. Common 8종(16 XP) + Uncommon 7종(35 XP) + Rare 2종(30 XP) 추정 (-> see `docs/systems/collection-system.md` 섹션 5.2.1) |
+| **합계** | **~4,682 XP** | **100%** | 레벨 8 중후반 도달 (낚시 + 채집 퀘스트/업적 + 도감 초회 보상 반영) |
 
 ### 5.2 전체 게임 XP 예산 (레벨 10 = 9,029 기준)
 
@@ -353,9 +355,10 @@ BAL-006 제안 A의 퀘스트 XP 총량을 692에서 **900 XP**로 상향한다.
 | 수확/경작 | 무제한 (시간 비례) | - | 매일 누적 |
 | 퀘스트 (전 카테고리) | **~1,115 XP** (낚시 퀘스트 ~110 + 채집 퀘스트 ~105 추가 후 확정) | 12.3% | 1~3년차. (-> see `docs/systems/quest-system.md` 섹션 7.3) |
 | 업적 (전 40종) | **3,160 XP** (낚시 업적 4종 390 + 채집 업적 5종 490 + 통합 수집 마스터 1종 30 추가 후 확정, CON-017) | 35.0% | 1~3년차+. (-> see `docs/content/achievements.md` 섹션 13.1) |
-| **보조 소스 합계** | **~4,275 XP** | **47.3%** | |
+| 수집 도감 초회 보상 (채집 도감 27종) | **351 XP** (Common 8×2 + Uncommon 9×5 + Rare 6×15 + Legendary 4×50, DES-018 확정) | 3.9% | 1~3년차 분산. (-> see `docs/systems/collection-system.md` 섹션 5.2.1) |
+| **보조 소스 합계** | **~4,626 XP** | **51.2%** | |
 
-[RISK] 업적 XP(3,160)가 퀘스트 XP(1,115)의 2.8배로, 장기적으로 업적이 더 큰 XP 소스가 된다. 전 업적 완료에 2년 이상이 걸리고, 낚시(390 XP)는 Zone F, 채집 고급 업적(300 XP)은 Zone G 이상 해금 이후이므로 연 단위 유입 속도는 제한적이다(1년차 ~610, 2년차 ~950, 3년차+ ~1,570). 전체 보조 소스가 ~4,275 XP로 레벨 10(9,029)의 47.3%에 달하므로, BAL-019에서 업적 XP 비중 조정 여부를 결정한다 (-> see `docs/balance/xp-integration.md` 섹션 5.2 [OPEN]).
+[RISK] 업적 XP(3,160)가 퀘스트 XP(1,115)의 2.8배로, 장기적으로 업적이 더 큰 XP 소스가 된다. 전 업적 완료에 2년 이상이 걸리고, 낚시(390 XP)는 Zone F, 채집 고급 업적(300 XP)은 Zone G 이상 해금 이후이므로 연 단위 유입 속도는 제한적이다(1년차 ~610, 2년차 ~950, 3년차+ ~1,570). 채집 도감 초회 보상(351 XP, DES-018 추가)까지 합산하면 전체 보조 소스가 ~4,626 XP로 레벨 10(9,029)의 **51.2%**에 달하므로, BAL-019에서 업적 XP 비중 조정 여부를 결정한다 (-> see `docs/balance/xp-integration.md` 섹션 5.2 [OPEN]).
 
 ### 5.3 소스별 제한 메커니즘
 
@@ -364,6 +367,7 @@ BAL-006 제안 A의 퀘스트 XP 총량을 692에서 **900 XP**로 상향한다.
 | 수확/경작 | **자연 제한** (에너지, 타일 수, 성장 시간) | Hard cap 불필요. 에너지 시스템이 일일 XP 상한을 자연스럽게 결정 |
 | 퀘스트 | **콘텐츠 제한** (퀘스트 수 유한) | 전체 ~1,010 XP가 콘텐츠 총량에 의해 hard cap |
 | 업적 | **콘텐츠 제한** (업적 수 유한) | 전체 3,160 XP가 40종에 의해 hard cap (-> see `docs/content/achievements.md` 섹션 13.1) |
+| 수집 도감 초회 보상 | **콘텐츠 제한** (도감 항목 수 유한) | 채집 도감 27종 초회 보상 351 XP가 hard cap. 아이템당 1회만 지급 (-> see `docs/systems/collection-system.md` 섹션 5.2.1) |
 | 일일 목표 | **일일 제한** (하루 2개, 최대 ~5 XP) | 제안 A' 적용: 기본 XP 2~5 범위, 레벨 스케일링 제거 |
 
 ### 5.4 연간 XP 수지 안전 검증
@@ -440,6 +444,7 @@ BAL-006 제안 A의 퀘스트 XP 총량을 692에서 **900 XP**로 상향한다.
 | `docs/balance/progression-curve.md` | 섹션 1.3.2 (원본 XP 테이블), 섹션 2.4.1 (조정 XP 테이블), 섹션 2.4.2~2.4.3 (시뮬레이션) | 수확/경작 XP canonical, XP 테이블 canonical |
 | `docs/balance/quest-rewards.md` | 섹션 3~6 (퀘스트 XP 분석), 섹션 6.2 (제안 A), 섹션 7.2 (조정 후 시뮬레이션) | 퀘스트 XP 삭감 기반, 제안 A' 수정 필요 |
 | `docs/content/achievements.md` | 섹션 13.1 (전체 XP 3,160 확정 합산, CON-017 반영), 섹션 3~10 및 섹션 9.5 (카테고리별 소계) | 업적 XP canonical |
+| `docs/systems/collection-system.md` | 섹션 5.2.1 (채집 도감 초회 보상 테이블, 351 XP 확정) | 수집 도감 초회 보상 XP canonical (DES-018) |
 | `docs/systems/quest-system.md` | 섹션 7.3 (XP 예산 목표 10~15%) | 설계 목표 원본 |
 | `docs/design.md` | 섹션 4.2 (작물 목록), 섹션 4.6 (시설 목록) | 작물/시설 canonical |
 | `docs/systems/farming-system.md` | 섹션 3.2 (에너지 시스템) | 수확 XP의 자연 제한 근거 |

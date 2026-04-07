@@ -569,7 +569,7 @@ AchievementProgress {
 | `OnTimeAdvanced` | 게임 시간 진행 시 발생 | currentHour, playerLocation | ach_hidden_02 |
 | `OnToolUsed` | 도구 사용 시 발생 | toolId, usageCount | ach_hidden_03 |
 | `OnGoldChanged` | 골드 변동 시 발생 | previousGold, currentGold, delta | ach_hidden_04 |
-| `GatheringEvents.OnItemGathered` | 채집물 수집 시 발생 ([TODO] `GatherCount`, `GatherSpeciesCollected`, `GatherSickleUpgraded` enum 추가 후 구독 — -> see `docs/content/achievements.md` 섹션 9.5.1) | itemId, rarity, location | ach_gather_01~05 |
+| `GatheringEvents.OnItemGathered` | 채집물 수집 시 발생 (`GatherCount`, `GatherSpeciesCollected`, `GatherSickleUpgraded` enum 추가 완료, FIX-088 확정 — -> see `docs/content/achievements.md` 섹션 9.5.1) | itemId, rarity, location | ach_gather_01~05 |
 | `AchievementEvents.OnAchievementUnlocked` | 업적 달성 시 발행 (연쇄 해금 체크용) | achievementData | ach_hidden_07 |
 
 ### 7.2 복합 조건 추적

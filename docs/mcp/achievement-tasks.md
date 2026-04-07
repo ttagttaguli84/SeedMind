@@ -112,8 +112,9 @@
 | A-33 | `SO_Ach_Gather03.asset` | `Assets/_Project/Data/Achievements/Gatherer/` | Gatherer | T-7-04 |
 | A-34 | `SO_Ach_Gather04.asset` | `Assets/_Project/Data/Achievements/Gatherer/` | Gatherer | T-7-05 |
 | A-35 | `SO_Ach_Gather05.asset` | `Assets/_Project/Data/Achievements/Gatherer/` | Gatherer | T-7-06 |
+| A-36 | `SO_Ach_Hidden07.asset` | `Assets/_Project/Data/Achievements/Hidden/` | Hidden | T-2-32 |
 
-> 업적 총 개수 39개 (-> see docs/content/achievements.md 섹션 13.1 for 카테고리별 배분). 기존 30개(T-2) + 낚시 4개(별도) + 채집 5개(T-7)
+> 업적 총 개수 40개 (-> see docs/content/achievements.md 섹션 13.1 for 카테고리별 배분). 기존 30개(T-2) + 낚시 4개(별도) + 채집 5개(T-7) + ach_hidden_07 통합 수집 마스터 1개(T-2-32, CON-017 추가)
 
 ## 4. 씬 GameObject 목록
 
@@ -1234,6 +1235,37 @@ set_property  asset: "SO_Ach_Farming02"  property: "tiers.Array.data[2].rewardTi
 
 ---
 
+### T-2-32: ach_hidden_07 SO 에셋 생성 (통합 수집 마스터, CON-017)
+
+`ach_hidden_07`은 낚시 도감 전종(ach_fish_04) AND 채집 도감 전종(ach_gather_03)을 모두 달성한 플레이어에게만 연쇄 해금되는 숨겨진 업적이다. (-> see `docs/content/achievements.md` 섹션 7.3 for 업적 수치, `docs/systems/achievement-architecture.md` 섹션 3.2 for HandleAchievementChain 로직)
+
+```
+create_asset
+  type: "SeedMind.Achievement.Data.AchievementData"
+  path: "Assets/_Project/Data/Achievements/Hidden/SO_Ach_Hidden07.asset"
+```
+
+```
+set_property  asset: "Assets/_Project/Data/Achievements/Hidden/SO_Ach_Hidden07.asset"
+  achievementId: "ach_hidden_07"
+  isHidden: true
+  conditionType: 99  // Custom(99): 복합 연쇄 조건 (HandleAchievementChain 내부 처리)
+  targetValue: 0     // HandleAchievementChain이 직접 UnlockAchievement 호출
+  // 보상 수치 -> see docs/content/achievements.md 섹션 7.3
+```
+
+**연쇄 해금 이벤트 구독 확인** (T-2-32 완료 후):
+
+`AchievementManager.Awake()`에 아래 구독이 포함되어 있는지 검증:
+```
+AchievementEvents.OnAchievementUnlocked += HandleAchievementChain;
+// -> see docs/systems/achievement-architecture.md 섹션 3.2 for HandleAchievementChain 구현
+```
+
+- **MCP 호출**: 2회 (create_asset 1 + set_property 1)
+
+---
+
 ### T-2-ALT: Editor 스크립트를 통한 일괄 생성 (대안)
 
 Tiered 업적의 `tiers[]` 배열 설정이 `set_property`로 불가능한 경우, Editor 스크립트를 사용한다.
@@ -2125,7 +2157,7 @@ execute_menu_item
 - [OPEN] `tiers.Array.data[n].fieldName` 형식의 중첩 배열 `set_property`가 MCP for Unity에서 지원되는지 사전 검증 필요. 지원되지 않으면 T-2-ALT (Editor 스크립트 일괄 생성) 적용.
 - [OPEN] AchievementManager의 `_allAchievements` 배열을 수동 참조 연결 대신 DataRegistry 또는 `Resources.LoadAll<AchievementData>` 패턴으로 자동화할지 결정 필요. (-> see docs/pipeline/data-pipeline.md)
 - [OPEN] `EconomyEvents.OnGoldSpent`와 `NPCEvents.OnNPCFirstMet`가 기존 아키텍처에 정의되어 있는지 확인 필요. 없으면 해당 시스템에 이벤트를 추가해야 하며, 관련 아키텍처 문서 업데이트 수반.
-- 업적 총 개수 및 세부 수치는 `docs/content/achievements.md` (CON-007/CON-013)에 확정. 39개, 보상 XP 총 3,130, 골드 총 10,950G, 칭호 49종. (-> see docs/content/achievements.md 섹션 13.1). 채집 업적 5종(490 XP, 2,600G)은 T-7에서 SO 에셋 생성
+- 업적 총 개수 및 세부 수치는 `docs/content/achievements.md` (CON-007/CON-013/CON-017)에 확정. 40개, 보상 XP 총 3,160 XP(ach_hidden_07 포함), 칭호 49종. (-> see docs/content/achievements.md 섹션 13.1). 채집 업적 5종(490 XP, 2,600G)은 T-7에서, ach_hidden_07(통합 수집 마스터)은 T-2-32에서 SO 에셋 생성
 - [OPEN] `ach_gather_04`(전설의 채집가)의 Legendary 레어리티 필터를 `targetId="rarity_legendary"` + HandleGather 핸들러 분기로 처리할지, Custom(99)으로 처리할지 결정 필요. 현재 T-7-05에서는 GatherCount(15) + targetId 커스텀 필터 방식을 채택
 - [OPEN] `ach_gather_02` Gold 단계의 채집 숙련도 XP 보너스(+25%, 50회) 아이템 구현 방식 미확정. 버프 시스템 공통화 설계 필요 (-> see docs/content/achievements.md Open Question #9)
 
