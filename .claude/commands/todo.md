@@ -10,9 +10,14 @@ Read `TODO.md`. It is a markdown table: `ID | Priority(1~5) | Description`.
 
 ## Execution
 1. Read relevant existing documents for context
-2. Use the appropriate agent (designer, architect, or both via /plan)
+2. Select the agent based on task type (following `start.md` Phase 2/3 strategy):
+   - `DES-*` new system: designer + architect in parallel
+   - `ARC-*` architecture only: architect only (read design document first)
+   - `BAL-*` balance: designer only
+   - `CON-*` content: designer only
+   - `FIX-*` simple fix: direct edit, no agent
 3. Create or update documents
-4. Run `/review` to verify consistency
+4. Decide whether to run `/review` (based on `start.md` Phase 3 criteria — can skip for simple FIX-* fixes)
 5. Remove completed row from TODO.md
 6. If TODO.md drops below 10 rows: analyze docs for gaps, add new items
 7. Commit and push

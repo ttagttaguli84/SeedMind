@@ -16,10 +16,10 @@ description: Write a development log entry summarizing recent work and decisions
 ## Format
 ```markdown
 # Devlog #NNN — [Title]
-> YYYY-MM-DD | Phase N | 작성: Claude Code (Opus)
+> YYYY-MM-DD | Phase N | Author: Claude Code (Opus)
 
-## 오늘 한 일
-## 의사결정 근거
-## 다음 단계
-## AI의 자기 평가
+## What Was Done Today
+## Rationale
+## Next Steps
+## AI Self-Assessment
 ```
