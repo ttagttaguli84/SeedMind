@@ -130,14 +130,18 @@
 | ~~FIX-053~~ | ~~3~~ | ~~data-pipeline.md Part I ItemType enum에 `Fish` 값 추가 (ARC-026 후속)~~ — DONE: data-pipeline.md, inventory-architecture.md 섹션 3.2, inventory-tasks.md Step 1-01에 동시 반영 |
 | FIX-054 | 2 | processing-system.md에 생선 가공 레시피 섹션 추가 후 fishing-system.md 섹션 6.2 테이블 제거 및 참조 교체 (PATTERN-008 이전 — DES-013 후속) |
 | ~~FIX-055~~ | ~~5~~ | ~~낚시 미니게임 방식 결정 및 통일: fishing-system.md 섹션 3(Oscillating Bar 가로 커서)과 fishing-architecture.md 섹션 2(ExcitementGauge 세로 게이지)가 불일치. 한 방식으로 확정 후 두 문서를 동시 수정 (CRITICAL — ARC-026 후속)~~ — DONE: ExcitementGauge 방식으로 통일, fishing-system.md 섹션 3 전면 재작성 (FishData SO targetZoneWidthMul/moveSpeed 필드 정합) |
-| FIX-057 | 3 | npcs.md 섹션 9.3 `luckyCharmIridiumBonus` 조정 범위 0.03~0.10 → 0.03~0.20 확장 (BAL-005 섹션 8 Open Question 6 후속 — 권장 값 0.15 수용 위해 상한 확장 필요) |
-| FIX-058 | 2 | BAL-005 확정 후 npcs.md 섹션 6.3·9.2·9.3 가격/파라미터 반영: universalFertPrice 150→80G, offSeasonSeedPriceMult 2.0→1.5, growthAccelDays 1→2, luckyCharmIridiumBonus 0.05→0.15, 성장 촉진제 가격 250G→150G, 행운의 부적 400G→250G (BAL-005 권장 조정 — [OPEN] 확정 대기) |
-| FIX-059 | 3 | data-pipeline.md Part I ItemType enum에 `Consumable` 값 추가 — 여행 상인 소비형 아이템(에너지 토닉, 성장 촉진제, 행운의 부적)을 Special과 구분하기 위해 (BAL-005 아키텍처 분석 후속) |
-| FIX-060 | 3 | economy-architecture.md PriceCategory enum에 `Consumable`, `Decoration` 값 추가 후 관련 switch 문 업데이트 (BAL-005 아키텍처 분석 후속) |
-| FIX-061 | 2 | npc-shop-architecture.md 섹션 7.2의 구버전 TravelingMerchantSaveData(4필드)를 섹션 9.4 확장판(7필드)으로 대체 또는 명시적 deprecated 표기 (BAL-005 아키텍처 분석 후속) |
-| FIX-062 | 3 | npc-shop-architecture.md 섹션 3.5 TravelingMerchantScheduler 클래스 다이어그램에 `_affinityPoints`, `GetAffinityLevel()`, `ApplyAffinityBonus()` 추가 (BAL-005 아키텍처 분석 후속) |
+| ~~FIX-057~~ | ~~3~~ | ~~npcs.md 섹션 9.3 `luckyCharmIridiumBonus` 조정 범위 0.03~0.10 → 0.03~0.20 확장 (BAL-005 섹션 8 Open Question 6 후속 — 권장 값 0.15 수용 위해 상한 확장 필요)~~ — DONE: 섹션 9.3 조정 범위 0.03~0.20으로 확장 |
+| ~~FIX-058~~ | ~~2~~ | ~~BAL-005 확정 후 npcs.md 섹션 6.3·9.2·9.3 가격/파라미터 반영: universalFertPrice 150→80G, offSeasonSeedPriceMult 2.0→1.5, growthAccelDays 1→2, luckyCharmIridiumBonus 0.05→0.15, 성장 촉진제 가격 250G→150G, 행운의 부적 400G→250G (BAL-005 권장 조정 — [OPEN] 확정 대기)~~ — DONE: 섹션 6.3/6.4/9.1/9.2/9.3 전면 반영, canonical 참조 추가 |
+| ~~FIX-059~~ | ~~3~~ | ~~data-pipeline.md Part I ItemType enum에 `Consumable` 값 추가 — 여행 상인 소비형 아이템(에너지 토닉, 성장 촉진제, 행운의 부적)을 Special과 구분하기 위해 (BAL-005 아키텍처 분석 후속)~~ — DONE: ItemType enum 테이블에 Consumable 추가, ItemSlotSaveData 주석 업데이트 |
+| ~~FIX-060~~ | ~~3~~ | ~~economy-architecture.md PriceCategory enum에 `Consumable`, `Decoration` 값 추가 후 관련 switch 문 업데이트 (BAL-005 아키텍처 분석 후속)~~ — DONE: PriceCategory enum에 Consumable/Decoration 추가 (switch 문 없음) |
+| ~~FIX-061~~ | ~~2~~ | ~~npc-shop-architecture.md 섹션 7.2의 구버전 TravelingMerchantSaveData(4필드)를 섹션 9.4 확장판(7필드)으로 대체 또는 명시적 deprecated 표기 (BAL-005 아키텍처 분석 후속)~~ — DONE: 섹션 7.1/7.2에 [DEPRECATED] 배너 추가, 섹션 9.4(7필드) 참조 명시 |
+| ~~FIX-062~~ | ~~3~~ | ~~npc-shop-architecture.md 섹션 3.5 TravelingMerchantScheduler 클래스 다이어그램에 `_affinityPoints`, `GetAffinityLevel()`, `ApplyAffinityBonus()` 추가 (BAL-005 아키텍처 분석 후속)~~ — DONE: _affinityPoints 필드 + 메서드 2개 + OnAffinityChanged 이벤트 구독 추가 |
 | FIX-063 | 2 | inventory-architecture.md 섹션 4에 FishData의 IInventoryItem 구현 예시 추가 (ItemType 프로퍼티 `Fish` 반환 — ARC-026 후속, 리뷰어 INFO-1) |
 | FIX-064 | 2 | fishing-architecture.md 섹션 5.2 또는 balance 문서에 낚시 XP 계산 공식 확정 및 canonical 등록 (rarity 기반 vs basePrice 기반 — ARC-026 후속, 리뷰어 INFO-2) |
+| FIX-067 | 3 | tool-upgrade.md 섹션 6.1 대장간 영업시간 09:00~18:00 → 10:00~16:00 수정 (economy-system.md 섹션 3.2가 canonical — npcs.md [OPEN] 6 후속) |
+| DES-014 | 2 | 겨울 온실 전용 씨앗 판매 경로 확정 (여행 상인 독점 vs 잡화 상점 겨울 판매 — npcs.md [OPEN] 1 후속, crops.md 섹션 3.9~3.11 반영) |
+| ARC-028 | 2 | 낚시 시스템 MCP 태스크 시퀀스 문서화 (fishing-architecture.md Part II → docs/mcp/fishing-tasks.md — ARC-026 후속) |
+| FIX-068 | 2 | farm-expansion-architecture.md [RISK] 해소: ToolType enum에 Axe/Pickaxe 추가 여부 확정 (Hoe 등급별 개간 능력으로 대체 유지 vs 전용 도구 추가 — farming-architecture.md 섹션 4.3 동기화 포함) |
 | ~~FIX-065~~ | ~~2~~ | ~~sound-design.md 섹션 3.5에 SFX 풀 총 크기(poolSize=16) canonical 수치 추가 (AUD-001 리뷰어 WARNING-002 후속)~~ — DONE: 섹션 3.5 풀 크기 테이블 추가 (poolSize=16, 산출 근거 포함), sound-architecture.md 섹션 3.2 참조 `섹션 3.5`로 구체화 |
 | ~~FIX-066~~ | ~~2~~ | ~~sound-design.md 섹션 1에 TitleScreen/GameOver BGM 트랙 추가 또는 sound-architecture.md BGMTrack에서 해당 값 제거 결정 (AUD-001 리뷰어 INFO-001 후속)~~ — DONE: sound-design.md 섹션 1.3에 bgm_title_screen/bgm_game_over 추가; 섹션 1.4 우선순위 스택 6단계로 확장(TitleScreen/GameOver 최우선); sound-architecture.md BGMTrack 주석 참조 추가 |
 | ~~ARC-027~~ | ~~2~~ | ~~사운드 시스템 MCP 태스크 시퀀스 독립 문서화 (sound-architecture.md Part II → docs/mcp/sound-tasks.md 상세 분리)~~ — DONE → `docs/mcp/sound-tasks.md` (6단계 태스크 그룹, ~148회 MCP 호출) |

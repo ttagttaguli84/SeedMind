@@ -355,6 +355,7 @@ SO_Tool_Hoe_Legendary    (tier=3, nextTier=null)
 | Processed | 가공품 | O (50) | - |
 | Material | 재료 (광석 등) | O (99) | 향후 확장 |
 | Fish | 물고기 | O (99) | 품질별 별도 슬롯 (→ see docs/systems/fishing-system.md, FIX-053) |
+| Consumable | 소비형 아이템 | O (10) | 여행 상인 소비품(에너지 토닉, 성장 촉진제, 행운의 부적) — Special과 구분 |
 | Special | 특수 아이템 | X (1) | 이벤트 보상 등 |
 
 [OPEN] 최종 구현 방식(방식 A vs B)은 아키텍트 에이전트와 협의하여 Part II에서 확정.
@@ -394,7 +395,8 @@ SO_Tool_Hoe_Legendary    (tier=3, nextTier=null)
   "unlocks": { },
   "shops": [ ],
   "shippingBin": { },
-  "fishing": { }
+  "fishing": { },
+  "npc": { }
 }
 ```
 
@@ -686,7 +688,7 @@ SO_Tool_Hoe_Legendary    (tier=3, nextTier=null)
 |------|------|
 | pendingItems | 당일 넣은 아이템 목록 — 다음 날 06:00 정산 전까지 유지 |
 | itemId | 아이템 고유 ID (→ see `docs/systems/inventory-system.md` 섹션 7) |
-| itemType | 아이템 카테고리 (Crop, Processed, Seed 등) |
+| itemType | 아이템 카테고리 (Crop, Seed, Tool, Consumable 등) |
 | quantity | 수량 |
 | quality | 품질 등급 (Normal / Silver / Gold) |
 
@@ -1272,7 +1274,7 @@ namespace SeedMind.Building
     public class ItemSlotSaveData
     {
         public string itemId;             // IInventoryItem.ItemId
-        public string itemType;           // ItemType enum 문자열 ("Crop", "Seed", "Tool" 등)
+        public string itemType;           // ItemType enum 문자열 ("Crop", "Seed", "Tool", "Consumable" 등)
         public int quantity;
         public string quality;            // CropQuality enum 문자열 (Crop 카테고리만)
         public string origin;             // [FIX-034] HarvestOrigin enum 문자열 ("Outdoor" | "Greenhouse")

@@ -400,13 +400,13 @@
 
 | 카테고리 | 아이템 | 영문 ID | 가격 | 등장 확률 | 비고 |
 |----------|--------|---------|------|-----------|------|
-| 비계절 씨앗 | 다음 계절 씨앗 1종 (무작위) | `seed_*` | 정가 x2.0 | 30% | 미리 다음 계절 작물 준비 가능 |
-| 희귀 비료 | 만능 비료 (Universal Fertilizer) | `item_universal_fert` | 150G | 20% | 품질+성장 복합 효과 (섹션 6.4 참조) |
+| 비계절 씨앗 | 다음 계절 씨앗 1종 (무작위) | `seed_*` | 정가 x1.5 | 30% | 미리 다음 계절 작물 준비 가능 (→ see docs/balance/traveler-economy.md) |
+| 희귀 비료 | 만능 비료 (Universal Fertilizer) | `item_universal_fert` | 80G | 20% | 품질+성장 복합 효과 (섹션 6.4 참조, → see docs/balance/traveler-economy.md) |
 | 장식품 | 정원 등불 (Garden Lantern) | `item_garden_lantern` | 300G | 15% | 농장 장식 아이템, 야간 조명 |
 | 장식품 | 풍향계 (Weathervane) | `item_weathervane` | 500G | 10% | 농장 장식, 다음 날 날씨 예보 기능 |
 | 특수 아이템 | 에너지 토닉 (Energy Tonic) | `item_energy_tonic` | 200G | 25% | 에너지 50 즉시 회복 (1일 1회 제한) |
-| 특수 아이템 | 성장 촉진제 (Growth Accelerator) | `item_growth_accel` | 250G | 15% | 대상 작물 성장 1일 단축 (1회 사용) |
-| 특수 아이템 | 행운의 부적 (Lucky Charm) | `item_lucky_charm` | 400G | 10% | 하루 동안 Iridium 품질 확률 +5% |
+| 특수 아이템 | 성장 촉진제 (Growth Accelerator) | `item_growth_accel` | 150G | 15% | 대상 작물 성장 2일 단축 (1회 사용, → see docs/balance/traveler-economy.md) |
+| 특수 아이템 | 행운의 부적 (Lucky Charm) | `item_lucky_charm` | 250G | 10% | 하루 동안 Iridium 품질 확률 +15% (→ see docs/balance/traveler-economy.md) |
 | 겨울 전용 | 온실 전용 씨앗 (겨울무/표고버섯/시금치 중 1종) | `seed_winter_*` | 정가 x1.5 | 20% (겨울만) | 겨울 온실 콘텐츠 진입 경로 |
 
 **아이템 선정 규칙**:
@@ -421,7 +421,7 @@
 | 항목 | 내용 |
 |------|------|
 | 영문 ID | `item_universal_fert` |
-| 가격 | 150G |
+| 가격 | 80G (→ see docs/balance/traveler-economy.md) |
 | 효과 | 품질 보정 +15% (고급 비료 수준) + 성장 속도 +10% (속성장 비료의 절반 수준) |
 | 사용법 | 타일에 적용 (일반 비료와 동일) |
 | 중첩 | 다른 비료와 중첩 불가. 기존 비료를 대체함 |
@@ -641,13 +641,13 @@ DialogueEntry {
 | 판매 아이템 수 | `travelMerchantItemCount` | 4~6 | 3~8 | 쇼핑 선택지 다양성 |
 | 아이템당 재고 | `travelMerchantStock` | 1~3 | 1~5 | 아이템 희소성 |
 | 아이템 쿨다운 | `travelMerchantCooldown` | 2주 | 1~4주 | 아이템 갱신 주기 |
-| 비계절 씨앗 가격 배수 | `offSeasonSeedPriceMult` | 2.0 | 1.5~3.0 | 사전 준비 비용 |
+| 비계절 씨앗 가격 배수 | `offSeasonSeedPriceMult` | 1.5 | 1.5~3.0 | 사전 준비 비용 (→ see docs/balance/traveler-economy.md) |
 
 ### 9.2 만능 비료 파라미터
 
 | 파라미터 | 영문 키 | 현재 값 | 조정 범위 | 영향 |
 |----------|---------|---------|-----------|------|
-| 가격 | `universalFertPrice` | 150 | 100~250 | 접근성 |
+| 가격 | `universalFertPrice` | 80 | 50~250 | 접근성 (→ see docs/balance/traveler-economy.md) |
 | 품질 보정 | `universalFertQuality` | 0.15 | 0.10~0.25 | 비료 효과 |
 | 성장 속도 보정 | `universalFertGrowth` | 0.10 | 0.05~0.15 | 비료 효과 |
 
@@ -657,8 +657,8 @@ DialogueEntry {
 |----------|---------|---------|-----------|------|
 | 에너지 토닉 회복량 | `energyTonicAmount` | 50 | 30~70 | 일일 에너지 경제 |
 | 에너지 토닉 일일 제한 | `energyTonicDailyLimit` | 1 | 1~3 | 에너지 시스템 밸런스 |
-| 성장 촉진제 단축 일수 | `growthAccelDays` | 1 | 1~2 | 작물 성장 밸런스 |
-| 행운 부적 Iridium 확률 증가 | `luckyCharmIridiumBonus` | 0.05 | 0.03~0.10 | 품질 밸런스 |
+| 성장 촉진제 단축 일수 | `growthAccelDays` | 2 | 1~3 | 작물 성장 밸런스 (→ see docs/balance/traveler-economy.md) |
+| 행운 부적 Iridium 확률 증가 | `luckyCharmIridiumBonus` | 0.15 | 0.03~0.20 | 품질 밸런스 (→ see docs/balance/traveler-economy.md) |
 
 ### 9.4 대화 시스템 파라미터
 

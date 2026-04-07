@@ -744,12 +744,12 @@ namespace SeedMind.Economy.Data
     public class EconomyConfig : ScriptableObject
     {
         [Header("기본 설정")]
-        public int startingGold = 500;           // 게임 시작 골드
-        public int maxGold = 999999;             // 골드 상한
+        public int startingGold = 500;           // 게임 시작 골드 (→ see docs/systems/economy-system.md 섹션 7.1)
+        public int maxGold = 999999;             // 골드 상한 (→ see docs/systems/economy-system.md 섹션 7.1)
 
         [Header("가격 변동")]
-        public float sellPriceFloor = 0.5f;      // 판매가 하한 배수
-        public float sellPriceCeiling = 2.0f;    // 판매가 상한 배수
+        public float sellPriceFloor = 0.5f;      // 판매가 하한 배수 (→ see 섹션 3.8)
+        public float sellPriceCeiling = 2.0f;    // 판매가 상한 배수 (→ see 섹션 3.8)
         // [DEPRECATED by FIX-044] supplyDecayRate → categorySupplyParams로 대체
         // public float supplyDecayRate = 0.1f;
 
@@ -836,7 +836,9 @@ namespace SeedMind.Economy.Data
         Tool,       // 도구 (구매 전용)
         Building,   // 시설 (구매 전용)
         Fertilizer, // 비료 (구매 전용)
-        Processed   // 가공품 (판매/구매)
+        Processed,  // 가공품 (판매/구매)
+        Consumable, // 소비형 아이템 (여행 상인 소비품 — 에너지 토닉, 성장 촉진제 등)
+        Decoration  // 장식 아이템 (향후 확장 대비)
     }
 
     /// <summary>

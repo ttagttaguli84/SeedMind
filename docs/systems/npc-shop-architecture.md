@@ -385,6 +385,7 @@ namespace SeedMind.NPC
 │  - _isPresent: bool                                          │
 │  - _currentStock: List<ShopItemEntry>                        │
 │  - _randomSeed: int                                          │
+│  - _affinityPoints: int                                      │
 │                                                              │
 │  [메서드]                                                     │
 │  + CheckVisitSchedule(int currentDay, int currentDayOfWeek): │
@@ -392,11 +393,16 @@ namespace SeedMind.NPC
 │  + GenerateStock(int playerLevel, Season season): void       │
 │  + SpawnMerchant(): void                                     │
 │  + DespawnMerchant(): void                                   │
+│  + GetAffinityLevel(int points, int[] thresholds):           │
+│    MerchantAffinityLevel                                     │
+│  + ApplyAffinityBonus(ref StockItem item,                    │
+│    MerchantAffinityLevel level): void                        │
 │  + GetSaveData(): TravelingMerchantSaveData                  │
 │  + LoadSaveData(TravelingMerchantSaveData data): void        │
 │                                                              │
 │  [이벤트 구독]                                                 │
 │  - TimeManager.OnDayChanged → CheckVisitSchedule()           │
+│  - NPCEvents.OnAffinityChanged → UpdateAffinityPoints()      │
 └──────────────────────────────────────────────────────────────┘
 ```
 
@@ -688,7 +694,9 @@ SCN_Farm (Scene Root)
 
 ### 7.1 NPC 세이브 데이터
 
-> **참고**: 아래 정의는 초기 버전이다. CON-008 확장 이후의 최신 버전은 **섹션 9.4** (TravelingMerchantSaveData 7필드) 및 **섹션 13.2** (NPCSaveData 통합)을 참조한다.
+> **[DEPRECATED]** 이 섹션의 TravelingMerchantSaveData 정의(4필드)는 CON-008c에서 7필드로 확장되었다.  
+> 최신 버전: **섹션 9.4** (C# 클래스 + JSON 스키마 7필드 PATTERN-005 준수).  
+> 이 섹션은 히스토리 보존 목적으로 유지한다.
 
 ```csharp
 // illustrative — 초기 버전 (→ see 섹션 9.4, 13.2 for CON-008 확장 버전)
@@ -717,6 +725,10 @@ namespace SeedMind.NPC.Data
 기존 세이브 루트 구조(-> see `docs/pipeline/data-pipeline.md` Part I 섹션 3)에 `npc` 필드를 추가한다.
 
 ### 7.2 JSON 스키마 확장
+
+> **[DEPRECATED]** 이 섹션의 JSON 스키마(4필드)는 CON-008c에서 7필드로 확장되었다.  
+> 최신 버전: **섹션 9.4** (C# 클래스 + JSON 스키마 7필드 PATTERN-005 준수).  
+> 이 섹션은 히스토리 보존 목적으로 유지한다.
 
 ```json
 {
@@ -1657,7 +1669,7 @@ namespace SeedMind.NPC.Data
 **Step G-2**: TravelingMerchantScheduler 확장
 - CheckVisitSchedule에 계절별 확률 보정 로직 추가
 - GenerateStock에 시드 기반 재현성 / 2주 쿨다운 / BAL-005 가격 범위 로직 추가
-- TravelingMerchantSaveData를 6필드 확장 버전으로 교체
+- TravelingMerchantSaveData를 7필드 확장 버전으로 교체 (섹션 9.4 참조: isPresent/randomSeed/currentStockItemIds/currentStockQuantities/currentStockPrices/recentItemIds/affinityPoints)
 
 ### Phase H: 농업 전문가 힌트 시스템
 
