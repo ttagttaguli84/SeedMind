@@ -154,12 +154,20 @@
 | ~~DES-015~~ | ~~1~~ | ~~낚싯대 업그레이드 재료 공급 경로 확정 (구리 광석·금 광석 조달 방안 — 광산 미설계 상태, 여행 상인 구매 vs 별도 채집 활동 결정 필요: fishing-system.md 섹션 1.1 [OPEN] 후속)~~ — DONE: gathering-system.md 섹션 3.8에서 동굴 입구 채집 + 여행 상인 구매 혼합 경로 확정 |
 | ~~CON-011~~ | ~~1~~ | ~~낚시 도감 콘텐츠 정의 (15종 어종 도감 항목 상세 — 힌트 텍스트, 최대 크기 범위, 포획 달성 시 특수 보상 목록: fishing-system.md 섹션 8.2 후속)~~ — DONE → `docs/content/fish-catalog.md` (CON-011) |
 | ~~FIX-075~~ | ~~3~~ | ~~크기 시스템 데이터 모델 통일: sizeMinCm/sizeMaxCm 절대값 채택, hintLocked/hintUnlocked 통일, firstCatchGold/XP 추가, GetSizePriceMultiplier 3등급 이산 교체~~ — DONE: fishing-architecture.md 섹션 15/18 + fish-catalog.md 섹션 7 동시 수정 완료 |
-| FIX-072 | 1 | economy-system.md 섹션 1.3 골드 획득 경로에 "낚시 직판/가공" 항목 추가 (BAL-012 완료 후 downstream — economy-system.md 골드 수입원 목록 미반영) |
+| ~~FIX-072~~ | ~~1~~ | ~~economy-system.md 섹션 1.3 골드 획득 경로에 "낚시 직판/가공" 항목 추가 (BAL-012 완료 후 downstream — economy-system.md 골드 수입원 목록 미반영)~~ — DONE: devlog #069에서 낚시 직판/가공 행 추가, 채집물 판매 [OPEN] 해소 완료 |
 | ~~ARC-030~~ | ~~1~~ | ~~낚시 도감 아키텍처 (FishCatalog 클래스, 세이브 연동 — FishingStats.caughtByFishId 활용, fishing-architecture.md 섹션 신규 추가)~~ — DONE: fishing-architecture.md Part VII (섹션 14~23) 추가, save-load-architecture.md fishCatalog 필드 추가 |
-| BAL-014 | 1 | 낚시 숙련도 XP 획득 밸런스 검증 (BAL-013 성공률 조정 후 레벨 10 도달 일수 재시뮬레이션 — 기존 추산 45일 유지 여부 확인) |
+| ~~BAL-014~~ | ~~1~~ | ~~낚시 숙련도 XP 획득 밸런스 검증 (BAL-013 성공률 조정 후 레벨 10 도달 일수 재시뮬레이션 — 기존 추산 45일 유지 여부 확인)~~ — DONE → `docs/balance/bal-014-fishing-xp-balance.md` (총 XP 2,250→4,500 상향, 레벨 10 도달 39일 확정) |
 | ~~DES-016~~ | ~~1~~ | ~~채집 시스템 기본 설계 (낚시와 유사한 보조 활동 — 농장 주변 채집 포인트, 계절별 식물/버섯/광물 채집, 독립 숙련도 패턴 적용 여부)~~ — DONE → `docs/systems/gathering-system.md` (DES-016), `docs/systems/gathering-architecture.md` (ARC-031) |
-| FIX-076 | 3 | economy-architecture.md 섹션 3.10.2 HarvestOrigin에 `Gathering = 4` 추가, 섹션 3.10.3 switch에 case 추가; 섹션 3.11 SupplyCategory enum에 `Forage = 4` 추가 및 수급 파라미터 정의 (ARC-031 후속) |
-| FIX-077 | 3 | progression-architecture.md 섹션 2.2 XPSource에 `GatheringComplete` 추가, 섹션 2.3 switch에 case 추가 (ARC-031 후속) |
-| FIX-078 | 2 | inventory-architecture.md 섹션 3.2 ItemType에 `Gathered` 추가, data-pipeline.md 관련 섹션 동시 업데이트 (ARC-031 후속) |
-| FIX-079 | 2 | save-load-architecture.md 섹션 7 SaveLoadOrder 할당표에 `GatheringManager \| 54` 행 추가 (ARC-031 후속) |
-| FIX-080 | 2 | data-pipeline.md Part I 섹션 2.1 GameSaveData에 `public GatheringSaveData gathering;` 필드 추가 (ARC-031 후속) |
+| ~~FIX-076~~ | ~~3~~ | ~~economy-architecture.md 섹션 3.10.2 HarvestOrigin에 `Gathering = 4` 추가, 섹션 3.10.3 switch에 case 추가; 섹션 3.11 SupplyCategory enum에 `Forage = 4` 추가 및 수급 파라미터 정의 (ARC-031 후속)~~ — DONE |
+| ~~FIX-077~~ | ~~3~~ | ~~progression-architecture.md 섹션 2.2 XPSource에 `GatheringComplete` 추가, 섹션 2.3 switch에 case 추가 (ARC-031 후속)~~ — DONE: OnEnable() 구독 목록 + 이벤트 흐름 다이어그램 동시 업데이트 |
+| ~~FIX-078~~ | ~~2~~ | ~~inventory-architecture.md 섹션 3.2 ItemType에 `Gathered` 추가, data-pipeline.md 관련 섹션 동시 업데이트 (ARC-031 후속)~~ — DONE |
+| ~~FIX-079~~ | ~~2~~ | ~~save-load-architecture.md 섹션 7 SaveLoadOrder 할당표에 `GatheringManager \| 54` 행 추가 (ARC-031 후속)~~ — DONE |
+| ~~FIX-080~~ | ~~2~~ | ~~data-pipeline.md Part I 섹션 2.1 GameSaveData에 `public GatheringSaveData gathering;` 필드 추가 (ARC-031 후속)~~ — DONE: JSON 스키마 canonical 참조 주석 추가(CRITICAL-2 해소) |
+| FIX-081 | 2 | economy-architecture.md 섹션 3.7.1/3.7.2의 구버전 `GetGreenhouseMultiplier(bool isGreenhouse)` pseudocode에 `[SUPERSEDED by 섹션 3.10.3]` 주석 추가 또는 삭제 처리 (Reviewer WARNING — HarvestOrigin 도입 전 초안 잔존) |
+| ARC-032 | 2 | 채집 시스템 MCP 태스크 시퀀스 독립 문서화 (gathering-architecture.md Phase A~G → docs/mcp/gathering-tasks.md 분리, 패턴: facilities-tasks.md 참조) |
+| BAL-015 | 2 | 채집 경제 밸런스 시트 (22개 포인트 일일 채집 수입 시뮬레이션, 농업·낚시·목축 대비 채집 수입 비중 검증 → docs/balance/gathering-economy.md) |
+| CON-012 | 2 | 채집 아이템 콘텐츠 상세 (27종 아이템 상세 스펙 — 판매가, 가공 레시피 연계, 낚싯대 재료 공급 역할 명세 → docs/content/gathering-items.md) |
+| DES-017 | 2 | 채집 낫 업그레이드 경로 상세 설계 (기본/강화/전설 채집 낫 비용·효과·재료 — 도구 업그레이드 시스템과 통합 방안 포함 → gathering-system.md 섹션 업데이트 또는 독립 문서) |
+| ARC-033 | 1 | 채집 시스템 data-pipeline.md 반영 (GatheringPointData/GatheringItemData/GatheringConfig SO 에셋 테이블 섹션 2.4에 추가, PATTERN-007 준수) |
+| FIX-082 | 1 | gathering-system.md Cross-references 섹션에 economy-architecture.md(FIX-076), progression-architecture.md(FIX-077), inventory-architecture.md(FIX-078), save-load-architecture.md(FIX-079) 참조 추가 |
+| CON-013 | 1 | 채집 퀘스트/업적 콘텐츠 (채집 관련 퀘스트 5종 + 업적 5종 → quest-system.md 및 achievements.md 업데이트, con-010 낚시 패턴 참조) |

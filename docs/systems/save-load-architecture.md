@@ -167,9 +167,14 @@ GameSaveData (루트)
 ├── AffinitySaveData                  # (→ see blacksmith-architecture.md 섹션 5.5)
 │   └── entries[]                     # AffinityEntry[] (npcId, affinityValue, lastVisitDay, triggeredDialogueIds[])
 │
-└── FishCatalogSaveData               # (→ see fishing-architecture.md 섹션 20, ARC-030)
-    ├── entries[]                      # FishCatalogEntry[] (fishId, isDiscovered, maxSizeCm 등)
-    └── discoveredCount                # int
+├── FishCatalogSaveData               # (→ see fishing-architecture.md 섹션 20, ARC-030)
+│   ├── entries[]                      # FishCatalogEntry[] (fishId, isDiscovered, maxSizeCm 등)
+│   └── discoveredCount                # int
+│
+└── GatheringSaveData                  # (→ see gathering-system.md, ARC-031)
+    ├── gatheringLevel: int            # 채집 숙련도 레벨
+    ├── gatheringExp: int              # 현재 채집 경험치
+    └── spawnStates[]                  # GatheringSpawnState[] (nodeId, lastGatheredDay, isAvailable 등)
 ```
 
 #### 2.2 JSON 스키마 (PATTERN-005 준수)
@@ -276,6 +281,12 @@ GameSaveData (루트)
   "fishCatalog": {
     "entries": [],
     "discoveredCount": 0
+  },
+
+  "gathering": {
+    "gatheringLevel": 0,
+    "gatheringExp": 0,
+    "spawnStates": []
   }
 }
 ```
@@ -328,14 +339,15 @@ namespace SeedMind.Save.Data
         public AnimalSaveData animals;                   // → see livestock-architecture.md 섹션 8 (ARC-019, null 허용)
         public AffinitySaveData affinity;                // → see blacksmith-architecture.md 섹션 5.5 (null 허용)
         public FishCatalogSaveData fishCatalog;           // → see fishing-architecture.md 섹션 20 (ARC-030, null 허용)
+        public GatheringSaveData gathering;              // → see gathering-system.md (ARC-031, null 허용 — 구버전 세이브 호환)
     }
 }
 ```
 
 **PATTERN-005 검증**: JSON 스키마(섹션 2.2)와 C# 클래스(섹션 2.3)의 필드 수 동일:
 - 메타데이터 3개: saveVersion, savedAt, playTimeSeconds
-- 시스템 데이터 18개: player, farm, farmZones, inventory, time, weather, economy, buildings, processing, unlocks, shops, milestones, npc, tutorial, achievements, animals, affinity, fishCatalog
-- 총 21개 필드 -- 양쪽 일치 (ARC-030 fishCatalog 필드 추가)
+- 시스템 데이터 19개: player, farm, farmZones, inventory, time, weather, economy, buildings, processing, unlocks, shops, milestones, npc, tutorial, achievements, animals, affinity, fishCatalog, gathering
+- 총 22개 필드 -- 양쪽 일치 (FIX-079 gathering 필드 추가)
 
 **기존 data-pipeline.md와의 차이점**: data-pipeline.md의 GameSaveData에는 `inventory`, `npc`, `tutorial` 필드가 명시적으로 분리되지 않았다. `inventory`는 PlayerSaveData 내부에 포함되어 있었고, `npc`와 `tutorial`은 각 아키텍처 문서에서 개별적으로 확장을 기술했다. 이 문서에서는 향후 구현 시 모든 세이브 데이터가 루트에서 명확히 접근 가능하도록 통합한다.
 
@@ -942,6 +954,7 @@ namespace SeedMind.Save
 | PlayerController | 50 | 인벤토리 SO 참조 필요 |
 | FishingManager | 52 | PlayerController(50) 이후 — 낚시 상태 복원 (→ see docs/systems/fishing-architecture.md, FIX-052) |
 | FishCatalogManager | 53 | FishingManager(52) 이후 — 도감 상태 복원, 구버전 세이브 마이그레이션 시 FishingStats 참조 (→ see docs/systems/fishing-architecture.md 섹션 20.4, ARC-030) |
+| GatheringManager | 54 | FishCatalogManager(53) 이후 — 채집 포인트 스폰 상태 복원 (→ see docs/systems/gathering-system.md, ARC-031) |
 | InventoryManager | 55 | 별도 인벤토리 상태 복원 |
 | BuildingManager | 60 | 시설 SO 참조 복원 |
 | ProgressionManager | 70 | 해금/마일스톤 복원 |

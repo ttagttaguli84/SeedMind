@@ -80,6 +80,8 @@
 │      ToolSystem.OnToolUsed += HandleToolUse                  │
 │      QuestEvents.OnQuestRewarded += HandleQuestXP            │
 │      AchievementEvents.OnAchievementUnlocked += HandleAchievementXP │
+│      FishingEvents.OnFishCaught += HandleFishingXP           │
+│      GatheringEvents.OnGatheringCompleted += HandleGatheringXP │  // FIX-077
 │  + OnDisable(): 구독 해제                                      │
 └──────────────────────────────────────────────────────────────┘
          │ owns                        │ ref
@@ -127,6 +129,14 @@ QuestEvents.OnQuestRewarded ──▶ ProgressionManager.HandleQuestXP()
 AchievementEvents.OnAchievementUnlocked ──▶ ProgressionManager.HandleAchievementXP()
     → 업적 달성 보상 XP 부여 (AddExp(amount, XPSource.AchievementReward))
     → XP 수치 → see docs/content/achievements.md
+
+FishingEvents.OnFishCaught ──▶ ProgressionManager.HandleFishingXP()
+    → 낚시 성공 시 XP 부여 (AddExp(amount, XPSource.FishingCatch))
+    → XP 수치 → see docs/systems/fishing-system.md 섹션 숙련도
+
+GatheringEvents.OnGatheringCompleted ──▶ ProgressionManager.HandleGatheringXP()
+    → 채집 완료 시 XP 부여 (AddExp(amount, XPSource.GatheringComplete))
+    → XP 수치 → see docs/systems/gathering-system.md 섹션 숙련도  // FIX-077
 
 
 [이벤트 발행 — ProgressionManager가 발행하는 이벤트]
@@ -248,6 +258,7 @@ namespace SeedMind.Level
         AnimalCare,         // 동물 돌봄 (먹이, 쓰다듬기) (→ see docs/systems/livestock-architecture.md 섹션 7, ARC-019)
         AnimalHarvest,      // 동물 생산물 수집 (→ see docs/systems/livestock-architecture.md 섹션 7, ARC-019)
         FishingCatch,       // 낚시 포획 (→ see docs/systems/fishing-architecture.md, ARC-026/FIX-050)
+        GatheringComplete,  // 채집 완료 (→ see docs/systems/gathering-system.md 섹션 숙련도, ARC-031)
     }
 }
 ```
@@ -319,6 +330,12 @@ namespace SeedMind.Level
                     // → see docs/systems/fishing-architecture.md for 포획 흐름
                     var fishData = (FishData)context;
                     return CalculateFishingCatchExp(fishData);
+
+                case XPSource.GatheringComplete:
+                    // 채집 완료 XP — 채집물 희귀도/계절에 따라 차등
+                    // → see docs/systems/gathering-system.md 섹션 숙련도 (ARC-031)
+                    var gatherData = (GatherableData)context;
+                    return CalculateGatheringExp(gatherData);
 
                 default:
                     return 0;

@@ -251,6 +251,7 @@ namespace SeedMind
         Processed,      // 가공품 -- 스택 가능
         Material,       // 건축 재료 -- 스택 가능 (향후 확장)
         Fish,           // 물고기 -- 스택 가능, 품질별 별도 슬롯 (→ see docs/systems/fishing-system.md, FIX-053)
+        Gathered,       // 채집물 -- 스택 가능, 품질별 별도 슬롯 (→ see docs/systems/gathering-system.md, ARC-031)
         Special         // 특수 아이템 -- 스택 불가 (이벤트 보상 등)
     }
 }

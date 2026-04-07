@@ -356,6 +356,7 @@ SO_Tool_Hoe_Legendary    (tier=3, nextTier=null)
 | Processed | 가공품 | O (50) | - |
 | Material | 재료 (광석 등) | O (99) | 향후 확장 |
 | Fish | 물고기 | O (99) | 품질별 별도 슬롯 (→ see docs/systems/fishing-system.md, FIX-053) |
+| Gathered | 채집물 | O (99) | 품질별 별도 슬롯 (→ see docs/systems/gathering-system.md, ARC-031) |
 | Consumable | 소비형 아이템 | O (10) | 여행 상인 소비품(에너지 토닉, 성장 촉진제, 행운의 부적) — Special과 구분 |
 | Special | 특수 아이템 | X (1) | 이벤트 보상 등 |
 
@@ -379,12 +380,17 @@ SO_Tool_Hoe_Legendary    (tier=3, nextTier=null)
 
 #### 3.2 최상위 세이브 스키마
 
+> **주의**: 아래는 초기 설계 개요이다. 최신·완전한 JSON 스키마 및 C# 클래스 정의는
+> `docs/systems/save-load-architecture.md` 섹션 2.2가 canonical이며,
+> 메타 필드명(`saveVersion`, `savedAt`, `playTimeSeconds`)·시스템 필드 목록은
+> 해당 문서를 따른다. (→ see docs/systems/save-load-architecture.md 섹션 2.2)
+
 ```json
 {
-  "version": "1.0",
-  "saveDate": "2026-04-06T15:30:00Z",
-  "playTime": 3600.0,
-  
+  "saveVersion": "1.0.0",        // canonical 필드명: saveVersion (→ see save-load-architecture.md 섹션 2.2)
+  "savedAt": "2026-04-06T15:30:00Z",
+  "playTimeSeconds": 3600,
+
   "player": { },
   "inventory": { },
   "farm": { },
@@ -395,9 +401,10 @@ SO_Tool_Hoe_Legendary    (tier=3, nextTier=null)
   "processing": [ ],
   "unlocks": { },
   "shops": [ ],
-  "shippingBin": { },
   "fishing": { },
-  "npc": { }
+  "fishCatalog": { },
+  "npc": { },
+  "gathering": { }               // FIX-080: (→ see docs/systems/gathering-system.md 섹션 숙련도)
 }
 ```
 
@@ -1130,6 +1137,7 @@ namespace SeedMind.Core
         public TutorialSaveData tutorial;    // 튜토리얼 진행 (null 허용, → see docs/systems/tutorial-architecture.md 섹션 7)
         public FishingSaveData fishing;      // 낚시 상태 (null 허용 — 구버전 호환, → see docs/systems/fishing-architecture.md, FIX-051)
         public FishCatalogSaveData fishCatalog; // 낚시 도감 상태 (null 허용 — 구버전 호환, → see docs/systems/fishing-architecture.md 섹션 20, ARC-030)
+        public GatheringSaveData gathering;   // 채집 상태 (null 허용 — 구버전 호환, → see docs/systems/gathering-system.md, ARC-031)
     }
 }
 ```
@@ -1279,7 +1287,7 @@ namespace SeedMind.Building
         public string itemType;           // ItemType enum 문자열 ("Crop", "Seed", "Tool", "Consumable" 등)
         public int quantity;
         public string quality;            // CropQuality enum 문자열 (Crop 카테고리만)
-        public string origin;             // [FIX-034] HarvestOrigin enum 문자열 ("Outdoor" | "Greenhouse")
+        public string origin;             // [FIX-034] HarvestOrigin enum 문자열 ("Outdoor" | "Greenhouse" | "Barn" | "Fishing" | "Gathering")
                                           // null/미지정 시 "Outdoor"로 역직렬화 (하위 호환)
                                           // → see docs/systems/economy-architecture.md 섹션 3.10
     }
