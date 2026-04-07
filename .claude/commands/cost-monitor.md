@@ -32,6 +32,57 @@ For each threshold exceeded, record:
 - 어느 세션이 트리거했는가
 - 추정 원인 (루프 과다, 대형 문서 주입, 병렬 에이전트 등)
 
+**충분성 판단 — JSONL 폴백 조건:**
+
+리포트만으로 분석이 충분하지 않은 경우:
+- 배치가 1개뿐이라 추세 판단 불가
+- Warning/Critical 임계치 초과 세션이 있으나 리포트 상세 테이블에 원인이 불명확
+- 최고 비용 세션이 평균의 2배 이상이나 비용 외 데이터가 없음
+
+이 경우 Step 2.5로 이동.
+
+## Step 2.5 — JSONL 폴백 분석 (조건부)
+
+Step 2에서 폴백 조건에 해당하는 경우에만 실행.
+
+**분석 대상 JSONL 선택 기준:**
+- 최고 비용 세션 → 해당 배치의 `logs/backup/<YYYYMMDD_HHMMSS>/run_*.jsonl` 중 해당 파일
+- 평균 초과 세션이 여럿인 배치 → 해당 배치 폴더 전체 JSONL
+
+**JSONL에서 추출할 정보:**
+
+```python
+import json
+
+# 각 세션별 per-message 통계
+for fp in target_jsonl_files:
+    turns = []
+    with open(fp) as f:
+        for line in f:
+            d = json.loads(line)
+            if d.get('type') == 'assistant':
+                u = d.get('message', {}).get('usage', {})
+                cc = u.get('cache_creation_input_tokens', 0)
+                cr = u.get('cache_read_input_tokens', 0)
+                out = u.get('output_tokens', 0)
+                # agent spawn 감지: cc가 갑자기 큰 턴
+                turns.append({'cc': cc, 'cr': cr, 'out': out})
+    # cc 급등 턴 = agent spawn 시점
+    spikes = [i for i, t in enumerate(turns) if t['cc'] > 50_000]
+    print(f"{fp.name}: {len(turns)} turns, {len(spikes)} agent spawns")
+```
+
+Run this with the Bash tool on the target files. Extract:
+- 총 턴 수 (세션 길이)
+- Agent spawn 횟수 (cc 급등 구간 수)
+- 각 spawn 시점의 cc 크기 (주입 문서 규모 추정)
+- output 집중 구간 (긴 문서 작성 = 높은 out)
+
+**판단 기준:**
+- Agent spawn 3회 이상 → Session Task Budget 초과 실행 의심
+- 단일 spawn cc > 200,000 → 대형 문서 주입 의심
+- 총 턴 > 300 → 루프 초과 실행 의심
+
 ## Step 3 — Root Cause Analysis
 
 Cross-reference anomalies with current `start.md` rules:
