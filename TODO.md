@@ -168,7 +168,7 @@
 | ~~CON-012~~ | ~~2~~ | ~~채집 아이템 콘텐츠 상세 (27종 아이템 상세 스펙 — 판매가, 가공 레시피 연계, 낚싯대 재료 공급 역할 명세 → docs/content/gathering-items.md)~~ — DONE → `docs/content/gathering-items.md` (CON-012): 27종 maxStack/힌트텍스트/NPC선물/SFX 확정, 가공 레시피 연계 정의, 광석 업그레이드 재료 역할 명세 |
 | ~~BAL-015~~ | ~~2~~ | ~~채집 경제 밸런스 시트 (22개 포인트 일일 채집 수입 시뮬레이션, 농업·낚시·목축 대비 채집 수입 비중 검증 → docs/balance/gathering-economy.md)~~ — DONE → `docs/balance/gathering-economy.md`: 일일 수입 봄~가을 220~402G(Lv.1), Critical 이슈 발견(비중 45%), 조정안 D(판매가 40% 하향) 추천 |
 | ARC-032 | 2 | 채집 시스템 MCP 태스크 시퀀스 독립 문서화 (gathering-architecture.md Phase A~G → docs/mcp/gathering-tasks.md 분리, 패턴: facilities-tasks.md 참조) |
-| BAL-016 | 3 | 채집 아이템 판매가 하향 조정 확정 (BAL-015 조정안 D — 전체 채집물 판매가 40% 하향, gathering-system.md 섹션 3.3~3.7 수정, gathering-economy.md 섹션 8 미확정 수치 확정) |
+| ~~BAL-016~~ | ~~3~~ | ~~채집 아이템 판매가 하향 조정 확정 (BAL-015 조정안 D — 전체 채집물 판매가 40% 하향, gathering-system.md 섹션 3.3~3.7 수정, gathering-economy.md 섹션 8 미확정 수치 확정)~~ — DONE: 27종 판매가 40% 하향, 섹션 6.1/6.2 시뮬레이션 업데이트, gathering-economy.md 히스토리 배너 추가 및 섹션 4/6.2/Risks 갱신 |
 | DES-017 | 2 | 채집 낫 업그레이드 경로 상세 설계 (기본/강화/전설 채집 낫 비용·효과·재료 — 도구 업그레이드 시스템과 통합 방안 포함 → gathering-system.md 섹션 업데이트 또는 독립 문서) |
 | ARC-033 | 1 | 채집 시스템 data-pipeline.md 반영 (GatheringPointData/GatheringItemData/GatheringConfig SO 에셋 테이블 섹션 2.4에 추가, PATTERN-007 준수) |
 | CON-013 | 1 | 채집 퀘스트/업적 콘텐츠 (채집 관련 퀘스트 5종 + 업적 5종 → quest-system.md 및 achievements.md 업데이트, con-010 낚시 패턴 참조) |
