@@ -30,7 +30,7 @@ for fp in sorted(Path(p) for p in sys.argv[1:]):
         print(f"SKIP: {fp}")
         continue
     turns, seen = [], set()
-    stop_reason, cost_from_result, error_results = "unknown", None, 0
+    model, stop_reason, cost_from_result, error_results = "unknown", "unknown", None, 0
     try:
         with open(fp, encoding='utf-8') as f:
             for line in f:
@@ -38,7 +38,9 @@ for fp in sorted(Path(p) for p in sys.argv[1:]):
                 if not line: continue
                 try: d = json.loads(line)
                 except: continue
-                if d.get('type') == 'assistant':
+                if d.get('type') == 'system' and d.get('subtype') == 'init':
+                    model = d.get('model', 'unknown')
+                elif d.get('type') == 'assistant':
                     mid = d.get('message', {}).get('id')
                     if mid and mid in seen: continue
                     if mid: seen.add(mid)
@@ -62,7 +64,7 @@ for fp in sorted(Path(p) for p in sys.argv[1:]):
     to = sum(t['out'] for t in turns)
     tt = ti + tc + tr
     cost = cost_from_result if cost_from_result is not None else (ti*PRICE_INP + tc*PRICE_CC + tr*PRICE_CR + to*PRICE_OUT)/1e6
-    print(f"{fp.name}|{len(turns)}|{cost:.4f}|{tc/tt*100 if tt else 0:.1f}|{tr/tt*100 if tt else 0:.1f}|{to}|{sum(1 for t in turns if t['cc']>50000)}|{sum(1 for t in turns if t['cc']>200000)}|{sum(1 for t in turns if t['out']>5000)}|{stop_reason}|{error_results}")
+    print(f"{fp.name}|{len(turns)}|{cost:.4f}|{tc/tt*100 if tt else 0:.1f}|{tr/tt*100 if tt else 0:.1f}|{to}|{sum(1 for t in turns if t['cc']>50000)}|{sum(1 for t in turns if t['cc']>200000)}|{sum(1 for t in turns if t['out']>5000)}|{stop_reason}|{error_results}|{model}")
 ```
 
 Pass all `logs/run_*.jsonl` file paths as arguments. Parse the pipe-delimited output to build the session detail table.
@@ -124,8 +126,8 @@ Write to `logs/reports/cost-monitor-analysis-<YYYYMMDD>.md`. If exists, append `
 - 총 세션 수: N개 / 총 비용: $X.XX
 
 ## 세션별 요약
-| 파일 | 턴 | 비용 | cc% | cr% | output | spawns | stop | error |
-|------|-----|------|-----|-----|--------|--------|------|-------|
+| 파일 | 모델 | 턴 | 비용 | cc% | cr% | output | spawns | stop | error |
+|------|------|-----|------|-----|-----|--------|--------|------|-------|
 
 ## 임계치 체크
 | Metric | 값 | 임계치 | 상태 |
