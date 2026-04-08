@@ -206,7 +206,7 @@
 | ~~FIX-100~~ | ~~2~~ | ~~achievement-tasks.md에 ach_hidden_07 SO 에셋 생성 및 HandleAchievementChain 구현 태스크 추가 (ARC-040 후속 — CON-017에서 업적 추가됐으나 MCP 태스크 문서 미반영)~~ — DONE: SO 에셋 목록 A-36 추가, T-2-32 태스크 상세 추가, 업적 총개수 39→40 수정 |
 | ~~FIX-101~~ | ~~2~~ | ~~achievement-system.md 섹션 7.1 OnItemGathered 행 [TODO] 태그 제거 및 구독 확정 표기 (FIX-088에서 GatherCount/GatherSpeciesCollected/GatherSickleUpgraded enum 추가 완료됨 — [TODO] 잔존 상태)~~ — DONE |
 | ~~ARC-041~~ | ~~2~~ | ~~collection-tasks.md MCP 태스크 시퀀스 문서화 (collection-architecture.md Part II → docs/mcp/collection-tasks.md — ARC-038/ARC-039 완료 후 선행 조건)~~ — DONE → `docs/mcp/collection-tasks.md` (8개 태스크 그룹, ~126회 MCP 호출, Q-A~Q-H) |
-| ARC-042 | 1 | collection-architecture.md GatheringCatalogData↔GatheringItemData SO 참조 방식 확정 (OPEN#5 — itemId 문자열 연결 vs SO 직접 참조, 구현 시 결정) |
+| ~~ARC-042~~ | ~~1~~ | ~~collection-architecture.md GatheringCatalogData↔GatheringItemData SO 참조 방식 확정 (OPEN#5 — itemId 문자열 연결 vs SO 직접 참조, 구현 시 결정)~~ — DONE: itemId 문자열 연결 방식 확정. collection-architecture.md OPEN#5 + fishing-architecture.md OQ-10 동시 RESOLVED |
 | DES-021 | 1 | 보조 XP 소스 합산 비중 상한 기준 설계 원칙 문서화 (BAL-019 OPEN — 보조 소스 51.2%, 60% 초과 시 재검토 기준 명시) |
 | ~~CON-015~~ | ~~2~~ | ~~collection-system.md 채집 도감 통합 UI CollectionPanel 씬 배치 확정 (DES-018 — CollectionUIController가 FishCatalogPanel을 하위로 흡수하는 마이그레이션 경로, collection-architecture.md OPEN#4 후속)~~ — DONE: collection-system.md OPEN#5 [ARC-038/ARC-039 확정]으로 닫음. 마이그레이션 전략 collection-architecture.md Q-4a~Q-4f 참조. |
 | ~~FIX-102~~ | ~~2~~ | ~~save-load-architecture.md Cross-references에 collection-architecture.md 참조 추가 (FIX-093 후속 — gatheringCatalog 필드 추가로 collection-architecture.md가 연계됨)~~ — DONE |

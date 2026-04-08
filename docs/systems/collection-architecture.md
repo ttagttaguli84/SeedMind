@@ -871,7 +871,7 @@ SeedMind.Collection (신규)
 
 4. ~~[OPEN] (ARC-037) **CollectionPanel과 기존 FishCatalogPanel 통합 시 씬 재구성 범위**: 기존 FishCatalogPanel이 독립 프리팹이므로, CollectionPanel 하위로 이동 시 기존 참조가 깨질 수 있다. Phase Q-4에서 신중한 마이그레이션 필요.~~ — **[ARC-039 확정]** 참조 재연결 방식(In-place migration) 채택. 단계: (1) FishCatalogPanel 프리팹을 FishPanel로 이름 변경, (2) FishPanel을 CollectionPanel 자식으로 이동, (3) FishPanel 내 CloseButton 비활성화(CollectionPanel 공통 CloseButton 사용), (4) FishPanel Header 완성도 표시 비활성화(CollectionUIController 위임), (5) FishCatalogUI.cs Inspector 참조 재연결, (6) 구버전 FishCatalogPanel.prefab은 DEPRECATED 접두사 후 Legacy/ 이동. FishCatalogToast는 기존대로 독립 유지(섹션 6.4 현행 유지). 세부 단계는 Phase Q-4a~Q-4f 참조.
 
-5. [OPEN] (ARC-037) **GatheringCatalogData와 GatheringItemData 1:1 관계 유지 방안**: FishCatalogData와 FishData의 동일 이슈(-> see `docs/systems/fishing-architecture.md` Open Question 10). itemId 문자열 연결 vs SO 직접 참조. 구현 시 결정.
+5. ~~[OPEN] (ARC-037) **GatheringCatalogData와 GatheringItemData 1:1 관계 유지 방안**: FishCatalogData와 FishData의 동일 이슈(-> see `docs/systems/fishing-architecture.md` Open Question 10). itemId 문자열 연결 vs SO 직접 참조. 구현 시 결정.~~ — **[ARC-042 확정]** itemId 문자열 연결 방식 채택. 이유: (1) `GatheringCatalogSaveData.entries[].itemId`가 세이브/로드 key로 사용되므로 SO 직접 참조로 변경 시 직렬화 구조 재설계 필요. (2) `Initialize()`에서 `Dictionary<string, GatheringCatalogData>` 구축 패턴이 이미 정착 — string key 방식과 일관성 유지. (3) `GatheringManager.OnItemGathered(item.dataId)` 이벤트 인터페이스가 string itemId를 전달하므로 CatalogManager 수신부도 string 기반으로 통일. (4) SO 직접 참조의 Inspector 편의 이점은 `Initialize()` 시 `dataId` 불일치 경고 로그(Debug.LogWarning)로 대체 가능. FishCatalogData/FishData도 동일 방식 유지 (-> see `docs/systems/fishing-architecture.md` Open Question 10 [RESOLVED]).
 
 ---
 

@@ -2223,7 +2223,7 @@ Assets/_Project/Data/Fishing/
 7. [OPEN] FishingPoint 일일 사용 제한 횟수 미확정. 무제한으로 할지, 포인트당 일일 제한을 둘지 결정 필요.
 8. [OPEN] 낚싯대 도구 요건 미확정. 기존 ToolType enum에 FishingRod를 추가해야 하며, 도구 업그레이드 경로도 설계 필요.
 9. [RESOLVED-CON-011] (ARC-030) 도감 마일스톤 보상 확정: 5종(100G+30XP+미끼x10), 10종(300G+80XP+고급미끼x5+도감배경"연못의사계절"), 15종(500G+150XP+도감배경"전설의연못"+프레임"황금물결") (-> see `docs/content/fish-catalog.md` 섹션 4.1).
-10. [OPEN] (ARC-030) FishCatalogData SO와 FishData SO의 1:1 관계 유지 방안. 현재 fishId로 연결하지만, SO 참조(직접 FishData 필드)로 변경하면 Inspector에서 관리가 편해진다. 구현 시 결정 필요.
+10. ~~[OPEN] (ARC-030) FishCatalogData SO와 FishData SO의 1:1 관계 유지 방안. 현재 fishId로 연결하지만, SO 참조(직접 FishData 필드)로 변경하면 Inspector에서 관리가 편해진다. 구현 시 결정 필요.~~ — **[ARC-042 확정]** fishId 문자열 연결 방식 유지. 이유: (1) `FishCatalogSaveData.entries[].fishId`가 세이브/로드 key — SO 직접 참조로 변경 시 직렬화 재설계 필요. (2) `FishCatalogManager.Initialize()`의 `Dictionary<string, FishCatalogData>` 구축 패턴이 이미 정착. (3) Inspector 편의는 `Initialize()` 시 `fishId` 불일치 경고 로그로 대체 가능. GatheringCatalogData/GatheringItemData도 동일 방식 적용 (-> see `docs/systems/collection-architecture.md` Open Question 5 [RESOLVED]).
 11. [OPEN] (ARC-030) 크기 판매가 보정(sizePriceMul)을 InventorySlot.metadata에 저장할지, 판매 시점에 재계산할지 결정 필요. metadata 방식이면 인벤토리 아키텍처 확장 필요.
 
 ---
