@@ -2093,6 +2093,8 @@ Canvas (기존)
     └── ProgressText
 ```
 
+> **[마이그레이션 예정 — ARC-039]** `FishCatalogPanel`은 `collection-architecture.md`(ARC-037) 통합 도감 채택에 따라 Phase 2 구현 시 `CollectionPanel` → `FishPanel` 탭으로 흡수될 예정이다. 마이그레이션 전략은 `docs/systems/collection-architecture.md` 섹션 Q-4a~Q-4f (In-place migration 6단계)를 참조. 현재 이 씬 계층은 Phase 2 착수 전까지 독립 구조로 유지된다.
+
 ---
 
 ## 22. 프로젝트 폴더 구조 확장

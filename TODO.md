@@ -211,7 +211,7 @@
 | ~~CON-015~~ | ~~2~~ | ~~collection-system.md 채집 도감 통합 UI CollectionPanel 씬 배치 확정 (DES-018 — CollectionUIController가 FishCatalogPanel을 하위로 흡수하는 마이그레이션 경로, collection-architecture.md OPEN#4 후속)~~ — DONE: collection-system.md OPEN#5 [ARC-038/ARC-039 확정]으로 닫음. 마이그레이션 전략 collection-architecture.md Q-4a~Q-4f 참조. |
 | ~~FIX-102~~ | ~~2~~ | ~~save-load-architecture.md Cross-references에 collection-architecture.md 참조 추가 (FIX-093 후속 — gatheringCatalog 필드 추가로 collection-architecture.md가 연계됨)~~ — DONE |
 | ~~FIX-103~~ | ~~1~~ | ~~data-pipeline.md 시스템 데이터 총계 주석 업데이트 (FIX-094 후속)~~ — N/A: data-pipeline.md에 PATTERN-005 카운트 주석 없음, 수정 불필요 |
-| FIX-104 | 1 | fishing-architecture.md 섹션 21.5 씬 계층에 ARC-039 마이그레이션 노트 추가 (FishCatalogPanel → CollectionPanel/FishPanel 통합 예정 명시 — collection-architecture.md Cross-references에 이미 Q-4 마이그레이션 언급됨, 역방향 참조 보완) |
+| ~~FIX-104~~ | ~~1~~ | ~~fishing-architecture.md 섹션 21.5 씬 계층에 ARC-039 마이그레이션 노트 추가 (FishCatalogPanel → CollectionPanel/FishPanel 통합 예정 명시 — collection-architecture.md Cross-references에 이미 Q-4 마이그레이션 언급됨, 역방향 참조 보완)~~ — DONE: 섹션 21.5 마이그레이션 예정 노트 추가, collection-architecture.md Q-4a~Q-4f 참조 명시 |
 | FIX-105 | 1 | collection-system.md 섹션 6.1 단축키 바인딩 OPEN#2 결정 (fish-catalog.md 섹션 5.1과 동일 이슈 — UI 시스템 단축키 정책 통일, ui-system.md 섹션 7 참조) |
 | ~~BAL-021~~ | ~~2~~ | ~~연간 수익 흐름 통합 시뮬레이션 — 작물/낚시/채집/가공/목축 5개 수익 소스 합산, 1년차 예상 총수익 범위 확인 (economy-system.md 섹션 6 밸런스 검증 후속)~~ — DONE → `docs/balance/annual-economy.md` (A:~13,500G / B:~131,900G / C:~376,500G, 낚시 우위 구조 [RISK] 확인) |
 | ~~DES-023~~ | ~~2~~ | ~~농장 장식/꾸미기 시스템 설계 검토 — 울타리/경로/장식물 배치 메카닉 필요 여부, design.md 4.6 시설 목록에 장식 카테고리 포함 여부 결정~~ — DONE → `docs/systems/decoration-system.md` (5개 카테고리: Fence/Path/Light/Ornament/WaterDecor, 그리드 고정 배치, 0% 환불 소모형, 골드 소모처 역할) |
