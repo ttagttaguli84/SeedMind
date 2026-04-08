@@ -351,7 +351,7 @@ public class DecorationInstance
 }
 ```
 
-[OPEN - FIX 태스크로 save-load-architecture.md GameSaveData에 decoration 필드 추가 필요 — DES-023 확정 완료, 즉시 반영 가능]
+~~[OPEN]~~ **[DONE — FIX-111]** save-load-architecture.md GameSaveData 섹션 2.1/2.2/2.3에 `decoration: DecorationSaveData` 필드 추가 완료됨.
 
 ---
 
@@ -514,7 +514,7 @@ Rule Tile 규칙:
 | `docs/systems/farming-system.md` | 섹션 1, TileState | 타일 상태, 경작지 제약 |
 | `docs/systems/farm-expansion.md` | 섹션 1.3 | Zone 해금 조건, 수경 장식 접근 가능 시점 |
 | `docs/systems/farm-expansion-architecture.md` | 섹션 1, 5 | FarmZoneManager.IsZoneUnlocked() 참조 |
-| `docs/systems/save-load-architecture.md` (ARC-011) | 섹션 7 | ISaveable 인터페이스, SaveLoadOrder 할당표 (57 추가 필요) |
+| `docs/systems/save-load-architecture.md` (ARC-011) | 섹션 2.1/2.2/2.3/7 | ISaveable 인터페이스, SaveLoadOrder 할당표 57 등록 완료, GameSaveData decoration 필드 추가 완료 (FIX-111) |
 | `docs/pipeline/data-pipeline.md` (ARC-004) | 섹션 1.1, 2.4 | SO 에셋 체계, BuildingData 패턴 |
 | `docs/systems/project-structure.md` | 섹션 2, 6 | SeedMind.Decoration 네임스페이스, 에셋 네이밍 규칙 |
 | `docs/systems/time-season.md` | 계절 정의 | limitedSeason 필드의 Season enum |
@@ -531,9 +531,9 @@ Rule Tile 규칙:
 
 ### Open Questions
 
-- [OPEN] **save-load-architecture.md GameSaveData 갱신**: `decoration: DecorationSaveData` 필드를 GameSaveData JSON 스키마 및 C# 클래스에 추가해야 한다. FIX 태스크로 등록 필요.
+- ~~[OPEN]~~ **[DONE — FIX-111] save-load-architecture.md GameSaveData 갱신**: `decoration: DecorationSaveData` 필드가 GameSaveData JSON 스키마(섹션 2.2) 및 C# 클래스(섹션 2.3)에 추가 완료됨. 총 필드 수 24개로 갱신됨.
 
-- [OPEN] **SaveLoadOrder 할당표 갱신**: `save-load-architecture.md` 섹션 7에 `DecorationManager | 57` 행 추가 필요. 현재 GatheringCatalogManager=56, BuildingManager=60 사이 여유 공간(57~59) 중 57 배정 예정이나, FIX 태스크로 공식 등록 후 확정.
+- ~~[OPEN]~~ **[DONE] SaveLoadOrder 할당표 갱신**: `save-load-architecture.md` 섹션 7에 `DecorationManager | 57` 행이 이미 추가되어 있음.
 
 - [OPEN] **project-structure.md 갱신**: `SeedMind.Decoration` 네임스페이스와 `Scripts/Decoration/` 폴더를 네임스페이스 목록 및 폴더 구조에 추가 필요.
 

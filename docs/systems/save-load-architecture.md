@@ -171,10 +171,17 @@ GameSaveData (루트)
 │   ├── entries[]                      # FishCatalogEntry[] (fishId, isDiscovered, maxSizeCm 등)
 │   └── discoveredCount                # int
 │
-└── GatheringSaveData                  # (→ see gathering-system.md, ARC-031)
-    ├── gatheringLevel: int            # 채집 숙련도 레벨
-    ├── gatheringExp: int              # 현재 채집 경험치
-    └── spawnStates[]                  # GatheringSpawnState[] (nodeId, lastGatheredDay, isAvailable 등)
+├── GatheringSaveData                  # (→ see gathering-system.md, ARC-031)
+│   ├── gatheringLevel: int            # 채집 숙련도 레벨
+│   ├── gatheringExp: int              # 현재 채집 경험치
+│   └── spawnStates[]                  # GatheringSpawnState[] (nodeId, lastGatheredDay, isAvailable 등)
+│
+├── GatheringCatalogSaveData           # (→ see collection-architecture.md 섹션 5.2, ARC-037, FIX-093)
+│   └── entries[]                      # GatheringCatalogEntry[]
+│
+└── DecorationSaveData                 # (→ see decoration-architecture.md 섹션 2.4, ARC-043, FIX-111)
+    ├── decorations[]                  # DecorationInstanceSave[]
+    └── nextInstanceId: int
 ```
 
 #### 2.2 JSON 스키마 (PATTERN-005 준수)
@@ -291,6 +298,11 @@ GameSaveData (루트)
 
   "gatheringCatalog": {
     "entries": []
+  },
+
+  "decoration": {
+    "decorations": [],
+    "nextInstanceId": 1
   }
 }
 ```
@@ -346,14 +358,15 @@ namespace SeedMind.Save.Data
         public FishCatalogSaveData fishCatalog;           // → see fishing-architecture.md 섹션 20 (ARC-030, null 허용)
         public GatheringSaveData gathering;              // → see gathering-system.md (ARC-031, null 허용 — 구버전 세이브 호환)
         public GatheringCatalogSaveData gatheringCatalog; // → see collection-architecture.md 섹션 5.2 (ARC-037, null 허용 — 구버전 세이브 호환)
+        public DecorationSaveData decoration;             // → see decoration-architecture.md 섹션 2.4 (ARC-043, null 허용 — 구버전 세이브 호환)
     }
 }
 ```
 
 **PATTERN-005 검증**: JSON 스키마(섹션 2.2)와 C# 클래스(섹션 2.3)의 필드 수 동일:
 - 메타데이터 3개: saveVersion, savedAt, playTimeSeconds
-- 시스템 데이터 20개: player, farm, farmZones, inventory, time, weather, economy, buildings, processing, unlocks, shops, milestones, npc, tutorial, achievements, animals, affinity, fishCatalog, gathering, gatheringCatalog
-- 총 23개 필드 -- 양쪽 일치 (FIX-093 gatheringCatalog 필드 추가)
+- 시스템 데이터 21개: player, farm, farmZones, inventory, time, weather, economy, buildings, processing, unlocks, shops, milestones, npc, tutorial, achievements, animals, affinity, fishCatalog, gathering, gatheringCatalog, decoration
+- 총 24개 필드 -- 양쪽 일치 (FIX-111 decoration 필드 추가)
 
 **기존 data-pipeline.md와의 차이점**: data-pipeline.md의 GameSaveData에는 `inventory`, `npc`, `tutorial` 필드가 명시적으로 분리되지 않았다. `inventory`는 PlayerSaveData 내부에 포함되어 있었고, `npc`와 `tutorial`은 각 아키텍처 문서에서 개별적으로 확장을 기술했다. 이 문서에서는 향후 구현 시 모든 세이브 데이터가 루트에서 명확히 접근 가능하도록 통합한다.
 
