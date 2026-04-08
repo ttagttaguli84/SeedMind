@@ -1,6 +1,6 @@
 ---
 title: 농장 확장 시스템
-date: 2026-04-07
+date: 2026-04-08
 author: Claude Code (Opus 4.6)
 ---
 
@@ -104,7 +104,7 @@ author: Claude Code (Opus 4.6)
 
 **전체 타일 합계**: 64 + 64 + 64 + 96 + 96 + 96 + 96 = **576타일** (사용 가능 타일은 장애물, 연못, 고정 오브젝트 등 제외 후 약 480~500타일)
 
-[OPEN] 최대 농장 크기를 1,024타일(32x32)로 정의했으나, 실제 구역 합계는 576타일이다. 남은 영역은 향후 콘텐츠 확장(광산 입구, 마을 연결 통로 등)으로 예약할지, 구역 크기를 늘릴지 검토 필요.
+[RESOLVED] 1,024타일(32x32)은 **전체 월드 맵 크기** (경작 Zone + 비경작 영역 전체 포함)이며, 576타일은 **경작 가능 Zone(Zone A~G)의 합계**이다. 두 수치는 서로 다른 범위를 정의하므로 불일치가 아니다. 나머지 448타일(1,024 - 576)은 마을, 광산 입구, 길, 강, 마을 연결 통로 등 비경작 월드 영역으로 구성되며, 향후 Phase 3~4 콘텐츠 확장(광산 시스템, 마을 탐험 등)의 공간으로 예약된다. 경작 Zone을 확장하려면 별도 Zone 추가 설계가 필요하며, 이는 Phase 1 MVP 범위 밖이다.
 
 ### 1.4 Zone A (초기 농장) 상세
 
@@ -265,13 +265,13 @@ Zone A (시작)
 | 덤불 | 섬유 x1 (60%) | 야생 열매 x1 (30%), 없음 (10%) |
 
 **드랍 아이템 용도**:
-- **목재(Wood)**: 시설 건설 재료 후보 (MVP에서는 판매 전용, 판매가 5G)
-- **돌(Stone)**: 시설 건설 재료 후보 (MVP에서는 판매 전용, 판매가 3G)
-- **섬유(Fiber)**: 비료 제작 재료 후보 (MVP에서는 판매 전용, 판매가 2G)
+- **목재(Wood)**: Phase 1 MVP에서는 **판매 전용** (판매가 5G). `docs/content/facilities.md` 섹션 2.4에서 시설 건설은 골드만으로 동작하도록 확정되어 있으며, 이와 일관성을 유지한다. Phase 3~4에서 크래프팅 시스템 도입 시 건설 재료 역할 재검토 예정.
+- **돌(Stone)**: Phase 1 MVP에서는 **판매 전용** (판매가 3G). 동일 이유. Phase 3~4 재검토 예정.
+- **섬유(Fiber)**: Phase 1 MVP에서는 **판매 전용** (판매가 2G). 동일 이유. Phase 3~4 재검토 예정.
 - **혼합 씨앗(Mixed Seeds)**: 랜덤 작물 1개 성장 (현재 계절의 기본 작물 중 랜덤)
 - **야생 열매(Wild Berry)**: 즉시 판매 가능 (판매가 15G) 또는 에너지 회복 아이템
 
-[OPEN] MVP에서 목재/돌/섬유를 건설 재료로 사용할지, 단순 판매 아이템으로만 둘지 결정 필요. `docs/content/facilities.md` 섹션 2.4에서 현재 골드만으로 건설하도록 설계했으나, 개간 보상이 건설 재료가 되면 게임 깊이가 증가한다.
+[RESOLVED] Phase 1 MVP에서 개간 보상(목재/돌/섬유)은 **판매 전용 아이템**으로 확정. `docs/content/facilities.md` 섹션 2.4의 골드 전용 건설 시스템과 일관성을 유지한다. 크래프팅 시스템을 통한 건설 재료 활용은 Phase 3~4 설계 시 재검토한다.
 
 ---
 
@@ -356,7 +356,7 @@ Zone A (시작)
 
 **온실 배치 제한**: 6x6 타일 점유 (-> see `docs/content/facilities.md` 섹션 2.1). Zone E(목장), Zone F(연못 타일 위), Zone G(과수원 전용)에는 건설 불가.
 
-[OPEN] 온실을 Zone G(과수원)에 건설 가능하게 할지 검토. 과수원 토양의 Rich 품질이 온실 내부에도 적용되면 밸런스 이슈 발생 가능 (BAL-010 연계).
+[RESOLVED] 온실의 Zone G(과수원) 건설을 **금지**로 확정. 근거: Zone G 토양은 Rich 품질이며, Rich 토양 효과가 온실 내부에도 적용될 경우 BAL-010에서 설계된 온실 비주 계절 페널티(x0.8)/겨울 전용 시너지(x1.2) 밸런스가 과수원 Rich 토양 보정과 중첩되어 의도치 않은 이득이 발생한다. Zone G는 과일나무 전용 구역으로서의 설계 정체성을 유지하며, 온실 건설 불가 구역은 Zone E, Zone F(연못 타일 위), Zone G로 고정한다.
 
 ---
 
@@ -464,6 +464,7 @@ Zone A (시작)
 | `docs/systems/tool-upgrade.md` | 도구 등급별 성능 (Reinforced/Legendary 요건) |
 | `docs/content/npcs.md` | 목공소 NPC, 구역 확장 서비스 제공 |
 | `docs/content/crops.md` | 작물 상세 스펙, 온실 전용 작물 (BAL-010) |
+| `docs/balance/` BAL-010 | 온실 비주 계절 페널티(x0.8)/겨울 시너지(x1.2) — Zone G 건설 금지 근거 |
 | (미작성) CON-006 | 동물 사육 시스템 -- Zone E 상세 메카닉 |
 | `docs/systems/fishing-system.md` (DES-013) | 낚시 시스템 -- Zone F 상세 메카닉, 어종 15종, 미니게임, 숙련도 |
 | `docs/systems/quest-system.md` 섹션 3.1 | "농장의 시작" 퀘스트 -- Zone 해금 연계 가능 |
@@ -474,11 +475,11 @@ Zone A (시작)
 
 1. [RESOLVED: FIX-036] farming-system.md 섹션 1의 4x8 블록 확장 방식과 본 문서의 구역(Zone) 기반 확장 방식이 충돌한다. farming-system.md와 economy-system.md 섹션 3.3을 본 문서에 맞춰 업데이트해야 한다. progression-curve.md의 "농장 확장 4단계" 기술도 6단계(Zone B~G)로 변경 필요.
 2. [RESOLVED] FIX-068: 접근법 A 확정 — 곡괭이/도끼 미추가. 낫(Sickle)으로 식물 장애물(잡초/덤불), 호미(Hoe)로 지형 장애물(돌/바위/그루터기/나무) 처리.
-3. [OPEN] MVP에서 개간 보상(목재/돌)을 건설 재료로 사용할지, 판매 전용 아이템으로만 둘지 결정 필요.
+3. [RESOLVED] MVP에서 개간 보상(목재/돌/섬유)은 판매 전용 아이템으로 확정. `docs/content/facilities.md` 섹션 2.4 골드 전용 건설과 일관성 유지. Phase 3~4 크래프팅 시스템 도입 시 재검토.
 4. [RESOLVED: CON-006] 동물 사육 시스템(CON-006)이 미설계 상태. Zone E의 상세 메카닉은 CON-006 완료 후 확정. → `docs/content/livestock-system.md`
 5. [RESOLVED] 낚시 시스템 설계 완료 (DES-013 -> `docs/systems/fishing-system.md`).
-6. [OPEN] 전체 구역 합계(576타일)와 최대 농장 크기(1,024타일) 사이의 448타일 처리 방안.
-7. [OPEN] 온실을 Zone G(과수원)에 건설 가능하게 할지 검토 (BAL-010 연계).
+6. [RESOLVED] 1,024타일은 전체 월드 맵 크기(경작 Zone + 비경작 영역), 576타일은 경작 가능 Zone(A~G) 합계. 448타일 차이는 마을/광산 입구/길 등 비경작 월드 영역. Phase 3~4 콘텐츠 확장 공간으로 예약.
+7. [RESOLVED] 온실 Zone G 건설 금지 확정. Zone G Rich 토양과 온실 BAL-010 보정 중첩 시 밸런스 이슈 발생을 근거로 금지. 온실 불가 구역: Zone E, Zone F(연못 타일 위), Zone G.
 8. [RESOLVED: FIX-035] progression-curve.md의 농장 확장 XP가 현재 "4단계 x 25 XP = 100 XP"로 설정되어 있는데, 구역이 6개로 늘면 "6단계 x 25 XP = 150 XP"로 변경 필요. → progression-curve.md 섹션 1.2.4 확정됨.
 
 ---

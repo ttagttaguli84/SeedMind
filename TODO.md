@@ -217,7 +217,7 @@
 | ~~DES-023~~ | ~~2~~ | ~~농장 장식/꾸미기 시스템 설계 검토 — 울타리/경로/장식물 배치 메카닉 필요 여부, design.md 4.6 시설 목록에 장식 카테고리 포함 여부 결정~~ — DONE → `docs/systems/decoration-system.md` (5개 카테고리: Fence/Path/Light/Ornament/WaterDecor, 그리드 고정 배치, 0% 환불 소모형, 골드 소모처 역할) |
 | ~~ARC-043~~ | ~~2~~ | ~~농장 장식 시스템 기술 아키텍처 (DecorationManager, DecorationItemData SO, DecorationSaveData, Tilemap 연동 — DES-023 후속)~~ — DONE → `docs/systems/decoration-architecture.md` |
 | ARC-044 | 1 | 전체 MCP 태스크 시퀀스 의존성 그래프 문서화 — 각 Phase가 선행하는 Phase를 명시한 빌드 순서 개요 작성 (Phase 2 구현 착수 시 실행 순서 로드맵) |
-| DES-022 | 1 | farm-expansion.md 잔존 [OPEN] 항목 일괄 처리 — 섹션 3.3 이하 미결 항목 검토 및 확정 (ARC-023 후속, Phase 2 착수 전 선행 필요) |
+| ~~DES-022~~ | ~~1~~ | ~~farm-expansion.md 잔존 [OPEN] 항목 일괄 처리 — 섹션 3.3 이하 미결 항목 검토 및 확정 (ARC-023 후속, Phase 2 착수 전 선행 필요)~~ — DONE → [OPEN] 3건 모두 [RESOLVED] 처리 (타일 정의 분리, 개간 보상 판매 전용 확정, 온실 Zone G 금지 확정) |
 | ~~FIX-106~~ | ~~2~~ | ~~collection-architecture.md 섹션 2 시스템 다이어그램에 GatheringCatalogManager 박스 추가 (현재 다이어그램이 FishCatalogManager 중심으로 기술되고 GatheringCatalogManager 박스가 누락되어 있는지 확인 후 보완)~~ — N/A: 다이어그램 섹션 2에 GatheringCatalogManager 박스([신규 시스템] 레이블, 필드/메서드/이벤트 전체 포함)가 이미 존재함. 수정 불필요 |
 | ~~BAL-024~~ | ~~2~~ | ~~낚시+채집 합산 비율 구조적 이탈 분석 및 조정안 검토 — BAL-023 리뷰에서 새 기준(60%)도 시나리오 B(72%)·C(65%)에서 초과 확인. 낚시 에너지 비용 상향 또는 일일 낚시 시간 제약 도입 중 결정 (economy-system.md 섹션 8 [RISK] 낚시 우위 구조 후속)~~ — DONE → `docs/balance/fishing-gathering-ratio.md` (캐스팅 에너지 2→3, Lv.8+ 3→2, fishGatherVsCropProcessingMax 0.60→0.65 확정) |
 | ~~FIX-114~~ | ~~2~~ | ~~fishing-system.md 섹션 2.3 캐스팅 에너지 2→3, Lv.8+ 캐스팅 에너지 2 명시 (BAL-024 확정 파라미터 반영)~~ — DONE: 섹션 2.3 테이블, 플로우 다이어그램, 설계 의도 문구, Lv.8 숙련도 표, 튜닝 파라미터 전수 수정 |
