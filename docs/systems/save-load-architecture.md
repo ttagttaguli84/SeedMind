@@ -963,6 +963,7 @@ namespace SeedMind.Save
 | GatheringManager | 54 | FishCatalogManager(53) 이후 — 채집 포인트 스폰 상태 복원 (→ see docs/systems/gathering-system.md, ARC-031) |
 | InventoryManager | 55 | 별도 인벤토리 상태 복원 |
 | GatheringCatalogManager | 56 | GatheringManager(54) 이후 — 채집 도감 상태 복원 (→ see docs/systems/collection-architecture.md 섹션 5.2, ARC-037) |
+| DecorationManager | 57 | GatheringCatalogManager(56) 이후 — 배치된 장식품 인스턴스 복원 (→ see docs/systems/decoration-architecture.md 섹션 2.1, ARC-043) |
 | BuildingManager | 60 | 시설 SO 참조 복원 |
 | ProgressionManager | 70 | 해금/마일스톤 복원 |
 | NPCManager | 75 | NPC 상태, 여행 상인 일정 |

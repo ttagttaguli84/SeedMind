@@ -81,6 +81,9 @@ DecorationManager.CanPlace(item, cell, edge)
     ├─ 불가 → false 반환 → UI 빨간 하이라이트
     └─ 가능 → DecorationManager.Place() 진행
                   │
+                  ├─ InventoryManager.RemoveItem(item.itemId, 1) 호출
+                  │     (→ see docs/systems/inventory-system.md)
+                  │     [OPEN - 상점 직구매 시 골드 즉시 차감 vs 인벤토리 경유 결정 필요]
                   ├─ DecorationInstance 생성 (_items에 등록)
                   ├─ category별 렌더링 처리
                   │     Fence     → _fenceLayer.SetTile (edge sprite)
@@ -229,7 +232,7 @@ namespace SeedMind.Decoration.Data
                                                       // → see docs/systems/decoration-system.md 섹션 2.1
 
         // 최대 배치 수 제한 (성능 안전망)
-        [OPEN - to be filled after DES-023 확정 후]
+        // [OPEN - 성능 측정 후 Phase 2에서 결정]
         // public int maxDecorationsPerZone;
 
         // Path 이동속도 보너스 적용 여부 (접근성 옵션 연동용)
@@ -520,6 +523,7 @@ Rule Tile 규칙:
 | `docs/systems/progression-architecture.md` | 섹션 2.1 | 해금 레벨 판정 (ProgressionManager.CurrentLevel) |
 | `docs/content/livestock-system.md` | 전체 | 울타리 동물 이동 차단 연동 ([OPEN#1] DES-023) |
 | `docs/systems/time-season.md` | 야간 가시성 | 조명 기능 효과 전제 조건 ([OPEN#2] DES-023) |
+| `docs/systems/quest-system.md` | 전체 | 이벤트/퀘스트 보상으로 장식품 획득 경로 |
 
 ---
 
@@ -533,7 +537,7 @@ Rule Tile 규칙:
 
 - [OPEN] **project-structure.md 갱신**: `SeedMind.Decoration` 네임스페이스와 `Scripts/Decoration/` 폴더를 네임스페이스 목록 및 폴더 구조에 추가 필요.
 
-- [OPEN] **DecorationConfig.maxDecorationsPerZone**: 구역당 최대 장식 수 제한은 성능 영향 측정 후 Phase 2에서 결정. DES-023 미확정.
+- [OPEN] **DecorationConfig.maxDecorationsPerZone**: 구역당 최대 장식 수 제한은 성능 영향 측정 후 Phase 2에서 결정. DES-023에서 미결 항목으로 남긴 수치 — Phase 2 성능 프로파일링 후 확정.
 
 - [OPEN] **색상 변형(colorVariantIndex)**: 마법 수정 조명(`LightCrystal`) 색상 팔레트 UI 설계는 ui-system.md에서 결정 후 반영. 현재 `colorVariantIndex=0` 고정.
 
