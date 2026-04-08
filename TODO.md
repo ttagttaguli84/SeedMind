@@ -219,7 +219,7 @@
 | DES-022 | 1 | farm-expansion.md 잔존 [OPEN] 항목 일괄 처리 — 섹션 3.3 이하 미결 항목 검토 및 확정 (ARC-023 후속, Phase 2 착수 전 선행 필요) |
 | FIX-106 | 2 | collection-architecture.md 섹션 2 시스템 다이어그램에 GatheringCatalogManager 박스 추가 (현재 다이어그램이 FishCatalogManager 중심으로 기술되고 GatheringCatalogManager 박스가 누락되어 있는지 확인 후 보완) |
 | CON-018 | 2 | collection-system.md에 채집 아이템 초회 발견 보상 canonical 정의 (rarity별 firstDiscoverGold/XP 테이블 — ARC-041 Q-C-02에서 [OPEN] 처리된 수치, 구현 전 확정 필요) |
-| ARC-045 | 1 | data-pipeline.md 섹션 2.13에 GatheringCatalogData SO 에셋 스키마 추가 (PATTERN-007 준수 — ARC-041에서 새 SO 타입 도입됨, 기존 섹션 2.10~2.12 패턴 참조) |
+| ~~ARC-045~~ | ~~1~~ | ~~data-pipeline.md 섹션 2.13에 GatheringCatalogData SO 에셋 스키마 추가 (PATTERN-007 준수 — ARC-041에서 새 SO 타입 도입됨, 기존 섹션 2.10~2.12 패턴 참조)~~ — DONE: 섹션 2.13 신규, 섹션 1.1 행 추가(~190→~217개), Cross-references 3개 추가 |
 | ~~BAL-022~~ | ~~2~~ | ~~작물 수익 비중 설계 목표 공식화 (economy-system.md에 "작물 50~70%", "낚시+채집 = 작물의 20~40%" 목표 수치 명시 섹션 추가 — BAL-021 OPEN#1 후속)~~ — DONE → `docs/systems/economy-system.md` 섹션 8 신규 추가 (수익원 비중 목표 canonical 확정, annual-economy.md 섹션 1.3/4.2 수정 완료) |
 | FIX-107 | 2 | 온실 딸기 재수확 재검토 결정 (겨울 딸기가 전용 작물 압도 — BAL-021 OPEN#3, BAL-001 후속. 재수확 3일→4일 또는 온실 다중 수확 제한 중 확정) |
 | ~~CON-019~~ | ~~1~~ | ~~치즈 공방 연료비 canonical 확정 (livestock-system.md 섹션 7.2 [OPEN] — BAL-021 OPEN#2 후속, 시나리오 C 목축 수익 재계산 전 필요)~~ — DONE: 연료비 0G 확정 (processing-system.md 섹션 4.1 canonical), livestock-system.md 섹션 7.1/7.2/Open Questions, annual-economy.md 시나리오 C [OPEN] 닫힘 |
