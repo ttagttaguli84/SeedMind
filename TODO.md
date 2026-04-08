@@ -234,6 +234,6 @@
 | ~~BAL-023~~ | ~~1~~ | ~~economy-system.md BAL-022 OPEN#1 후속 — 작물 단독 비중 하한(25%) 현실화 결정: 20%로 완화하거나 작물+가공 합산 기준으로 단일화 (시나리오 B·C에서 18~28% 이탈 확인)~~ — DONE: 작물+가공 합산 기준 단일화, 8.2·8.4·8.6 및 annual-economy.md 1.3·4.2·4.3·5 업데이트 |
 | ~~FIX-110~~ | ~~1~~ | ~~farm-expansion.md Open Questions 해소된 항목 DONE 처리 — #1(FIX-036 완료), #4(CON-006 완료), #8(FIX-035 완료) 태그 닫기~~ — DONE: Open Questions #1/#4/#8 [RESOLVED] 처리, 인라인 [OPEN] 2건 및 [RISK] 1건 동시 처리 |
 | ~~FIX-111~~ | ~~2~~ | ~~save-load-architecture.md GameSaveData JSON/C# 클래스에 `decoration: DecorationSaveData` 필드 추가 (ARC-043 후속 — PATTERN-005 준수)~~ — DONE: 섹션 2.1 트리/2.2 JSON/2.3 C# 3곳 추가, PATTERN-005 필드 수 23→24 갱신, GatheringCatalogSaveData 트리 누락도 동시 수정 |
-| FIX-113 | 2 | data-pipeline.md 섹션 2.14~2.15에 DecorationItemData/DecorationConfig SO 에셋 스키마 추가 (PATTERN-007 준수 — ARC-043에서 신규 SO 타입 2종 도입됨, 기존 섹션 2.10~2.13 패턴 참조) |
+| ~~FIX-113~~ | ~~2~~ | ~~data-pipeline.md 섹션 2.14~2.15에 DecorationItemData/DecorationConfig SO 에셋 스키마 추가 (PATTERN-007 준수 — ARC-043에서 신규 SO 타입 2종 도입됨, 기존 섹션 2.10~2.13 패턴 참조)~~ — DONE: 섹션 1.1 테이블에 2행 추가(총 247개), 섹션 2.14 DecorationItemData 20필드 + 섹션 2.15 DecorationConfig 5필드 스키마 추가, 모든 콘텐츠 수치는 canonical 참조로만 기재 |
 | FIX-112 | 1 | project-structure.md에 SeedMind.Decoration 네임스페이스/폴더 추가 (ARC-043 후속 — Scripts/Decoration/ 폴더, asmdef 등록) |
 | ARC-046 | 1 | 장식 시스템 MCP 태스크 시퀀스 문서화 (decoration-architecture.md Part II → docs/mcp/decoration-tasks.md — ARC-043 후속) |
