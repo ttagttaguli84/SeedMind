@@ -198,7 +198,7 @@ create_script
   namespace: "SeedMind.Decoration"
   // Plain C# 클래스 (런타임 인스턴스)
   // 필드 (7개): instanceId(int), data(DecorationItemData), cell(Vector3Int),
-  //   edge(EdgeDirection), durability(float), colorVariantIndex(int),
+  //   edge(EdgeDirection), durability(int), colorVariantIndex(int),
   //   runtimeObject(GameObject)
   // -> see docs/systems/decoration-architecture.md 섹션 2.4
 
@@ -208,8 +208,8 @@ create_script
   // [System.Serializable] class DecorationSaveData:
   //   decorations(List<DecorationInstanceSave>), nextInstanceId(int)  -- 2필드
   // [System.Serializable] class DecorationInstanceSave:
-  //   instanceId(int), itemId(int), cellX(int), cellZ(int),
-  //   edge(EdgeDirection), durability(float), colorVariantIndex(int)  -- 7필드
+  //   instanceId(int), itemId(string), cellX(int), cellZ(int),
+  //   edge(EdgeDirection), durability(int), colorVariantIndex(int)  -- 7필드
   // PATTERN-005: JSON 스키마와 C# 필드 일치 필수
   // -> see docs/systems/decoration-architecture.md 섹션 2.6
 
@@ -294,9 +294,9 @@ add_component
 
 - **MCP 호출**: 3회
 
-#### D-B-04: SaveLoadOrder 및 참조 설정 (이미 완료된 항목 확인)
+#### D-B-04: SaveLoadOrder 설정
 
-> **[이미 완료됨]** `GameSaveData`에 `decoration: DecorationSaveData` 필드 추가는 FIX-111에서 `save-load-architecture.md`에 반영 완료. MCP 단계에서 `SaveManager` 인스펙터의 `GameSaveData` 필드를 재확인만 필요.
+> **[NOTE]** `GameSaveData`에 `decoration: DecorationSaveData` 필드 추가는 FIX-111에서 `save-load-architecture.md`에 이미 반영 완료됨. 이 태스크는 런타임 시 SaveManager가 DecorationManager를 올바른 순서로 호출하도록 `saveLoadOrder` 필드를 설정하는 작업이다.
 
 ```
 set_property
@@ -304,7 +304,7 @@ set_property
   component: "SeedMind.Decoration.DecorationManager"
   property: "saveLoadOrder"
   value: 57
-  // SaveLoadOrder = 57 -> see docs/systems/decoration-architecture.md 섹션 2.1
+  // SaveLoadOrder = 57 -> see docs/systems/save-load-architecture.md SaveLoadOrder 할당표
 ```
 
 - **MCP 호출**: 1회 (SaveLoadOrder 설정)
@@ -362,30 +362,30 @@ create_folder
 ```
 create_scriptable_object
   type: "SeedMind.Decoration.Data.DecorationConfig"
-  path: "Assets/_Project/Data/Decoration/SO_DecoConfig.asset"
+  path: "Assets/_Project/Data/Config/SO_DecorationConfig.asset"
 
 set_property
-  asset: "Assets/_Project/Data/Decoration/SO_DecoConfig.asset"
+  asset: "Assets/_Project/Data/Config/SO_DecorationConfig.asset"
   property: "validHighlightColor"
   value: [색상값 -> see docs/systems/decoration-architecture.md 섹션 2.3]
 
 set_property
-  asset: "Assets/_Project/Data/Decoration/SO_DecoConfig.asset"
+  asset: "Assets/_Project/Data/Config/SO_DecorationConfig.asset"
   property: "invalidHighlightColor"
   value: [색상값 -> see docs/systems/decoration-architecture.md 섹션 2.3]
 
 set_property
-  asset: "Assets/_Project/Data/Decoration/SO_DecoConfig.asset"
+  asset: "Assets/_Project/Data/Config/SO_DecorationConfig.asset"
   property: "fenceDurabilityDecayPerSeason"
   value: [수치 -> see docs/systems/decoration-architecture.md 섹션 2.3]
 
 set_property
-  asset: "Assets/_Project/Data/Decoration/SO_DecoConfig.asset"
+  asset: "Assets/_Project/Data/Config/SO_DecorationConfig.asset"
   property: "fenceRepairCostRatio"
   value: [수치 -> see docs/systems/decoration-architecture.md 섹션 2.3]
 
 set_property
-  asset: "Assets/_Project/Data/Decoration/SO_DecoConfig.asset"
+  asset: "Assets/_Project/Data/Config/SO_DecorationConfig.asset"
   property: "pathSpeedBonusEnabled"
   value: [bool -> see docs/systems/decoration-architecture.md 섹션 2.3]
 ```
@@ -399,7 +399,7 @@ set_property
 ```
 // 네이밍 패턴: SO_Deco_Fence<이름>.asset
 // 예시: SO_Deco_FenceWood.asset, SO_Deco_FenceStone.asset,
-//       SO_Deco_FenceIron.asset, SO_Deco_FenceBrick.asset
+//       SO_Deco_FenceIron.asset, SO_Deco_FenceFloral.asset
 
 create_scriptable_object
   type: "SeedMind.Decoration.Data.DecorationItemData"
@@ -419,8 +419,8 @@ create_scriptable_object
 
 ```
 // 네이밍 패턴: SO_Deco_Path<이름>.asset
-// 예시: SO_Deco_PathGravel.asset, SO_Deco_PathCobble.asset,
-//       SO_Deco_PathBrick.asset, SO_Deco_PathWood.asset, SO_Deco_PathFlower.asset
+// 예시: SO_Deco_PathDirt.asset, SO_Deco_PathGravel.asset,
+//       SO_Deco_PathStone.asset, SO_Deco_PathBrick.asset, SO_Deco_PathWood.asset
 
 create_scriptable_object
   type: "SeedMind.Decoration.Data.DecorationItemData"
@@ -440,8 +440,8 @@ create_scriptable_object
 
 ```
 // 네이밍 패턴: SO_Deco_Light<이름>.asset
-// 예시: SO_Deco_LightLantern.asset, SO_Deco_LightTorch.asset,
-//       SO_Deco_LightCrystal.asset, SO_Deco_LightFairy.asset
+// 예시: SO_Deco_LightTorch.asset, SO_Deco_LightLantern.asset,
+//       SO_Deco_LightStreet.asset, SO_Deco_LightCrystal.asset
 
 create_scriptable_object
   type: "SeedMind.Decoration.Data.DecorationItemData"
@@ -625,7 +625,7 @@ set_property
   object: "DecorationManager"
   component: "SeedMind.Decoration.DecorationManager"
   property: "_decoConfig"
-  value: [ref: "Assets/_Project/Data/Decoration/SO_DecoConfig.asset"]
+  value: [ref: "Assets/_Project/Data/Config/SO_DecorationConfig.asset"]
 
 set_property
   object: "DecorationManager"
