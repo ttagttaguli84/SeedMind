@@ -220,10 +220,10 @@
 | DES-022 | 1 | farm-expansion.md 잔존 [OPEN] 항목 일괄 처리 — 섹션 3.3 이하 미결 항목 검토 및 확정 (ARC-023 후속, Phase 2 착수 전 선행 필요) |
 | FIX-106 | 2 | collection-architecture.md 섹션 2 시스템 다이어그램에 GatheringCatalogManager 박스 추가 (현재 다이어그램이 FishCatalogManager 중심으로 기술되고 GatheringCatalogManager 박스가 누락되어 있는지 확인 후 보완) |
 | ~~BAL-024~~ | ~~2~~ | ~~낚시+채집 합산 비율 구조적 이탈 분석 및 조정안 검토 — BAL-023 리뷰에서 새 기준(60%)도 시나리오 B(72%)·C(65%)에서 초과 확인. 낚시 에너지 비용 상향 또는 일일 낚시 시간 제약 도입 중 결정 (economy-system.md 섹션 8 [RISK] 낚시 우위 구조 후속)~~ — DONE → `docs/balance/fishing-gathering-ratio.md` (캐스팅 에너지 2→3, Lv.8+ 3→2, fishGatherVsCropProcessingMax 0.60→0.65 확정) |
-| FIX-114 | 2 | fishing-system.md 섹션 2.3 캐스팅 에너지 2→3, Lv.8+ 캐스팅 에너지 2 명시 (BAL-024 확정 파라미터 반영) |
-| FIX-115 | 2 | fishing-economy.md 섹션 3.1~3.4, 5.4 새 에너지 기준(캐스팅 3)으로 시뮬레이션 재계산 (BAL-024 후속) |
-| FIX-116 | 2 | economy-system.md 섹션 8.6 `fishGatherVsCropProcessingMax` 0.60→0.65 수정, 섹션 8.3 시나리오별 비율 요약 업데이트 (BAL-024 후속) |
-| FIX-117 | 2 | annual-economy.md 섹션 4.2 시나리오 B/C 낚시 수익 수치 및 비율 재계산 반영 (BAL-024 후속) |
+| ~~FIX-114~~ | ~~2~~ | ~~fishing-system.md 섹션 2.3 캐스팅 에너지 2→3, Lv.8+ 캐스팅 에너지 2 명시 (BAL-024 확정 파라미터 반영)~~ — DONE: 섹션 2.3 테이블, 플로우 다이어그램, 설계 의도 문구, Lv.8 숙련도 표, 튜닝 파라미터 전수 수정 |
+| ~~FIX-115~~ | ~~2~~ | ~~fishing-economy.md 섹션 3.1~3.4, 5.4 새 에너지 기준(캐스팅 3)으로 시뮬레이션 재계산 (BAL-024 후속)~~ — DONE: 섹션 2.1 전제, 2.5 G/E 테이블, 3.1~3.4 계산 블록, 3.5 비교 테이블, 5.4 수급 반영 수익, 섹션 6 요약 모두 갱신 |
+| ~~FIX-116~~ | ~~2~~ | ~~economy-system.md 섹션 8.6 `fishGatherVsCropProcessingMax` 0.60→0.65 수정, 섹션 8.3 시나리오별 비율 요약 업데이트 (BAL-024 후속)~~ — DONE: 8.6 목표값 0.65, 8.3 B·C 비율(62.7%/37.2%) 갱신, [RISK]→[RESOLVED: BAL-024] |
+| ~~FIX-117~~ | ~~2~~ | ~~annual-economy.md 섹션 4.2 시나리오 B/C 낚시 수익 수치 및 비율 재계산 반영 (BAL-024 후속)~~ — DONE: 1.3 canonical 참조(221/339/752G), 3.2/3.3 합산 낚시 37,968G/62,720G+히스토리 배너, 4.1 비중표, 4.2 달성 여부, 4.3 이상징후 텍스트 갱신 |
 | FIX-109 | 1 | economy-architecture.md에 BAL-023 파라미터 키명 변경 반영 확인 — fishGatherVsCropMax → fishGatherVsCropProcessingMax 변경이 economy-architecture.md에 직접 기재된 경우 갱신 (canonical 참조로 교체 or 키명 수정) |
 | ~~CON-018~~ | ~~2~~ | ~~collection-system.md에 채집 아이템 초회 발견 보상 canonical 정의 (rarity별 firstDiscoverGold/XP 테이블 — ARC-041 Q-C-02에서 [OPEN] 처리된 수치, 구현 전 확정 필요)~~ — DONE: 섹션 3.3 희귀도별 테이블(Common 5G/2XP ~ Legendary 200G/50XP) + 섹션 5.2.1 27종 아이템별 테이블 이미 DES-018에서 작성 완료. ARC-041 Q-C-02도 해당 섹션을 참조만 함 |
 | ~~ARC-045~~ | ~~1~~ | ~~data-pipeline.md 섹션 2.13에 GatheringCatalogData SO 에셋 스키마 추가 (PATTERN-007 준수 — ARC-041에서 새 SO 타입 도입됨, 기존 섹션 2.10~2.12 패턴 참조)~~ — DONE: 섹션 2.13 신규, 섹션 1.1 행 추가(~190→~217개), Cross-references 3개 추가 |
