@@ -338,19 +338,25 @@ Zone E(`zone_south_meadow`)의 구조적 파라미터는 farm-expansion.md에서
 | 해금 조건 | 레벨 8 + 외양간 Lv.1 보유 |
 | 점유 타일 | 3x4 (12타일) |
 | 배치 구역 | Zone E 또는 Zone A~D (미확정) |
+| 연료 사용 | **없음** (-> see `docs/content/processing-system.md` 섹션 4.1) |
 
-### 7.2 예상 가공 레시피 (확정은 치즈 공방 문서에서)
+### 7.2 확정 가공 레시피 (CON-009 확정)
 
-아래는 본 시스템이 공급하는 원재료와 예상 가공품의 방향성이다. **확정 레시피, 처리 시간, 판매가는 치즈 공방 문서(미작성)가 canonical**이며, 여기서는 연계 방향만 기술한다.
+치즈 공방 레시피 5종은 `docs/content/processing-system.md` 섹션 3.6에 canonical로 확정되었다 (CON-009, 2026-04-07).
 
-| 원재료 | 예상 가공품 | 기대 부가가치 |
-|--------|-----------|-------------|
-| 우유 (`item_milk`) | 치즈 (Cheese) | 원재료 대비 ~1.8x |
-| 우유 (`item_milk`) | 버터 (Butter) | 원재료 대비 ~1.5x |
-| 염소젖 (`item_goat_milk`) | 염소 치즈 (Goat Cheese) | 원재료 대비 ~2.0x |
-| 우유 + 달걀 | 크림 (Cream) | 복합 재료, 고부가가치 |
+**연료비**: 없음. 치즈 공방은 연료 소모 없이 운영한다 (-> see `docs/content/processing-system.md` 섹션 4.1).
 
-[OPEN] 치즈 공방 레시피를 `docs/content/processing-system.md`에 추가할지, 별도 문서로 분리할지 결정 필요. 기존 processing-system.md가 32종 레시피를 다루고 있어, 치즈 공방 레시피(4~6종 예상)를 추가하면 36~38종이 된다.
+| 원재료 | 확정 가공품 | 실제 부가가치 |
+|--------|-----------|------------|
+| 우유 (`item_milk`) | 치즈 (Cheese) 250G | 직판 120G 대비 1.8x |
+| 우유 (`item_milk`) | 버터 (Butter) 160G | 직판 대비 1.4x |
+| 염소젖 (`item_goat_milk`) | 염소 치즈 (Goat Cheese) 190G | 직판 80G 대비 2.0x |
+| 치즈 (`item_cheese`) | 에이지드 치즈 (Aged Cheese) 680G | 치즈 재투입 2차 가공 |
+| 우유 + 달걀 | 크림 (Cream) 280G | 복합 재료, 베이커리 연계 |
+
+레시피 상세(처리 시간, 해금 조건) → see `docs/content/processing-system.md` 섹션 3.6.
+
+[RESOLVED-CON-009] 치즈 공방 레시피 5종이 `docs/content/processing-system.md` 섹션 3.6에 추가됨. 총 레시피 수 56종으로 확정.
 
 ### 7.3 XPSource 확장 필요
 
@@ -469,7 +475,7 @@ Zone E 해금 후 목축 시작까지의 최소 투자:
 
 1. [OPEN] **사료 자급자족**: 목초지(Zone E) 타일에 "풀"을 재배하여 사료 비용을 절감하는 메카닉 도입 여부 (섹션 2.2)
 2. [OPEN] **고품질 확률 차등**: 동물별 고품질 생산물 확률에 차등을 둘지 통일할지 (섹션 4.2)
-3. [OPEN] **치즈 공방 문서 위치**: processing-system.md에 추가할지 별도 문서로 분리할지 (섹션 7.2)
+3. [RESOLVED-CON-009] **치즈 공방 문서 위치**: `docs/content/processing-system.md` 섹션 3.6에 레시피 5종 추가 확정. 연료비 없음 (섹션 4.1 canonical).
 4. [OPEN] **치즈 공방 배치 구역**: Zone E 전용인지, 다른 Zone에도 건설 가능한지 (섹션 7.1)
 5. [OPEN] **Zone E 이외 동물 시설**: 게임 후반 "제2 목장" 확장 필요성 (섹션 3.3)
 6. [OPEN] **동물 구매 NPC**: 기존 NPC 시스템에 목축상(Rancher) 추가 필요. 상시 판매인지, 특정 요일/계절 한정인지 (섹션 1.1)

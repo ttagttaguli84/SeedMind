@@ -545,8 +545,9 @@
   닭 직판: 4 x 25G = 100G/일
   합계: 178G/일 x 28일 = 4,984G
   연료비 검증: 치즈 공방 가공 (-> see docs/balance/livestock-economy.md 섹션 2.2)
-    치즈 공방은 연료 소모 없음(전기 사용 가정, 처리시간만 소모). 연료비 0G.
-    [OPEN] 치즈 공방 연료/에너지 비용이 livestock-system.md에서 미확정. 0G 가정 유지.
+    치즈 공방은 연료 소모 없음. 연료비 0G.
+    [RESOLVED-CON-019] 연료비 0G 확정 — `docs/content/processing-system.md` 섹션 4.1 canonical.
+    `docs/content/livestock-system.md` 섹션 7.1 참조 추가 완료.
 
 ```
 여름 합산:
