@@ -86,14 +86,14 @@
 
 | itemId | 이름 | 원재료 출처 | 회복량 | 판매가 | 비고 |
 |--------|------|-----------|:------:|:------:|------|
-| `item_food_wild_berry` | 야생 산딸기 | `gather_wild_berry` 채집 | +10 | 4G | 봄/여름 |
-| `item_food_wild_mushroom` | 야생 버섯 (능이) | `gather_neungi` 채집 | +10 | 6G | 여름/가을 |
-| `item_food_pine_mushroom` | 송이버섯 | `gather_pine_mushroom` 채집 | +10 | 32G | 가을 |
-| `item_food_wild_grape` | 머루 | `gather_wild_grape` 채집 | +10 | 9G | 가을 |
-| `item_food_spring_herb` | 봄나물 | `gather_spring_herb` 채집 | +10 | 8G | 봄 |
-| `item_food_wild_ginseng` | 산삼 | `gather_wild_ginseng` 채집 | +10 | 80G | 봄 Legendary |
+| `item_food_wild_berry` | 야생 산딸기 | `gather_wild_berry` 채집 | +10 | (-> see gathering-system.md 섹션 3.3) | 봄/여름 |
+| `item_food_wild_mushroom` | 야생 버섯 (능이) | `gather_neungi` 채집 | +10 | (-> see gathering-system.md 섹션 3.4) | 여름/가을 |
+| `item_food_pine_mushroom` | 송이버섯 | `gather_pine_mushroom` 채집 | +10 | (-> see gathering-system.md 섹션 3.4) | 가을 |
+| `item_food_wild_grape` | 머루 | `gather_wild_grape` 채집 | +10 | (-> see gathering-system.md 섹션 3.5) | 가을 |
+| `item_food_spring_herb` | 봄나물 | `gather_spring_herb` 채집 | +10 | (-> see gathering-system.md 섹션 3.3) | 봄 |
+| `item_food_wild_ginseng` | 산삼 | `gather_wild_ginseng` 채집 | +10 | (-> see gathering-system.md 섹션 3.7) | 봄 Legendary |
 
-**설계 노트**: 채집 원물의 기본 판매가는 (-> see `docs/systems/gathering-system.md` 섹션 3.3~3.7). 위 판매가는 해당 canonical의 값을 참조한다. 직접 섭취 시 판매 기회를 포기하므로 기회비용이 음식 가치의 실질 비용이다.
+**설계 노트**: 채집 원물의 기본 판매가 canonical은 `docs/systems/gathering-system.md` 섹션 3.3~3.7. 직접 섭취 시 판매 기회를 포기하므로 기회비용이 음식 가치의 실질 비용이다.
 
 **산삼 직접 섭취 설계 의도**: 산삼(80G)을 에너지 +10 회복에 쓰는 것은 손해지만, 에너지가 급하게 필요한 극한 상황에서 선택지로 존재한다는 의미가 있다. 산삼의 주 용도는 직판(80G) 또는 산삼주 제조(280G)이다.
 
@@ -128,7 +128,7 @@
 | `item_food_pumpkin_stew` | 호박 스튜 | 호박 x1, 감자 x1 | 2시간 | 장작 x1 | +45 | 임시 maxEnergy +20 | 350G |
 | `item_food_strawberry_jam_toast` | 딸기 잼 토스트 | `item_jam_strawberry` x1, 옥수수 가루 x1 | 2시간 | 장작 x1 | +45 | 임시 maxEnergy +20 | 320G |
 | `item_food_fish_stew_deluxe` | 특제 생선 스튜 | 생선(Uncommon+) x1, 감자 x1, 당근 x1 | 3시간 | 장작 x1 | +45 | 임시 maxEnergy +20 | 380G |
-| `item_food_spring_bibimbap` | 봄나물 비빔밥 (고급) | `gather_wild_garlic` x2, `gather_spring_herb` x1, 달걀 x1 | 2시간 | 장작 x1 | +45 | 임시 maxEnergy +20 | 300G |
+| `item_food_spring_bibimbap` | 달걀 봄나물 비빔밥 | `gather_wild_garlic` x2, `gather_spring_herb` x1, 달걀 x1 | 2시간 | 장작 x1 | +45 | 임시 maxEnergy +20 | 300G |
 | `item_food_autumn_mushroom_dish` | 가을 버섯 요리 | `gather_pine_mushroom` x1, `gather_reishi` x1 | 2시간 | 장작 x1 | +45 | 임시 maxEnergy +20 | 340G |
 | `item_food_watermelon_sorbet` | 수박 셔벗 | 수박 x1, `item_juice_watermelon` x0.5개분(수박 주스 별도 제조 필요 없음, 수박 직투입) | 2시간 | 장작 x1 | +45 | 임시 maxEnergy +20 | 480G |
 | `item_food_cheese_gratin` | 치즈 그라탱 | `item_cheese` x1, 감자 x2 | 3시간 | 장작 x1 | +45 | 임시 maxEnergy +20 | 420G |
@@ -144,7 +144,7 @@
 | 호박 스튜 | 호박 200G + 감자 30G = 230G | 30G | 260G | 350G | +90G | 1.35x |
 | 딸기 잼 토스트 | 딸기 잼 210G + 옥수수 가루 170G = 380G | 30G | 410G | 320G | -90G | 0.78x |
 | 특제 생선 스튜 | 생선Uncommon ~50G + 감자 30G + 당근 35G = 115G | 30G | 145G | 380G | +235G | 2.62x |
-| 봄나물 비빔밥(고급) | 달래 5Gx2 + 봄나물 8G + 달걀 35G = 53G | 30G | 83G | 300G | +217G | 3.61x |
+| 달걀 봄나물 비빔밥 | 달래 5Gx2 + 봄나물 8G + 달걀 35G = 53G | 30G | 83G | 300G | +217G | 3.61x |
 | 가을 버섯 요리 | 송이 32G + 영지 24G = 56G | 30G | 86G | 340G | +254G | 3.95x |
 | 수박 셔벗 | 수박 350G | 30G | 380G | 480G | +100G | 1.26x |
 | 치즈 그라탱 | 치즈 250G + 감자 30Gx2 = 310G | 30G | 340G | 420G | +80G | 1.24x |
@@ -159,17 +159,21 @@
 
 | itemId | 이름 | 재료 | 가공 시간 | 연료 | 회복량 | 특수 효과 | 판매가 |
 |--------|------|------|:--------:|:----:|:------:|-----------|:------:|
-| `item_food_lotus_tea_feast` | 황금 연꽃 만찬 | `gather_golden_lotus` x1, 수박 x1 | 4시간 | 장작 x2 | +60 | 임시 maxEnergy +20, 이동 속도 +20% (해당 날) | 900G |
-| `item_food_millennium_soup` | 천년 영지 보양식 | `gather_millennium_reishi` x1, 닭 수프(달걀 x2 + 당근 x1 가공소 제조) | 4시간 | 장작 x2 | +60 | 임시 maxEnergy +20, 이동 속도 +20% (해당 날) | 850G |
-| `item_food_royal_harvest` | 왕실 수확 연회 | 호박 분말 x1, 수박 잼 x1, `gather_wild_ginseng` x1 | 5시간 | 장작 x2 | +60 | 임시 maxEnergy +20, 이동 속도 +20% (해당 날) | 1,200G |
-| `item_food_ginseng_elixir` | 산삼 강정 | `gather_wild_ginseng` x2, 꿀(달래꽃 대용: `gather_wild_garlic` x3 + 설탕 상점 구매 50G) | 5시간 | 장작 x2 | +60 | 임시 maxEnergy +20, 이동 속도 +20% (해당 날) | 1,100G |
+| `item_food_lotus_tea_feast` | 황금 연꽃 만찬 | `gather_golden_lotus` x1, 수박 x1 | 4시간 | 장작 x2 | +60 | 임시 maxEnergy +20, 이동 속도 +20%\* (해당 날) | 900G |
+| `item_food_millennium_soup` | 천년 영지 보양식 | `gather_millennium_reishi` x1, 닭 수프(달걀 x2 + 당근 x1 가공소 제조) | 4시간 | 장작 x2 | +60 | 임시 maxEnergy +20, 이동 속도 +20%\* (해당 날) | 850G |
+| `item_food_royal_harvest` | 왕실 수확 연회 | 호박 분말 x1, 수박 잼 x1, `gather_wild_ginseng` x1 | 5시간 | 장작 x2 | +60 | 임시 maxEnergy +20, 이동 속도 +20%\* (해당 날) | 1,200G |
+| `item_food_ginseng_elixir` | 산삼 강정 | `gather_wild_ginseng` x2, 꿀(달래꽃 대용: `gather_wild_garlic` x3 + 설탕 상점 구매 50G) | 5시간 | 장작 x2 | +60 | 임시 maxEnergy +20, 이동 속도 +20%\* (해당 날) | 1,100G |
+
+\* [OPEN] 이동 속도 +20%는 잠정값. 이동 속도 시스템 설계 후 최종 검증 필요 (Open Questions 3번).
 
 **최고급 요리 판매가 설계 근거** (PATTERN-BAL-COST 준수):
 
 | 음식 | 재료 기회비용 | 연료 비용 | 총 비용 | 판매가 | 순이익 |
 |------|:-----------:|:--------:|:-------:|:------:|:------:|
-| 황금 연꽃 만찬 | 황금 연꽃 100G + 수박 350G = 450G | 60G | 510G | 900G | +390G |
-| 천년 영지 보양식 | 천년 영지 120G + 닭 수프 재료(달걀 35Gx2 + 당근 35G) = 225G | 60G | 285G | 850G | +565G |
+| 황금 연꽃 만찬 | 황금 연꽃 [OPEN]\* + 수박 350G | 60G | ~510G | 900G | ~+390G |
+| 천년 영지 보양식 | 천년 영지 [OPEN]\* + 닭 수프 재료(달걀 35Gx2 + 당근 35G) | 60G | ~285G | 850G | ~+565G |
+
+\* [OPEN] 황금 연꽃/천년 영지 판매가는 gathering-items.md에서 확정 필요 (잠정 100G/120G 기준 계산값).
 | 왕실 수확 연회 | 호박 분말 320G + 수박 잼 750G + 산삼 80G = 1,150G | 60G | 1,210G | 1,200G | -10G |
 | 산삼 강정 | 산삼 80Gx2 + 달래 5Gx3 + 설탕 50G = 225G | 60G | 285G | 1,100G | +815G |
 
@@ -289,7 +293,8 @@
 | `docs/design.md` 섹션 4.2 | 작물 기본 판매가 (요리 재료 기회비용 계산 기준) |
 | `docs/systems/fishing-system.md` 섹션 4.2 | 수산물 기본 판매가 (요리 재료 기회비용 계산 기준) |
 | `docs/systems/economy-system.md` 섹션 1.2 | 초기 골드 500G, 300G/day 수익 기준 |
-| `docs/content/gathering-items.md` | 채집 아이템 상세 (원물 기본 음식의 출처) |
+| `docs/content/gathering-items.md` | 채집 아이템 상세 (원물 기본 음식의 출처, 황금 연꽃·천년 영지 판매가 canonical) |
+| `docs/content/livestock-system.md` 섹션 4 | 달걀 판매가 canonical (35G, 요리 재료 기회비용 계산 기준) |
 
 ---
 
