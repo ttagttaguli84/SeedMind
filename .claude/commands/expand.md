@@ -14,7 +14,7 @@ Arguments: $ARGUMENTS
    - `docs/architecture.md` — system's current architecture
    - Any task-relevant system docs under `docs/systems/` or `docs/content/`
 3. Select the agent based on task type (following `start.md` Phase 2 strategy):
-   - **New system design (DES-*)**: spawn designer + architect in parallel
+   - **New system design (DES-*)**: designer → architect (sequential)
    - **Supplementing existing architecture (ARC-*)**: spawn architect only
    - **Content/balance (CON-*, BAL-*)**: spawn designer only
 4. **Inject pre-read content into each agent prompt** using the block below. Agents must NOT re-read files already provided.
