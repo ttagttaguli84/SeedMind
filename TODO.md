@@ -224,5 +224,5 @@
 | ~~FIX-107~~ | ~~2~~ | ~~온실 딸기 재수확 재검토 결정 (겨울 딸기가 전용 작물 압도 — BAL-021 OPEN#3, BAL-001 후속. 재수확 3일→4일 또는 온실 다중 수확 제한 중 확정)~~ — DONE: 재수확 3일 유지 확정. BAL-010 수급 보정 시 표고버섯(5,920G) > 딸기(5,584G) 역전 확인. annual-economy.md OPEN#3/이상징후2 RESOLVED, crop-economy.md 제안A [OPEN] RESOLVED |
 | ~~CON-019~~ | ~~1~~ | ~~치즈 공방 연료비 canonical 확정 (livestock-system.md 섹션 7.2 [OPEN] — BAL-021 OPEN#2 후속, 시나리오 C 목축 수익 재계산 전 필요)~~ — DONE: 연료비 0G 확정 (processing-system.md 섹션 4.1 canonical), livestock-system.md 섹션 7.1/7.2/Open Questions, annual-economy.md 시나리오 C [OPEN] 닫힘 |
 | ~~FIX-108~~ | ~~2~~ | ~~economy-system.md 섹션 8.2 채집 비중 하한 수정 — 현행 "10~20%"를 "15~20%"로 교정 (gathering-economy.md 섹션 6.2와 불일치, BAL-022 리뷰 WARNING 후속)~~ — DONE: economy-system.md 섹션 8.2 채집 행 "10~20%" → "15~20%" 교정 |
-| BAL-023 | 1 | economy-system.md BAL-022 OPEN#1 후속 — 작물 단독 비중 하한(25%) 현실화 결정: 20%로 완화하거나 작물+가공 합산 기준으로 단일화 (시나리오 B·C에서 18~28% 이탈 확인) |
+| ~~BAL-023~~ | ~~1~~ | ~~economy-system.md BAL-022 OPEN#1 후속 — 작물 단독 비중 하한(25%) 현실화 결정: 20%로 완화하거나 작물+가공 합산 기준으로 단일화 (시나리오 B·C에서 18~28% 이탈 확인)~~ — DONE: 작물+가공 합산 기준 단일화, 8.2·8.4·8.6 및 annual-economy.md 1.3·4.2·4.3·5 업데이트 |
 | FIX-110 | 1 | farm-expansion.md Open Questions 해소된 항목 DONE 처리 — #1(FIX-036 완료), #4(CON-006 완료), #8(FIX-035 완료) 태그 닫기 |
