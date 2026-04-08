@@ -971,7 +971,8 @@ namespace SeedMind.Save
 | FarmZoneManager | 45 | FarmGrid(40) 복원 후 구역 해금 상태 적용 (ARC-023) |
 | AnimalManager | 48 | FarmZoneManager(45) 이후 — Zone E 해금 상태 복원 후 동물 상태 로드 (ARC-019) |
 | PlayerController | 50 | 인벤토리 SO 참조 필요 |
-| FishingManager | 52 | PlayerController(50) 이후 — 낚시 상태 복원 (→ see docs/systems/fishing-architecture.md, FIX-052) |
+| EnergyManager | 51 | PlayerController(50) 직후 — 에너지 상태 복원 (→ see docs/systems/energy-architecture.md 섹션 8, ARC-044) |
+| FishingManager | 52 | EnergyManager(51) 이후 — 낚시 상태 복원 (→ see docs/systems/fishing-architecture.md, FIX-052) |
 | FishCatalogManager | 53 | FishingManager(52) 이후 — 도감 상태 복원, 구버전 세이브 마이그레이션 시 FishingStats 참조 (→ see docs/systems/fishing-architecture.md 섹션 20.4, ARC-030) |
 | GatheringManager | 54 | FishCatalogManager(53) 이후 — 채집 포인트 스폰 상태 복원 (→ see docs/systems/gathering-system.md, ARC-031) |
 | InventoryManager | 55 | 별도 인벤토리 상태 복원 |
