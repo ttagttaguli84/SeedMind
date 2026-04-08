@@ -115,6 +115,18 @@ Assets/
 │   │   │   └── Data/                  # SeedMind.Collection.Data 네임스페이스
 │   │   │       └── GatheringCatalogData.cs  # ScriptableObject 정의
 │   │   │
+│   │   ├── Decoration/                # 장식 시스템 (→ see docs/systems/decoration-architecture.md, ARC-043)
+│   │   │   ├── DecorationManager.cs   # Singleton, ISaveable, SaveLoadOrder=60
+│   │   │   ├── DecorationInstance.cs  # 배치된 장식 런타임 상태
+│   │   │   ├── DecorationEvents.cs    # 정적 이벤트 허브
+│   │   │   └── Data/                  # SeedMind.Decoration.Data 네임스페이스
+│   │   │       ├── DecorationItemData.cs   # ScriptableObject 정의
+│   │   │       ├── DecorationConfig.cs     # 글로벌 설정 ScriptableObject
+│   │   │       ├── DecorationSaveData.cs   # 세이브 데이터 루트
+│   │   │       ├── DecorationInstanceSave.cs # 인스턴스 세이브 항목
+│   │   │       ├── DecoCategoryType.cs     # enum 정의
+│   │   │       └── EdgeDirection.cs        # enum 정의 (울타리 방향)
+│   │   │
 │   │   └── UI/                        # UI 시스템 (→ see docs/systems/ui-architecture.md for full details)
 │   │       ├── UIManager.cs           # 싱글턴, Screen FSM, PopupQueue 관리
 │   │       ├── ScreenBase.cs          # Screen 추상 기반 클래스
@@ -153,7 +165,8 @@ Assets/
 │   │   ├── Buildings/                 # SO_Bldg_WaterTank.asset 등
 │   │   ├── Recipes/                   # SO_Recipe_Jam_Potato.asset 등 (→ see docs/systems/processing-architecture.md Part II)
 │   │   ├── Tutorial/                  # SO_TutSeq_MainTutorial.asset, SO_TutStep_*.asset, SO_CtxHint_*.asset
-│   │   └── Config/                    # SO_ProgressionData.asset (SO_LevelConfig.asset 대체), SO_TimeConfig.asset 등
+│   │   ├── Decorations/               # SO_Deco_*.asset 29종 (→ see docs/systems/decoration-architecture.md, ARC-043)
+│   │   └── Config/                    # SO_ProgressionData.asset (SO_LevelConfig.asset 대체), SO_TimeConfig.asset, SO_DecorationConfig.asset 등
 │   │
 │   ├── Prefabs/
 │   │   ├── Player/                    # PFB_Player.prefab
@@ -232,7 +245,9 @@ SeedMind                          # 최상위 네임스페이스 (공용 인터�
 ├── SeedMind.UI                   # UI 시스템 (→ see docs/systems/ui-architecture.md)
 ├── SeedMind.UI.Data              # UI enum/struct 정의 (ScreenType, PopupPriority, NotificationData 등)
 ├── SeedMind.Collection           # 수집 도감 시스템 (→ see docs/systems/collection-architecture.md, ARC-037)
-└── SeedMind.Collection.Data      # GatheringCatalogData, GatheringCatalogSaveData, FishCatalogData SO 정의
+├── SeedMind.Collection.Data      # GatheringCatalogData, GatheringCatalogSaveData, FishCatalogData SO 정의
+├── SeedMind.Decoration           # 장식 시스템 (→ see docs/systems/decoration-architecture.md, ARC-043)
+└── SeedMind.Decoration.Data      # DecorationItemData, DecorationConfig, DecorationSaveData SO/데이터 정의
 ```
 
 ### 네임스페이스 규칙
@@ -325,6 +340,7 @@ Assembly Definition(asmdef)으로 컴파일 단위를 분리하여 빌드 시간
 | `SeedMind.Level.asmdef` | `Scripts/Level/` | Core, Farm |
 | `SeedMind.UI.asmdef` | `Scripts/UI/` | Core, Farm, Player, Economy, Building, Level |
 | `SeedMind.Collection.asmdef` | `Scripts/Collection/` | Core, Player (→ see docs/systems/collection-architecture.md, ARC-037) |
+| `SeedMind.Decoration.asmdef` | `Scripts/Decoration/` | Core (→ see docs/systems/decoration-architecture.md, ARC-043) |
 
 ### asmdef 규칙
 
@@ -508,4 +524,5 @@ SCN_Farm (Scene Root)
 - `docs/systems/farming-architecture.md` (경작 시스템 클래스 구조)
 - `docs/systems/tool-upgrade-architecture.md` (도구 업그레이드 시스템 — DES-007)
 - `docs/mcp/scene-setup-tasks.md` (기본 씬 구성 MCP 태스크 — ARC-002)
+- `docs/systems/decoration-architecture.md` (장식 시스템 클래스 구조, ARC-043)
 - `docs/pipeline/` (빌드 파이프라인, 작성 예정)
