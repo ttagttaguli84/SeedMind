@@ -54,8 +54,8 @@
 
 | 지표 | 설계 목표 | 참조 |
 |------|---------|------|
-| 작물 수익 비중 | 전체의 50~70% | 설계 원칙 [OPEN - economy-system.md에 공식 수치 미등재, BAL-021 분석 기준] |
-| 낚시+채집 보조 역할 | 작물 수익의 20~40% | 설계 원칙 [OPEN - economy-system.md에 공식 수치 미등재, BAL-021 분석 기준] |
+| 작물+가공 합산 비중 | 전체의 50~70% | (→ see `docs/systems/economy-system.md` 섹션 8.2) |
+| 낚시+채집 보조 역할 | 작물 직판의 20~50% | (→ see `docs/systems/economy-system.md` 섹션 8.2) |
 | 가공 체인 매력도 | 생작물 직판 대비 2~3x ROI | (-> see `docs/balance/processing-economy.md` 섹션 1) |
 | 채집 수입 비중 | 전체의 15~20% | (-> see `docs/balance/gathering-economy.md` 섹션 6.2) |
 | 1년차 말 자산 수준 | 시작 골드(500G) 대비 현저한 성장 필요 | 경제 성장 곡선 설계 의도 |
