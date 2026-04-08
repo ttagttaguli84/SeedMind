@@ -220,7 +220,7 @@ catchSize = sizeMin + (sizeMax - sizeMin) * weightedRandom()
 
 - 메뉴 > 수집 도감 > 어종 탭
 - 낚시 중 어종 포획 시 도감 등록 팝업에서 "도감 보기" 버튼
-- 단축키: [OPEN] 키 바인딩 미확정
+- 단축키: `C` 키 (→ see `docs/systems/ui-system.md` 섹션 11, canonical 키 바인딩 맵)
 
 ### 5.2 도감 상태 정의
 
@@ -400,7 +400,7 @@ catchSize = sizeMin + (sizeMax - sizeMin) * weightedRandom()
 
 1. **[OPEN]** 크기 보정률 x 품질 배수 x Giant 배수의 곱셈 중첩이 극단적 가격을 만들 수 있다. 황금 잉어 Iridium + Large + Giant = 920G. 밸런스 시트(-> see `docs/balance/fishing-economy.md`)에서 시뮬레이션 필요. (섹션 2.4)
 2. **[OPEN]** 미끼 시스템 전체 설계 미완료. 마일스톤 보상으로 미끼를 지급하는 것은 확정하되, 상점 판매/제작 등은 별도 설계 필요. (섹션 4.2)
-3. **[OPEN]** 도감 단축키 바인딩 미확정. (섹션 5.1)
+3. ~~**[OPEN]** 도감 단축키 바인딩 미확정.~~ — **RESOLVED (FIX-105)**: `C` 키로 확정. (→ see `docs/systems/ui-system.md` 섹션 11)
 4. **[OPEN]** FishingSaveData의 기존 `caughtByFishId` 필드와 도감 세이브 데이터의 중복 가능성. 아키텍트와 협의 필요. (섹션 8.1)
 
 ### [RISK] 항목

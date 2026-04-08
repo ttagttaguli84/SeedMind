@@ -773,6 +773,7 @@ NPC가 의뢰를 갖고 있을 때, 대화 선택지에 "[의뢰 확인]"이 추
 | E | 상호작용 (NPC, 시설, 아이템 줍기) | 월드 | |
 | I / Tab | 인벤토리 패널 토글 | 전역 | |
 | J | 퀘스트 로그 패널 토글 | 전역 | (-> see `docs/systems/quest-system.md` 섹션 8.1) |
+| C | 수집 도감 패널 토글 | 전역 | (-> see `docs/systems/collection-system.md` 섹션 6.1) |
 | Y | 업적 패널 토글 | 전역 | (-> see `docs/systems/achievement-system.md` 섹션 5.1) |
 | ESC | 일시정지 메뉴 / 패널 닫기 | 전역 | 우선: 열린 패널 닫기 > 메뉴 열기 |
 | Shift + 좌클릭 | 빠른 아이템 이동 | 인벤토리/창고 | |
