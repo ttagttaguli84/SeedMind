@@ -131,6 +131,19 @@
 
 시설 상세 (건설 요건, 슬롯, 레시피): (-> see `docs/content/processing-system.md` 섹션 2~3 for 특화 가공소 3종, `docs/content/facilities.md` 섹션 6 for 일반 가공소, `docs/content/livestock-system.md` 섹션 3, 7.2 for 목축 시설)
 
+### 4.6.1 농장 장식 (Farm Decorations)
+
+장식품은 생산성 효과 없음. 골드 소모처 및 농장 개성 표현 수단.  
+상세 설계: (-> see `docs/systems/decoration-system.md`)
+
+| 카테고리 | 영문 ID | 구매가 범위 | 해금 |
+|----------|---------|-----------|------|
+| 울타리 | `Fence` | 5~30G/단 | 시작~레벨 6 |
+| 경로 | `Path` | 2~18G/타일 | 시작~레벨 6 |
+| 조명 | `Light` | 30~500G | 레벨 2~레벨 8 |
+| 장식물 | `Ornament` | 40~2,000G | 시작~레벨 9 |
+| 수경 장식 | `WaterDecor` | 80~1,200G | Zone F 해금 |
+
 ---
 
 ## 5. 플레이어 조작
@@ -226,6 +239,7 @@
 - `docs/content/livestock-system.md` — 목축/낙농 콘텐츠 상세 (CON-006)
 - `docs/systems/livestock-architecture.md` — 목축/낙농 시스템 기술 아키텍처 (ARC-019)
 - `docs/systems/fishing-system.md` — 낚시 시스템 상세 설계 (DES-013)
+- `docs/systems/decoration-system.md` — 농장 장식/꾸미기 시스템 상세 설계 (DES-023)
 
 ## Open Questions
 
