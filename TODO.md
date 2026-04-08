@@ -213,10 +213,13 @@
 | ~~FIX-103~~ | ~~1~~ | ~~data-pipeline.md 시스템 데이터 총계 주석 업데이트 (FIX-094 후속)~~ — N/A: data-pipeline.md에 PATTERN-005 카운트 주석 없음, 수정 불필요 |
 | FIX-104 | 1 | fishing-architecture.md 섹션 21.5 씬 계층에 ARC-039 마이그레이션 노트 추가 (FishCatalogPanel → CollectionPanel/FishPanel 통합 예정 명시 — collection-architecture.md Cross-references에 이미 Q-4 마이그레이션 언급됨, 역방향 참조 보완) |
 | FIX-105 | 1 | collection-system.md 섹션 6.1 단축키 바인딩 OPEN#2 결정 (fish-catalog.md 섹션 5.1과 동일 이슈 — UI 시스템 단축키 정책 통일, ui-system.md 섹션 7 참조) |
-| BAL-021 | 2 | 연간 수익 흐름 통합 시뮬레이션 — 작물/낚시/채집/가공/목축 5개 수익 소스 합산, 1년차 예상 총수익 범위 확인 (economy-system.md 섹션 6 밸런스 검증 후속) |
+| ~~BAL-021~~ | ~~2~~ | ~~연간 수익 흐름 통합 시뮬레이션 — 작물/낚시/채집/가공/목축 5개 수익 소스 합산, 1년차 예상 총수익 범위 확인 (economy-system.md 섹션 6 밸런스 검증 후속)~~ — DONE → `docs/balance/annual-economy.md` (A:~13,500G / B:~131,900G / C:~376,500G, 낚시 우위 구조 [RISK] 확인) |
 | DES-023 | 2 | 농장 장식/꾸미기 시스템 설계 검토 — 울타리/경로/장식물 배치 메카닉 필요 여부, design.md 4.6 시설 목록에 장식 카테고리 포함 여부 결정 |
 | ARC-044 | 1 | 전체 MCP 태스크 시퀀스 의존성 그래프 문서화 — 각 Phase가 선행하는 Phase를 명시한 빌드 순서 개요 작성 (Phase 2 구현 착수 시 실행 순서 로드맵) |
 | DES-022 | 1 | farm-expansion.md 잔존 [OPEN] 항목 일괄 처리 — 섹션 3.3 이하 미결 항목 검토 및 확정 (ARC-023 후속, Phase 2 착수 전 선행 필요) |
 | FIX-106 | 2 | collection-architecture.md 섹션 2 시스템 다이어그램에 GatheringCatalogManager 박스 추가 (현재 다이어그램이 FishCatalogManager 중심으로 기술되고 GatheringCatalogManager 박스가 누락되어 있는지 확인 후 보완) |
 | CON-018 | 2 | collection-system.md에 채집 아이템 초회 발견 보상 canonical 정의 (rarity별 firstDiscoverGold/XP 테이블 — ARC-041 Q-C-02에서 [OPEN] 처리된 수치, 구현 전 확정 필요) |
 | ARC-045 | 1 | data-pipeline.md 섹션 2.13에 GatheringCatalogData SO 에셋 스키마 추가 (PATTERN-007 준수 — ARC-041에서 새 SO 타입 도입됨, 기존 섹션 2.10~2.12 패턴 참조) |
+| BAL-022 | 2 | 작물 수익 비중 설계 목표 공식화 (economy-system.md에 "작물 50~70%", "낚시+채집 = 작물의 20~40%" 목표 수치 명시 섹션 추가 — BAL-021 OPEN#1 후속) |
+| FIX-107 | 2 | 온실 딸기 재수확 재검토 결정 (겨울 딸기가 전용 작물 압도 — BAL-021 OPEN#3, BAL-001 후속. 재수확 3일→4일 또는 온실 다중 수확 제한 중 확정) |
+| CON-019 | 1 | 치즈 공방 연료비 canonical 확정 (livestock-system.md 섹션 7.2 [OPEN] — BAL-021 OPEN#2 후속, 시나리오 C 목축 수익 재계산 전 필요) |
