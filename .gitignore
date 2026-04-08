@@ -6,7 +6,7 @@
 [Bb]uilds/
 Logs/
 !logs/
-logs/backup/**/*.jsonl
+logs/archive/
 logs/session_*.log
 [Uu]ser[Ss]ettings/
 *.pidb.meta
