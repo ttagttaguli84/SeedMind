@@ -119,7 +119,7 @@ EnergyManager ─implements─▶ ISaveable (SaveLoadOrder = 51)
 │  + MaxEnergy: int                // _maxEnergy + _tempMaxBonusToday  │
 │  + TempMaxBonus: int             // 당일 임시 최대치 보너스            │
 │  + IsWellRested: bool                                                 │
-│  + IsDepletd: bool               // CurrentEnergy <= 0               │
+│  + IsDepleted: bool              // CurrentEnergy <= 0               │
 │  + EnergyRatio: float            // CurrentEnergy / MaxEnergy (0~1)  │
 │  + IsWarning: bool               // CurrentEnergy <= warningThreshold │
 │                                                                       │
@@ -213,7 +213,7 @@ namespace SeedMind.Player
     public enum SleepType
     {
         EarlySleep  = 0,   // 20:00 이전 조기 수면 (숙면 보너스 발생)
-        NormalSleep = 1,   // 20:00~24:00 일반 수면
+        NormalSleep = 1,   // 20:00~24:00 일반·늦은 수면 (회복 100%, 숙면 보너스 없음)
         PassOut     = 2    // 기절 (50% 회복, 골드 페널티)
     }
 }
