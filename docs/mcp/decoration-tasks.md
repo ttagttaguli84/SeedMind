@@ -331,7 +331,7 @@ save_scene
 
 **예상 MCP 호출**: ~65회
 
-[RISK] 29종 에셋의 `buyPrice`, `unlockLevel`, `unlockZoneId`, `lightRadius`, `moveSpeedBonus`, `durabilityMax` 등 콘텐츠 수치를 MCP로 직접 설정하는 경우, 각 값은 반드시 `docs/systems/decoration-system.md` 섹션 2.X를 참조하여 입력해야 한다. 임의 수치 기재 금지 (PATTERN-007).
+[RISK] 29종 에셋의 `buyPrice`, `unlockLevel`, `unlockZoneId`, `lightRadius`, `moveSpeedBonus`, `durabilityMax` 등 콘텐츠 수치를 MCP로 직접 설정하는 경우, 각 값은 반드시 `docs/content/decoration-items.md` (CON-020) 섹션 1~5를 참조하여 입력해야 한다. 임의 수치 기재 금지 (PATTERN-007).
 
 #### D-C-01: 에셋 폴더 생성
 
@@ -408,7 +408,7 @@ create_scriptable_object
 // 이하 4종 동일 패턴
 // 각 에셋마다 set_property로 category = Fence, isEdgePlaced = true 설정
 // 콘텐츠 수치 (buyPrice, unlockLevel 등):
-//   -> see docs/systems/decoration-system.md 섹션 2.1
+//   -> see docs/content/decoration-items.md 섹션 1.1
 ```
 
 - **MCP 호출**: ~12회 (4종 × 3회 평균)
@@ -429,7 +429,7 @@ create_scriptable_object
 // 이하 5종 동일 패턴
 // 각 에셋마다 set_property로 category = Path, isEdgePlaced = false 설정
 // 콘텐츠 수치 (moveSpeedBonus, buyPrice 등):
-//   -> see docs/systems/decoration-system.md 섹션 2.2
+//   -> see docs/content/decoration-items.md 섹션 2.1
 ```
 
 - **MCP 호출**: ~15회 (5종 × 3회 평균)
@@ -450,7 +450,7 @@ create_scriptable_object
 // 이하 4종 동일 패턴
 // 각 에셋마다 set_property로 category = Light, lightRadius 설정
 // 콘텐츠 수치 (lightRadius, buyPrice, unlockLevel 등):
-//   -> see docs/systems/decoration-system.md 섹션 2.3
+//   -> see docs/content/decoration-items.md 섹션 3.1
 ```
 
 - **MCP 호출**: ~12회 (4종 × 3회 평균)
@@ -460,17 +460,19 @@ create_scriptable_object
 카테고리별 에셋 수: (→ see `docs/systems/decoration-system.md` 섹션 2.4)
 
 ```
-// 네이밍 패턴: SO_Deco_Ornament<이름>.asset
-// 예시: SO_Deco_OrnamentScarecrow.asset, SO_Deco_OrnamentWindmill.asset 등
+// 네이밍 패턴: SO_Deco_<itemId>.asset  (itemId 직접 사용)
+// 예시: SO_Deco_OrnaScareRaven.asset, SO_Deco_OrnaWindmillS.asset 등
+// itemId 전체 목록: (-> see docs/content/decoration-items.md 섹션 4.1)
 
 create_scriptable_object
   type: "SeedMind.Decoration.Data.DecorationItemData"
-  path: "Assets/_Project/Data/Decoration/Ornament/SO_Deco_OrnamentScarecrow.asset"
+  path: "Assets/_Project/Data/Decoration/Ornament/SO_Deco_OrnaScareRaven.asset"
 
-// 이하 11종 동일 패턴
+// 이하 11종 동일 패턴 (OrnaFlowerPotS, OrnaFlowerPotL, OrnaBenchWood, OrnaStatueStone,
+//   OrnaWindmillS, OrnaWellDecor, OrnaSignBoard, OrnaPumpkinLantern, OrnaSnowman, OrnaStatueGold)
 // 각 에셋마다 set_property로 category = Ornament, tileWidthX, tileHeightZ 설정
 // 콘텐츠 수치 (buyPrice, unlockLevel, tileWidthX, tileHeightZ 등):
-//   -> see docs/systems/decoration-system.md 섹션 2.4
+//   -> see docs/content/decoration-items.md 섹션 4.1
 ```
 
 - **MCP 호출**: ~11회 (11종 × 1회 create + 별도 set_property)
@@ -480,22 +482,23 @@ create_scriptable_object
 카테고리별 에셋 수: (→ see `docs/systems/decoration-system.md` 섹션 2.5)
 
 ```
-// 네이밍 패턴: SO_Deco_WaterDecor<이름>.asset
-// 예시: SO_Deco_WaterDecorPond.asset, SO_Deco_WaterDecorFountain.asset 등
+// 네이밍 패턴: SO_Deco_<itemId>.asset  (itemId 직접 사용)
+// 예시: SO_Deco_WaterLotus.asset, SO_Deco_WaterFountainS.asset 등
+// itemId 전체 목록: (-> see docs/content/decoration-items.md 섹션 5.1)
 
 create_scriptable_object
   type: "SeedMind.Decoration.Data.DecorationItemData"
-  path: "Assets/_Project/Data/Decoration/WaterDecor/SO_Deco_WaterDecorPond.asset"
+  path: "Assets/_Project/Data/Decoration/WaterDecor/SO_Deco_WaterLotus.asset"
 
-// 이하 5종 동일 패턴
+// 이하 5종 동일 패턴 (WaterBridge, WaterFountainS, WaterFountainL, WaterDuck)
 // 각 에셋마다 set_property로 category = WaterDecor 설정
 // 콘텐츠 수치 (buyPrice, unlockLevel 등):
-//   -> see docs/systems/decoration-system.md 섹션 2.5
+//   -> see docs/content/decoration-items.md 섹션 5.1
 ```
 
 - **MCP 호출**: ~9회 (5종 × ~1.8회 평균)
 
-[RISK] Editor 스크립트 일괄 생성 우회를 사용하는 경우, `CreateDecorationAssets.cs`에서 각 에셋의 콘텐츠 수치를 `docs/systems/decoration-system.md` 기준으로 직접 작성해야 한다. MCP 단독으로 30개 에셋을 생성하면 ~65회 호출이 발생하므로, 가능하면 Editor 스크립트를 먼저 실행한 후 D-D로 넘어갈 것을 권장한다.
+[RISK] Editor 스크립트 일괄 생성 우회를 사용하는 경우, `CreateDecorationAssets.cs`에서 각 에셋의 콘텐츠 수치를 `docs/content/decoration-items.md` (CON-020) 기준으로 직접 작성해야 한다. MCP 단독으로 30개 에셋을 생성하면 ~65회 호출이 발생하므로, 가능하면 Editor 스크립트를 먼저 실행한 후 D-D로 넘어갈 것을 권장한다.
 
 ---
 
@@ -694,7 +697,7 @@ execute_method
   object: "DecorationManager"
   method: "Place"
   args:
-    itemId: [SO_Deco_PathGravel의 itemId -> see docs/systems/decoration-system.md 섹션 2.2]
+    itemId: [SO_Deco_PathGravel의 itemId -> see docs/content/decoration-items.md 섹션 2.1]
     cell: [1, 0, 1]
     edge: "None"
   // 기대 결과: OnDecorationPlaced 이벤트 발생, 콘솔에 배치 로그
@@ -754,7 +757,8 @@ exit_play_mode
 | 문서 | 역할 |
 |------|------|
 | `docs/systems/decoration-architecture.md` (ARC-043) | 상위 설계 — 클래스 계층, 필드 목록, 이벤트 흐름 |
-| `docs/systems/decoration-system.md` | 콘텐츠 canonical — 카테고리별 아이템 수, buyPrice, unlockLevel 등 |
+| `docs/systems/decoration-system.md` | 설계 근거(rationale) — 카테고리 개요, 배치 메카닉, 경제 연동 원칙 |
+| `docs/content/decoration-items.md` (CON-020) | 콘텐츠 canonical — 29종 itemId, buyPrice, 파라미터 수치 확정값 |
 | `docs/pipeline/data-pipeline.md` 섹션 2.14~2.15 | SO 스키마 정의 (DecorationItemData, DecorationConfig) |
 | `docs/systems/save-load-architecture.md` | GameSaveData.decoration 필드 (FIX-111 반영) |
 | `docs/systems/project-structure.md` | SeedMind.Decoration 네임스페이스/폴더/asmdef (FIX-112 반영) |
