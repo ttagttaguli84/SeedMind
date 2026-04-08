@@ -53,7 +53,7 @@ author: Claude Code (Opus 4.6)
 
 **farming-system.md와의 차이점**: farming-system.md 섹션 1은 최대 크기를 16x16(256타일)으로 정의하고, 4x8 블록 단위 4단계 확장으로 설계했다. 본 문서는 이를 **구역(Zone) 기반 확장**으로 대체하여 게임 깊이를 확장한다. farming-system.md의 확장 비용(500G/1,000G/2,000G/4,000G)은 본 문서의 Zone B~E 비용의 기반이 된다.
 
-[OPEN] farming-system.md 섹션 1의 확장 방식(4x8 블록 단위)과 본 문서의 구역 기반 확장이 충돌한다. farming-system.md를 본 문서에 맞춰 업데이트해야 한다. 또한 economy-system.md 섹션 3.3의 목공소 인벤토리 항목도 동기화 필요.
+[RESOLVED: FIX-036] farming-system.md 섹션 1의 확장 방식(4x8 블록 단위)과 본 문서의 구역 기반 확장이 충돌한다. farming-system.md를 본 문서에 맞춰 업데이트해야 한다. 또한 economy-system.md 섹션 3.3의 목공소 인벤토리 항목도 동기화 필요.
 
 ### 1.2 구역 배치도
 
@@ -299,7 +299,7 @@ Zone A (시작)
 
 **경작지 전환**: Zone E는 목장 전용이지만, 울타리 내부 타일을 호미로 경작지로 전환할 수 있다. 다만 동물이 배치된 타일의 경작지 전환은 불가.
 
-[OPEN] 동물 사육 시스템(CON-006)이 미설계 상태이다. Zone E의 상세 메카닉(동물 종류, 사료, 생산물)은 CON-006 완료 후 확정한다. 현재는 구역 구조와 해금 조건만 정의.
+[RESOLVED: CON-006] 동물 사육 시스템(CON-006)이 완료되었다. Zone E의 상세 메카닉(동물 종류, 사료, 생산물)은 → `docs/content/livestock-system.md` 참조.
 
 **동물 시스템 예상 연계**:
 - 닭(Chicken): 달걀 생산, 소형 동물 (2x2 타일 점유)
@@ -472,20 +472,20 @@ Zone A (시작)
 
 ## Open Questions
 
-1. [OPEN] farming-system.md 섹션 1의 4x8 블록 확장 방식과 본 문서의 구역(Zone) 기반 확장 방식이 충돌한다. farming-system.md와 economy-system.md 섹션 3.3을 본 문서에 맞춰 업데이트해야 한다. progression-curve.md의 "농장 확장 4단계" 기술도 6단계(Zone B~G)로 변경 필요.
+1. [RESOLVED: FIX-036] farming-system.md 섹션 1의 4x8 블록 확장 방식과 본 문서의 구역(Zone) 기반 확장 방식이 충돌한다. farming-system.md와 economy-system.md 섹션 3.3을 본 문서에 맞춰 업데이트해야 한다. progression-curve.md의 "농장 확장 4단계" 기술도 6단계(Zone B~G)로 변경 필요.
 2. [RESOLVED] FIX-068: 접근법 A 확정 — 곡괭이/도끼 미추가. 낫(Sickle)으로 식물 장애물(잡초/덤불), 호미(Hoe)로 지형 장애물(돌/바위/그루터기/나무) 처리.
 3. [OPEN] MVP에서 개간 보상(목재/돌)을 건설 재료로 사용할지, 판매 전용 아이템으로만 둘지 결정 필요.
-4. [OPEN] 동물 사육 시스템(CON-006)이 미설계 상태. Zone E의 상세 메카닉은 CON-006 완료 후 확정.
+4. [RESOLVED: CON-006] 동물 사육 시스템(CON-006)이 미설계 상태. Zone E의 상세 메카닉은 CON-006 완료 후 확정. → `docs/content/livestock-system.md`
 5. [RESOLVED] 낚시 시스템 설계 완료 (DES-013 -> `docs/systems/fishing-system.md`).
 6. [OPEN] 전체 구역 합계(576타일)와 최대 농장 크기(1,024타일) 사이의 448타일 처리 방안.
 7. [OPEN] 온실을 Zone G(과수원)에 건설 가능하게 할지 검토 (BAL-010 연계).
-8. [OPEN] progression-curve.md의 농장 확장 XP가 현재 "4단계 x 25 XP = 100 XP"로 설정되어 있는데, 구역이 6개로 늘면 "6단계 x 25 XP = 150 XP"로 변경 필요.
+8. [RESOLVED: FIX-035] progression-curve.md의 농장 확장 XP가 현재 "4단계 x 25 XP = 100 XP"로 설정되어 있는데, 구역이 6개로 늘면 "6단계 x 25 XP = 150 XP"로 변경 필요. → progression-curve.md 섹션 1.2.4 확정됨.
 
 ---
 
 ## Risks
 
-1. [RISK] **farming-system.md 비동기화**: 본 문서의 구역 기반 확장이 farming-system.md의 블록 확장과 충돌한다. 동기화하지 않으면 아키텍처(ARC-023) 설계 시 혼란 발생.
+1. [RESOLVED: FIX-036] **farming-system.md 비동기화**: 본 문서의 구역 기반 확장이 farming-system.md의 블록 확장과 충돌한다. → FIX-036에서 farming-system.md 섹션 1 및 economy-system.md 섹션 3.3 동기화 완료.
 2. [RISK] **도구 추가에 따른 파급 범위**: 곡괭이/도끼를 추가하면 도구 슬롯 UI, 에너지 밸런스, 도구 업그레이드 비용/재료 등 다수 문서에 영향.
 3. [RISK] **Zone E/F의 콘텐츠 공백**: 동물 시스템과 낚시 시스템이 미설계 상태에서 구역만 해금되면 플레이어에게 "빈 구역"으로 느껴질 수 있다. 해금 조건에 해당 시스템 구현 여부를 연동해야 한다.
 4. [RISK] **과일나무 ROI 불균형**: 장기 투자형 콘텐츠가 일반 작물 대비 매력 없을 수 있다. 과일 가공품(와인, 잼)의 높은 가격 배수로 보완 필요.
