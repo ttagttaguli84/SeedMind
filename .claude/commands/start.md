@@ -100,8 +100,8 @@ Decide whether to run the reviewer based on task type:
 
 ## Phase 4 — Wrap Up
 
-1. Update `TODO.md` — remove completed items, add new ones discovered
-2. If TODO.md drops below 10 rows: analyze docs for gaps, add new items
+1. Update `TODO.md` — mark completed items, add new ones discovered
+2. If TODO.md has zero active DES/ARC items: analyze docs for gaps, add new DES/ARC items (FIX/BAL/CON count is ignored for replenishment)
 3. Update `README.md` current status if a phase milestone was reached
 4. Write a devlog entry in `docs/devlog/NNN-<title>.md`
 5. Commit and push
@@ -126,3 +126,4 @@ After completing Phase 4, **if budget remains (Priority-1 only)**:
 - Reviewer has final say on consistency issues
 - All output in Korean. Document content in Korean (technical terms in English where natural).
 - Looping is allowed only within Priority-1 budget. Must stop when budget is exhausted.
+- **FIX inline principle**: When a task (DES/ARC/BAL/CON) creates downstream fixes (reference additions, figure sync, enum updates), handle them within the same task — do NOT register separate FIX items in TODO. Only register a FIX in TODO when immediate resolution is impossible (e.g., depends on unconfirmed design, requires user decision).
