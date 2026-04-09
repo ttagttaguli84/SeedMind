@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e7611b4d2146cb4d97caf3feb5aa9d3, type: 3}
+  m_Name: SO_Dlg_Blacksmith_Greet_Lv2
+  m_EditorClassIdentifier: Assembly-CSharp::SeedMind.NPC.Data.DialogueData
+  dialogueId: dlg_blacksmith_greet_lv2
+  nodes:
+  - speakerName: "\uCCA0\uC218"
+    text: "\uC694\uC998 \uC790\uC8FC \uC624\uB294\uAD70. \uB3C4\uAD6C\uB294 \uC798
+      \uC4F0\uACE0 \uC788\uC5B4?"
+    choices: []

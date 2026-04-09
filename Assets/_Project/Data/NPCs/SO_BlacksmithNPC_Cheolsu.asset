@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ede959ec6b0d234b9b599f9a95838a7, type: 3}
+  m_Name: SO_BlacksmithNPC_Cheolsu
+  m_EditorClassIdentifier: Assembly-CSharp::SeedMind.NPC.Data.BlacksmithNPCData
+  npcId: npc_cheolsu
+  displayName: "\uCCA0\uC218"
+  greetingDialogues:
+  - {fileID: 11400000, guid: ae33e5fda4d63e64484451defc716e3e, type: 2}
+  - {fileID: 11400000, guid: 774f116f79ba24c4480b9e31c6237bac, type: 2}
+  - {fileID: 11400000, guid: ab68fb3a571561e4c865dff1185bd8b3, type: 2}
+  - {fileID: 11400000, guid: 65571a39f5418444b997b3300d6ec760, type: 2}
+  closedDialogue: {fileID: 11400000, guid: 4ee5d49b2a8051e428a861302db3aa5b, type: 2}
+  pendingPickupDialogue: {fileID: 11400000, guid: d857e201ac0f01d4fbfe1fb7f79fb0ed, type: 2}
+  affinityThresholds: 000000000a0000001900000032000000
+  affinityDialogues:
+  - {fileID: 11400000, guid: b149457f211d3924fb62194f7825e8e9, type: 2}
+  - {fileID: 11400000, guid: 01eeb466aa0eecd40ab14f0c7d3b969a, type: 2}
+  - {fileID: 11400000, guid: 966427bb4dc5817438b3d5960b5276c0, type: 2}
+  upgradeCompleteAffinity: 5
+  materialPurchaseAffinity: 1
+  specialDiscountAffinityLevel: 3
+  discountRate: 0.1
