@@ -1,6 +1,6 @@
 # SeedMind — MCP 태스크 실행 진행 상황
 
-> 최종 업데이트: 2026-04-10 (sound-tasks.md S-1~S-4 완료)
+> 최종 업데이트: 2026-04-10 (farm-expansion-tasks.md Z-1~Z-9 완료)
 > **갱신 규칙**: 각 MCP 태스크 파일 실행 완료 직후 해당 항목을 ✅로 바꾸고 커밋. 세션 종료와 무관하게 완료 즉시 갱신한다.
 > 새 세션 시작 시 `/start`가 이 파일을 읽어 진행 위치를 복원한다.
 
@@ -9,7 +9,7 @@
 ## 현재 위치
 
 **Phase F — Advanced Features**
-- 다음 실행 파일: `farm-expansion-tasks.md` (F-1)
+- 다음 실행 파일: `livestock-tasks.md` (F-2)
 
 ---
 
@@ -69,7 +69,7 @@
 
 | 파일 | 완료 여부 | 비고 |
 |------|----------|------|
-| `farm-expansion-tasks.md` (ARC-025) | ⬜ 미시작 | |
+| `farm-expansion-tasks.md` (ARC-025) | ✅ 완료 | Z-1~Z-9 완료. 스크립트 14종(5 enum+ZoneEvents+ZoneData+ObstacleEntry/Instance+ZoneRuntimeState+FarmZoneManager+FarmGrid.Zone partial+ZoneSaveData/Entry/Obstacle). Editor 스크립트 3종(CreateObstacleAssets/CreateZoneAssets/ConnectZoneManagerRefs). 머티리얼 4종+프리팹 7종. ZoneData SO 7종(Zone A~G). FarmZoneManager 씬배치+배열연결. Z-9 Play Mode 통합테스트 execute_code 비활성으로 스킵. |
 | `livestock-tasks.md` (ARC-024) | ⬜ 미시작 | |
 | `fishing-tasks.md` (ARC-028) | ⬜ 미시작 | |
 | `gathering-tasks.md` (ARC-032) | ⬜ 미시작 | |
@@ -99,6 +99,8 @@
 - ui-tasks.md: create_script는 batch 미지원 → Write 툴로 개별 파일 직접 생성. ScreenBase.cs가 stub으로 이미 존재(blacksmith-tasks) → 완전 구현으로 덮어씀(Show/Hide 하위 호환 유지). TooltipUI.cs도 기존 구현 유지(InventoryUI 연동 포함). Canvas_Overlay 내부 비활성 UI 이동 시 먼저 SetActive=true로 활성화 후 parent 변경. Canvas_HUD/Popup/Tutorial은 --- UI --- 하위에 기존 오브젝트 있어 새 생성 불필요(Sort Order 업데이트만). CanvasScaler uiScaleMode=1(Scale With Screen Size), referenceResolution=1920×1080 설정.
 - tutorial-tasks.md: TutorialEvents에 `event` 키워드 사용 시 외부 클래스에서 `?.Invoke()` 불가(CS0070) — FarmEvents 패턴과 동일하게 `public static Action` (이벤트 키워드 없음)으로 작성. TutorialManager/ContextHintSystem에서 TutorialUI 타입 참조 시 `using SeedMind.UI;` 필요(동일 네임스페이스 아닌 경우). _highlightMask(RectTransform)는 비활성 부모 하위라 instanceID set_property 불가 — 에디터에서 수동 연결 필요. SO 배열(_allSequences, _allHints)은 ConnectTutorialManagerArrays Editor 스크립트로 일괄 연결.
 - achievement-tasks.md: create_script validator 오탐(SubscribeAll/CheckCompletion 0~1파라미터 중복 감지) → Write 툴로 우회 후 manage_asset import. AchievementItemUI 프리팹은 SerializedObject 패턴 Editor 스크립트로 일괄 생성. AchievementManager _allAchievements 배열도 Editor 스크립트(FindAssets+sortOrder)로 일괄 연결. SO 에셋은 T-2-ALT(CreateAchievementAssets) 36개 일괄 생성. Canvas_Overlay 하위 오브젝트는 비활성 상태라 by_name 검색 안 됨 — instanceID 사용 필요.
+
+- farm-expansion-tasks.md: asmdef 파일 없음 — 프로젝트 단일 어셈블리, Z-1-04 스킵. FarmGrid.cs에 `partial` 키워드 추가 필요(원본에 없었음). FarmZoneManager ISaveable 구현 시 ISaveable 반환 타입이 `object`이므로 ZoneSaveData로 캐스팅. ProgressionManager.RegisterUnlock() 없음 — 호출 제거. EconomyManager.TrySpendGold()가 SpendGold()가 아닌 실제 API. FarmGrid partial 클래스로 ActivateZoneTiles/DeactivateZoneTiles 확장. CreateZoneAssets Editor 스크립트로 tilePositions Vector2Int[] 배열 코드 할당 (MCP set_property 불안정 우회). ConnectZoneManagerRefs Editor 스크립트로 _zones 7개+_farmGrid 자동 연결.
 
 - sound-tasks.md: AudioMixer 에셋(UnityEngine.AudioMixer) MCP `create_asset`으로 생성 불가 — Unity Editor에서 수동 생성 필요(Create > Audio > Audio Mixer). AudioMixer 없이도 SoundManager는 동작(볼륨 제어 비활성). SFXPool은 SoundManager.Awake()에서 동적 생성(자식 GO 사전 생성 불필요). BGMRegistry entries enumValueIndex 방식으로 enum 직접 설정 성공. SoundEventBridge: FishingEvents 미구현(Phase F 이후)이므로 제외, EconomyEvents 없어 EconomyManager.Instance.OnGoldChanged 직접 구독.
 
