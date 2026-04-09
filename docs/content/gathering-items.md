@@ -232,7 +232,7 @@ author: Claude Code (Opus 4.6)
 | 속성 | 값 |
 |------|-----|
 | 영문 ID | `gather_golden_lotus` |
-| 희귀도/판매가 | (-> see `docs/systems/gathering-system.md` 섹션 3.4) |
+| 희귀도/판매가 | Legendary / **100G** (→ see `docs/systems/gathering-system.md` 섹션 3.4) |
 | `maxStack` | 5 |
 | 카테고리 | `Gathered` |
 | **가공 연계** | **황금 연꽃차** (황금 연꽃 x1 -> 황금 연꽃차 x1, 가공소, 2시간, 300G). Legendary 아이템 고부가가치 가공 경로. (-> see `docs/content/processing-system.md` 섹션 3.7.1, `recipe_gather06`) |
@@ -320,7 +320,7 @@ author: Claude Code (Opus 4.6)
 | 속성 | 값 |
 |------|-----|
 | 영문 ID | `gather_millennium_reishi` |
-| 희귀도/판매가 | (-> see `docs/systems/gathering-system.md` 섹션 3.5) |
+| 희귀도/판매가 | Legendary / **120G** (→ see `docs/systems/gathering-system.md` 섹션 3.5) |
 | `maxStack` | 5 |
 | 카테고리 | `Gathered` |
 | **가공 연계** | **천년 영지차** (천년 영지 x1 -> 천년 영지차 x1, 가공소, 3시간, 360G). Legendary 아이템 최고 부가가치 가공. (-> see `docs/content/processing-system.md` 섹션 3.7.1, `recipe_gather07`) |
