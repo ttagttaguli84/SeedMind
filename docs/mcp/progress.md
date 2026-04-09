@@ -1,6 +1,6 @@
 # SeedMind — MCP 태스크 실행 진행 상황
 
-> 최종 업데이트: 2026-04-10 (ui-tasks.md T-1~T-5 완료)
+> 최종 업데이트: 2026-04-10 (ui-tasks.md T-6~T-7 완료, ui-tasks.md 전체 완료)
 > **갱신 규칙**: 각 MCP 태스크 파일 실행 완료 직후 해당 항목을 ✅로 바꾸고 커밋. 세션 종료와 무관하게 완료 즉시 갱신한다.
 > 새 세션 시작 시 `/start`가 이 파일을 읽어 진행 위치를 복원한다.
 
@@ -9,7 +9,7 @@
 ## 현재 위치
 
 **Phase E — UI & UX**
-- 다음 실행 파일: `ui-tasks.md` (E-1)
+- 다음 실행 파일: `sound-tasks.md` (E-2)
 
 ---
 
@@ -60,7 +60,7 @@
 
 | 파일 | 완료 여부 | 비고 |
 |------|----------|------|
-| `ui-tasks.md` (ARC-022) | 🔄 진행 중 | T-1~T-5 완료. T-6(알림 시스템), T-7(Screen 등록), T-8(통합 테스트) 미완료. execute_code 비활성으로 T-8 스킵 예정. |
+| `ui-tasks.md` (ARC-022) | ✅ 완료 | T-1~T-7 완료. T-8(통합 테스트) execute_code 비활성으로 스킵. InventoryUI/QuestLogUI/AchievementPanel/DialogueUI/ProcessingUI → ScreenBase 상속으로 업데이트, _screenType 설정 완료. ScreenBase.Awake()에 UIManager.RegisterScreen 자동 등록 추가. |
 | `sound-tasks.md` (ARC-027) | ⬜ 미시작 | |
 
 ---
