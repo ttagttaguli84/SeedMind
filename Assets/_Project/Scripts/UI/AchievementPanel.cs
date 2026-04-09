@@ -8,32 +8,31 @@ using SeedMind.Achievement.Data;
 
 namespace SeedMind.UI
 {
-    public class AchievementPanel : MonoBehaviour
+    public class AchievementPanel : ScreenBase
     {
         [SerializeField] private Transform _contentParent;
         [SerializeField] private AchievementItemUI _itemPrefab;
         [SerializeField] private Button[] _categoryTabs;
         [SerializeField] private TMP_Text _progressText;
 
-        private bool _isOpen;
         private AchievementCategory _currentCategory;
 
         public void Toggle()
         {
-            if (_isOpen) Close(); else Open();
+            if (IsOpen) Close(); else Open();
         }
 
-        public void Open()
+        public new void Open()
         {
-            _isOpen = true;
+            IsOpen = true;
             gameObject.SetActive(true);
             RefreshList();
             UpdateProgressText();
         }
 
-        public void Close()
+        public new void Close()
         {
-            _isOpen = false;
+            IsOpen = false;
             gameObject.SetActive(false);
         }
 

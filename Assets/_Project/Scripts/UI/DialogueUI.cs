@@ -8,7 +8,7 @@ using SeedMind.NPC.Data;
 
 namespace SeedMind.UI
 {
-    public class DialogueUI : MonoBehaviour
+    public class DialogueUI : ScreenBase
     {
         [Header("UI 참조")]
         [SerializeField] private GameObject _dialoguePanel;

@@ -9,7 +9,7 @@ namespace SeedMind.UI
     /// 가공소 인터랙션 UI. 레시피 선택 및 슬롯 상태 표시를 담당.
     /// -> see docs/systems/processing-architecture.md 섹션 7.2
     /// </summary>
-    public class ProcessingUI : MonoBehaviour
+    public class ProcessingUI : ScreenBase
     {
         [SerializeField] private Transform _recipeListParent;
         [SerializeField] private Transform _slotStatusParent;
@@ -22,8 +22,9 @@ namespace SeedMind.UI
         private readonly List<RecipeSlotUI> _recipeSlots = new List<RecipeSlotUI>();
         private readonly List<ProcessingSlotUI> _processingSlots = new List<ProcessingSlotUI>();
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             if (_recipeListParent == null)
                 _recipeListParent = transform.Find("RecipeListArea");
             if (_slotStatusParent == null)

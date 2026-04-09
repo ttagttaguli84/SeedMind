@@ -30,6 +30,8 @@ namespace SeedMind.UI
         {
             if (_canvasGroup == null)
                 _canvasGroup = GetComponent<CanvasGroup>();
+            if (_screenType != ScreenType.None && UIManager.Instance != null)
+                UIManager.Instance.RegisterScreen(_screenType, this);
         }
 
         /// <summary>화면 열기 (페이드 인)</summary>

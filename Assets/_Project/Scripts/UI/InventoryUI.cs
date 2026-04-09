@@ -10,7 +10,7 @@ namespace SeedMind.UI
     /// InventoryManager의 슬롯 이벤트를 구독하여 SlotUI 배열을 갱신한다.
     /// -> see docs/systems/inventory-architecture.md 섹션 2 (InventoryUI 클래스 다이어그램)
     /// </summary>
-    public class InventoryUI : MonoBehaviour
+    public class InventoryUI : ScreenBase
     {
         [Header("매니저 참조")]
         [SerializeField] private InventoryManager _inventoryManager;
@@ -27,12 +27,11 @@ namespace SeedMind.UI
         private SlotUI[] _backpackSlotUIs;
         private SlotUI[] _toolbarSlotUIs;
 
-        private bool _isOpen = false;
-
         // ── Unity 생명주기 ────────────────────────────────────────────
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             if (_inventoryManager == null)
                 _inventoryManager = InventoryManager.Instance;
         }
@@ -63,23 +62,23 @@ namespace SeedMind.UI
 
         // ── 공개 API ─────────────────────────────────────────────────
 
-        public void Open()
+        public new void Open()
         {
             gameObject.SetActive(true);
-            _isOpen = true;
+            IsOpen = true;
             RefreshBackpack();
         }
 
-        public void Close()
+        public new void Close()
         {
             gameObject.SetActive(false);
-            _isOpen = false;
+            IsOpen = false;
             TooltipUI.HideGlobal();
         }
 
         public void Toggle()
         {
-            if (_isOpen) Close();
+            if (IsOpen) Close();
             else Open();
         }
 

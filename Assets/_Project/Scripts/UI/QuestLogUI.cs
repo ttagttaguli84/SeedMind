@@ -8,7 +8,7 @@ using SeedMind.Quest;
 
 namespace SeedMind.UI
 {
-    public class QuestLogUI : MonoBehaviour
+    public class QuestLogUI : ScreenBase
     {
         [Header("패널")]
         [SerializeField] private GameObject _logPanel;

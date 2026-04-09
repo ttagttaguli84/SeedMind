@@ -1629,6 +1629,68 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 90c0f62b3a54c2b4294db85436917b98, type: 2}
   - {fileID: 11400000, guid: 074e989ef2b8970479e177a33499bd7b, type: 2}
   - {fileID: 11400000, guid: 818c5ad89dd736d448ca0ebd3a4c46bf, type: 2}
+--- !u!1 &105613052
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 105613053}
+  - component: {fileID: 105613054}
+  m_Layer: 0
+  m_Name: ToastContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &105613053
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105613052}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2.180827, y: 2.180827, z: 2.180827}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2092882001}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -959.99994, y: -415.01135}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 1, y: 1}
+--- !u!114 &105613054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105613052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.VerticalLayoutGroup
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 1
+  m_Spacing: 8
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1 &110218911
 GameObject:
   m_ObjectHideFlags: 0
@@ -1903,6 +1965,7 @@ GameObject:
   - component: {fileID: 127528573}
   - component: {fileID: 127528572}
   - component: {fileID: 127528571}
+  - component: {fileID: 127528574}
   m_Layer: 0
   m_Name: InventoryPanel
   m_TagString: Untagged
@@ -1943,6 +2006,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06ef472df967c6b4cadc7d9de3e67373, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SeedMind.UI.InventoryUI
+  _canvasGroup: {fileID: 0}
+  _firstSelected: {fileID: 0}
+  _screenType: 2
+  _pauseGameTime: 0
+  _fadeInDuration: 0.15
+  _fadeOutDuration: 0.1
   _inventoryManager: {fileID: 0}
   _slotUIPrefab: {fileID: 0}
   _backpackGrid: {fileID: 0}
@@ -1986,6 +2055,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 127528569}
   m_CullTransparentMesh: 1
+--- !u!225 &127528574
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 127528569}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &131895912
 GameObject:
   m_ObjectHideFlags: 0
@@ -5411,6 +5492,7 @@ GameObject:
   m_Component:
   - component: {fileID: 418690916}
   - component: {fileID: 418690917}
+  - component: {fileID: 418690918}
   m_Layer: 0
   m_Name: ProcessingPanel
   m_TagString: Untagged
@@ -5448,10 +5530,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335e2321f8483004d99d31503060cf35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SeedMind.UI.ProcessingUI
+  _canvasGroup: {fileID: 0}
+  _firstSelected: {fileID: 0}
+  _screenType: 9
+  _pauseGameTime: 0
+  _fadeInDuration: 0.15
+  _fadeOutDuration: 0.1
   _recipeListParent: {fileID: 713342410}
   _slotStatusParent: {fileID: 1473588395}
   _recipeSlotPrefab: {fileID: 1565224039542933047, guid: 6dd039551ea985a4a8849440ab7ce6e5, type: 3}
   _processingSlotPrefab: {fileID: 6043352612816749500, guid: 56bffe37ff1dbea46af23564b85fac20, type: 3}
+--- !u!225 &418690918
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 418690915}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &431021942
 GameObject:
   m_ObjectHideFlags: 0
@@ -12070,6 +12170,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c939ae1e6726967458480dbc02ce96ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SeedMind.UI.AchievementPanel
+  _canvasGroup: {fileID: 0}
+  _firstSelected: {fileID: 0}
+  _screenType: 5
+  _pauseGameTime: 0
+  _fadeInDuration: 0.15
+  _fadeOutDuration: 0.1
   _contentParent: {fileID: 250834949}
   _itemPrefab: {fileID: 0}
   _categoryTabs: []
@@ -16560,6 +16666,7 @@ GameObject:
   - component: {fileID: 1419858561}
   - component: {fileID: 1419858563}
   - component: {fileID: 1419858562}
+  - component: {fileID: 1419858564}
   m_Layer: 0
   m_Name: QuestLogPanel
   m_TagString: Untagged
@@ -16602,6 +16709,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 799af2d3e61ca0f498974d801c502140, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SeedMind.UI.QuestLogUI
+  _canvasGroup: {fileID: 0}
+  _firstSelected: {fileID: 0}
+  _screenType: 4
+  _pauseGameTime: 0
+  _fadeInDuration: 0.15
+  _fadeOutDuration: 0.1
   _logPanel: {fileID: 1419858560}
   _tabMainQuest: {fileID: 1505397477}
   _tabNPCRequest: {fileID: 77884106}
@@ -16620,6 +16733,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1419858560}
   m_CullTransparentMesh: 1
+--- !u!225 &1419858564
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1419858560}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1420421143
 GameObject:
   m_ObjectHideFlags: 0
@@ -17898,8 +18023,8 @@ MonoBehaviour:
   _slideInDuration: 0.25
   _slideOutDuration: 0.2
   _verticalSpacing: 8
-  _toastPrefab: {fileID: 0}
-  _toastContainer: {fileID: 0}
+  _toastPrefab: {fileID: 9052439156394022234, guid: 3905c8d63487f0a419a3e7e6b36e8e4e, type: 3}
+  _toastContainer: {fileID: 105613053}
 --- !u!1 &1563540415
 GameObject:
   m_ObjectHideFlags: 0
@@ -22923,6 +23048,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 224233722}
+  - {fileID: 105613053}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -23844,6 +23970,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5561549227562253492, guid: ab7cc77dfff8c9d4fadfe36805148d2f, type: 3}
+      propertyPath: _screenType
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5561549227562253492, guid: ab7cc77dfff8c9d4fadfe36805148d2f, type: 3}
       propertyPath: _dialogueSystem
       value: 
       objectReference: {fileID: 1595144717}
@@ -23854,13 +23984,33 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7130177185607693857, guid: ab7cc77dfff8c9d4fadfe36805148d2f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 468040574759329820}
   m_SourcePrefab: {fileID: 100100000, guid: ab7cc77dfff8c9d4fadfe36805148d2f, type: 3}
 --- !u!224 &468040574759329818 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 950528123067572957, guid: ab7cc77dfff8c9d4fadfe36805148d2f, type: 3}
   m_PrefabInstance: {fileID: 468040574759329817}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &468040574759329819 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7130177185607693857, guid: ab7cc77dfff8c9d4fadfe36805148d2f, type: 3}
+  m_PrefabInstance: {fileID: 468040574759329817}
+  m_PrefabAsset: {fileID: 0}
+--- !u!225 &468040574759329820
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 468040574759329819}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1001 &3394721401083988030
 PrefabInstance:
   m_ObjectHideFlags: 0
