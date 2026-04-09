@@ -113,6 +113,7 @@ Check at the start of every session. When all conditions are met, transition imm
    | blacksmith | content/blacksmith-npc.md (DES) | blacksmith-architecture.md | blacksmith-tasks.md |
    | livestock | content/livestock-system.md (DES) | livestock-architecture.md | livestock-tasks.md |
    | processing | content/processing-system.md (DES) | processing-architecture.md | processing-tasks.md |
+   | player-character | systems/player-character.md | player-character-architecture.md | player-character-tasks.md |
 2. [ ] Zero incomplete DES-*/ARC-* items in TODO
 3. [ ] Zero unresolved PATTERN-* items in TODO (self-improve handled)
 4. [ ] No implementation-blocking `[OPEN]` tags in core ARC documents

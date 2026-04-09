@@ -249,3 +249,4 @@
 | ~~ARC-048~~ | ~~1~~ | ~~경제 시스템 MCP 태스크 시퀀스 독립 문서화 (economy-architecture.md Part II 요약 → docs/mcp/economy-tasks.md 상세 분리 — ARC-004 후속)~~ — DONE: docs/mcp/economy-tasks.md 신규 작성 (Phase A~D, EC-A~D 태스크 그룹, ~48 MCP 호출) |
 | ~~ARC-049~~ | ~~1~~ | ~~비주얼 시스템 MCP 태스크 시퀀스 독립 문서화 (visual-architecture.md Part II 요약 → docs/mcp/visual-tasks.md 상세 분리)~~ — DONE → `docs/mcp/visual-tasks.md` (6개 태스크 그룹 VA~VF, ~89회 MCP 호출), visual-architecture.md 네임스페이스 불일치 수정(SeedMind.Visual.Data 통일) |
 | ARC-050 | 1 | 작물 성장 시스템 MCP 태스크 시퀀스 독립 문서화 (crop-growth-architecture.md Part II 요약 → docs/mcp/crop-growth-tasks.md 상세 분리) |
+| DES-012 | 2 | 플레이어 캐릭터 시스템 설계 (이동 속도/타일 인터랙션 반경/애니메이션 상태 머신/카메라 추적 방식 — scene-setup-tasks.md에 분산된 내용 통합 + 미정 항목 확정 → docs/systems/player-character.md, docs/systems/player-character-architecture.md, docs/mcp/player-character-tasks.md) |
