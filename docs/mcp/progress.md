@@ -9,7 +9,7 @@
 ## 현재 위치
 
 **Phase B — Core Systems (핵심 시스템)**
-- 다음 실행 파일: `time-season-tasks.md` (B-3) 또는 `progression-tasks.md` (B-4) — 병렬 진행 가능
+- 다음 실행 파일: `progression-tasks.md` (B-4)
 
 ---
 
@@ -27,7 +27,7 @@
 |------|----------|------|
 | `farming-tasks.md` (ARC-003) | ✅ 완료 | Phase A~C 완료 (그리드 64타일, 작물SO, 도구SO, 스크립트 컴포넌트, 레이어). Phase D(Play Mode 검증) 미실행 |
 | `save-load-tasks.md` (ARC-012) | ✅ 완료 | T-1~T-5 완료 (Singleton/ISaveable/SaveEvents/SaveManager/AutoSaveTrigger/Data 클래스 생성, 씬 배치). T-6(이벤트 연결)은 TimeManager/BuildingEvents 구현 후 처리. T-7(SaveSlotPanel UI), T-8(PauseMenu 연동), T-9(통합 테스트)는 UI 시스템(Phase E) 이후 처리 |
-| `time-season-tasks.md` (ARC-021) | ⬜ 미시작 | |
+| `time-season-tasks.md` (ARC-021) | ✅ 완료 | Phase A~D 완료 (스크립트 12개, SO 13개, TimeSystem GO 배치). HUDController 시간 표시 연결 및 E-2 저장/로드 테스트는 UI 시스템(Phase E) 이후 처리 |
 | `progression-tasks.md` (BAL-002-MCP) | ⬜ 미시작 | |
 
 ---
