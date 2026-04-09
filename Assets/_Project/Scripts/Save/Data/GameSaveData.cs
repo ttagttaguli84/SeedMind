@@ -31,5 +31,10 @@ namespace SeedMind.Save.Data
         // -> see docs/systems/farm-expansion-architecture.md 섹션 9.2
         // null 허용: 이전 세이브 호환. null 시 초기 구역(Zone A)만 해금 상태로 초기화
         public SeedMind.Save.ZoneSaveData farmZones;
+
+        // --- 축산 세이브 데이터 ---
+        // -> see docs/systems/livestock-architecture.md 섹션 9.2
+        // null 허용: 이전 세이브 호환. null 시 축사/닭장 미해금 상태로 초기화
+        public SeedMind.Livestock.AnimalSaveData animals;
     }
 }

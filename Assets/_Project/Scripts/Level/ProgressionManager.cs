@@ -5,6 +5,7 @@ using UnityEngine;
 using SeedMind.Core;
 using SeedMind.Farm;
 using SeedMind.Level.Data;
+using SeedMind.Livestock;
 
 namespace SeedMind.Level
 {
@@ -89,13 +90,17 @@ namespace SeedMind.Level
             // AchievementEvents.OnAchievementUnlocked    += HandleAchievementXP;
             // FishingEvents.OnFishCaught                 += HandleFishingXP;
             // GatheringEvents.OnGatheringCompleted       += HandleGatheringXP;
-            // LivestockEvents.OnAnimalCared              += HandleAnimalCareXP;
-            // LivestockEvents.OnProductHarvested         += HandleAnimalHarvestXP;
+            LivestockEvents.OnAnimalFed                += HandleAnimalCareXP;
+            LivestockEvents.OnAnimalPetted             += HandleAnimalCareXP;
+            LivestockEvents.OnProductCollected         += HandleAnimalHarvestXP;
         }
 
         private void OnDisable()
         {
             FarmEvents.OnCropHarvested -= HandleCropHarvested;
+            LivestockEvents.OnAnimalFed      -= HandleAnimalCareXP;
+            LivestockEvents.OnAnimalPetted   -= HandleAnimalCareXP;
+            LivestockEvents.OnProductCollected -= HandleAnimalHarvestXP;
 
             if (TimeManager.Instance != null)
                 TimeManager.Instance.UnregisterOnDayChanged(OnDayChanged);
@@ -142,6 +147,7 @@ namespace SeedMind.Level
                 case XPSource.FacilityProcess: return _progressionData.facilityProcessExp;
                 case XPSource.ToolUpgrade:     return _progressionData.toolUpgradeExp;
                 case XPSource.AnimalCare:      return _progressionData.animalCareExp;
+                case XPSource.AnimalHarvest:   return _progressionData.animalHarvestBaseExp;
 
                 case XPSource.MilestoneReward:
                     return context is MilestoneData ms ? ms.reward.expReward : 0;
@@ -176,6 +182,18 @@ namespace SeedMind.Level
             _milestoneTracker.UpdateProgress(MilestoneConditionType.TotalHarvest, null, 1);
             _milestoneTracker.UpdateProgress(MilestoneConditionType.CropHarvestCount, crop.cropId, 1);
             _milestoneTracker.UpdateProgress(MilestoneConditionType.FirstHarvest, crop.cropId, 1);
+        }
+
+        private void HandleAnimalCareXP(AnimalInstance animal)
+        {
+            if (animal == null) return;
+            AddExp(GetExpForSource(XPSource.AnimalCare), XPSource.AnimalCare);
+        }
+
+        private void HandleAnimalHarvestXP(AnimalInstance animal, AnimalProductInfo info)
+        {
+            if (animal == null) return;
+            AddExp(GetExpForSource(XPSource.AnimalHarvest), XPSource.AnimalHarvest);
         }
 
         private void OnDayChanged(int newDay)
