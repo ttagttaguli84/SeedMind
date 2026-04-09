@@ -14,5 +14,9 @@ namespace SeedMind.Save.Data
         // -> see docs/systems/save-load-architecture.md 섹션 2.1 for 전체 트리
         public SeedMind.Core.TimeSaveData timeData;
         public SeedMind.Core.WeatherSaveData weatherData;
+
+        // --- 퀘스트 세이브 데이터 ---
+        // -> see docs/systems/quest-architecture.md 섹션 8.4
+        public SeedMind.Quest.QuestSaveData quest;
     }
 }

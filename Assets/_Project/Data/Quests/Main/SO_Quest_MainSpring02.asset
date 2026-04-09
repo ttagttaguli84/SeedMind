@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 363c8e502c693c5458f6f12800690eef, type: 3}
+  m_Name: SO_Quest_MainSpring02
+  m_EditorClassIdentifier: Assembly-CSharp::SeedMind.Quest.Data.QuestData
+  questId: main_spring_02
+  category: 0
+  titleKR: "\uB18D\uC7A5 \uD655\uC7A5\uC758 \uC2DC\uC791"
+  descriptionKR: "\uACBD\uC791\uC9C0\uB97C 20\uD0C0\uC77C \uC774\uC0C1 \uBCF4\uC720\uD558\uC138\uC694"
+  giverId: system
+  objectives:
+  - type: 6
+    targetId: 
+    requiredAmount: 20
+    minQuality: 0
+    descriptionKR: "\uACBD\uC791\uC9C0 20\uD0C0\uC77C \uC774\uC0C1 \uBCF4\uC720"
+    compositeMode: 0
+    subObjectives: []
+  rewards:
+  - type: 0
+    amount: 100
+    targetId: 
+    scaledByLevel: 0
+  - type: 1
+    amount: 10
+    targetId: 
+    scaledByLevel: 0
+  - type: 2
+    amount: 5
+    targetId: fertilizer_advanced
+    scaledByLevel: 0
+  unlockConditions:
+  - type: 2
+    stringParam: main_spring_01
+    intParam: 0
+    seasonParam: 0
+  timeLimitDays: 0
+  season: 0
+  isRepeatable: 0
+  icon: {fileID: 0}
