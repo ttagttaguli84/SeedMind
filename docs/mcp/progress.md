@@ -1,6 +1,6 @@
 # SeedMind — MCP 태스크 실행 진행 상황
 
-> 최종 업데이트: 2026-04-10 (progression-tasks.md 완료)
+> 최종 업데이트: 2026-04-10 (crop-content-tasks.md 완료)
 > **갱신 규칙**: 각 MCP 태스크 파일 실행 완료 직후 해당 항목을 ✅로 바꾸고 커밋. 세션 종료와 무관하게 완료 즉시 갱신한다.
 > 새 세션 시작 시 `/start`가 이 파일을 읽어 진행 위치를 복원한다.
 
@@ -9,7 +9,7 @@
 ## 현재 위치
 
 **Phase C — Content (콘텐츠)**
-- 다음 실행 파일: `crop-content-tasks.md` (C-1)
+- 다음 실행 파일: `facilities-tasks.md` (C-2)
 
 ---
 
@@ -36,7 +36,7 @@
 
 | 파일 | 완료 여부 | 비고 |
 |------|----------|------|
-| `crop-content-tasks.md` (CON-001-ARC) | ⬜ 미시작 | farming-tasks.md 완료 후 |
+| `crop-content-tasks.md` (CON-001-ARC) | ✅ 완료 | Phase A~E 완료. DataRegistry 기본 구조 생성(Resources 배치는 inventory-tasks에서). 검증(V-1~V-4)은 execute_code 비활성으로 스킵. |
 | `facilities-tasks.md` (ARC-007) | ⬜ 미시작 | farming-tasks.md 완료 후 |
 | `inventory-tasks.md` (ARC-013) | ⬜ 미시작 | facilities-tasks.md 완료 후 |
 
@@ -87,6 +87,7 @@
 
 ## 실전 메모 (세션 중 발견사항)
 
+- crop-content-tasks.md: CropData.cs가 이미 단순 버전으로 존재 → GameDataSO+IInventoryItem 상속으로 전면 업데이트. Season [Flags] enum을 SeasonFlag.cs로 분리. Editor 스크립트(CreateCropPrefabs.cs)로 8종×4단계=32 프리팹 + 2 Giant프리팹 + 8 머티리얼 일괄 생성. SO 배열 참조 자동 설정.
 - farming-tasks.md: 타일 레이어(FarmTile, index 8), 작물 SO, 도구 SO, 프리팹 12개 등이 이전 세션에 이미 완성된 상태였음. GrowthSystem.farmGrid 참조(null→FarmGrid)만 2026-04-10 세션에서 보완.
 - scene-setup-tasks.md: Canvas_Overlay는 비활성(SetActive=false) 상태이므로 find_gameobjects에서 검색 안 됨 — include_inactive=true 필요.
 - Build Settings: SCN_Loading(0), SCN_MainMenu(1), SCN_Farm(2) 이미 등록 완료.
