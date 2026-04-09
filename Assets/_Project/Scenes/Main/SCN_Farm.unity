@@ -769,6 +769,114 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1589186831}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &103921545
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 103921546}
+  - component: {fileID: 103921550}
+  - component: {fileID: 103921549}
+  - component: {fileID: 103921548}
+  - component: {fileID: 103921547}
+  m_Layer: 0
+  m_Name: TimeSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &103921546
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 103921545}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2036590076}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &103921547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 103921545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66ec1f51e907b6f48bbc3d2a3b5c960b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SeedMind.Core.FestivalManager
+  _festivals:
+  - {fileID: 11400000, guid: d48c2f383abb9f9458704eeed62009fa, type: 2}
+  - {fileID: 11400000, guid: 1364e2d42edc56c48b4d541d90b42f7e, type: 2}
+  - {fileID: 11400000, guid: 302c6776147074443bba727b5e985b2b, type: 2}
+  - {fileID: 11400000, guid: 34e20ee0a81463e42849bc36e8a9fb7b, type: 2}
+--- !u!114 &103921548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 103921545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c9be7fab5ebaae47bc11ed7c46ef96f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SeedMind.Core.EnvironmentController
+  _directionalLight: {fileID: 497203422}
+--- !u!114 &103921549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 103921545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 823d55c9608ec8440a63573ecdf8a130, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SeedMind.Core.WeatherSystem
+  _weatherDataSet:
+  - {fileID: 11400000, guid: 3c7722ef5f09a784ba54b6d9b892a81f, type: 2}
+  - {fileID: 11400000, guid: 21848955d392a9b4baa143e2b0d2ee05, type: 2}
+  - {fileID: 11400000, guid: 3c40be7801577d144921738aedc5de02, type: 2}
+  - {fileID: 11400000, guid: 3269c3c5a28e1d84bbdcf584a5a1a7a8, type: 2}
+  _farmGrid: {fileID: 2122019856}
+--- !u!114 &103921550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 103921545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f11b08d7011b8f145b7da2cf5c84313f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SeedMind.Core.TimeManager
+  _currentYear: 1
+  _currentSeason: 0
+  _currentDay: 1
+  _currentHour: 6
+  _currentDayPhase: 0
+  _timeScale: 1
+  _isPaused: 0
+  _timeConfig: {fileID: 11400000, guid: b5a593a73ac33e848b2d88f2f5aba3fe, type: 2}
+  _seasonDataSet:
+  - {fileID: 11400000, guid: 7afdfe54ee77bdb4b860db1852690a90, type: 2}
+  - {fileID: 11400000, guid: 90c0f62b3a54c2b4294db85436917b98, type: 2}
+  - {fileID: 11400000, guid: 074e989ef2b8970479e177a33499bd7b, type: 2}
+  - {fileID: 11400000, guid: 818c5ad89dd736d448ca0ebd3a4c46bf, type: 2}
 --- !u!1 &110218911
 GameObject:
   m_ObjectHideFlags: 0
@@ -9974,6 +10082,7 @@ Transform:
   - {fileID: 310773786}
   - {fileID: 397380800}
   - {fileID: 844191232}
+  - {fileID: 103921546}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2059395705

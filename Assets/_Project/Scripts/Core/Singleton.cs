@@ -30,7 +30,8 @@ namespace SeedMind.Core
                 return;
             }
             _instance = this as T;
-            DontDestroyOnLoad(gameObject);
+            // 하위 오브젝트인 경우 root(부모)에 DontDestroyOnLoad 적용
+            DontDestroyOnLoad(transform.root.gameObject);
         }
     }
 }

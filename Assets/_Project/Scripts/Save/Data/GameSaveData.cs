@@ -11,7 +11,8 @@ namespace SeedMind.Save.Data
         public int playTimeSeconds;         // 총 플레이 시간 (초)
 
         // --- 시스템별 세이브 데이터 ---
-        // 각 시스템 구현 시 해당 SaveData 필드가 여기에 추가된다.
         // -> see docs/systems/save-load-architecture.md 섹션 2.1 for 전체 트리
+        public SeedMind.Core.TimeSaveData timeData;
+        public SeedMind.Core.WeatherSaveData weatherData;
     }
 }

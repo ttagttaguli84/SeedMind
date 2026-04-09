@@ -8,5 +8,6 @@ namespace SeedMind.Farm
         public static Action<FarmTile, TileState> OnTileStateChanged;
         public static Action<FarmTile> OnCropHarvested;
         public static Action<FarmTile> OnCropWithered;
+        public static Action<FarmTile> OnTileWatered; // WeatherSystem 비 자동 물주기
     }
 }

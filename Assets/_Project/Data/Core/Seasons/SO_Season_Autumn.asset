@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a80d9020082e2d439967266c797f247, type: 3}
+  m_Name: SO_Season_Autumn
+  m_EditorClassIdentifier: Assembly-CSharp::SeedMind.Core.SeasonData
+  season: 2
+  displayName: "\uAC00\uC744"
+  sunColor: {r: 1, g: 0.85, b: 0.65, a: 1}
+  sunIntensity: 0.9
+  ambientColor: {r: 1, g: 0.95, b: 0.88, a: 1}
+  fogColor: {r: 0.95, g: 0.88, b: 0.78, a: 1}
+  fogDensity: 0.008
+  phaseOverrides:
+  - phase: 0
+    lightColor: {r: 1, g: 0.8, b: 0.55, a: 1}
+    lightIntensity: 0.55
+    lightRotation: {x: 8, y: -30, z: 0}
+    ambientColor: {r: 0.43, g: 0.35, b: 0.28, a: 1}
+    transitionDuration: 10
+  - phase: 1
+    lightColor: {r: 1, g: 0.9, b: 0.75, a: 1}
+    lightIntensity: 0.9
+    lightRotation: {x: 28, y: -30, z: 0}
+    ambientColor: {r: 0.44, g: 0.4, b: 0.35, a: 1}
+    transitionDuration: 8
+  - phase: 2
+    lightColor: {r: 1, g: 0.92, b: 0.78, a: 1}
+    lightIntensity: 0.9
+    lightRotation: {x: 55, y: -30, z: 0}
+    ambientColor: {r: 0.45, g: 0.41, b: 0.36, a: 1}
+    transitionDuration: 5
+  - phase: 3
+    lightColor: {r: 0.95, g: 0.55, b: 0.2, a: 1}
+    lightIntensity: 0.65
+    lightRotation: {x: 8, y: 150, z: 0}
+    ambientColor: {r: 0.44, g: 0.3, b: 0.2, a: 1}
+    transitionDuration: 8
+  - phase: 4
+    lightColor: {r: 0.25, g: 0.35, b: 0.55, a: 1}
+    lightIntensity: 0.25
+    lightRotation: {x: -10, y: 30, z: 0}
+    ambientColor: {r: 0.17, g: 0.2, b: 0.28, a: 1}
+    transitionDuration: 10
+  growthSpeedMultiplier: 1
+  shopPriceMultiplier: 1.1
+  terrainTintColor: {r: 0.8, g: 0.55, b: 0.25, a: 1}
+  treePrefabOverride: {fileID: 0}
+  particleEffect: {fileID: 0}

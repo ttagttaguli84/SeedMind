@@ -31,5 +31,25 @@ namespace SeedMind.Farm
             if (_tiles == null) RebuildTileMap();
             return _tiles[x, y];
         }
+
+        /// <summary>비/폭우/폭풍 시 WeatherSystem이 호출 — 모든 Planted/Dry 타일 자동 물주기.</summary>
+        public void WaterAllPlantedTiles()
+        {
+            if (_tiles == null) RebuildTileMap();
+            for (int x = 0; x < gridWidth; x++)
+            {
+                for (int y = 0; y < gridHeight; y++)
+                {
+                    var tile = _tiles[x, y];
+                    if (tile == null) continue;
+                    var state = tile.State;
+                    if (state == Farm.Data.TileState.Planted || state == Farm.Data.TileState.Dry)
+                    {
+                        tile.SetState(Farm.Data.TileState.Watered);
+                        FarmEvents.OnTileWatered?.Invoke(tile);
+                    }
+                }
+            }
+        }
     }
 }
