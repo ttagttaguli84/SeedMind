@@ -71,12 +71,9 @@ SeedMind/
 
 - [x] Phase 0: GitHub 저장소 생성
 - [x] Phase 1: AI 자율 게임 설계
-- [ ] **Phase 2: Unity 프로젝트 생성 및 기본 환경 구축** ← 현재
-- [ ] Phase 3: 핵심 시스템 구현 (농장, 작물, 경제)
-- [ ] Phase 3: 핵심 시스템 구현 (농장, 작물, 경제)
-- [ ] Phase 4: 게임플레이 콘텐츠 제작
-- [ ] Phase 5: UI/UX 및 폴리싱
-- [ ] Phase 6: 빌드 및 배포
+- [ ] **Phase 2: Unity MCP 전체 구현 (씬·시스템·콘텐츠·UI)** ← 현재
+- [ ] Phase 3: QA, 플레이 테스트, 버그 수정
+- [ ] Phase 4: 빌드 및 배포
 
 ### Phase 1 완료 산출물
 

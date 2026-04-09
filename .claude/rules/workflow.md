@@ -10,7 +10,7 @@
 
 Agent selection is determined by task type (see `start.md` Phase 2/3 for full criteria):
 
-| Task type | Phase 2 agent | Phase 3 reviewer |
+| Task type | Agent | Reviewer |
 |-----------|---------------|-----------------|
 | DES-* new system | designer → architect (sequential) | Required |
 | ARC-* architecture only | architect only | Required |
@@ -81,10 +81,10 @@ If a git command requires a repo path, use `-C .` (current dir) or omit the path
 
 ## Phase Progression
 
-### Phase 1 → Phase 2 Completion Criteria (AI self-evaluated)
-Check at the start of every session. When all conditions are met, transition immediately without waiting for user approval.
+### Phase 1 → Phase 2 Completion Criteria — ✅ COMPLETED (2026-04-09)
+> 아래 4개 조건 모두 충족됨. Phase 2 Unity 구현 진행 중. (참조용으로 보존)
 
-1. [ ] All systems have DES + ARC + MCP task documents.
+1. [x] All systems have DES + ARC + MCP task documents.
    DES source varies by system — check the mapping below:
 
    | System | DES | ARC | MCP tasks |
@@ -115,11 +115,9 @@ Check at the start of every session. When all conditions are met, transition imm
    | livestock | content/livestock-system.md (DES) | livestock-architecture.md | livestock-tasks.md |
    | processing | content/processing-system.md (DES) | processing-architecture.md | processing-tasks.md |
    | player-character | systems/player-character.md | player-character-architecture.md | player-character-tasks.md |
-2. [ ] Zero incomplete DES-*/ARC-* items in TODO
-3. [ ] Zero unresolved PATTERN-* items in TODO (self-improve handled)
-4. [ ] No implementation-blocking `[OPEN]` tags in core ARC documents
-
-All four must be true simultaneously. If any condition is unmet, continue Phase 1 and replenish TODO as needed.
+2. [x] Zero incomplete DES-*/ARC-* items in TODO
+3. [x] Zero unresolved PATTERN-* items in TODO (self-improve handled)
+4. [x] No implementation-blocking `[OPEN]` tags in core ARC documents
 
 ### Phase Transition Procedure (executed by AI autonomously)
 When all four criteria above are confirmed:
@@ -130,5 +128,30 @@ When all four criteria above are confirmed:
 5. `git commit + push`
 6. Begin Unity MCP task execution starting from `docs/mcp/scene-setup-tasks.md`
 
-### Phase 2 → Phase 3 and beyond
-Defined separately when Phase 2 scope is established.
+### Phase 2 → Phase 3 Completion Criteria (AI self-evaluated)
+
+`docs/mcp/progress.md`의 모든 Phase가 ✅일 때 완료.
+
+| Phase | 설명 |
+|-------|------|
+| Phase A | Foundation (씬/기본환경) |
+| Phase B | Core Systems (핵심 시스템) |
+| Phase C | Content (작물/시설/인벤토리) |
+| Phase D | Feature Systems (툴업글/NPC/퀘스트/튜토리얼) |
+| Phase E | UI & UX |
+| Phase F | Advanced Features (농장확장/낚시/채집/축산) |
+| Phase G | Polish (컬렉션/데코) |
+
+모든 Phase ✅ 확인 시 전환 절차:
+1. `README.md` 현재 상태 → Phase 3
+2. `CLAUDE.md` 현재 상태 업데이트
+3. `workflow.md` 이 섹션에 완료 표시 추가
+4. 데브로그 작성
+5. `git commit + push`
+6. Phase 3 시작
+
+### Phase 3 — QA & 플레이 테스트
+Phase 2 완료 후 범위 정의 예정.
+
+### Phase 4 — 빌드 & 배포
+Phase 3 완료 후 범위 정의 예정.

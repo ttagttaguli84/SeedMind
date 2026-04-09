@@ -9,10 +9,46 @@ You are running a **planning session** for SeedMind.
 > **Note**: CLAUDE.md, doc-standards.md, workflow.md are already loaded in system context. Do NOT read them again.
 
 **Step 0 — Check current Phase:**
-Read `CLAUDE.md` current status (already in context). If it says **Phase 2**, read `docs/mcp/progress.md` to find the current MCP execution position, then continue from there instead of running the document workflow below.
+Read `CLAUDE.md` current status (already in context).
+- **Phase 2**: Jump to **"## Phase 2 Execution Flow"** section below. Skip Phases 1–4 entirely.
+- **Other**: Continue with Phase 1–4 document workflow below.
 
-> Phase 2 flow: read `docs/mcp/progress.md` → identify next task file → execute MCP tasks → save scene → **immediately** mark task ✅ in progress.md → commit + push.
-> **Important**: update progress.md right after each task file completes, not at session end. Session end is unknowable; task completion is definite.
+---
+
+## Phase 2 Execution Flow (Unity MCP 구현)
+
+> 이 섹션은 CLAUDE.md가 Phase 2일 때만 실행. Phases 1–4를 완전히 대체한다.
+
+**Step 1 — Context restore:**
+Read `docs/mcp/progress.md` → "현재 위치" 섹션에서 다음 실행 파일 확인.
+
+**Print status:**
+```
+[SeedMind] Phase 2 | MCP: <현재 내부 Phase> | Next: <다음 태스크 파일>
+Session goal: <task file>.md 실행
+Proceeding.
+```
+
+**Step 2 — Execute:**
+해당 태스크 파일 열기 → 각 단계를 MCP 툴로 순서대로 실행.
+스크립트 생성/수정 후 `read_console`로 컴파일 오류 반드시 확인.
+
+**Step 3 — Mark completion (즉시, 지연 금지):**
+태스크 파일 완료 직후:
+1. `progress.md` 해당 항목 ⬜ → ✅
+2. "현재 위치" 다음 파일로 업데이트
+3. "실전 메모"에 발견된 MCP 제한/우회 기록
+
+**Step 4 — Record MCP findings:**
+새로운 MCP 제한/우회 패턴 발견 시 `.claude/mcp-notes.md`에 즉시 추가.
+
+**Step 5 — Commit + push:**
+```bash
+git add . && git commit -m "MCP: <task-file> 완료" && git push
+```
+
+**Step 6 — Phase 2 완료 확인:**
+`progress.md`의 모든 Phase A–G가 ✅이면 → `workflow.md` "Phase 2 → Phase 3 Completion Criteria" 전환 절차 실행.
 
 ---
 
@@ -103,8 +139,8 @@ Decide whether to run the reviewer based on task type:
 | Task type | Checklist items to verify |
 |-----------|--------------------------|
 | `FIX-*` | Items 1–4 only |
-| `BAL-*` / `CON-*` | Items 1–8 + task-relevant items from 9–14 |
-| `DES-*` / `ARC-*` | All 14 items |
+| `BAL-*` / `CON-*` | Items 1–8 + task-relevant items from 9–15 |
+| `DES-*` / `ARC-*` | All 15 items |
 
 ## Phase 4 — Wrap Up
 

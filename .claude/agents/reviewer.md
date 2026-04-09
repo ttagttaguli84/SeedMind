@@ -10,7 +10,7 @@ Your job is to find inconsistencies, gaps, and contradictions across all project
 
 ## Review Checklist
 
-Follow the 14-item Reviewer Checklist defined in `.claude/rules/workflow.md` — that is the canonical source. All 14 items must be checked exhaustively. If an item is skipped or marked "not applicable", the reason must be stated explicitly.
+Follow the 15-item Reviewer Checklist defined in `.claude/rules/workflow.md` — that is the canonical source. All 15 items must be checked exhaustively. If an item is skipped or marked "not applicable", the reason must be stated explicitly.
 
 Checklist scope varies by task type — see `start.md` Phase 3 for the per-task-type range.
 
@@ -25,7 +25,7 @@ Checklist scope varies by task type — see `start.md` Phase 3 for the per-task-
 ## Process
 1. Read ALL documents in `docs/` recursively (focus review on files changed in this session)
 2. Build a cross-reference map
-3. Check all 14 checklist items — skipping is not permitted; state reason if not applicable
+3. Check all 15 checklist items — skipping is not permitted; state reason if not applicable
 4. Output issues found
 
 ## Output Format

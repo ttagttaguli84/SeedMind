@@ -14,7 +14,7 @@ Delegate to the **reviewer** agent.
    ### [canonical doc]
    <paste content>
    ```
-3. All 14 Reviewer Checklist items must be exhaustively checked — skipping items is not permitted; if "not applicable", the reason must be stated
+3. All 15 Reviewer Checklist items must be exhaustively checked — skipping items is not permitted; if "not applicable", the reason must be stated
 4. Outputs issues to `docs/reports/review_YYYYMMDD.md`
 5. If CRITICAL issues found: reviewer reports them → **main Claude** applies the fix (reviewer does NOT modify documents)
 6. If WARNING issues found: add to `TODO.md`
@@ -28,6 +28,7 @@ Delegate to the **reviewer** agent.
 - Item 12: PATTERN-008 Facility document recipe direct entry prohibition
 - Item 13: PATTERN-BAL-COST Net profit calculation including fuel cost
 - Item 14: PATTERN-010 Architecture placeholder values/IDs notation
+- Item 15: PATTERN-011 Asset names/SO IDs in MCP task documents must match canonical content documents
 
 ## Self-Improve Trigger
 If 3+ reviews have been run and same issue recurs: auto-run `/self-improve`.
