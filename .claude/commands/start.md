@@ -11,7 +11,8 @@ You are running a **planning session** for SeedMind.
 **Step 0 — Check current Phase:**
 Read `CLAUDE.md` current status (already in context). If it says **Phase 2**, read `docs/mcp/progress.md` to find the current MCP execution position, then continue from there instead of running the document workflow below.
 
-> Phase 2 flow: read `docs/mcp/progress.md` → identify next task file → execute MCP tasks → save scene → update progress.md → commit + push.
+> Phase 2 flow: read `docs/mcp/progress.md` → identify next task file → execute MCP tasks → save scene → **immediately** mark task ✅ in progress.md → commit + push.
+> **Important**: update progress.md right after each task file completes, not at session end. Session end is unknowable; task completion is definite.
 
 ---
 
