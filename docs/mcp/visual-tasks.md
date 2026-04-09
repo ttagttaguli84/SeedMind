@@ -1046,3 +1046,5 @@ create_material
 - `docs/mcp/farming-tasks.md` (ARC-003) — FarmTile, CropInstance 배치 완료 조건
 - `docs/pipeline/data-pipeline.md` — ScriptableObject 파이프라인 전반 구조
 - `docs/architecture.md` 섹션 5 — 렌더링 전략 개요
+- `docs/mcp/energy-tasks.md` (ARC-047) — MCP 태스크 문서 구조 패턴 참조
+- `docs/mcp/economy-tasks.md` (ARC-048) — MCP 태스크 문서 구조 패턴 참조

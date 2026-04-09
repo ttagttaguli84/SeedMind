@@ -97,7 +97,7 @@ Assets/_Project/Settings/
 ### 2.2 LightingManager 클래스 설계
 
 ```csharp
-namespace SeedMind.Visual
+namespace SeedMind.Visual  // MonoBehaviour → SeedMind.Visual
 {
     /// <summary>
     /// 시간대/계절에 따라 Directional Light와 앰비언트 조명을 보간 전환한다.
@@ -172,7 +172,7 @@ TimeManager
 `time-season-architecture.md`의 `SeasonData`에 이미 조명 관련 필드(`sunColor`, `sunIntensity`, `ambientColor`, `fogColor`, `fogDensity`, `phaseOverrides[]`)가 정의되어 있다. 비주얼 시스템은 이 데이터를 직접 참조하므로 별도 SO를 중복 정의하지 않고, `SeasonData`를 래핑하는 프로파일 어댑터 구조를 사용한다.
 
 ```csharp
-namespace SeedMind.Visual
+namespace SeedMind.Visual.Data  // ScriptableObject 데이터 타입 → SeedMind.Visual.Data
 {
     /// <summary>
     /// SeasonData를 래핑하여 조명 전환에 필요한 데이터만 추출하는 어댑터.
@@ -216,7 +216,7 @@ namespace SeedMind.Visual
 보간 연산의 from/to 상태를 캡슐화하는 값 타입:
 
 ```csharp
-namespace SeedMind.Visual
+namespace SeedMind.Visual.Data  // 값 타입(struct) → SeedMind.Visual.Data
 {
     [System.Serializable]
     public struct LightingSnapshot
@@ -243,7 +243,7 @@ namespace SeedMind.Visual
 계절별 색상 팔레트를 정의하는 SO. 지형, 식물, 물 등 카테고리별 색상을 한 곳에서 관리한다.
 
 ```csharp
-namespace SeedMind.Visual
+namespace SeedMind.Visual.Data  // ScriptableObject 데이터 타입 → SeedMind.Visual.Data
 {
     [CreateAssetMenu(fileName = "PaletteData", menuName = "SeedMind/Visual/PaletteData")]
     public class PaletteData : ScriptableObject
@@ -321,6 +321,8 @@ Assets/_Project/Materials/
 계절 전환 시 머티리얼 인스턴스를 복제하지 않고 `MaterialPropertyBlock`으로 색상만 교체한다.
 
 ```csharp
+// PaletteApplier (MonoBehaviour) → namespace SeedMind.Visual
+// PaletteTarget, PaletteColorCategory (데이터 타입) → namespace SeedMind.Visual.Data
 namespace SeedMind.Visual
 {
     /// <summary>
@@ -645,12 +647,12 @@ Assets/_Project/Data/Visual/
 
 | Step | 태스크 | MCP 주요 명령 | 산출물 |
 |:----:|--------|--------------|--------|
-| 1 | URP 설정 및 Volume Profile 생성 | `execute_menu_item` (URP Asset 생성), `set_component_property` | URP Asset, Global Volume, VP_Global.asset |
-| 2 | LightingManager 생성 및 배치 | `create_object` (Lighting 하위), `add_component`, `set_component_property` | LightingManager GO + 컴포넌트, Sun Directional Light 참조 연결 |
+| 1 | URP 설정 및 Volume Profile 생성 | `execute_menu_item` (URP Asset 생성), `set_property` | URP Asset, Global Volume, VP_Global.asset |
+| 2 | LightingManager 생성 및 배치 | `create_object` (Lighting 하위), `add_component`, `set_property` | LightingManager GO + 컴포넌트, Sun Directional Light 참조 연결 |
 | 3 | SeasonLightingProfile SO 에셋 생성 (4계절) | `create_scriptable_object` x4, 필드 설정 | SO_LightProfile_Spring~Winter.asset |
 | 4 | PaletteData SO 에셋 생성 (4계절) | `create_scriptable_object` x4, 필드 설정 | SO_Palette_Spring~Winter.asset |
 | 5 | 날씨 파티클 시스템 생성 | `create_object` (WeatherFX 하위), `add_component` (ParticleSystem) x5 | Rain/Snow/Blizzard 등 파티클 GO |
-| 6 | WeatherVisualController 배치 | `add_component`, `set_component_property` (파티클 참조 연결) | WeatherVisualController GO |
+| 6 | WeatherVisualController 배치 | `add_component`, `set_property` (파티클 참조 연결) | WeatherVisualController GO |
 | 7 | CropVisual 프리팹 구성 | 작물별 stage 프리팹 자식 배치, `CropVisual` 컴포넌트 추가 | PFB_Crop_[작물명] 프리팹 업데이트 |
 | 8 | 머티리얼 생성 (카테고리별) | `create_material` x N, shader/color 설정 | M_Grass, M_Soil_*, M_Crop_* 등 |
 
