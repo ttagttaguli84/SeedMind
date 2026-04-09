@@ -182,6 +182,8 @@ set_property  target: "SO_Building_Bakery"
 
 ### Task P-2: RecipeData SO 에셋 생성
 
+> **[최적화 필수]** P-2-01(폴더 생성)만 수행 후 P-2-ALT로 이동한다. P-2-02~P-2-07 개별 생성(517회)은 건너뜀.
+
 **목표**: 전체 32종 레시피의 ProcessingRecipeData SO 에셋을 생성한다.
 
 **전제**: ProcessingRecipeData.cs, ProcessingType.cs가 컴파일 완료된 상태 (스크립트 S-01, S-02).
@@ -338,7 +340,88 @@ set_property  target: "SO_Recipe_Bake_{Output}"
 
 **P-2 MCP 호출 합계**: 5(폴더) + 128(잼 8) + 48(주스 3) + 112(절임 7) + 64(제분 4) + 80(발효 5) + 80(베이커리 5) = 517회
 
-[RISK] 총 517회 MCP 호출은 매우 많다. Editor 스크립트(CreateAllRecipeSOs.cs)를 작성하여 일괄 생성하면 ~5회로 감소 가능. MCP 단독 실행 시 시간 비용이 크므로, Editor 스크립트 우회를 강력 권장한다.
+> **[최적화 필수]** P-2 개별 생성(517회)을 건너뛰고 P-2-ALT를 사용한다. P-2-01(폴더 생성)만 수행 후 P-2-ALT로 이동할 것.
+
+---
+
+### Task P-2-ALT: Editor 스크립트를 통한 레시피 SO 일괄 생성 (**기본 경로**)
+
+**[기본 경로]** P-2-01(폴더 생성) 완료 후 바로 이 절차를 실행한다. P-2-02~P-2-07은 건너뜀.
+
+**목표**: `CreateAllRecipeSOs.cs` Editor 스크립트를 생성하고 실행하여 레시피 SO 32종을 일괄 생성한다.
+
+**전제**: ProcessingRecipeData.cs, ProcessingType.cs 컴파일 완료. P-2-01 폴더 4개 생성 완료.
+
+#### P-2-ALT-01: Editor 스크립트 생성
+
+```
+create_script
+  path: "Assets/_Project/Editor/CreateAllRecipeSOs.cs"
+  content: |
+    // Editor 전용: 가공 레시피 SO 32종 일괄 생성
+    // 모든 레시피 수치는 docs/content/processing-system.md 섹션 3의 canonical 정의를 기반으로 함
+    // -> copied from docs/content/processing-system.md 섹션 3.1~3.4, 3.7
+    #if UNITY_EDITOR
+    using UnityEditor;
+    using UnityEngine;
+    using SeedMind.Building.Data;
+
+    public static class CreateAllRecipeSOs
+    {
+        [MenuItem("SeedMind/Create All Recipe SOs")]
+        public static void CreateAll()
+        {
+            // 가공소(일반): 잼 8종(섹션 3.1.1+3.1.4) + 주스 3종(3.1.2) + 절임 7종(3.1.3+3.1.4) = 18종
+            // 제분소: 4종 (섹션 3.2)
+            // 발효실: 5종 (섹션 3.3)
+            // 베이커리: 5종 (섹션 3.4)
+            // 제련로: 1종 — 철 광석 → 철 조각 (섹션 3.7, DES-020)
+            // -> see docs/content/processing-system.md 섹션 3 전체 for 각 레시피 dataId/수치
+            // -> see docs/content/processing-system.md 섹션 4.2 for 연료 비용 canonical
+
+            // 각 레시피를 ProcessingRecipeData SO로 생성 후 AssetDatabase.CreateAsset()
+            // 필드: dataId, displayName, processingType, inputItemId, inputQuantity,
+            //        priceMultiplier, priceBonus, processingTimeHours, fuelCost,
+            //        requiredFacilityTier, outputItemId, outputQuantity
+
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            Debug.Log("[CreateAllRecipeSOs] 32 recipe SO assets created.");
+        }
+    }
+    #endif
+```
+
+- **MCP 호출**: 1회 (create_script)
+
+[RISK] Editor 스크립트 내 수치는 canonical 문서에서 읽어 구현한다. 베이커리 레시피 복수 재료 문제(P-2 OPEN#2): `inputItemId`를 주재료 1종으로 설정하고, 부재료는 description에 명시하는 임시 처리를 적용한다.
+
+#### P-2-ALT-02: 컴파일 대기
+
+```
+execute_menu_item
+  menu: "File/Save Project"
+```
+
+- **MCP 호출**: 1회
+
+#### P-2-ALT-03: 레시피 SO 일괄 생성 실행
+
+```
+execute_menu_item
+  menu: "SeedMind/Create All Recipe SOs"
+```
+
+- **MCP 호출**: 1회
+
+#### P-2-ALT 검증 체크리스트
+
+- [ ] `Assets/_Project/Data/Recipes/` 하위 SO 에셋 총 32개 (+ 제련 1종 포함 시 33개)
+- [ ] 콘솔에 `[CreateAllRecipeSOs] 32 recipe SO assets created.` 출력
+- [ ] 콘솔 에러 없음
+
+**P-2-ALT MCP 호출 합계**: 3회 (create_script 1 + execute_menu_item 2)  
+**P-2 대비 절감**: 514회 (517 → 3)
 
 ---
 
@@ -1091,7 +1174,7 @@ Phase C: SO 에셋 생성                              │ 의존
 │ P-1: BuildingData SO x4  │◄─────────────────────┘
 │ P-2: RecipeData SO x32   │
 │ P-3: FuelData SO x1      │
-│  [37 + 517 + 8 MCP 호출] │
+│  [37 + 3(ALT) + 8 MCP 호출] │
 └──────────┬───────────────┘
            │
 Phase D: UI 레이어                     Phase E: 씬 배치
@@ -1117,7 +1200,7 @@ Phase F: 통합 테스트                               │ 의존
 | Task | 호출 수 | 비고 |
 |------|--------|------|
 | P-1 | 37 | BuildingData SO x4 |
-| P-2 | 517 | RecipeData SO x32 (Editor 스크립트 우회 시 ~5) |
+| P-2-ALT | **3** | **기본 경로** — Editor 스크립트 일괄 생성 (P-2 개별 517회 대신 사용) |
 | P-3 | 8 | FuelData SO x1 |
 | P-4 | 5 | 데이터 스크립트 4개 + 컴파일 |
 | P-5 | 4 | 시스템 스크립트 + 수정 |
@@ -1129,9 +1212,7 @@ Phase F: 통합 테스트                               │ 의존
 | P-11 | 8 | 기본 플로우 테스트 |
 | P-12 | ~10 | 연료 테스트 |
 | P-13 | ~12 | 세이브/로드 테스트 |
-| **총합** | **~651** | Editor 스크립트 우회 시 **~139** |
-
-[RISK] MCP 단독 실행 시 총 ~651회 호출이 필요하며, 특히 P-2(레시피 SO 32종)가 517회로 전체의 79%를 차지한다. **강력 권장: P-2는 Editor 스크립트(`CreateAllRecipeSOs.cs`)로 일괄 생성하여 ~5회로 줄인다.**
+| **총합** | **~139** | P-2-ALT 적용 기준 (P-2 단독 실행 시 ~651) |
 
 ---
 
@@ -1158,7 +1239,7 @@ Phase F: 통합 테스트                               │ 의존
 
 2. **[OPEN]** 베이커리 레시피의 복수 재료 지원 문제. 현재 ProcessingRecipeData 스키마는 `inputItemId` 1개만 지원하므로, 호박 파이(호박 분말 + 딸기 잼) 등 복수 재료 레시피를 정확히 표현할 수 없다. `InputRequirement[]` 배열 필드 추가 또는 별도 `BakeryRecipeData` SO 생성이 필요하다.
 
-3. **[OPEN]** P-2의 517회 MCP 호출을 Editor 스크립트로 대체할 경우, 해당 스크립트의 위치와 실행 방법을 별도로 문서화해야 한다. `Assets/_Project/Editor/CreateAllRecipeSOs.cs`에 MenuItem으로 등록하는 것을 제안한다.
+3. ~~**[OPEN]** P-2의 517회 MCP 호출을 Editor 스크립트로 대체할 경우, 해당 스크립트의 위치와 실행 방법을 별도로 문서화해야 한다.~~ **[RESOLVED]** P-2-ALT 섹션에 `Assets/_Project/Editor/CreateAllRecipeSOs.cs` MenuItem 방식으로 정의 완료.
 
 4. **[OPEN]** SO 에셋의 오브젝트 참조 필드(Sprite icon, GameObject prefab 등) 설정이 MCP로 가능한지 미확인. 불가능한 경우 해당 필드는 Unity Editor에서 수동 연결이 필요하며, 이 수동 작업 목록을 별도 정리해야 한다.
 

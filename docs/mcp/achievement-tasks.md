@@ -1051,6 +1051,8 @@ execute_menu_item
 
 ## T-2: SO 에셋 생성
 
+> **[최적화 필수]** `tiers[]` 중첩 배열은 `set_property`로 불안정하다 (CLAUDE.md MCP 제한사항 — SO 배열 참조 설정 불가). **T-2 개별 생성 절차를 건너뛰고 T-2-ALT를 무조건 사용한다.** T-2-01(폴더 생성)만 수행 후 T-2-ALT로 이동할 것.
+
 **목적**: AchievementData ScriptableObject 에셋을 카테고리별로 생성하고, 필드값을 설정한다.
 
 **전제**: T-1 전체 완료 (모든 스크립트 컴파일 성공).
@@ -1266,9 +1268,9 @@ AchievementEvents.OnAchievementUnlocked += HandleAchievementChain;
 
 ---
 
-### T-2-ALT: Editor 스크립트를 통한 일괄 생성 (대안)
+### T-2-ALT: Editor 스크립트를 통한 일괄 생성 (**기본 경로**)
 
-Tiered 업적의 `tiers[]` 배열 설정이 `set_property`로 불가능한 경우, Editor 스크립트를 사용한다.
+**[기본 경로]** `tiers[]` 배열 설정은 `set_property`로 불안정하므로 항상 이 방법을 사용한다. T-2-01(폴더 생성) 완료 후 바로 이 절차를 실행한다.
 
 ```
 create_script
@@ -1876,6 +1878,8 @@ save_scene
 
 ## T-7: 채집 업적 SO 에셋 생성 + 이벤트 연결 (ARC-035)
 
+> **[최적화 필수]** T-7-01(폴더 생성)만 수행 후 T-7-ALT를 사용한다. T-7-02~T-7-06 개별 생성은 건너뜀.
+
 **목적**: 채집 업적 5종(A-031~A-035)의 AchievementData SO 에셋을 생성하고, GatheringEvents 이벤트 핸들러 연결을 구성한다.
 
 **전제**: T-1 전체 완료 (모든 스크립트 컴파일 성공). AchievementConditionType enum에 GatherCount(15), GatherSpeciesCollected(16), GatherSickleUpgraded(17) 값이 포함되어야 한다 (-> see docs/systems/achievement-architecture.md 섹션 2.3). AchievementCategory enum에 Gatherer(8) 값이 포함되어야 한다.
@@ -2082,9 +2086,9 @@ save_scene
 - **검증**: AchievementManager Inspector에서 _allAchievements 배열에 채집 업적 5종 포함 확인
 - [NOTE] 배열 인덱스 N은 기존 업적 수(T-4-02 완료 시점의 배열 크기)에 따라 결정. 낚시 업적 포함 시 N=34 (기존 30 + 낚시 4)
 
-### T-7-ALT: Editor 스크립트를 통한 채집 업적 일괄 생성 (대안)
+### T-7-ALT: Editor 스크립트를 통한 채집 업적 일괄 생성 (**기본 경로**)
 
-T-7-02 ~ T-7-06의 대안. T-2-ALT와 동일한 패턴으로 Editor 스크립트에 채집 업적 5종을 추가한다.
+**[기본 경로]** T-7-01(폴더 생성) 완료 후 바로 이 절차를 실행한다. T-7-02~T-7-06은 건너뜀.
 
 ```
 // 기존 CreateAchievementAssets.cs에 Gatherer 카테고리 추가
