@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c4fa34834858564abfb96363ff6e1c3, type: 3}
+  m_Name: SO_GatherPoint_PondEdge
+  m_EditorClassIdentifier: Assembly-CSharp::SeedMind.Gathering.GatheringPointData
+  pointId: gather_pond_edge
+  displayName: "\uC5F0\uBABB \uAC00\uC7A5\uC790\uB9AC"
+  description: "\uC5F0\uBABB \uAC00\uC7A5\uC790\uB9AC \uCC44\uC9D1 \uD3EC\uC778\uD2B8"
+  zoneId: zone_f
+  requiredZoneUnlocked: 1
+  availableItems: []
+  seasonOverrides: []
+  respawnDays: 3
+  respawnVariance: 1
+  pointPrefab: {fileID: 0}
+  depletedPrefab: {fileID: 0}
+  gatherVFX: {fileID: 0}

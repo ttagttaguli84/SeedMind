@@ -41,5 +41,10 @@ namespace SeedMind.Save.Data
         // -> see docs/systems/fishing-architecture.md 섹션 10, 12.1
         // null 허용: 이전 세이브 호환. null 시 낚시 통계/숙련도 초기 상태로 복원
         public SeedMind.Fishing.FishingSaveData fishing;
+
+        // --- 채집 세이브 데이터 ---
+        // -> see docs/systems/gathering-architecture.md 섹션 7
+        // null 허용: 이전 세이브 호환. null 시 채집 통계/포인트 상태 초기화
+        public SeedMind.Gathering.GatheringSaveData gathering;
     }
 }

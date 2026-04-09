@@ -162,6 +162,11 @@ namespace SeedMind.Level
                     // -> see docs/systems/fishing-architecture.md 섹션 6.2
                     return context is int fishXp ? fishXp : 0;
 
+                case XPSource.GatheringComplete:
+                    // GatheringItemData.expReward 값을 context로 전달 (ARC-031)
+                    // -> see docs/systems/gathering-architecture.md 섹션 6.2
+                    return context is int gatherXp ? gatherXp : 0;
+
                 default: return 0;
             }
         }
