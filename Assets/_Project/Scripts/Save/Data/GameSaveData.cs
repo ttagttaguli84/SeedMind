@@ -26,5 +26,10 @@ namespace SeedMind.Save.Data
         // --- 튜토리얼 세이브 데이터 ---
         // -> see docs/systems/tutorial-architecture.md 섹션 7.2
         public SeedMind.Tutorial.TutorialSaveData tutorial;
+
+        // --- 농장 확장(구역) 세이브 데이터 ---
+        // -> see docs/systems/farm-expansion-architecture.md 섹션 9.2
+        // null 허용: 이전 세이브 호환. null 시 초기 구역(Zone A)만 해금 상태로 초기화
+        public SeedMind.Save.ZoneSaveData farmZones;
     }
 }

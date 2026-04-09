@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace SeedMind.Farm
 {
-    public class FarmGrid : MonoBehaviour
+    public partial class FarmGrid : MonoBehaviour
     {
         public int gridWidth = 8;  // -> see docs/mcp/farming-tasks.md section 1.1
         public int gridHeight = 8; // -> see docs/mcp/farming-tasks.md section 1.1

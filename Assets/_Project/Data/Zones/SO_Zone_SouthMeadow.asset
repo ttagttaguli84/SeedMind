@@ -1,0 +1,247 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 329f8cf2673c05a41b835ee3b622156a, type: 3}
+  m_Name: SO_Zone_SouthMeadow
+  m_EditorClassIdentifier: Assembly-CSharp::SeedMind.Farm.ZoneData
+  zoneId: zone_south_meadow
+  zoneName: "\uB0A8\uCABD \uCD08\uC6D0"
+  sortOrder: 4
+  requiredLevel: 6
+  unlockCost: 4000
+  prerequisiteZoneId: zone_north_plain
+  zoneType: 2
+  tilePositions:
+  - {x: 0, y: -16}
+  - {x: 1, y: -16}
+  - {x: 2, y: -16}
+  - {x: 3, y: -16}
+  - {x: 4, y: -16}
+  - {x: 5, y: -16}
+  - {x: 6, y: -16}
+  - {x: 7, y: -16}
+  - {x: 8, y: -16}
+  - {x: 9, y: -16}
+  - {x: 10, y: -16}
+  - {x: 11, y: -16}
+  - {x: 0, y: -15}
+  - {x: 1, y: -15}
+  - {x: 2, y: -15}
+  - {x: 3, y: -15}
+  - {x: 4, y: -15}
+  - {x: 5, y: -15}
+  - {x: 6, y: -15}
+  - {x: 7, y: -15}
+  - {x: 8, y: -15}
+  - {x: 9, y: -15}
+  - {x: 10, y: -15}
+  - {x: 11, y: -15}
+  - {x: 0, y: -14}
+  - {x: 1, y: -14}
+  - {x: 2, y: -14}
+  - {x: 3, y: -14}
+  - {x: 4, y: -14}
+  - {x: 5, y: -14}
+  - {x: 6, y: -14}
+  - {x: 7, y: -14}
+  - {x: 8, y: -14}
+  - {x: 9, y: -14}
+  - {x: 10, y: -14}
+  - {x: 11, y: -14}
+  - {x: 0, y: -13}
+  - {x: 1, y: -13}
+  - {x: 2, y: -13}
+  - {x: 3, y: -13}
+  - {x: 4, y: -13}
+  - {x: 5, y: -13}
+  - {x: 6, y: -13}
+  - {x: 7, y: -13}
+  - {x: 8, y: -13}
+  - {x: 9, y: -13}
+  - {x: 10, y: -13}
+  - {x: 11, y: -13}
+  - {x: 0, y: -12}
+  - {x: 1, y: -12}
+  - {x: 2, y: -12}
+  - {x: 3, y: -12}
+  - {x: 4, y: -12}
+  - {x: 5, y: -12}
+  - {x: 6, y: -12}
+  - {x: 7, y: -12}
+  - {x: 8, y: -12}
+  - {x: 9, y: -12}
+  - {x: 10, y: -12}
+  - {x: 11, y: -12}
+  - {x: 0, y: -11}
+  - {x: 1, y: -11}
+  - {x: 2, y: -11}
+  - {x: 3, y: -11}
+  - {x: 4, y: -11}
+  - {x: 5, y: -11}
+  - {x: 6, y: -11}
+  - {x: 7, y: -11}
+  - {x: 8, y: -11}
+  - {x: 9, y: -11}
+  - {x: 10, y: -11}
+  - {x: 11, y: -11}
+  - {x: 0, y: -10}
+  - {x: 1, y: -10}
+  - {x: 2, y: -10}
+  - {x: 3, y: -10}
+  - {x: 4, y: -10}
+  - {x: 5, y: -10}
+  - {x: 6, y: -10}
+  - {x: 7, y: -10}
+  - {x: 8, y: -10}
+  - {x: 9, y: -10}
+  - {x: 10, y: -10}
+  - {x: 11, y: -10}
+  - {x: 0, y: -9}
+  - {x: 1, y: -9}
+  - {x: 2, y: -9}
+  - {x: 3, y: -9}
+  - {x: 4, y: -9}
+  - {x: 5, y: -9}
+  - {x: 6, y: -9}
+  - {x: 7, y: -9}
+  - {x: 8, y: -9}
+  - {x: 9, y: -9}
+  - {x: 10, y: -9}
+  - {x: 11, y: -9}
+  obstacleMap:
+  - localPosition: {x: 0, y: 0}
+    type: 0
+    maxHP: 1
+    lootDropIds:
+    - debris_weed
+    obstaclePrefab: {fileID: 0}
+  - localPosition: {x: 2, y: 1}
+    type: 0
+    maxHP: 1
+    lootDropIds:
+    - debris_weed
+    obstaclePrefab: {fileID: 0}
+  - localPosition: {x: 4, y: 2}
+    type: 0
+    maxHP: 1
+    lootDropIds:
+    - debris_weed
+    obstaclePrefab: {fileID: 0}
+  - localPosition: {x: 6, y: 0}
+    type: 0
+    maxHP: 1
+    lootDropIds:
+    - debris_weed
+    obstaclePrefab: {fileID: 0}
+  - localPosition: {x: 8, y: 3}
+    type: 0
+    maxHP: 1
+    lootDropIds:
+    - debris_weed
+    obstaclePrefab: {fileID: 0}
+  - localPosition: {x: 10, y: 1}
+    type: 0
+    maxHP: 1
+    lootDropIds:
+    - debris_weed
+    obstaclePrefab: {fileID: 0}
+  - localPosition: {x: 1, y: 5}
+    type: 0
+    maxHP: 1
+    lootDropIds:
+    - debris_weed
+    obstaclePrefab: {fileID: 0}
+  - localPosition: {x: 5, y: 6}
+    type: 0
+    maxHP: 1
+    lootDropIds:
+    - debris_weed
+    obstaclePrefab: {fileID: 0}
+  - localPosition: {x: 9, y: 5}
+    type: 0
+    maxHP: 1
+    lootDropIds:
+    - debris_weed
+    obstaclePrefab: {fileID: 0}
+  - localPosition: {x: 11, y: 7}
+    type: 0
+    maxHP: 1
+    lootDropIds:
+    - debris_weed
+    obstaclePrefab: {fileID: 0}
+  - localPosition: {x: 1, y: 2}
+    type: 6
+    maxHP: 2
+    lootDropIds:
+    - debris_bush
+    obstaclePrefab: {fileID: 0}
+  - localPosition: {x: 3, y: 4}
+    type: 6
+    maxHP: 2
+    lootDropIds:
+    - debris_bush
+    obstaclePrefab: {fileID: 0}
+  - localPosition: {x: 7, y: 2}
+    type: 6
+    maxHP: 2
+    lootDropIds:
+    - debris_bush
+    obstaclePrefab: {fileID: 0}
+  - localPosition: {x: 9, y: 0}
+    type: 6
+    maxHP: 2
+    lootDropIds:
+    - debris_bush
+    obstaclePrefab: {fileID: 0}
+  - localPosition: {x: 11, y: 4}
+    type: 6
+    maxHP: 2
+    lootDropIds:
+    - debris_bush
+    obstaclePrefab: {fileID: 0}
+  - localPosition: {x: 0, y: 6}
+    type: 6
+    maxHP: 2
+    lootDropIds:
+    - debris_bush
+    obstaclePrefab: {fileID: 0}
+  - localPosition: {x: 4, y: 7}
+    type: 6
+    maxHP: 2
+    lootDropIds:
+    - debris_bush
+    obstaclePrefab: {fileID: 0}
+  - localPosition: {x: 8, y: 6}
+    type: 6
+    maxHP: 2
+    lootDropIds:
+    - debris_bush
+    obstaclePrefab: {fileID: 0}
+  - localPosition: {x: 2, y: 3}
+    type: 1
+    maxHP: 2
+    lootDropIds:
+    - debris_small_rock
+    obstaclePrefab: {fileID: 0}
+  - localPosition: {x: 6, y: 5}
+    type: 1
+    maxHP: 2
+    lootDropIds:
+    - debris_small_rock
+    obstaclePrefab: {fileID: 0}
+  - localPosition: {x: 10, y: 7}
+    type: 1
+    maxHP: 2
+    lootDropIds:
+    - debris_small_rock
+    obstaclePrefab: {fileID: 0}
+  lockedOverlayMaterial: {fileID: 0}
+  unlockVFXPrefab: {fileID: 0}

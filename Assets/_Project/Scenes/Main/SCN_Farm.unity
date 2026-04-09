@@ -5611,6 +5611,37 @@ MonoBehaviour:
   _expSlider: {fileID: 0}
   _levelText: {fileID: 0}
   _expText: {fileID: 0}
+--- !u!1 &409373306
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 409373307}
+  m_Layer: 0
+  m_Name: ObstacleContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &409373307
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 409373306}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1581990258}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &418690915
 GameObject:
   m_ObjectHideFlags: 0
@@ -15772,6 +15803,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1297176513}
   m_CullTransparentMesh: 1
+--- !u!1 &1310075351
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1310075352}
+  - component: {fileID: 1310075353}
+  m_Layer: 0
+  m_Name: FarmZoneManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1310075352
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1310075351}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2036590076}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1310075353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1310075351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e03cdd437efe28c4d8c5e37310b7ed65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SeedMind.Farm.FarmZoneManager
+  _zones:
+  - {fileID: 11400000, guid: dc2fcbb9d9a9d454b9211f5aa1a3df46, type: 2}
+  - {fileID: 11400000, guid: 3fa134c7c4e77b94ab2e1f86b2fbdb82, type: 2}
+  - {fileID: 11400000, guid: a5b26dd5e39bdfa4499e1296226a19bd, type: 2}
+  - {fileID: 11400000, guid: f278086536a7b1449b2ec55e55f13445, type: 2}
+  - {fileID: 11400000, guid: 4ca020a4eed4e0f4e964273571578574, type: 2}
+  - {fileID: 11400000, guid: 9838b572b52b54d43b4ab4e49ec39193, type: 2}
+  - {fileID: 11400000, guid: 7a27f1df8fb31d64f84211e70c93c36a, type: 2}
+  _farmGrid: {fileID: 2122019856}
 --- !u!1 &1326326880
 GameObject:
   m_ObjectHideFlags: 0
@@ -18776,6 +18860,7 @@ Transform:
   - {fileID: 2059395706}
   - {fileID: 1038599939}
   - {fileID: 1062646070}
+  - {fileID: 409373307}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1586625517
@@ -23029,6 +23114,7 @@ Transform:
   - {fileID: 1821823086}
   - {fileID: 1697168981}
   - {fileID: 1023847468}
+  - {fileID: 1310075352}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2050018761
