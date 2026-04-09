@@ -45,7 +45,7 @@ author: Claude Code (Opus 4.6)
 | 경제 수치 (초기 골드, 마진 비율) | `docs/systems/economy-system.md` 섹션 1~2 |
 | 가공 공식, 가공소 해금 | `docs/systems/economy-system.md` 섹션 2.5, `docs/content/processing-system.md` |
 | 레벨/해금 시스템, XP 테이블 | `docs/design.md` 섹션 4.5, `docs/balance/progression-curve.md` |
-| 에너지 시스템 | `docs/systems/farming-system.md` 섹션 3.2 |
+| 에너지 시스템 | `docs/systems/energy-system.md` 섹션 1, 2.3 |
 | 도구 업그레이드 등급 체계 (Basic/Reinforced/Legendary) | `docs/systems/tool-upgrade.md` 섹션 1 |
 | 낚싯대 업그레이드 재료 (구리 광석, 금 광석) | `docs/systems/fishing-system.md` 섹션 1.1 |
 | 여행 상인 등장 조건, 판매 풀 | `docs/content/npcs.md` 섹션 6 |
@@ -82,11 +82,11 @@ author: Claude Code (Opus 4.6)
     |   품질 보정: 없음
     |
     └─ [채집 낫 장착] E키 → 빠른 수집 애니메이션 (0.5초) → 아이템 획득
-        에너지 소모: 1
+        에너지 소모: 1 (→ see `docs/systems/energy-system.md` 섹션 2.3)
         품질 보정: 도구 등급에 따라 (섹션 5 참조)
 ```
 
-**설계 의도**: 맨손으로도 채집이 가능하여 진입 장벽을 낮춘다. 도구를 사용하면 속도가 빨라지고 품질 보정이 붙어, 도구 투자에 대한 보상이 존재한다. 에너지 소모가 극히 낮아(0~1) "빈 시간에 가볍게 돌아보는" 활동으로 포지셔닝한다.
+**설계 의도**: 맨손으로도 채집이 가능하여 진입 장벽을 낮춘다. 도구를 사용하면 속도가 빨라지고 품질 보정이 붙어, 도구 투자에 대한 보상이 존재한다. 에너지 소모가 극히 낮아(→ see `docs/systems/energy-system.md` 섹션 2.3) "빈 시간에 가볍게 돌아보는" 활동으로 포지셔닝한다.
 
 ---
 
@@ -686,7 +686,7 @@ fishing-system.md의 [OPEN] 항목(광석 획득 경로)을 해소하기 위해,
 | 비 다음 날 버섯 리스폰 확률 | `rainMushroomRespawnChance` | 1.00 | 0.80~1.00 | 날씨-채집 연동 강도 |
 | 맨손 채집 소요 시간 | `bareHandGatherTime` | 1.0초 | 0.5~2.0 | 맨손 채집 편의성 |
 | 도구 채집 소요 시간 | `toolGatherTime` | 0.5초 | 0.3~1.0 | 도구 투자 가치 |
-| 도구 채집 에너지 | `toolGatherEnergy` | 1 | 0~2 | 도구 사용 비용 |
+| 도구 채집 에너지 | `toolGatherEnergy` | (→ see `docs/systems/energy-system.md` 섹션 2.3) | 0~2 | 도구 사용 비용 |
 | 더블 드롭 확률 (Lv.4) | `doubleDropLv4` | 0.05 | 0.03~0.10 | 중반 보상 |
 | 더블 드롭 확률 (Lv.8) | `doubleDropLv8` | 0.10 | 0.05~0.15 | 후반 보상 |
 | 숙련도 최대 레벨 | `gatheringMasteryMaxLv` | 10 | - | 채집 숙련도 상한 |

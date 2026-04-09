@@ -104,13 +104,10 @@ author: Claude Code (Opus 4.6)
 
 ### 2.3 에너지 소모
 
-| 행동 | 에너지 소모 | 비고 |
-|------|-----------|------|
-| 캐스팅 (찌 던지기) | 3 | 성공/실패 불문 소모 (BAL-024 확정) |
-| 미니게임 실패 | +1 (추가) | 캐스팅 3 + 실패 1 = 총 4 |
-| 미니게임 성공 | +0 | 캐스팅 3만 소모 |
+낚시 에너지 소모 수치(캐스팅, 미니게임 실패 추가 소모, 숙련도 Lv.8+ 감소)는 canonical 문서를 참조한다.
+→ see `docs/systems/energy-system.md` 섹션 2.2
 
-**설계 의도**: 낚시 1회 시도에 에너지 3~4 소모. 하루 최대 에너지 100 기준(-> see `docs/systems/farming-system.md` 섹션 3.2), 농작업에 에너지 40~50을 쓴다고 가정하면 낚시에 16~20회 시도 가능. 이는 "보조 활동"으로서의 포지셔닝에 적합하다. (BAL-024: 낚시+채집 vs 작물+가공 비율 65% 이하 달성 목적으로 에너지 상향 확정 → see `docs/balance/fishing-gathering-ratio.md`)
+**설계 의도**: 낚시 1회 시도에 에너지 3~4 소모. 하루 최대 에너지 기준(→ see `docs/systems/energy-system.md` 섹션 1.1), 농작업에 에너지 40~50을 쓴다고 가정하면 낚시에 16~20회 시도 가능. 이는 "보조 활동"으로서의 포지셔닝에 적합하다. (BAL-024: 낚시+채집 vs 작물+가공 비율 65% 이하 달성 목적으로 에너지 상향 확정 → see `docs/balance/fishing-gathering-ratio.md`)
 
 ### 2.4 낚시 소요 시간
 
@@ -565,8 +562,7 @@ Giant 변이가 가능한 어종: 잉어, 산천어, 황금 잉어, 무지개송
 
 | 파라미터 | 영문 키 | 기본값 | 설명 |
 |----------|---------|--------|------|
-| 캐스팅 에너지 | `castEnergy` | 3 | 낚시 1회 캐스팅 에너지 소모 (BAL-024 확정) |
-| 실패 추가 에너지 | `failExtraEnergy` | 1 | 미니게임 실패 시 추가 에너지 |
+| 캐스팅 에너지 / 실패 추가 에너지 | `castEnergy` / `failExtraEnergy` | (→ see `docs/systems/energy-system.md` 섹션 2.2, 7) | 낚시 에너지 소모 파라미터 |
 | 바이트 대기 최소 | `biteWaitMin` | 3초 | 최소 대기 시간 (실시간) |
 | 바이트 대기 최대 | `biteWaitMax` | 15초 | 최대 대기 시간 (실시간) |
 | 바이트 윈도우 | `biteWindow` | 0.5~1.5초 | 바이트 반응 허용 시간 |
@@ -588,7 +584,7 @@ Giant 변이가 가능한 어종: 잉어, 산천어, 황금 잉어, 무지개송
 | `docs/systems/farm-expansion.md` 섹션 1.3, 2.1, 4.3 | Zone F 정의, 해금 조건, 연못 구역 상세 |
 | `docs/systems/time-season.md` 섹션 1.2, 2.2, 3.1~3.2 | 시간대 정의, 겨울 고유 메커닉(얼음 낚시 허용), 날씨 종류/확률 |
 | `docs/systems/economy-system.md` 섹션 1~2, 2.6.2.1, 7.3 | 경제 수치, 판매가 공식, Fish 수급 카테고리 파라미터 |
-| `docs/systems/farming-system.md` 섹션 3.2 | 에너지 시스템 |
+| `docs/systems/energy-system.md` 섹션 1, 2.2 | 에너지 시스템 (최대 에너지, 낚시 에너지 소모) |
 | `docs/systems/crop-growth.md` 섹션 5.1, 6 | Giant 변이 참조, 품질 시스템 |
 | `docs/systems/tool-upgrade.md` | 도구 업그레이드 3단계 구조 참조 |
 | `docs/content/processing-system.md` | 가공소 해금, 기존 레시피 구조 |

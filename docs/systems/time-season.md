@@ -47,7 +47,7 @@
 | 아침 (Morning) | NPC 등장 시작, 상점 오픈(08:00). 물주기/농작업 최적 시간대 |
 | 낮 (Afternoon) | 모든 NPC 활동, 모든 상점 운영. 에너지 소모 기본값 |
 | 저녁 (Evening) | 일부 상점 마감(18:00). TV/게시판에서 내일 날씨 예보 확인 가능(18:00~) |
-| 밤 (Night) | 대부분 상점 마감. 에너지 소모 +20% 가중. 시야 범위 축소(화면 가장자리 어둡게). 20:00 이후 피로 경고 |
+| 밤 (Night) | 대부분 상점 마감. 에너지 소모 가중 적용 (→ see `docs/systems/energy-system.md` 섹션 4). 시야 범위 축소(화면 가장자리 어둡게). 20:00 이후 피로 경고 |
 
 ### 1.4 시간 경과 메커니즘
 
@@ -79,9 +79,12 @@
 5. 다음 날 06:00에 집 내부에서 시작
 6. 수면 시각에 따른 보너스:
 
+수면 시각별 에너지 회복량 및 보너스 상세는 canonical 문서를 참조한다.
+→ see `docs/systems/energy-system.md` 섹션 5.1
+
 | 수면 시각 | 에너지 회복 | 보너스 |
 |-----------|------------|--------|
-| 20:00 이전 | 100% + 잔여 에너지의 10% 추가 (최대 110) | "숙면" 상태: 다음 날 오전 에너지 소모 -10% |
+| 20:00 이전 | (→ energy-system.md §5.1) | "숙면" 상태: 다음 날 오전 에너지 소모 -10% |
 | 20:00~22:00 | 100% | 없음 (기본) |
 | 22:00~24:00 | 100% | 없음 |
 | 24:00 (기절) | 50% | 골드 페널티 |
@@ -299,15 +302,8 @@
 
 #### 에너지 소모 영향
 
-| 날씨 | 도구 사용 에너지 배수 |
-|------|---------------------|
-| Clear | x1.0 |
-| Cloudy | x1.0 |
-| Rain | x1.0 |
-| HeavyRain | x1.1 |
-| Storm | x1.25 |
-| Snow | x1.1 |
-| Blizzard | x1.3 |
+날씨별 도구 사용 에너지 배수 수치는 canonical 문서를 참조한다.
+→ see `docs/systems/energy-system.md` 섹션 3
 
 #### NPC 행동 영향
 
@@ -430,8 +426,7 @@
 | 하루 시작 시각 | `dayStartHour` | 6 | 하루 시작 시각 (24시간제) |
 | 하루 종료 시각 | `dayEndHour` | 24 | 하루 종료 시각 |
 | 시간 가속 배율 | `sleepTimeScale` | 50.0 | 수면 시 시간 가속 배율 |
-| 밤 에너지 가중 | `nightEnergyMultiplier` | 1.2 | 20:00 이후 에너지 소모 배수 |
-| 기절 에너지 회복률 | `passOutEnergyRecovery` | 0.5 | 기절 시 에너지 회복 비율 (50%) |
+| 밤 에너지 가중 / 기절 에너지 회복률 | `nightEnergyMultiplier` / `passOutEnergyRecovery` | (→ see `docs/systems/energy-system.md` 섹션 4, 7) | 에너지 관련 파라미터 |
 | 기절 골드 페널티 비율 | `passOutGoldPenaltyRate` | 0.05 | 기절 시 골드 손실 비율 (5%) |
 | 기절 골드 페널티 최대 | `passOutGoldPenaltyMax` | 500 | 기절 시 최대 골드 손실 |
 | 피로 경고 시각 | `fatigueWarningHour` | 20 | 피로 경고 표시 시작 시각 |
@@ -458,10 +453,7 @@
 | Storm 이동속도 배수 | `stormSpeedMult` | 0.75 | 폭풍 시 이동속도 |
 | Snow 이동속도 배수 | `snowSpeedMult` | 0.9 | 눈 시 이동속도 |
 | Blizzard 이동속도 배수 | `blizzardSpeedMult` | 0.7 | 폭설 시 이동속도 |
-| HeavyRain 에너지 배수 | `heavyRainEnergyMult` | 1.1 | 폭우 시 에너지 소모 |
-| Storm 에너지 배수 | `stormEnergyMult` | 1.25 | 폭풍 시 에너지 소모 |
-| Snow 에너지 배수 | `snowEnergyMult` | 1.1 | 눈 시 에너지 소모 |
-| Blizzard 에너지 배수 | `blizzardEnergyMult` | 1.3 | 폭설 시 에너지 소모 |
+| 날씨별 에너지 배수 | `heavyRainEnergyMult` / `stormEnergyMult` / `snowEnergyMult` / `blizzardEnergyMult` | (→ see `docs/systems/energy-system.md` 섹션 3, 7) | 날씨별 에너지 소모 배수 파라미터 |
 
 ### 5.4 축제 파라미터
 
@@ -544,7 +536,7 @@
 | `docs/architecture.md` 섹션 4.3 | TimeManager 구조 (currentDay, currentSeason, 이벤트) |
 | `docs/systems/farming-system.md` 섹션 8 | 날씨 연동 기초 (farming-system.md의 날씨 확률은 초기 개요, 이 문서 섹션 3.2가 canonical) |
 | `docs/systems/farming-system.md` 섹션 9 | 계절 전환 규칙, 작물 고사 조건 |
-| `docs/systems/farming-system.md` 섹션 3.2 | 에너지 시스템 (maxEnergy, 회복 규칙) |
+| `docs/systems/energy-system.md` 섹션 1, 3, 4, 5 | 에너지 시스템 canonical (maxEnergy, 날씨/시간대 배수, 회복 규칙) |
 | `docs/systems/crop-growth.md` 섹션 2.4 | 계절 성장 보정 (seasonMultiplier) |
 | `docs/systems/crop-growth.md` 섹션 3 | 계절별 재배 제한, 계절 전환 미수확 처리 |
 | `docs/content/npcs.md` | NPC 스케줄, 상점 운영 (작성 예정, CON-003) |

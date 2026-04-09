@@ -119,10 +119,8 @@
 
 ### 3.2 에너지 시스템
 
-- **최대 에너지**: 100 (기본)
-- **회복**: 수면 시 전량 회복, 음식 섭취로 부분 회복
-- **에너지 0**: 도구 사용 불가, 이동 속도 50% 감소
-- **에너지 경고**: 20 이하일 때 UI 경고 표시
+에너지 시스템 전체 규칙(최대 에너지, 도구별 소모량, 회복 방식, 고갈 패널티, 경고 임계값)은 canonical 문서를 참조한다.
+→ see `docs/systems/energy-system.md` 섹션 1, 2.1, 5, 6
 
 ### 3.3 도구별 상세
 
@@ -410,10 +408,7 @@
 | `tilledDecayDays` | 3 | Tilled → Empty 복귀 일수 |
 | `waterEvaporationHour` | 6 | 물 증발 시각 (06:00) |
 | `witherThresholdDays` | 3 | 연속 건조 → 고사 일수 |
-| `maxEnergy` | 100 | 최대 에너지 |
-| `hoeEnergy` | 2 | 호미 에너지 소모 |
-| `waterEnergy` | 1 | 물뿌리개 에너지 소모 |
-| `sickleEnergy` | 1 | 낫 에너지 소모 |
+| `maxEnergy` / `hoeEnergy` / `waterEnergy` / `sickleEnergy` | (→ see `docs/systems/energy-system.md` 섹션 1.1, 2.1) | 에너지 관련 파라미터 |
 | `baseWateringCapacity` | 20 | 기본 물뿌리개 용량 |
 | `stormDamageChance` | 0.10 | 폭풍 피해 확률 |
 | `monocropThreshold` | 3 | 연작 피해 트리거 횟수 |
