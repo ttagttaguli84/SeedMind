@@ -1,7 +1,7 @@
 # 작물 성장 시스템 기술 아키텍처
 
 > 작물의 런타임 생명주기, 성장 공식, 품질 결정, 다중 수확, 거대 작물을 포함하는 기술 설계  
-> 작성: Claude Code (Opus) | 2026-04-06
+> 작성: Claude Code (Opus) | 2026-04-06 | 문서 ID: ARC-005
 
 ---
 
@@ -45,22 +45,22 @@
     │  - currentGrowthDays: float                          │
     │  - totalGrowthDays: int  (= cropData.growthDays)     │
     │  - currentStage: int                                 │
-    │  - quality: Quality (수확 시 결정)                     │
+    │  - quality: Quality (수확 시 결정, 비직렬화)            │
     │  - isWatered: bool                                   │
     │  - dryDayCount: int                                  │
-    │  - fertilizerType: FertilizerData (nullable)         │
+    │  - fertilizer: FertilizerData (nullable)             │
     │  - plantedSeason: SeasonFlag                         │
-    │  - wateredDayRatio: float (물 준 날 / 총 경과 일)     │
+    │  - wateredDayCount: int (물 준 총 일수)               │
     │  - totalElapsedDays: int                             │
     │  - isGiantPart: bool                                 │
-    │  - giantCropRef: GiantCropInstance (nullable)        │
+    │  - giantCropRef: GiantCropInstance (nullable, 비직렬화)│
     │──────────────────────────────────────────────────────│
-    │  + Grow(float amount): GrowthResult                  │
-    │  + GetCurrentStage(): int                            │
-    │  + CheckHarvestable(): bool                          │
+    │  + Grow(fertMul, soilMul, seasonBonus): GrowthResult │
     │  + DetermineQuality(float soilQuality): Quality      │
+    │  + CalculateYield(): int                             │
     │  + MarkWatered() / ResetWatered()                    │
     │  + IncrementDryDay(): bool (true = withered)         │
+    │  + TrackDay(): void                                  │
     │  + ResetForReharvest()                               │
     └──────────────┬───────────────────────────────────────┘
                    │ ref
@@ -824,24 +824,21 @@ Step A-3: GrowthResult enum 파일 생성
 
 Step A-4: CropData SO 에셋 생성 (기존 3종 업데이트 + 신규 5종)
           → Assets/_Project/Data/Crops/ 폴더
-          → SO_Crop_Potato: growthDays=3, sellPrice=30, seedPrice=15,
-            allowedSeasons=Spring, isReharvestable=false
-          → SO_Crop_Carrot: growthDays=3, sellPrice=35, seedPrice=15,
-            allowedSeasons=Spring, isReharvestable=false
-          → SO_Crop_Tomato: growthDays=5, sellPrice=60, seedPrice=25,
-            allowedSeasons=Summer, isReharvestable=true, reharvestDays=3
-          → SO_Crop_Corn: growthDays=7, sellPrice=100, seedPrice=30,
-            allowedSeasons=Summer, isReharvestable=false
-          → SO_Crop_Strawberry: growthDays=5, sellPrice=80, seedPrice=40,
-            allowedSeasons=Spring, isReharvestable=true, reharvestDays=2
-          → SO_Crop_Pumpkin: growthDays=10, sellPrice=200, seedPrice=80,
-            allowedSeasons=Autumn, isReharvestable=false,
-            giantCropChance=0.01
-          → SO_Crop_Sunflower: growthDays=8, sellPrice=150, seedPrice=60,
-            allowedSeasons=Summer, isReharvestable=false
-          → SO_Crop_Watermelon: growthDays=12, sellPrice=350, seedPrice=120,
-            allowedSeasons=Summer, isReharvestable=false,
-            giantCropChance=0.01
+          수치(growthDays, sellPrice, seedPrice, allowedSeasons, reharvestDays, giantCropChance)는
+          canonical 문서 참조 — 직접 기재 금지 (PATTERN-006):
+          (-> see docs/design.md 섹션 4.2, docs/systems/crop-growth.md 섹션 3.1, 4.1, 4.2, 5.1)
+          → SO_Crop_Potato: allowedSeasons=Spring, isReharvestable=false
+          → SO_Crop_Carrot: allowedSeasons=Spring+Autumn, isReharvestable=false
+          → SO_Crop_Tomato: allowedSeasons=Summer, isReharvestable=false
+            (단일 수확 확정 — crop-growth.md 섹션 4.1, 섹션 7.1 [OPEN] 해소 전까지 false 유지)
+          → SO_Crop_Corn: allowedSeasons=Summer, isReharvestable=false
+          → SO_Crop_Strawberry: allowedSeasons=Spring, isReharvestable=true
+            (reharvestDays=3 — see crop-growth.md 섹션 4.2)
+          → SO_Crop_Pumpkin: allowedSeasons=Autumn, isReharvestable=false
+            (giantCropChance → see crop-growth.md 섹션 5.1)
+          → SO_Crop_Sunflower: allowedSeasons=Summer, isReharvestable=false
+          → SO_Crop_Watermelon: allowedSeasons=Summer, isReharvestable=false
+            (giantCropChance → see crop-growth.md 섹션 5.1)
 
 Step A-5: 각 SO 에셋의 필드값 검증
           → Play Mode 진입
