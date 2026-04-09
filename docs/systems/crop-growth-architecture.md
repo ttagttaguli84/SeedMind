@@ -468,7 +468,7 @@ effectiveGrowth = baseGrowth * fertilizerMultiplier * soilMultiplier * seasonBon
 | baseGrowth | 1.0 (고정) | 물을 준 날 기본 1일 성장 |
 | fertilizerMultiplier | 1.0 ~ 1.5 | 비료 종류에 따른 배수 (-> farming-system.md 5.1) |
 | soilMultiplier | 0.9 ~ 1.2 | 토양 품질 단계에 따른 배수 (Poor=0.9, Normal=1.0, Fertile=1.1, Rich=1.2) (-> farming-system.md 6절, canonical) |
-| seasonBonus | 1.0 ~ 1.1 | 계절 적합도. 재배 가능 계절=1.0, 주 계절=1.1 |
+| seasonBonus | (→ see crop-growth.md 섹션 2.4) | 계절 적합도 배수. 주 계절/부 계절/여름 추가/온실 비계절 페널티 등 포함 |
 
 **비료 배수 상세** (-> see farming-system.md 5.1):
 
@@ -480,13 +480,16 @@ effectiveGrowth = baseGrowth * fertilizerMultiplier * soilMultiplier * seasonBon
 | 고급 비료 (Quality) | 1.0 (속도 영향 없음, 품질 보너스) |
 | 유기 비료 (Organic) | 1.0 (토양 품질 자체를 영구 상승) |
 
-**계절 보너스 상세**:
+**계절 보너스 상세** (→ see `docs/systems/crop-growth.md` 섹션 2.4 canonical):
 
 | 조건 | seasonBonus |
 |------|-------------|
-| 재배 가능 계절 (기본) | 1.0 |
-| 여름 + 과일류 작물 | 1.2 (-> design.md 4.3 여름 성장 속도 보너스) |
-| 온실 내 겨울 재배 | 0.8 (겨울 페널티) |
+| 주 계절 (첫 번째 계절) | x1.1 |
+| 부 계절 (두 번째 계절, 해당 시) | x1.0 |
+| 여름 (재배 가능 모든 작물 공통 추가) | ×1.05 추가 적용 |
+| 온실 내 — 해당 계절 작물 | x1.0 (계절 보정 무시) |
+| 온실 내 — 비계절 작물 | x0.85 (성장 페널티) |
+| 온실 내 — 겨울 전용 작물 | x1.0 (패널티 없음) |
 | 재배 불가 계절 (야외) | 성장 안 함 → 고사 처리 |
 
 **참고 [BAL-010]**: 온실 비계절 작물의 성장 속도 페널티 외에 판매가 보정도 적용될 수 있다 (-> see `docs/systems/economy-architecture.md` 섹션 3.7, `docs/systems/economy-system.md` 섹션 2.6.5).

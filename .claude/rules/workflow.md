@@ -1,10 +1,10 @@
 # Workflow Rules
 
 ## Document-Only Policy (Phase 1 only)
-- While in Phase 1: no code files (.cs, .json, .unity) are written
-- All work produces markdown documents in `docs/`
-- Code snippets in docs are illustrative, not executable
-- This policy is lifted automatically when Phase 2 begins
+~~- While in Phase 1: no code files (.cs, .json, .unity) are written~~
+~~- All work produces markdown documents in `docs/`~~
+~~- Code snippets in docs are illustrative, not executable~~
+**LIFTED — Phase 2 started (2026-04-09). Code files (.cs, .unity, .json) are now allowed. MCP for Unity task execution begins from `docs/mcp/scene-setup-tasks.md`.**
 
 ## Agent Collaboration
 
@@ -27,7 +27,7 @@ Agent selection is determined by task type (see `start.md` Phase 2/3 for full cr
 
 The reviewer must check items below when reviewing documents.
 Scope varies by task type — see `start.md` Phase 3 for the per-task-type checklist range.
-For DES-*/ARC-* tasks, all 14 items are required.
+For DES-*/ARC-* tasks, all 15 items are required.
 
 1. [ ] Do all figures (prices, growth days, probabilities, thresholds) have a canonical source reference?
 2. [ ] Does the architecture document avoid independently copying figures from the design document?
@@ -43,6 +43,7 @@ For DES-*/ARC-* tasks, all 14 items are required.
 12. [ ] (PATTERN-008) When a recipe list (ingredients/outputs/prices) is recorded directly in a processing facility section of a facilities document (facilities.md, etc.), has it been replaced with a reference to the canonical document (processing-system.md)? — The only things a facility document is allowed to record are structural parameters such as slot count, fuel type, and processing speed multiplier.
 13. [ ] (PATTERN-BAL-COST) In economy/balance documents, are fuel cost and material cost fully deducted when computing processing ROI and profit? — Calculating only "processed item price - raw material direct sale price" while omitting fuel cost is considered a miscalculation. Bakery/fermentation recipes must always include fuel cost when computing net profit.
 14. [ ] (PATTERN-010) When an architecture document records unconfirmed values or IDs as placeholders, are they explicitly marked with the `[OPEN]` tag, and are design-unconfirmed values not recorded as if they were canonical values?
+15. [ ] (PATTERN-011) Do all asset names and SO IDs recorded in the MCP task document (item IDs, facility names, crop IDs, etc.) match the exact English IDs in the canonical content documents? — Asset names invented without looking up the canonical document (e.g. `docs/content/decoration-items.md`, `docs/content/facilities.md`) are not allowed. Verify by opening the canonical document and confirming the ID exists verbatim.
 
 ## Operational Rules (Human)
 
