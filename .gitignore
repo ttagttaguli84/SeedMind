@@ -23,8 +23,8 @@
 Assets/AssetStoreTools*
 
 # MCP for Unity logs
-Assets/UnityMCP/Log/*.log
-Assets/UnityMCP/Log/*.log.meta
+Assets/UnityMCP/Log/
+Assets/UnityMCP/Log.meta
 Assets/Plugins/Editor/JetBrains*
 
 # Unity YAML merge tool
