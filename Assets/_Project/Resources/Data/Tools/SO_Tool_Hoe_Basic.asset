@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4c9d7c55f67e3a44961ae4a8e693b0a, type: 3}
+  m_Name: SO_Tool_Hoe_Basic
+  m_EditorClassIdentifier: Assembly-CSharp::SeedMind.Player.Data.ToolData
+  dataId: hoe_basic
+  displayName: "\uD638\uBBF8"
+  icon: {fileID: 0}
+  toolType: 0
+  tier: 1
+  range: 1
+  energyCost: 2
+  cooldown: 0.6
+  useSpeed: 1
+  nextTier: {fileID: 11400000, guid: 75477acb2edeabe439cfb15d519c838e, type: 2}
+  upgradeGoldCost: 800
+  upgradeTimeDays: 1
+  requiredLevel: 3
+  levelReqType: 0
+  upgradeMaterials:
+  - materialId: iron_scrap
+    quantity: 3
+  specialEffect: 0
+  description: "\uAE30\uBCF8 \uD638\uBBF8. \uB545\uC744 \uAC08\uC544 \uACBD\uC791\uC9C0\uB97C
+    \uB9CC\uB4E0\uB2E4."
