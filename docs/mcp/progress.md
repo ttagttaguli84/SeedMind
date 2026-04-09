@@ -1,6 +1,6 @@
 # SeedMind — MCP 태스크 실행 진행 상황
 
-> 최종 업데이트: 2026-04-10 (tutorial-tasks.md T-1~T-5 완료)
+> 최종 업데이트: 2026-04-10 (ui-tasks.md T-1~T-5 완료)
 > **갱신 규칙**: 각 MCP 태스크 파일 실행 완료 직후 해당 항목을 ✅로 바꾸고 커밋. 세션 종료와 무관하게 완료 즉시 갱신한다.
 > 새 세션 시작 시 `/start`가 이 파일을 읽어 진행 위치를 복원한다.
 
@@ -60,7 +60,7 @@
 
 | 파일 | 완료 여부 | 비고 |
 |------|----------|------|
-| `ui-tasks.md` (ARC-022) | ⬜ 미시작 | |
+| `ui-tasks.md` (ARC-022) | 🔄 진행 중 | T-1~T-5 완료. T-6(알림 시스템), T-7(Screen 등록), T-8(통합 테스트) 미완료. execute_code 비활성으로 T-8 스킵 예정. |
 | `sound-tasks.md` (ARC-027) | ⬜ 미시작 | |
 
 ---
@@ -96,6 +96,7 @@
 - processing-tasks.md: ProcessingRecipeData에 inputItemId/inputQuantity/outputQuantity/fuelCost/requiredFacilityTier 필드 추가 필요했음(기존 스크립트 미포함). Recipe SO는 Resources/Data/Recipes/ 하위에 생성 — DataRegistry가 Resources.LoadAll<GameDataSO>("Data")로 자동 스캔하므로 P-6 별도 수정 불필요. create_script validator 오탐(Make 메서드 10파라미터 중복 감지) → Write 툴로 우회. CropCategory에 None 없음 — Vegetable(=0) 또는 Fruit로 대체. ProcessingUI 프리팹 SerializeField 연결은 CreateProcessingUIPrefabs Editor 스크립트로 일괄 처리.
 - scene-setup-tasks.md: Canvas_Overlay는 비활성(SetActive=false) 상태이므로 find_gameobjects에서 검색 안 됨 — include_inactive=true 필요.
 - Build Settings: SCN_Loading(0), SCN_MainMenu(1), SCN_Farm(2) 이미 등록 완료.
+- ui-tasks.md: create_script는 batch 미지원 → Write 툴로 개별 파일 직접 생성. ScreenBase.cs가 stub으로 이미 존재(blacksmith-tasks) → 완전 구현으로 덮어씀(Show/Hide 하위 호환 유지). TooltipUI.cs도 기존 구현 유지(InventoryUI 연동 포함). Canvas_Overlay 내부 비활성 UI 이동 시 먼저 SetActive=true로 활성화 후 parent 변경. Canvas_HUD/Popup/Tutorial은 --- UI --- 하위에 기존 오브젝트 있어 새 생성 불필요(Sort Order 업데이트만). CanvasScaler uiScaleMode=1(Scale With Screen Size), referenceResolution=1920×1080 설정.
 - tutorial-tasks.md: TutorialEvents에 `event` 키워드 사용 시 외부 클래스에서 `?.Invoke()` 불가(CS0070) — FarmEvents 패턴과 동일하게 `public static Action` (이벤트 키워드 없음)으로 작성. TutorialManager/ContextHintSystem에서 TutorialUI 타입 참조 시 `using SeedMind.UI;` 필요(동일 네임스페이스 아닌 경우). _highlightMask(RectTransform)는 비활성 부모 하위라 instanceID set_property 불가 — 에디터에서 수동 연결 필요. SO 배열(_allSequences, _allHints)은 ConnectTutorialManagerArrays Editor 스크립트로 일괄 연결.
 - achievement-tasks.md: create_script validator 오탐(SubscribeAll/CheckCompletion 0~1파라미터 중복 감지) → Write 툴로 우회 후 manage_asset import. AchievementItemUI 프리팹은 SerializedObject 패턴 Editor 스크립트로 일괄 생성. AchievementManager _allAchievements 배열도 Editor 스크립트(FindAssets+sortOrder)로 일괄 연결. SO 에셋은 T-2-ALT(CreateAchievementAssets) 36개 일괄 생성. Canvas_Overlay 하위 오브젝트는 비활성 상태라 by_name 검색 안 됨 — instanceID 사용 필요.
 
