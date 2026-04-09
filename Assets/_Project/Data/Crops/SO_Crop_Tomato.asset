@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8474446aedde84c4fb25a49a678fabd7, type: 3}
+  m_Name: SO_Crop_Tomato
+  m_EditorClassIdentifier: Assembly-CSharp::SeedMind.Farm.Data.CropData
+  cropName: "\uD1A0\uB9C8\uD1A0"
+  cropId: tomato
+  seedPrice: 25
+  sellPrice: 60
+  growthDays: 5
+  allowedSeasons: 2
+  unlockLevel: 2
+  growthStagePrefabs:
+  - {fileID: 5708076226494515453, guid: 146cb0abb0a5ceb4fb2e133f8f4886b9, type: 3}
+  - {fileID: 7277780750994302831, guid: f4eff808e95275d4bb6ffe1981f4292a, type: 3}
+  - {fileID: 6386289263170653782, guid: 6b56d7325db8ec24db2789e499e63378, type: 3}
+  - {fileID: 863550631352968203, guid: ae175ac28fc2d0949925966bfc128720, type: 3}

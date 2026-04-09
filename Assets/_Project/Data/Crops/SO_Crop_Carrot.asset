@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8474446aedde84c4fb25a49a678fabd7, type: 3}
+  m_Name: SO_Crop_Carrot
+  m_EditorClassIdentifier: Assembly-CSharp::SeedMind.Farm.Data.CropData
+  cropName: "\uB2F9\uADFC"
+  cropId: carrot
+  seedPrice: 15
+  sellPrice: 35
+  growthDays: 3
+  allowedSeasons: 5
+  unlockLevel: 0
+  growthStagePrefabs:
+  - {fileID: 1502255372073817403, guid: 9f106287b0638574180c2730986a97d8, type: 3}
+  - {fileID: 4702873731898784606, guid: 47cc8ab1784465448b9b2a29d76fa4c2, type: 3}
+  - {fileID: 254717512509771221, guid: f7c24867f3249724bb105ebf01d47021, type: 3}
+  - {fileID: 5881130462661586906, guid: f31099f977afa884ab67eaaf978a7bc2, type: 3}
