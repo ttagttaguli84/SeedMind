@@ -18,5 +18,9 @@ namespace SeedMind.Save.Data
         // --- 퀘스트 세이브 데이터 ---
         // -> see docs/systems/quest-architecture.md 섹션 8.4
         public SeedMind.Quest.QuestSaveData quest;
+
+        // --- 업적 세이브 데이터 ---
+        // -> see docs/systems/achievement-architecture.md 섹션 7.3
+        public SeedMind.Achievement.AchievementSaveData achievements;
     }
 }

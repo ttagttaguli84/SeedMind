@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 177b293abdda4734d84daea9c46d84f3, type: 3}
+  m_Name: SO_Ach_Farming04
+  m_EditorClassIdentifier: Assembly-CSharp::SeedMind.Achievement.Data.AchievementData
+  achievementId: ach_farming_04
+  displayName: "\uC791\uBB3C \uB3C4\uAC10 \uC644\uC131"
+  description: "\uAC8C\uC784 \uB0B4 \uBAA8\uB4E0 \uC791\uBB3C \uC885\uB958\uB97C
+    1\uAC1C \uC774\uC0C1 \uC218\uD655\uD558\uC138\uC694."
+  category: 0
+  type: 0
+  conditionType: 6
+  targetId: 
+  targetValue: 11
+  tiers: []
+  rewardType: 3
+  rewardAmount: 1
+  rewardItemId: item_golden_seed
+  rewardTitleId: title_crop_doctor
+  isHidden: 0
+  icon: {fileID: 0}
+  sortOrder: 4

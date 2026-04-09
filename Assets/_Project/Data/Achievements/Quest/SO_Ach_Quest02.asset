@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 177b293abdda4734d84daea9c46d84f3, type: 3}
+  m_Name: SO_Ach_Quest02
+  m_EditorClassIdentifier: Assembly-CSharp::SeedMind.Achievement.Data.AchievementData
+  achievementId: ach_quest_02
+  displayName: "\uD018\uC2A4\uD2B8 \uC218\uC9D1\uAC00"
+  description: "\uB204\uC801 \uD018\uC2A4\uD2B8 \uC644\uB8CC \uC218\uB97C \uC313\uC73C\uC138\uC694."
+  category: 5
+  type: 1
+  conditionType: 0
+  targetId: 
+  targetValue: 0
+  tiers:
+  - tierName: Bronze
+    conditionType: 5
+    targetId: 
+    targetValue: 10
+    rewardType: 1
+    rewardAmount: 50
+    rewardItemId: 
+    rewardTitleId: 
+  - tierName: Silver
+    conditionType: 5
+    targetId: 
+    targetValue: 30
+    rewardType: 1
+    rewardAmount: 150
+    rewardItemId: 
+    rewardTitleId: title_quest_hunter
+  - tierName: Gold
+    conditionType: 5
+    targetId: 
+    targetValue: 100
+    rewardType: 3
+    rewardAmount: 1
+    rewardItemId: item_hero_badge
+    rewardTitleId: title_quest_hero
+  rewardType: 0
+  rewardAmount: 0
+  rewardItemId: 
+  rewardTitleId: 
+  isHidden: 0
+  icon: {fileID: 0}
+  sortOrder: 22

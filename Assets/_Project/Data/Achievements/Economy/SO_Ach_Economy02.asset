@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 177b293abdda4734d84daea9c46d84f3, type: 3}
+  m_Name: SO_Ach_Economy02
+  m_EditorClassIdentifier: Assembly-CSharp::SeedMind.Achievement.Data.AchievementData
+  achievementId: ach_economy_02
+  displayName: "\uBD80\uC758 \uCD95\uC801"
+  description: "\uB204\uC801 \uD310\uB9E4 \uC218\uC775\uC744 \uC313\uC73C\uC138\uC694."
+  category: 1
+  type: 1
+  conditionType: 0
+  targetId: 
+  targetValue: 0
+  tiers:
+  - tierName: Bronze
+    conditionType: 1
+    targetId: 
+    targetValue: 5000
+    rewardType: 1
+    rewardAmount: 50
+    rewardItemId: 
+    rewardTitleId: 
+  - tierName: Silver
+    conditionType: 1
+    targetId: 
+    targetValue: 25000
+    rewardType: 1
+    rewardAmount: 150
+    rewardItemId: 
+    rewardTitleId: title_successful_farmer
+  - tierName: Gold
+    conditionType: 1
+    targetId: 
+    targetValue: 100000
+    rewardType: 3
+    rewardAmount: 1
+    rewardItemId: item_safe_decoration
+    rewardTitleId: title_wealth_accumulator
+  rewardType: 0
+  rewardAmount: 0
+  rewardItemId: 
+  rewardTitleId: 
+  isHidden: 0
+  icon: {fileID: 0}
+  sortOrder: 7
