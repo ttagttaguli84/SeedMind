@@ -159,6 +159,19 @@ class App(tk.Tk):
         self._log_msg("[SYNC] ✓ 완료")
         return True
 
+    def _check_all_done(self):
+        """progress.md에 미완료(⬜) 항목이 없으면 True 반환 후 자동 종료."""
+        progress_path = PROJECT_DIR / "docs" / "mcp" / "progress.md"
+        try:
+            text = progress_path.read_text(encoding="utf-8")
+            if "⬜" not in text:
+                self._log_msg("\n[DONE] ✅ 모든 MCP 태스크 완료 — 자동 종료합니다.")
+                self._stop_requested = True
+                return True
+        except Exception as e:
+            self._log_msg(f"[DONE] progress.md 읽기 실패: {e}")
+        return False
+
     def _merge_to_main(self, wt):
         """run 후 wt-seedmind → main merge 후 push"""
         # 로컬 main을 origin/main으로 ff-only 업데이트 (run 중 외부 push 반영)
@@ -303,6 +316,8 @@ class App(tk.Tk):
             if head_before != head_after:
                 self._log_msg("[WARN] ⚠️ Claude가 origin/main에 직접 push 감지 — 워크트리 격리 우회됨")
             self._merge_to_main(wt)
+            if self._check_all_done():
+                break
             if not self._stop_requested and not self._rate_limit_resets_at:
                 time.sleep(INTER_RUN_DELAY)
 
