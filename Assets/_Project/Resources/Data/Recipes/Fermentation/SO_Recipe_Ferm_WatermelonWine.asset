@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94ab8a04590121d449981b1f936916c3, type: 3}
+  m_Name: SO_Recipe_Ferm_WatermelonWine
+  m_EditorClassIdentifier: Assembly-CSharp::SeedMind.Building.Data.ProcessingRecipeData
+  dataId: recipe_ferm_watermelon_wine
+  displayName: "\uC218\uBC15 \uC640\uC778"
+  icon: {fileID: 0}
+  processingType: 4
+  inputCategory: 1
+  inputItemId: watermelon
+  inputQuantity: 2
+  outputItemId: item_watermelon_wine
+  outputQuantity: 1
+  priceMultiplier: 3
+  priceBonus: 80
+  processingTimeHours: 24
+  fuelCost: 0
+  requiredFacilityTier: 0

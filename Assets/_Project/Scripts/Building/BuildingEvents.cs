@@ -18,6 +18,7 @@ namespace SeedMind.Building
         public static event Action<BuildingInstance, int> OnProcessingStarted;
         public static event Action<BuildingInstance, int> OnProcessingComplete;
         public static event Action<BuildingInstance, int, string> OnProcessingCollected;
+        public static event Action<BuildingInstance, int, string, int> OnProcessingCancelled;
 
         // 창고 관련
         public static event Action<BuildingInstance> OnStorageChanged;
@@ -29,6 +30,7 @@ namespace SeedMind.Building
         internal static void RaiseProcessingStarted(BuildingInstance proc, int slotIndex) => OnProcessingStarted?.Invoke(proc, slotIndex);
         internal static void RaiseProcessingComplete(BuildingInstance proc, int slotIndex) => OnProcessingComplete?.Invoke(proc, slotIndex);
         internal static void RaiseProcessingCollected(BuildingInstance proc, int slotIndex, string outputItemId) => OnProcessingCollected?.Invoke(proc, slotIndex, outputItemId);
+        internal static void RaiseProcessingCancelled(BuildingInstance proc, int slotIndex, string inputCropId, int qty) => OnProcessingCancelled?.Invoke(proc, slotIndex, inputCropId, qty);
         internal static void RaiseStorageChanged(BuildingInstance storage) => OnStorageChanged?.Invoke(storage);
     }
 }

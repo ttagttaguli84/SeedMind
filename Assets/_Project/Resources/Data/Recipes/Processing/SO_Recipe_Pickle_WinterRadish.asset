@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94ab8a04590121d449981b1f936916c3, type: 3}
+  m_Name: SO_Recipe_Pickle_WinterRadish
+  m_EditorClassIdentifier: Assembly-CSharp::SeedMind.Building.Data.ProcessingRecipeData
+  dataId: recipe_pickle_winter_radish
+  displayName: "\uACA8\uC6B8\uBB34 \uC808\uC784"
+  icon: {fileID: 0}
+  processingType: 2
+  inputCategory: 0
+  inputItemId: winter_radish
+  inputQuantity: 1
+  outputItemId: pickle_winter_radish
+  outputQuantity: 1
+  priceMultiplier: 2
+  priceBonus: 30
+  processingTimeHours: 4
+  fuelCost: 0
+  requiredFacilityTier: 0

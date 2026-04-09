@@ -55,13 +55,19 @@ namespace SeedMind.Building
         private void OnEnable()
         {
             if (_timeManager != null)
+            {
                 _timeManager.RegisterOnDayChanged(50, OnDayChangedHandler);
+                _timeManager.OnHourChanged += OnHourChangedHandler;
+            }
         }
 
         private void OnDisable()
         {
             if (_timeManager != null)
+            {
                 _timeManager.UnregisterOnDayChanged(OnDayChangedHandler);
+                _timeManager.OnHourChanged -= OnHourChangedHandler;
+            }
         }
 
         private void Start()
@@ -185,6 +191,11 @@ namespace SeedMind.Building
         {
             AdvanceConstruction();
             _waterTankSystem.ProcessDailyWatering();
+        }
+
+        private void OnHourChangedHandler(int newHour)
+        {
+            _processingSystem.ProcessTimeAdvance(1.0f);
         }
 
         private void AdvanceConstruction()
