@@ -1,6 +1,6 @@
 # SeedMind — MCP 태스크 실행 진행 상황
 
-> 최종 업데이트: 2026-04-10 (blacksmith-tasks.md T-1~T-5 완료)
+> 최종 업데이트: 2026-04-10 (quest-tasks.md T-1~T-5 완료)
 > **갱신 규칙**: 각 MCP 태스크 파일 실행 완료 직후 해당 항목을 ✅로 바꾸고 커밋. 세션 종료와 무관하게 완료 즉시 갱신한다.
 > 새 세션 시작 시 `/start`가 이 파일을 읽어 진행 위치를 복원한다.
 
@@ -9,7 +9,7 @@
 ## 현재 위치
 
 **Phase D — Feature Systems**
-- 다음 실행 파일: `quest-tasks.md` (D-5)
+- 다음 실행 파일: `achievement-tasks.md` (D-6)
 
 ---
 
@@ -50,7 +50,7 @@
 | `npc-shop-tasks.md` (ARC-009) | ✅ 완료 | T-1~T-5 완료. 스크립트 16종(NPCType/NPCActivityState/DayFlag/DialogueChoiceAction/DialogueChoice/DialogueNode/DialogueData/NPCData/TravelingShopPoolData/NPCSaveData/NPCEvents/NPCManager/NPCController/DialogueSystem/TravelingMerchantScheduler/DialogueUI). NPCData SO 4종+TravelingPool SO 1종+DialogueData SO 6종 생성. DialoguePanel 프리팹 생성(PFB_UI_DialoguePanel). NPC GO 3종+매니저 GO 3종 씬배치. DialogueUI→DialogueSystem 참조 연결. ShopSystem 확장(T-5-01)은 economy-tasks.md 이후 처리. T-6(통합테스트) execute_code 비활성으로 스킵. |
 | `blacksmith-tasks.md` (ARC-020) | ✅ 완료 | T-1~T-5 완료. 스크립트 10종(ScreenBase stub 포함)+BlacksmithNPC/AffinityTracker/Events/BlacksmithNPCData/AffinitySaveData. SO 11종(CreateBlacksmithAssets Editor 스크립트). NPC_Blacksmith에 BlacksmithNPC+InteractionZone 배치. ToolUpgradeScreen UI 계층+SerializeField 연결. NPCAffinityTracker 씬배치. T-6(통합테스트) execute_code 비활성으로 스킵. |
 | `processing-tasks.md` (ARC-014) | ✅ 완료 | T-1~T-5 완료. ProcessingRecipeData 필드 확장(inputItemId/Qty/outputQty/fuelCost/requiredTier), ProcessingSaveData 신규, ProcessingSystem 확장(Cancel/GetAvailableRecipes/SaveData), BuildingManager OnHourChanged 훅(ProcessTimeAdvance), BuildingEvents OnProcessingCancelled 추가. Editor 스크립트로 Building SO 4종+Recipe SO 32종(잼7/주스3/절임8/제분4/발효5/베이커리5) 생성. ProcessingUI/RecipeSlotUI/ProcessingSlotUI 스크립트+프리팹. Canvas_Overlay/ProcessingPanel 씬배치. T-6(통합테스트) execute_code 비활성으로 스킵. |
-| `quest-tasks.md` (ARC-016) | ⬜ 미시작 | |
+| `quest-tasks.md` (ARC-016) | ✅ 완료 | T-1~T-5 완료. 스크립트 20종(QuestCategory/Status/ObjectiveType/RewardType/UnlockConditionType/CompositeMode enum 6종, QuestObjectiveData/RewardData/UnlockCondition/QuestData/QuestSaveData 등 직렬화 클래스, QuestInstance/QuestEvents/QuestTracker/QuestRewarder/DailyQuestSelector/NPCRequestScheduler/QuestManager/QuestLogUI/QuestTrackingUI). Editor 스크립트로 QuestData SO 20종(메인4+일일12+도전4) 생성. QuestLogPanel/QuestTrackingWidget/QuestCompletePopup UI 씬배치+SerializeField 연결. QuestManager 씬배치+배열 참조 연결. GameSaveData quest 필드 추가. T-6(통합테스트) execute_code 비활성으로 스킵. |
 | `achievement-tasks.md` (ARC-017-MCP) | ⬜ 미시작 | |
 | `tutorial-tasks.md` (ARC-010) | ⬜ 미시작 | |
 
