@@ -230,7 +230,7 @@ create_script
   // MonoBehaviour
   // [SerializeField] _shopData: ShopData
   // [SerializeField] _economyManager: EconomyManager
-  // 메서드: Open(), Close(), TryBuyItem(string itemId): bool, TrySellCrop(string itemId, int qty, CropQuality quality): bool
+  // 메서드: Open(), Close(), TryBuyItem(string itemId): bool, TrySellCrop(CropData crop, int qty, CropQuality quality, HarvestOrigin origin = HarvestOrigin.Outdoor): int
   // GetDisplayPrice(string itemId): int  (PriceFluctuationSystem 경유)
   // → see docs/systems/economy-architecture.md 섹션 2 (ShopSystem)
 
@@ -242,12 +242,13 @@ create_script
   // [SerializeField] _economyConfig: EconomyConfig
   // private 상태: _currentGold(int), _priceDataMap(Dictionary<string,PriceData>)
   // 프로퍼티: CurrentGold(int), GoldRatio(float)
-  // 이벤트: OnGoldChanged(int newGold)
-  // 골드 API: AddGold(int amount, string reason), SpendGold(int amount, string reason): bool, CanSpend(int amount): bool
-  // 가격 API: GetSellPrice(string itemId, CropQuality quality): int, GetBuyPrice(string itemId): int
+  // 이벤트: OnGoldChanged(int oldGold, int newGold)
+  // 골드 API: AddGold(int amount, string reason), SpendGold(int amount, string reason): bool, CanAfford(int amount): bool
+  // 가격 API: GetSellPrice(CropData crop, CropQuality quality, HarvestOrigin origin = HarvestOrigin.Outdoor): int, GetBuyPrice(string itemId): int
   // 일 전환: ProcessDayEnd()
   // ISaveable: GetSaveData(), LoadSaveData(object)
-  // OnEnable 구독: TimeManager.OnDayChanged(priority 40), WeatherSystem.OnWeatherChanged
+  // OnEnable 구독: TimeManager.RegisterOnDayChanged(priority 40), TimeManager.RegisterOnSeasonChanged(priority 30),
+  //               WeatherSystem.OnWeatherChanged, FestivalManager.OnFestivalStarted, FestivalManager.OnFestivalEnded
   // → see docs/systems/economy-architecture.md 섹션 2 (EconomyManager)
 ```
 
@@ -613,7 +614,7 @@ set_property
 
 ```
 // 구매 버튼 → ShopSystem.TryBuyItem(itemId)
-// 판매 버튼 → ShopSystem.TrySellCrop(itemId, qty, quality)
+// 판매 버튼 → ShopSystem.TrySellCrop(crop, qty, quality, origin)
 // OnGoldChanged → HUD GoldDisplay 즉시 갱신
 // → see docs/systems/economy-architecture.md Phase D Step D-2
 ```
@@ -658,7 +659,7 @@ exit_play_mode
 - [ ] 씨앗 구매 후 골드 차감 및 HUD GoldDisplay 즉시 갱신
 - [ ] 작물 판매 후 골드 증가 및 HUD GoldDisplay 즉시 갱신
 - [ ] 거래 후 TransactionLog에 기록 확인 (콘솔 출력)
-- [ ] 골드 부족 시 구매 거부 동작 확인 (CanSpend → false)
+- [ ] 골드 부족 시 구매 거부 동작 확인 (CanAfford → false)
 
 ```
 save_scene
@@ -718,3 +719,5 @@ save_scene
 - `docs/mcp/energy-tasks.md` (ARC-047) — 참조 패턴 문서
 - `docs/mcp/scene-setup-tasks.md` (ARC-002) — 씬 기본 계층 생성 문서
 - `docs/mcp/save-load-tasks.md` (ARC-008) — SaveManager, ISaveable 생성 문서
+- `docs/systems/inventory-architecture.md` — HarvestOrigin, 인벤토리 판매 흐름 (FIX-034 연관)
+- `docs/balance/crop-economy.md` 섹션 4.3.10 — 온실 비주 계절 보정 / 겨울 작물 시너지 canonical (BAL-010)
