@@ -76,6 +76,34 @@ namespace SeedMind.Core
         }
 
         /// <summary>
+        /// itemId로 IInventoryItem을 조회한다.
+        /// "seed_" prefix 처리: "seed_potato" → CropData("potato") 반환 (Seed 타입으로 사용).
+        /// -> see docs/systems/inventory-architecture.md 섹션 9 Phase C Step C-4
+        /// </summary>
+        public IInventoryItem GetInventoryItem(string itemId)
+        {
+            if (string.IsNullOrEmpty(itemId)) return null;
+            if (_registry == null) Initialize();
+
+            // "seed_" prefix 처리: "seed_potato" → CropData("potato") 반환
+            if (itemId.StartsWith("seed_"))
+            {
+                string cropId = itemId.Substring(5); // "seed_" 제거
+                if (_registry.TryGetValue(cropId, out var cropSo))
+                    return cropSo as IInventoryItem;
+                Debug.LogWarning($"[DataRegistry] 씨앗 ID '{itemId}'에 대응하는 작물 '{cropId}'를 찾을 수 없습니다.");
+                return null;
+            }
+
+            // 일반 아이템: dataId로 직접 조회
+            if (_registry.TryGetValue(itemId, out var so))
+                return so as IInventoryItem;
+
+            Debug.LogWarning($"[DataRegistry] IInventoryItem '{itemId}'를 찾을 수 없습니다.");
+            return null;
+        }
+
+        /// <summary>
         /// 런타임에 SO를 직접 등록한다 (에디터 테스트 등 용도).
         /// </summary>
         public void Register(GameDataSO so)
