@@ -246,6 +246,6 @@
 | ~~DES-025~~ | ~~2~~ | ~~음식/요리 아이템 에너지 회복 상세 설계 — energy-system.md 섹션 5.2 [OPEN] 후속: 회복 음식 아이템 종류(기본~고급 4등급 이상), 요리 시스템 연동 여부, 상점 판매 vs 직접 제조 경로 확정~~ — DONE → `docs/content/food-items.md` (CON-021, 음식 25종, 4등급 체계, 가공소+베이커리 통합, energy-system.md 섹션 5.2 [OPEN] 해소) |
 | ~~CON-022~~ | ~~2~~ | ~~processing-system.md에 음식 레시피 19종 실제 통합 (food-items.md 섹션 3.2/3.3/3.4 레시피 → processing-system.md 섹션 신규 추가, 전체 레시피 수 56→75종 — DES-025 후속)~~ — DONE → 섹션 3.1.5(일반 요리 8종), 3.4.2(고급/최고급 11종), 3.8(75종 요약), 2.2(총계) 추가 |
 | ~~FIX-119~~ | ~~1~~ | ~~gathering-items.md에 황금 연꽃/천년 영지 아이템 확인 및 판매가 canonical 등록 (food-items.md 섹션 3.4 [OPEN] 해소 — 잠정 100G/120G 확정 필요)~~ — DONE: 황금 연꽃 100G/천년 영지 120G 명시 (→ gathering-system.md 참조), food-items.md [OPEN]* 해소 |
-| ARC-048 | 1 | 경제 시스템 MCP 태스크 시퀀스 독립 문서화 (economy-architecture.md Part II 요약 → docs/mcp/economy-tasks.md 상세 분리 — ARC-004 후속) |
+| ~~ARC-048~~ | ~~1~~ | ~~경제 시스템 MCP 태스크 시퀀스 독립 문서화 (economy-architecture.md Part II 요약 → docs/mcp/economy-tasks.md 상세 분리 — ARC-004 후속)~~ — DONE: docs/mcp/economy-tasks.md 신규 작성 (Phase A~D, EC-A~D 태스크 그룹, ~48 MCP 호출) |
 | ARC-049 | 1 | 비주얼 시스템 MCP 태스크 시퀀스 독립 문서화 (visual-architecture.md Part II 요약 → docs/mcp/visual-tasks.md 상세 분리) |
 | ARC-050 | 1 | 작물 성장 시스템 MCP 태스크 시퀀스 독립 문서화 (crop-growth-architecture.md Part II 요약 → docs/mcp/crop-growth-tasks.md 상세 분리) |
