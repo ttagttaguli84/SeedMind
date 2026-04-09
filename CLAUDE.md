@@ -55,7 +55,7 @@ docs/
 ├── mcp/               # MCP 작업 계획
 ├── pipeline/          # 빌드/에셋 파이프라인
 └── devlog/            # 개발 일지
-logs/
+docs/
 └── reports/           # /review, /self-improve 출력 보고서
 ```
 

@@ -4,10 +4,7 @@
 [Oo]bj/
 [Bb]uild/
 [Bb]uilds/
-Logs/
-!logs/
-logs/archive/
-logs/session_*.log
+[Ll]ogs/
 [Uu]ser[Ss]ettings/
 *.pidb.meta
 *.pdb

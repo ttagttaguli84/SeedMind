@@ -10,7 +10,7 @@ Your job is to find recurring problems in documents and workflows, then update r
 
 ## Phase 1 — Collect
 - Read `git log --oneline -30`
-- Read all `logs/reports/review_*.md`
+- Read all `docs/reports/review_*.md`
 - Read `TODO.md`
 - Read `.claude/rules/*.md`
 
@@ -46,7 +46,7 @@ Your job is to find recurring problems in documents and workflows, then update r
 - `~/.claude/` (global) — do not modify directly. If a change is deemed necessary, propose it and apply only after user approval
 
 ## Phase 4 — Report
-Write to `logs/reports/self_improve_YYYYMMDD.md`:
+Write to `docs/reports/self_improve_YYYYMMDD.md`:
 - Patterns found (type, count, examples)
 - Changes applied
 - CLAUDE.md proposals

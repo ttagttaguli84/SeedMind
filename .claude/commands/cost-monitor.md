@@ -10,7 +10,7 @@ Scan `logs/run_*.jsonl` for unanalyzed session logs.
 
 If no files exist, print "분석할 세션 로그 없음" and stop.
 
-Also read any prior analysis reports (`logs/reports/cost-monitor-analysis-*.md`) for trend comparison in Step 4.
+Also read any prior analysis reports (`docs/reports/cost-monitor-analysis-*.md`) for trend comparison in Step 4.
 
 ## Step 2 — Analyze Sessions
 
@@ -116,7 +116,7 @@ Forbidden: `doc-standards.md`, `docs/`, `TODO.md`, the 14 Reviewer Checklist ite
 
 ## Step 6 — Write Analysis Report
 
-Write to `logs/reports/cost-monitor-analysis-<YYYYMMDD>.md`. If exists, append `-2`, `-3`, etc.
+Write to `docs/reports/cost-monitor-analysis-<YYYYMMDD>.md`. If exists, append `-2`, `-3`, etc.
 
 ```markdown
 # Cost Monitor 분석 리포트 — <date>
@@ -157,7 +157,7 @@ mv logs/run_*.jsonl logs/archive/
 Commit the analysis report (and edited rule files if any):
 
 ```bash
-git add logs/reports/cost-monitor-analysis-<YYYYMMDD>.md
+git add docs/reports/cost-monitor-analysis-<YYYYMMDD>.md
 git commit -m "CHORE: cost-monitor 분석 — <한 줄 요약>"
 git push
 ```

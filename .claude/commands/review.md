@@ -15,7 +15,7 @@ Delegate to the **reviewer** agent.
    <paste content>
    ```
 3. All 14 Reviewer Checklist items must be exhaustively checked — skipping items is not permitted; if "not applicable", the reason must be stated
-4. Outputs issues to `logs/reports/review_YYYYMMDD.md`
+4. Outputs issues to `docs/reports/review_YYYYMMDD.md`
 5. If CRITICAL issues found: reviewer reports them → **main Claude** applies the fix (reviewer does NOT modify documents)
 6. If WARNING issues found: add to `TODO.md`
 7. Commit and push

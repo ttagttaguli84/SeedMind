@@ -13,4 +13,4 @@ The agent analyzes git history, review reports, and TODO patterns.
 It can create and update files in `.claude/rules/`, `.claude/commands/`, `.claude/agents/` without approval.
 CLAUDE.md changes are proposed but NOT applied without user approval.
 
-Report written to `logs/reports/self_improve_YYYYMMDD.md`.
+Report written to `docs/reports/self_improve_YYYYMMDD.md`.
