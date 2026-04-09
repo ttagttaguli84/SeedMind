@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8474446aedde84c4fb25a49a678fabd7, type: 3}
+  m_Name: SO_Crop_Corn
+  m_EditorClassIdentifier: Assembly-CSharp::SeedMind.Farm.Data.CropData
+  dataId: crop_corn
+  displayName: "\uC625\uC218\uC218"
+  icon: {fileID: 0}
+  cropId: crop_corn
+  cropName: "\uC625\uC218\uC218"
+  cropCategory: 0
+  allowedSeasons: 2
+  growthDays: 7
+  growthStageCount: 4
+  seedPrice: 50
+  sellPrice: 100
+  baseYield: 1
+  qualityChance: 0.1
+  isRepeating: 0
+  regrowDays: 0
+  giantCropChance: 0
+  giantCropPrefab: {fileID: 0}
+  unlockLevel: 3
+  growthStagePrefabs:
+  - {fileID: 5193964290003848502, guid: 107643f0443491741b613e5e98e4f287, type: 3}
+  - {fileID: 8544954245719717131, guid: ee7d40c0a4591cd4ab1a5c6061db5da0, type: 3}
+  - {fileID: 4393032858058795069, guid: 663a7401ae2b37d44a7e1cf57d0bf1b3, type: 3}
+  - {fileID: 6083174957624607117, guid: b2c232ef3c2cef04495ea2c709198a6b, type: 3}
+  soilMaterial: {fileID: 0}
+  harvestParticle: {fileID: 0}
+  requiresGreenhouse: 0
+  description: "\uD558\uB298\uC744 \uD5A5\uD574 \uACE7\uAC8C \uBC97\uB294 \uC5EC\uB984\uC758
+    \uC0C1\uC9D5. \uB178\uB780 \uC774\uC2AD\uC774 \uC601\uAE00\uBA74 \uC218\uD655\uC758
+    \uAE30\uC068\uC774 \uCC3E\uC544\uC628\uB2E4."

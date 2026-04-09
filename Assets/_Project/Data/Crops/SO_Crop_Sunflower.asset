@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8474446aedde84c4fb25a49a678fabd7, type: 3}
+  m_Name: SO_Crop_Sunflower
+  m_EditorClassIdentifier: Assembly-CSharp::SeedMind.Farm.Data.CropData
+  dataId: crop_sunflower
+  displayName: "\uD574\uBC14\uB77C\uAE30"
+  icon: {fileID: 0}
+  cropId: crop_sunflower
+  cropName: "\uD574\uBC14\uB77C\uAE30"
+  cropCategory: 4
+  allowedSeasons: 2
+  growthDays: 8
+  growthStageCount: 4
+  seedPrice: 75
+  sellPrice: 150
+  baseYield: 1
+  qualityChance: 0.1
+  isRepeating: 0
+  regrowDays: 0
+  giantCropChance: 0
+  giantCropPrefab: {fileID: 0}
+  unlockLevel: 5
+  growthStagePrefabs:
+  - {fileID: 5803508208550421871, guid: edd71202559276c47b8c55e7aad60bfe, type: 3}
+  - {fileID: 8882589275477842324, guid: 4fc19871885fe404488d604493327d9a, type: 3}
+  - {fileID: 9132860423530860906, guid: 763389b9b758f3d40b7fe54ad56a8336, type: 3}
+  - {fileID: 8846079926822554415, guid: 305a79e00e6cc0d49bd246c296b19bf0, type: 3}
+  soilMaterial: {fileID: 0}
+  harvestParticle: {fileID: 0}
+  requiresGreenhouse: 0
+  description: "\uD0DC\uC591\uC744 \uB2EE\uC740 \uAF43\uC774 \uD53C\uBA74, \uB369\uC73C\uB85C
+    \uC528\uC558\uAE4C\uC9C0 \uC5BB\uC744 \uC218 \uC788\uB2E4. \uC790\uAE09\uC790\uC871\uC758
+    \uC0C1\uC9D5."

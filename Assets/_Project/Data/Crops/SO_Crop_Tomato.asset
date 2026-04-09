@@ -12,15 +12,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8474446aedde84c4fb25a49a678fabd7, type: 3}
   m_Name: SO_Crop_Tomato
   m_EditorClassIdentifier: Assembly-CSharp::SeedMind.Farm.Data.CropData
+  dataId: crop_tomato
+  displayName: "\uD1A0\uB9C8\uD1A0"
+  icon: {fileID: 0}
+  cropId: crop_tomato
   cropName: "\uD1A0\uB9C8\uD1A0"
-  cropId: tomato
-  seedPrice: 25
-  sellPrice: 60
-  growthDays: 5
+  cropCategory: 2
   allowedSeasons: 2
+  growthDays: 5
+  growthStageCount: 4
+  seedPrice: 30
+  sellPrice: 60
+  baseYield: 1
+  qualityChance: 0.1
+  isRepeating: 0
+  regrowDays: 0
+  giantCropChance: 0
+  giantCropPrefab: {fileID: 0}
   unlockLevel: 2
   growthStagePrefabs:
   - {fileID: 5708076226494515453, guid: 146cb0abb0a5ceb4fb2e133f8f4886b9, type: 3}
   - {fileID: 7277780750994302831, guid: f4eff808e95275d4bb6ffe1981f4292a, type: 3}
   - {fileID: 6386289263170653782, guid: 6b56d7325db8ec24db2789e499e63378, type: 3}
   - {fileID: 863550631352968203, guid: ae175ac28fc2d0949925966bfc128720, type: 3}
+  soilMaterial: {fileID: 0}
+  harvestParticle: {fileID: 0}
+  requiresGreenhouse: 0
+  description: "\uC5EC\uB984 \uD587\uC0B4\uC744 \uBA38\uAE08\uACE0 \uBE68\uAC1B\uAC8C
+    \uC775\uC5B4\uAC00\uB294 \uD0D0\uC2A4\uB7EC\uC6B4 \uC5F4\uB9E4. \uC9C0\uC9C0\uB300\uAC00
+    \uD544\uC694\uD560 \uB9CC\uD07C \uC798 \uC790\uB780\uB2E4."
