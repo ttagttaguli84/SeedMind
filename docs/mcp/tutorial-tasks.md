@@ -915,6 +915,8 @@ save_scene
 
 ## 8. 태스크 T-3: TutorialStepData SO 에셋 생성 (메인 12단계)
 
+> **[최적화 필수]** T-3-01(폴더 생성) + T-3-02(시퀀스 SO 생성)만 수행 후 T-3-ALT로 이동한다. T-3-03(Step SO 12개 개별 생성, ~96회) 및 T-3-04(배열 연결)는 건너뜀.
+
 **목적**: 메인 튜토리얼 시퀀스(SEQ_MainTutorial)와 12개 단계(Step)의 SO 에셋을 생성한다.
 
 **전제**: T-1 완료 (TutorialSequenceData, TutorialStepData 클래스 컴파일 완료)
@@ -1276,9 +1278,58 @@ set_property  target: "SO_TutSeq_MainTutorial"
 - [ ] Step 02~11의 completionType = EventBased
 - [ ] 콘솔 에러 없음
 
-**T-3 MCP 호출 합계**: 4(폴더) + 10(시퀀스) + 96(Step 12개 x 8) + 12(배열 연결) = ~122회
+**T-3 MCP 호출 합계(ALT 적용)**: 4(폴더) + 10(시퀀스) + 3(T-3-ALT) = ~17회  
+~~개별 실행 시: ~122회~~
 
-> **주의**: 호출 수가 상당히 많다. Editor 스크립트(CreateTutorialStepAssets.cs)를 통한 일괄 생성으로 Step SO 12개를 ~3회(스크립트 생성 + 실행 + 검증)로 줄이는 것을 강력히 권장한다.
+---
+
+### T-3-ALT: Editor 스크립트를 통한 Step SO 일괄 생성 (**기본 경로**)
+
+**[기본 경로]** T-3-01, T-3-02 완료 후 바로 이 절차를 실행한다. T-3-03/T-3-04는 건너뜀.
+
+```
+create_script
+  path: "Assets/_Project/Editor/CreateTutorialStepAssets.cs"
+  content: |
+    // Editor 전용: 튜토리얼 StepData SO 12개 + steps[] 배열 일괄 생성
+    // 수치 및 이벤트 정의: docs/systems/tutorial-system.md 섹션 3~5
+    // -> copied from docs/systems/tutorial-architecture.md 섹션 4.2
+    #if UNITY_EDITOR
+    using UnityEditor;
+    using UnityEngine;
+    using SeedMind.Tutorial.Data;
+
+    public static class CreateTutorialStepAssets
+    {
+        [MenuItem("SeedMind/Create Tutorial Step Assets")]
+        public static void CreateAll()
+        {
+            // TutorialStepData SO 12개 생성 (STEP_MainTutorial_01_Arrival ~
+            //   STEP_MainTutorial_12_Complete)
+            // completionType: Step01/12 = TimeBased, Step02~11 = EventBased
+            // completionEventId, targetObjectId, dialogueKey:
+            //   -> see docs/systems/tutorial-system.md 섹션 3 for 각 단계 정의
+            // SO_TutSeq_MainTutorial.steps[] 배열에 12개 순서대로 연결
+            // -> see docs/systems/tutorial-architecture.md 섹션 4.2 for 시퀀스 구조
+
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            Debug.Log("[CreateTutorialStepAssets] 12 step assets created and linked.");
+        }
+    }
+    #endif
+```
+
+실행:
+```
+execute_menu_item
+  menu: "SeedMind/Create Tutorial Step Assets"
+```
+
+- **MCP 호출**: 3회 (create_script 1 + execute_menu_item 1 + read_console 1)
+- **T-3-03/T-3-04 대비 절감**: ~108회 (108 → 3)
+
+[RISK] steps[] 배열 연결(SO 참조 할당)은 CLAUDE.md 실전 제한 — SO 배열 참조 설정은 MCP set_property 불가이므로 Editor 스크립트 방식이 필수.
 
 ---
 
@@ -1420,6 +1471,8 @@ set_property  target: "TutorialSystem" -> TutorialManager
 ---
 
 ## 10. 태스크 T-5: ContextHintData SO 에셋 생성 (7종)
+
+> **[최적화 필수]** T-5-01 개별 생성(~70회) 대신 T-5-ALT를 사용한다.
 
 **목적**: 상황별 힌트 7종의 SO 에셋을 생성하고 ContextHintSystem에 등록한다.
 
@@ -1637,7 +1690,53 @@ save_scene
 - [ ] ContextHintSystem._tutorialUI 참조가 연결됨
 - [ ] 콘솔 에러 없음
 
-**T-5 MCP 호출 합계**: 70(힌트 7 x 10) + 7(배열 연결) + 1(UI 참조) + 1(씬 저장) = ~79회
+**T-5 MCP 호출 합계(ALT 적용)**: 3(T-5-ALT) + 1(UI 참조) + 1(씬 저장) = ~5회  
+~~개별 실행 시: ~79회~~
+
+---
+
+### T-5-ALT: Editor 스크립트를 통한 ContextHintData SO 일괄 생성 (**기본 경로**)
+
+**[기본 경로]** T-5-01 개별 생성 대신 이 절차를 실행한다.
+
+```
+create_script
+  path: "Assets/_Project/Editor/CreateContextHintAssets.cs"
+  content: |
+    // Editor 전용: ContextHintData SO 7종 + _allHints[] 배열 일괄 생성
+    // 힌트 정의: docs/systems/tutorial-system.md 섹션 7.2~7.4
+    // -> copied from docs/systems/tutorial-architecture.md 섹션 MCP-4
+    #if UNITY_EDITOR
+    using UnityEditor;
+    using UnityEngine;
+    using SeedMind.Tutorial.Data;
+
+    public static class CreateContextHintAssets
+    {
+        [MenuItem("SeedMind/Create Context Hint Assets")]
+        public static void CreateAll()
+        {
+            // 7종: WaterReminder, LowGold, InventoryFull, SeasonCrop,
+            //      HarvestReady, NightWarning, ProcessingReady
+            // conditionType, cooldownDays, priority:
+            //   -> see docs/systems/tutorial-system.md 섹션 7.2 for 각 힌트 수치
+            // ContextHintSystem._allHints[] 배열에 7개 연결
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            Debug.Log("[CreateContextHintAssets] 7 hint assets created and linked.");
+        }
+    }
+    #endif
+```
+
+실행:
+```
+execute_menu_item
+  menu: "SeedMind/Create Context Hint Assets"
+```
+
+- **MCP 호출**: 3회 (create_script 1 + execute_menu_item 1 + read_console 1)
+- **T-5-01 대비 절감**: ~74회 (77 → 3)
 
 ---
 

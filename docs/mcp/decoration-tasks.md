@@ -323,6 +323,8 @@ save_scene
 
 ### D-C: SO 에셋 인스턴스 생성 (29종 + Config 1종)
 
+> **[최적화 필수]** D-C-01(폴더 생성) + D-C-02(DecorationConfig SO)만 수행 후 D-C-ALT로 이동한다. D-C-03~D-C-07 개별 생성(~55회)은 건너뜀.
+
 **목적**: `DecorationItemData` SO 에셋 29개와 `DecorationConfig` SO 에셋 1개를 생성하고 기본 필드를 설정한다.
 
 **전제 조건**:
@@ -498,7 +500,53 @@ create_scriptable_object
 
 - **MCP 호출**: ~9회 (5종 × ~1.8회 평균)
 
-[RISK] Editor 스크립트 일괄 생성 우회를 사용하는 경우, `CreateDecorationAssets.cs`에서 각 에셋의 콘텐츠 수치를 `docs/content/decoration-items.md` (CON-020) 기준으로 직접 작성해야 한다. MCP 단독으로 30개 에셋을 생성하면 ~65회 호출이 발생하므로, 가능하면 Editor 스크립트를 먼저 실행한 후 D-D로 넘어갈 것을 권장한다.
+[RISK] Editor 스크립트 일괄 생성 우회를 사용하는 경우, `CreateDecorationAssets.cs`에서 각 에셋의 콘텐츠 수치를 `docs/content/decoration-items.md` (CON-020) 기준으로 직접 작성해야 한다.
+
+---
+
+### D-C-ALT: Editor 스크립트를 통한 DecorationItemData SO 일괄 생성 (**기본 경로**)
+
+**[기본 경로]** D-C-01(폴더) + D-C-02(Config SO) 완료 후 이 절차를 실행한다. D-C-03~D-C-07은 건너뜀.
+
+```
+create_script
+  path: "Assets/_Project/Editor/CreateDecorationAssets.cs"
+  content: |
+    // Editor 전용: DecorationItemData SO 29종 일괄 생성
+    // 모든 itemId, buyPrice, tileSize, category:
+    //   -> copied from docs/content/decoration-items.md 섹션 5.1 (CON-020 canonical)
+    // Fence 4종, Path 5종, Light 4종, Ornament 11종, WaterDecor 5종
+    #if UNITY_EDITOR
+    using UnityEditor;
+    using UnityEngine;
+    using SeedMind.Decoration.Data;
+
+    public static class CreateDecorationAssets
+    {
+        [MenuItem("SeedMind/Create Decoration Assets")]
+        public static void CreateAll()
+        {
+            // DecorationItemData 29종 생성
+            // itemId, displayName, category, buyPrice, tileWidth, tileHeight:
+            //   -> see docs/content/decoration-items.md 섹션 5.1 for 각 아이템 수치
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            Debug.Log("[CreateDecorationAssets] 29 decoration item assets created.");
+        }
+    }
+    #endif
+```
+
+실행:
+```
+execute_menu_item
+  menu: "SeedMind/Create Decoration Assets"
+```
+
+- **MCP 호출**: 3회 (create_script 1 + execute_menu_item 1 + read_console 1)
+- **D-C-03~D-C-07 대비 절감**: ~62회 (65 → 3)
+
+[RISK] PATTERN-011 준수 필수 — itemId는 반드시 `docs/content/decoration-items.md` 섹션 5.1에서 정확히 복사. 임의 생성 금지.
 
 ---
 
