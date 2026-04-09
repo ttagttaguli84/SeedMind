@@ -2,7 +2,7 @@
 
 > 작성: Claude Code (Sonnet 4.6) | 2026-04-09  
 > 문서 ID: MCP-012  
-> 연관 아키텍처: `docs/systems/player-character-architecture.md` (ARC-012)  
+> 연관 아키텍처: `docs/systems/player-character-architecture.md` (ARC-051)  
 > 연관 설계: `docs/systems/player-character.md` (DES-012)
 
 ---

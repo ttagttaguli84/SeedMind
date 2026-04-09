@@ -50,10 +50,15 @@ Assets/_Project/                    # (→ see docs/systems/project-structure.md
 │   │   ├── CropInstance.cs      # 심어진 작물 인스턴스
 │   │   └── GrowthSystem.cs      # 성장 로직
 │   │
-│   ├── Player/                  # 플레이어
-│   │   ├── PlayerController.cs  # 이동, 입력 처리
+│   ├── Player/                  # 플레이어 (→ see docs/systems/player-character-architecture.md)
+│   │   ├── PlayerController.cs  # 이동, 입력 처리, 이동 잠금 관리
+│   │   ├── PlayerAnimator.cs    # Animator 파라미터 동기화
+│   │   ├── PlayerInteractor.cs  # 인터랙션 반경 감지, 우선순위 정렬
 │   │   ├── PlayerInventory.cs   # 인벤토리
-│   │   └── ToolSystem.cs        # 도구 사용 로직
+│   │   ├── ToolSystem.cs        # 도구 슬롯 관리, 도구 사용 실행
+│   │   ├── CameraController.cs  # 줌 입력, Cinemachine 연동
+│   │   ├── PlayerData.cs        # 플레이어 수치 ScriptableObject
+│   │   └── ToolData.cs          # 도구 데이터 ScriptableObject
 │   │
 │   ├── Economy/                 # 경제 시스템 (→ see docs/systems/economy-architecture.md for details)
 │   │   ├── EconomyManager.cs    # 골드, 거래, 가격 조회

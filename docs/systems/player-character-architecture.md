@@ -1,7 +1,7 @@
 # 플레이어 캐릭터 아키텍처
 
 > 작성: Claude Code (Sonnet 4.6) | 2026-04-09  
-> 문서 ID: ARC-012  
+> 문서 ID: ARC-051  
 > 연관 설계 문서: `docs/systems/player-character.md` (DES-012)
 
 ---
@@ -355,7 +355,7 @@ namespace SeedMind.Player
     {
         public string toolId;        // e.g. "Hoe", "WateringCan", "Seeds", "Scythe", "Hand"
         public string displayName;
-        public ToolAnimIndex animIndex;
+        public ToolAnimIndex animIndex;  // Hand 도구는 전용 클립 없이 Harvest(3) 클립 재활용 (아이템 줍기 = 간단한 집기 동작)
         public bool consumesEnergy;  // 에너지 소모 여부 → see docs/systems/player-character.md 섹션 4.2
         public bool isConsumable;    // 씨앗 등 소모성 도구 여부
     }
@@ -369,7 +369,7 @@ namespace SeedMind.Core
 {
     public interface IInteractable
     {
-        InteractionPriority Priority { get; }  // → see 섹션 5.2
+        InteractionPriority Priority { get; }  // → see docs/systems/player-character-architecture.md 섹션 5.2 (우선순위 정렬 로직) / docs/systems/player-character.md 섹션 3.3 (우선순위 규칙)
         void Interact(PlayerController player);
         void InteractE(PlayerController player);
     }
@@ -621,8 +621,8 @@ private Vector2Int[] GetAffectedTiles(FarmTile origin, ToolGrade grade)
 |-------|------|-------------|
 | A | 데이터/스크립트 기반 구축 | ~25회 |
 | B | 프리팹/에셋 구축 | ~20회 |
-| C | 씬 배치 및 통합 테스트 | ~15회 |
-| 합계 | - | ~60회 |
+| C | 씬 배치 및 통합 테스트 | ~12회 |
+| 합계 | - | ~57회 (→ see `docs/mcp/player-character-tasks.md` 하단 집계 표) |
 
 ---
 
