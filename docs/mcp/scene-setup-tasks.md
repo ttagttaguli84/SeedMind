@@ -81,7 +81,7 @@ SCN_Farm에 배치되어야 할 게임 오브젝트를 계층별로 정의한다
 
 | GameObject | 역할 | 게임 디자인 근거 |
 |------------|------|------------------|
-| `Main Camera` | Orthographic, 쿼터뷰(45도 각도) | 고정 쿼터뷰, 줌 인/아웃 가능, 플레이어 중심 추적 (-> see `docs/design.md` 섹션 7) |
+| `Main Camera` | Orthographic, 쿼터뷰(X=45°, Y=45°) | 고정 쿼터뷰 확정. 줌 인/아웃, Cinemachine 플레이어 추적 (→ see `docs/systems/player-character.md` 섹션 6) |
 
 ### 1.7 UI
 
@@ -168,12 +168,12 @@ SCN_Farm에 배치되어야 할 게임 오브젝트를 계층별로 정의한다
 |----------|-----|------|
 | Projection | Orthographic | 로우폴리 스타일에 적합, 원근 왜곡 없음 |
 | 각도 (X Rotation) | 45도 | 쿼터뷰(아이소메트릭) |
-| Y Rotation | 45도 [OPEN] | 대각선 시점. MCP 테스트 후 확정 (-> see `docs/design.md` Open Questions) |
-| Orthographic Size | 6 (초기값) | 8x8 그리드를 화면에 적절히 담는 크기 |
-| Zoom 범위 | Size 5~12 | 줌인(개별 타일 상세) ~ 줌아웃(농장 전체 조망) |
-| 추적 대상 | Player | 부드러운 추적 (SmoothDamp 또는 Cinemachine) |
+| Y Rotation | 45도 | 대각선 시점. 확정 (→ see `docs/systems/player-character.md` 섹션 6.1) |
+| Orthographic Size | 6 (초기값) | 8x8 그리드를 화면에 적절히 담는 크기 (→ see `docs/systems/player-character.md` 섹션 6.3) |
+| Zoom 범위 | Size 4~10 | 줌인(개별 타일 상세) ~ 줌아웃(농장 전체 조망) (→ see `docs/systems/player-character.md` 섹션 6.3) |
+| 추적 대상 | Player | Cinemachine Virtual Camera (SmoothDamp 대신 채택) (→ see `docs/systems/player-character.md` 섹션 6.2) |
 
-[OPEN] 쿼터뷰 vs 탑다운 최종 확정은 MCP로 카메라 설정 후 테스트 필요 (-> see `docs/design.md` Open Questions)
+쿼터뷰(X=45°, Y=45°) 고정 방식으로 확정. 상세 설계 결정 근거 및 카메라 파라미터 전체: (→ see `docs/systems/player-character.md` 섹션 6)
 
 ### 3.2 라이팅
 
