@@ -3,5 +3,17 @@
     "allow": ["Bash(*)", "mcp__UnityMCP__*"],
     "deny": []
   },
-  "bypassPermissions": true
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python .claude/hooks/check-bash.py"
+          }
+        ]
+      }
+    ]
+  }
 }
