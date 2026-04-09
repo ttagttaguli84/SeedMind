@@ -67,12 +67,12 @@ SeedMind/
 
 ## 현재 상태
 
-**Phase 2: Unity 프로젝트 생성 및 기본 환경 구축** — 진행 중
+**Phase 3: QA & 플레이 테스트** — 진행 중
 
 - [x] Phase 0: GitHub 저장소 생성
 - [x] Phase 1: AI 자율 게임 설계
-- [ ] **Phase 2: Unity MCP 전체 구현 (씬·시스템·콘텐츠·UI)** ← 현재
-- [ ] Phase 3: QA, 플레이 테스트, 버그 수정
+- [x] **Phase 2: Unity MCP 전체 구현 (씬·시스템·콘텐츠·UI)** ← 완료 (2026-04-10)
+- [ ] **Phase 3: QA, 플레이 테스트, 버그 수정** ← 현재
 - [ ] Phase 4: 빌드 및 배포
 
 ### Phase 1 완료 산출물
