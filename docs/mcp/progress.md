@@ -1,6 +1,6 @@
 # SeedMind — MCP 태스크 실행 진행 상황
 
-> 최종 업데이트: 2026-04-10 (facilities-tasks.md F-1~F-4 완료)
+> 최종 업데이트: 2026-04-10 (inventory-tasks.md T-1~T-4 완료)
 > **갱신 규칙**: 각 MCP 태스크 파일 실행 완료 직후 해당 항목을 ✅로 바꾸고 커밋. 세션 종료와 무관하게 완료 즉시 갱신한다.
 > 새 세션 시작 시 `/start`가 이 파일을 읽어 진행 위치를 복원한다.
 
@@ -8,8 +8,8 @@
 
 ## 현재 위치
 
-**Phase C — Content (콘텐츠)**
-- 다음 실행 파일: `inventory-tasks.md` (C-3)
+**Phase D — Feature Systems**
+- 다음 실행 파일: `tool-upgrade-tasks.md` (D-1)
 
 ---
 
@@ -38,7 +38,7 @@
 |------|----------|------|
 | `crop-content-tasks.md` (CON-001-ARC) | ✅ 완료 | Phase A~E 완료. DataRegistry 기본 구조 생성(Resources 배치는 inventory-tasks에서). 검증(V-1~V-4)은 execute_code 비활성으로 스킵. |
 | `facilities-tasks.md` (ARC-007) | ✅ 완료 | F-1~F-4 완료 (스크립트 16종, SO 7종, 프리팹 8종, BuildingManager 씬 배치). F-5/F-6(UI 패널), F-8(통합 테스트)는 UI Phase E 이후 처리. |
-| `inventory-tasks.md` (ARC-013) | ⬜ 미시작 | facilities-tasks.md 완료 후 |
+| `inventory-tasks.md` (ARC-013) | ✅ 완료 | T-1~T-4 완료. CropQuality/HarvestOrigin enum 신규 생성. CropData(이미완료)/FertilizerData/ToolData/ProcessingRecipeData IInventoryItem 구현. DataRegistry GetInventoryItem 추가. SlotUI프리팹/ToolbarPanel/InventoryPanel/TooltipPanel 생성. InventoryManager+PlayerInventory 씬배치. T-5(타시스템 연동)는 Economy/UI Phase 이후 처리. T-6(통합테스트) execute_code 비활성으로 스킵. |
 
 ---
 
@@ -89,6 +89,7 @@
 
 - crop-content-tasks.md: CropData.cs가 이미 단순 버전으로 존재 → GameDataSO+IInventoryItem 상속으로 전면 업데이트. Season [Flags] enum을 SeasonFlag.cs로 분리. Editor 스크립트(CreateCropPrefabs.cs)로 8종×4단계=32 프리팹 + 2 Giant프리팹 + 8 머티리얼 일괄 생성. SO 배열 참조 자동 설정.
 - facilities-tasks.md: SO 배열 참조 set_property 불가 → Resources.LoadAll<BuildingData>("Data/Buildings") 자동 로드로 우회. SO 파일 위치를 Data/Buildings → Resources/Data/Buildings로 이동(1회성 에디터 스크립트). GrowthSystem에 SetSeasonOverrideProvider() 주입 패턴으로 온실-계절 연동. BuildingManager에 Singleton 없이 FindObjectOfType 패턴 사용.
+- inventory-tasks.md: CropQuality(SeedMind.Economy)/HarvestOrigin(SeedMind) enum이 코드에 없어 신규 생성 필요했음. IInventoryItem/ItemType은 이미 존재(Scripts/Player/). FertilizerData/ToolData는 ScriptableObject 직접 상속→GameDataSO 상속으로 업그레이드. create_script validator 오탐(3파라미터 메서드 중복 감지)→Write 툴로 우회. 크롭/도구 SO를 Data/→Resources/Data/로 이동(MoveInventoryAssetsToResources 에디터 스크립트). UI 생성은 CreateInventoryUI 에디터 스크립트로 일괄 처리.
 - farming-tasks.md: 타일 레이어(FarmTile, index 8), 작물 SO, 도구 SO, 프리팹 12개 등이 이전 세션에 이미 완성된 상태였음. GrowthSystem.farmGrid 참조(null→FarmGrid)만 2026-04-10 세션에서 보완.
 - scene-setup-tasks.md: Canvas_Overlay는 비활성(SetActive=false) 상태이므로 find_gameobjects에서 검색 안 됨 — include_inactive=true 필요.
 - Build Settings: SCN_Loading(0), SCN_MainMenu(1), SCN_Farm(2) 이미 등록 완료.
