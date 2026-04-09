@@ -1,7 +1,7 @@
 # UnityMCP 로컬 수정 내역
 
 원본: https://github.com/CoplayDev/unity-mcp  
-버전: 9.6.5 (commit `d6e58c68cf4b`)  
+버전: 9.6.6 (tag `v9.6.6`)  
 전환: git UPM 패키지 → 로컬 패키지 (`Packages/com.coplaydev.unity-mcp/`)
 
 ---
@@ -79,21 +79,23 @@ Unity 메뉴에 서버 제어 항목 추가:
 
 ## [7] CS0618 Obsolete 경고 전부 제거
 
-**대상**: 패키지 내 30개 파일
+**대상**: 패키지 내 주요 파일
 
 | 원인 | 수정 방법 |
 |------|-----------|
-| `GetInstanceID()` deprecated (Unity 6) | 영향 파일 전체에 `#pragma warning disable CS0618` 추가 |
+| `GetInstanceID()` deprecated (Unity 6) | 영향 파일에 `#pragma warning disable CS0618` 추가 |
 | `FindObjectsSortMode` deprecated | `FindObjectsByType<T>(FindObjectsInactive.Exclude)` 로 교체 |
 | `FindFirstObjectByType` deprecated | `FindAnyObjectByType` 으로 교체 |
 | `Physics2D.autoSyncTransforms` deprecated | `#pragma warning disable CS0618` 추가 |
-| `EntityId.implicit operator EntityId(int)` deprecated | `ResolveInstanceID`에서 `EntityIdToObject` → `InstanceIDToObject` 로 교체 |
+| `EntityId.implicit operator EntityId(int)` deprecated | `InstanceIDToObject` 로 교체 |
+
+> **Note**: 9.6.6 신규 파일(Vfx/*.cs, Physics/*.cs)에서 추가 경고 발생 시 Unity Editor 열고 확인 후 적용.
 
 ---
 
 ## Python 서버 측 수정
 
-**경로**: `C:\Users\kntop\AppData\Local\uv\cache\archive-v0\HVWJ4PVecfJcvLBA3nSWV\Lib\site-packages\services\tools\`
+Unity Editor에서 MCP 서버 재배포 후 적용 필요.
 
 | 파일 | 변경 내용 |
 |------|-----------|
@@ -102,4 +104,4 @@ Unity 메뉴에 서버 제어 항목 추가:
 
 `Literal` 검증을 `str`로 변경하여 C#에 새 액션을 추가해도 Python 서버 재시작 불필요.
 
-> **주의**: uv 캐시 경로(`HVWJ4PVecfJcvLBA3nSWV`)는 서버 업데이트 시 바뀔 수 있음.
+> **주의**: uv 캐시 경로는 서버 업데이트 시 바뀜 — Unity Editor 열기 후 경로 재확인 필요.
