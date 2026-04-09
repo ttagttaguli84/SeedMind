@@ -3,9 +3,9 @@
 AI(Claude Code)가 사람의 개입 없이 농장 시뮬레이션 게임을 설계·구축·배포하는 실험적 프로젝트.
 
 ## 현재 상태
-- **Phase 2**: Unity 프로젝트 생성 및 기본 환경 구축 (진행 중)
+- **Phase 3**: QA & 플레이 테스트 (진행 중)
+- Phase 2 완료 — Unity MCP 전체 구현 완료 (2026-04-10). Phase A–G 모두 ✅
 - Phase 1 완료 — 전체 시스템 설계·아키텍처·MCP 태스크 문서화 완료
-- MCP for Unity를 통해 씬/오브젝트/스크립트 직접 구현 시작
 
 ## 기술 스택
 - **Engine**: Unity 6 (MCP for Unity 연동)
