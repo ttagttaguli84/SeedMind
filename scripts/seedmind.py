@@ -88,6 +88,7 @@ class App(tk.Tk):
         self._running = False
         self._stop_requested = False
         self._destroyed = False
+        self._all_done = False
         self._proc = None
         self._thread = None
         self._rate_limit_resets_at = None
@@ -166,7 +167,8 @@ class App(tk.Tk):
             text = progress_path.read_text(encoding="utf-8")
             if "⬜" not in text:
                 self._log_msg("\n[DONE] ✅ 모든 MCP 태스크 완료 — 자동 종료합니다.")
-                self._stop_requested = True
+                self._all_done = True
+                self._safe_after(0, lambda: self._set_status("DONE ✅", "#a6e3a1"))
                 return True
         except Exception as e:
             self._log_msg(f"[DONE] progress.md 읽기 실패: {e}")
@@ -175,7 +177,9 @@ class App(tk.Tk):
     def _merge_to_main(self, wt):
         """run 후 wt-seedmind → main merge 후 push"""
         # 로컬 main을 origin/main으로 ff-only 업데이트 (run 중 외부 push 반영)
-        _git_locked(["merge", "--ff-only", "origin/main"], PROJECT_DIR, timeout=30)
+        rc, err = _git_locked(["merge", "--ff-only", "origin/main"], PROJECT_DIR, timeout=30)
+        if rc != 0:
+            self._log_msg(f"[MERGE] ⚠️ origin/main ff-only 실패 (local main diverged?): {err[:80]}")
 
         # 새 커밋이 있는지 확인 (없으면 스킵)
         rc, out = _git_query(["log", "wt-seedmind", "^main", "--oneline"], PROJECT_DIR)
@@ -246,6 +250,7 @@ class App(tk.Tk):
             return
         self._running = True
         self._stop_requested = False
+        self._all_done = False
         self._rate_limit_resets_at = None
         self._model = self._model_var.get()
         self._btn_start.config(state="disabled")
@@ -483,7 +488,8 @@ class App(tk.Tk):
         self._btn_start.config(state="normal")
         self._btn_stop.config(state="disabled")
         self._model_menu.config(state="normal")
-        self._set_status("IDLE", "#6c7086")
+        if not self._all_done:
+            self._set_status("IDLE", "#6c7086")
 
 
 # -- helpers -----------------------------------------------------------------
