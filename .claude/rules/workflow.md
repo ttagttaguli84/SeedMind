@@ -1,9 +1,10 @@
 # Workflow Rules
 
-## Document-Only Policy
-- This project is in DESIGN PHASE — no code files (.cs, .json, .unity) are written
+## Document-Only Policy (Phase 1 only)
+- While in Phase 1: no code files (.cs, .json, .unity) are written
 - All work produces markdown documents in `docs/`
 - Code snippets in docs are illustrative, not executable
+- This policy is lifted automatically when Phase 2 begins
 
 ## Agent Collaboration
 
@@ -78,6 +79,54 @@ If a git command requires a repo path, use `-C .` (current dir) or omit the path
 - PATTERN- prefix = systemic issue, handled by self-improve only
 
 ## Phase Progression
-- Phase advances when all TODO items for that phase are complete
-- Update README.md status when phase changes
-- Write a devlog entry for each phase transition
+
+### Phase 1 → Phase 2 Completion Criteria (AI self-evaluated)
+Check at the start of every session. When all conditions are met, transition immediately without waiting for user approval.
+
+1. [ ] All systems have DES + ARC + MCP task documents.
+   DES source varies by system — check the mapping below:
+
+   | System | DES | ARC | MCP tasks |
+   |--------|-----|-----|-----------|
+   | farming | systems/farming-system.md | farming-architecture.md | farming-tasks.md |
+   | crop-growth | systems/crop-growth.md | crop-growth-architecture.md | crop-growth-tasks.md |
+   | time-season | systems/time-season.md | time-season-architecture.md | time-season-tasks.md |
+   | economy | systems/economy-system.md | economy-architecture.md | economy-tasks.md |
+   | inventory | systems/inventory-system.md | inventory-architecture.md | inventory-tasks.md |
+   | quest | systems/quest-system.md | quest-architecture.md | quest-tasks.md |
+   | achievement | systems/achievement-system.md | achievement-architecture.md | achievement-tasks.md |
+   | ui | systems/ui-system.md | ui-architecture.md | ui-tasks.md |
+   | tool-upgrade | systems/tool-upgrade.md | tool-upgrade-architecture.md | tool-upgrade-tasks.md |
+   | tutorial | systems/tutorial-system.md | tutorial-architecture.md | tutorial-tasks.md |
+   | save-load | systems/save-load-system.md | save-load-architecture.md | save-load-tasks.md |
+   | collection | systems/collection-system.md | collection-architecture.md | collection-tasks.md |
+   | decoration | systems/decoration-system.md | decoration-architecture.md | decoration-tasks.md |
+   | energy | systems/energy-system.md | energy-architecture.md | energy-tasks.md |
+   | farm-expansion | systems/farm-expansion.md | farm-expansion-architecture.md | farm-expansion-tasks.md |
+   | fishing | systems/fishing-system.md | fishing-architecture.md | fishing-tasks.md |
+   | gathering | systems/gathering-system.md | gathering-architecture.md | gathering-tasks.md |
+   | sound | systems/sound-design.md | sound-architecture.md | sound-tasks.md |
+   | visual | systems/visual-guide.md | visual-architecture.md | visual-tasks.md |
+   | progression | balance/progression-curve.md (DES) | progression-architecture.md | progression-tasks.md |
+   | facilities | content/facilities.md (DES) | facilities-architecture.md | facilities-tasks.md |
+   | npc-shop | content/npcs.md (DES) | npc-shop-architecture.md | npc-shop-tasks.md |
+   | blacksmith | content/blacksmith-npc.md (DES) | blacksmith-architecture.md | blacksmith-tasks.md |
+   | livestock | content/livestock-system.md (DES) | livestock-architecture.md | livestock-tasks.md |
+   | processing | content/processing-system.md (DES) | processing-architecture.md | processing-tasks.md |
+2. [ ] Zero incomplete DES-*/ARC-* items in TODO
+3. [ ] Zero unresolved PATTERN-* items in TODO (self-improve handled)
+4. [ ] No implementation-blocking `[OPEN]` tags in core ARC documents
+
+All four must be true simultaneously. If any condition is unmet, continue Phase 1 and replenish TODO as needed.
+
+### Phase Transition Procedure (executed by AI autonomously)
+When all four criteria above are confirmed:
+1. Update `README.md` current status to Phase 2
+2. Update `CLAUDE.md` current status + remove Document-only rule (핵심 규칙 2번)
+3. Update `workflow.md` Document-Only Policy section
+4. Write devlog entry for the phase transition
+5. `git commit + push`
+6. Begin Unity MCP task execution starting from `docs/mcp/scene-setup-tasks.md`
+
+### Phase 2 → Phase 3 and beyond
+Defined separately when Phase 2 scope is established.

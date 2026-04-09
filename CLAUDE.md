@@ -65,5 +65,5 @@ logs/
 ## Session Defaults
 - 모든 /command는 이 규칙을 상속
 - 문서 변경 후 항상 cross-reference 검증
-- TODO 자동 보충: DES/ARC 항목이 0개일 때만 신규 추가 (FIX/BAL/CON 수는 무시)
+- TODO 자동 보충 (Phase 1 한정): Phase 1 완료 조건(workflow.md 참조)이 미충족된 상태에서 DES/ARC 항목이 0개일 때만 신규 추가. 완료 조건이 충족되면 추가 금지 — Phase 2 전환 절차 즉시 실행.
 - FIX 즉시 처리 원칙: 작업 완료 시 발견되는 후속 수정(참조 추가, 수치 반영, enum 동기화 등)은 같은 작업 내에서 즉시 처리. 별도 FIX 항목으로 TODO에 등록하지 않음. TODO에 FIX를 올리는 경우는 즉시 처리 불가능한 경우만 (다른 시스템 설계 미확정, 사용자 결정 필요 등)
