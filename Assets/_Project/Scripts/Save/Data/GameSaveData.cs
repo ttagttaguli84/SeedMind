@@ -36,5 +36,10 @@ namespace SeedMind.Save.Data
         // -> see docs/systems/livestock-architecture.md 섹션 9.2
         // null 허용: 이전 세이브 호환. null 시 축사/닭장 미해금 상태로 초기화
         public SeedMind.Livestock.AnimalSaveData animals;
+
+        // --- 낚시 세이브 데이터 ---
+        // -> see docs/systems/fishing-architecture.md 섹션 10, 12.1
+        // null 허용: 이전 세이브 호환. null 시 낚시 통계/숙련도 초기 상태로 복원
+        public SeedMind.Fishing.FishingSaveData fishing;
     }
 }

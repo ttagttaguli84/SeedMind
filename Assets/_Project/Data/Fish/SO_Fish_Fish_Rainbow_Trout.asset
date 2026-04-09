@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 995d6e019c8140e4fa7285ec8e266c33, type: 3}
+  m_Name: SO_Fish_Fish_Rainbow_Trout
+  m_EditorClassIdentifier: Assembly-CSharp::SeedMind.Fishing.Data.FishData
+  dataId: fish_rainbow_trout
+  displayName: "\uBB34\uC9C0\uAC1C\uC1A1\uC5B4"
+  icon: {fileID: 0}
+  fishId: fish_rainbow_trout
+  rarity: 2
+  basePrice: 150
+  seasonAvailability: 4
+  timeWeights:
+  - 0.45
+  - 0.35
+  - 0.1
+  - 0.05
+  - 0.05
+  weatherBonus: 6
+  minigameDifficulty: 0.7
+  targetZoneWidthMul: 0.75
+  moveSpeed: 2.2
+  maxStackSize: 99
+  expReward: 20

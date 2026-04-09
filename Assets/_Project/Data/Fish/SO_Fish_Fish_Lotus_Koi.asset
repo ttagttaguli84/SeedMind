@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 995d6e019c8140e4fa7285ec8e266c33, type: 3}
+  m_Name: SO_Fish_Fish_Lotus_Koi
+  m_EditorClassIdentifier: Assembly-CSharp::SeedMind.Fishing.Data.FishData
+  dataId: fish_lotus_koi
+  displayName: "\uC5F0\uAF43 \uC789\uC5B4"
+  icon: {fileID: 0}
+  fishId: fish_lotus_koi
+  rarity: 3
+  basePrice: 800
+  seasonAvailability: 2
+  timeWeights:
+  - 0.8
+  - 0.12
+  - 0.04
+  - 0.02
+  - 0.02
+  weatherBonus: 1
+  minigameDifficulty: 0.9
+  targetZoneWidthMul: 0.5
+  moveSpeed: 3
+  maxStackSize: 99
+  expReward: 50

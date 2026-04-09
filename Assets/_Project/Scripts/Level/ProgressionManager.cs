@@ -88,7 +88,7 @@ namespace SeedMind.Level
             // BlacksmithEvents.OnUpgradeCompleted        += HandleToolUpgrade;
             // QuestEvents.OnQuestRewarded                += HandleQuestXP;
             // AchievementEvents.OnAchievementUnlocked    += HandleAchievementXP;
-            // FishingEvents.OnFishCaught                 += HandleFishingXP;
+            SeedMind.Fishing.FishingEvents.OnFishCaught += HandleFishCaught;
             // GatheringEvents.OnGatheringCompleted       += HandleGatheringXP;
             LivestockEvents.OnAnimalFed                += HandleAnimalCareXP;
             LivestockEvents.OnAnimalPetted             += HandleAnimalCareXP;
@@ -98,6 +98,7 @@ namespace SeedMind.Level
         private void OnDisable()
         {
             FarmEvents.OnCropHarvested -= HandleCropHarvested;
+            SeedMind.Fishing.FishingEvents.OnFishCaught -= HandleFishCaught;
             LivestockEvents.OnAnimalFed      -= HandleAnimalCareXP;
             LivestockEvents.OnAnimalPetted   -= HandleAnimalCareXP;
             LivestockEvents.OnProductCollected -= HandleAnimalHarvestXP;
@@ -156,6 +157,11 @@ namespace SeedMind.Level
                 case XPSource.AchievementReward:
                     return context is int xp ? xp : 0;
 
+                case XPSource.FishingCatch:
+                    // FishData.expReward 값을 context로 전달
+                    // -> see docs/systems/fishing-architecture.md 섹션 6.2
+                    return context is int fishXp ? fishXp : 0;
+
                 default: return 0;
             }
         }
@@ -182,6 +188,14 @@ namespace SeedMind.Level
             _milestoneTracker.UpdateProgress(MilestoneConditionType.TotalHarvest, null, 1);
             _milestoneTracker.UpdateProgress(MilestoneConditionType.CropHarvestCount, crop.cropId, 1);
             _milestoneTracker.UpdateProgress(MilestoneConditionType.FirstHarvest, crop.cropId, 1);
+        }
+
+        private void HandleFishCaught(SeedMind.Fishing.Data.FishData fish, SeedMind.Economy.CropQuality quality)
+        {
+            if (fish == null) return;
+            // -> see docs/systems/fishing-architecture.md 섹션 6.3
+            int xp = GetExpForSource(XPSource.FishingCatch, fish.expReward);
+            AddExp(xp, XPSource.FishingCatch);
         }
 
         private void HandleAnimalCareXP(AnimalInstance animal)

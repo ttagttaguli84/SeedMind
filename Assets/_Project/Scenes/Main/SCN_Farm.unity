@@ -10807,6 +10807,59 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1411373621187103965, guid: 13c536de8d0b2b4418948b20c9ae0ce8, type: 3}
   m_PrefabInstance: {fileID: 780786044}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &787505656
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 787505658}
+  - component: {fileID: 787505657}
+  m_Layer: 0
+  m_Name: FishingPoint_03
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &787505657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 787505656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 424eb67186d234945812dab9415fc0cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SeedMind.Fishing.FishingPoint
+  pointId: fp_03
+  tilePosition: {x: 0, y: 0}
+  availableFish: []
+  rarityWeights:
+  - 0.6
+  - 0.28
+  - 0.1
+  - 0.02
+  maxDailyUseCount: 10
+--- !u!4 &787505658
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 787505656}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1581990258}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &787834680
 GameObject:
   m_ObjectHideFlags: 0
@@ -11833,6 +11886,59 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SeedMind.NPC.NPCController
   _npcData: {fileID: 11400000, guid: c0100dc0a5b85b242a0fcc755ee73c6d, type: 2}
+--- !u!1 &874943221
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 874943222}
+  - component: {fileID: 874943223}
+  m_Layer: 0
+  m_Name: FishingPoint_02
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &874943222
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874943221}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1581990258}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &874943223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874943221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 424eb67186d234945812dab9415fc0cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SeedMind.Fishing.FishingPoint
+  pointId: fp_02
+  tilePosition: {x: 0, y: 0}
+  availableFish: []
+  rarityWeights:
+  - 0.6
+  - 0.28
+  - 0.1
+  - 0.02
+  maxDailyUseCount: 10
 --- !u!1 &891619444
 GameObject:
   m_ObjectHideFlags: 0
@@ -19013,6 +19119,71 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1430367091}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1431064490
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1431064491}
+  - component: {fileID: 1431064492}
+  m_Layer: 0
+  m_Name: FishingManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1431064491
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1431064490}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2036590076}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1431064492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1431064490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b7b8a02f9d5fe04f9f6f40814987fb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SeedMind.Fishing.FishingManager
+  _fishDataRegistry:
+  - {fileID: 11400000, guid: 9e8929fc337504a4aae5d5652d4d8d07, type: 2}
+  - {fileID: 11400000, guid: 0007f696ee9c5424d8e00555524ce362, type: 2}
+  - {fileID: 11400000, guid: 89c610e4dd58a4147a7366400b618379, type: 2}
+  - {fileID: 11400000, guid: 6f36afaba4d6b654eb2b9ae6eae0b00e, type: 2}
+  - {fileID: 11400000, guid: b8816115ff1555f4b86ac97d3683a478, type: 2}
+  - {fileID: 11400000, guid: 979e611cc6d58c04383a5e42b9b2d63f, type: 2}
+  - {fileID: 11400000, guid: 602bd1a03ced3fc4d9e8c8a77c129959, type: 2}
+  - {fileID: 11400000, guid: 5a066072e87e92447951986aa9ad52ca, type: 2}
+  - {fileID: 11400000, guid: c407f3dd89c2f9f4c85859e6dc2a6172, type: 2}
+  - {fileID: 11400000, guid: 2b0c81c29fc3ed54fadf75879eaef1a8, type: 2}
+  - {fileID: 11400000, guid: de8401d9b452a814fb12ef8f9fe994d9, type: 2}
+  - {fileID: 11400000, guid: 7fafe357abf1f0f4f80f45c24e91d4e7, type: 2}
+  - {fileID: 11400000, guid: 5c1c15e94a2431e41bd06add1ace9308, type: 2}
+  - {fileID: 11400000, guid: 04a76d1ca0df34c41980808606dfe74f, type: 2}
+  - {fileID: 11400000, guid: 22de6e43adc0e484f96a452b7fe88b16, type: 2}
+  _fishingConfig: {fileID: 11400000, guid: 171ece957ce8b474f89d8ad1819d8fa9, type: 2}
+  _fishingPoints:
+  - {fileID: 2139281012}
+  - {fileID: 874943223}
+  - {fileID: 787505657}
 --- !u!1001 &1449974273
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20484,6 +20655,9 @@ Transform:
   - {fileID: 1038599939}
   - {fileID: 1062646070}
   - {fileID: 409373307}
+  - {fileID: 2139281011}
+  - {fileID: 874943222}
+  - {fileID: 787505658}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1586625517
@@ -24971,6 +25145,7 @@ Transform:
   - {fileID: 1023847468}
   - {fileID: 1310075352}
   - {fileID: 284468414}
+  - {fileID: 1431064491}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2050018761
@@ -26372,6 +26547,59 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1372131232}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2139281010
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2139281011}
+  - component: {fileID: 2139281012}
+  m_Layer: 0
+  m_Name: FishingPoint_01
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2139281011
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2139281010}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1581990258}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2139281012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2139281010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 424eb67186d234945812dab9415fc0cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SeedMind.Fishing.FishingPoint
+  pointId: fp_01
+  tilePosition: {x: 0, y: 0}
+  availableFish: []
+  rarityWeights:
+  - 0.6
+  - 0.28
+  - 0.1
+  - 0.02
+  maxDailyUseCount: 10
 --- !u!1001 &2146114660
 PrefabInstance:
   m_ObjectHideFlags: 0
