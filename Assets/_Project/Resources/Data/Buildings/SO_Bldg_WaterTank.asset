@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5e47c64d92d4aa4bb8366e393825bd0, type: 3}
+  m_Name: SO_Bldg_WaterTank
+  m_EditorClassIdentifier: Assembly-CSharp::SeedMind.Building.Data.BuildingData
+  dataId: building_water_tank
+  displayName: "\uBB3C\uD0F1\uD06C"
+  icon: {fileID: 0}
+  description: "\uC778\uC811 \uACBD\uC791\uC9C0\uC5D0 \uB9E4\uC77C \uC544\uCE68 \uC790\uB3D9\uC73C\uB85C
+    \uBB3C\uC744 \uC900\uB2E4."
+  buildCost: 1500
+  requiredLevel: 2
+  buildTimeDays: 2
+  tileSize: {x: 2, y: 2}
+  placementRules: 0
+  prefab: {fileID: 8049660388344557254, guid: 05176cc602e410a46849c006e2768876, type: 3}
+  constructionPrefab: {fileID: 1641671529623145153, guid: e9f42cfb719b573429a7a8815aa60d58, type: 3}
+  effectType: 1
+  effectRadius: 3
+  effectValue: 0
+  maxUpgradeLevel: 3
+  upgradeCosts: 20030000dc050000b80b0000

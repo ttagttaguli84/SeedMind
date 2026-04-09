@@ -6,6 +6,13 @@ namespace SeedMind.Farm
     {
         public FarmGrid farmGrid;
 
+        private ISeasonOverrideProvider _seasonOverrideProvider;
+
+        public void SetSeasonOverrideProvider(ISeasonOverrideProvider provider)
+        {
+            _seasonOverrideProvider = provider;
+        }
+
         public void AdvanceDay()
         {
             if (farmGrid == null) farmGrid = FindObjectOfType<FarmGrid>();
