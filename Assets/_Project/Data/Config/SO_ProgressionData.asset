@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eb83dfd1069cd3429a10a31472e6062, type: 3}
+  m_Name: SO_ProgressionData
+  m_EditorClassIdentifier: Assembly-CSharp::SeedMind.Level.Data.ProgressionData
+  maxLevel: 10
+  expPerLevel: 5000000080000000cd000000480100000c020000470300003e050000630800006c0d0000
+  harvestExpBase: 5
+  harvestExpPerGrowthDay: 1
+  qualityExpBonus:
+  - 1
+  - 1.2
+  - 1.5
+  - 2
+  buildingConstructExp: 30
+  toolUseExp: 2
+  facilityProcessExp: 5
+  toolUpgradeExp: 90
+  animalCareExp: 3
+  animalHarvestBaseExp: 5
+  unlockTable: []
+  milestones: []
