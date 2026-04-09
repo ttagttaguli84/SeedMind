@@ -1,6 +1,6 @@
 # SeedMind — MCP 태스크 실행 진행 상황
 
-> 최종 업데이트: 2026-04-10 (fishing-tasks.md F-1~F-6 완료)
+> 최종 업데이트: 2026-04-10 (collection-tasks.md Q-A~Q-F 완료)
 > **갱신 규칙**: 각 MCP 태스크 파일 실행 완료 직후 해당 항목을 ✅로 바꾸고 커밋. 세션 종료와 무관하게 완료 즉시 갱신한다.
 > 새 세션 시작 시 `/start`가 이 파일을 읽어 진행 위치를 복원한다.
 
@@ -8,8 +8,8 @@
 
 ## 현재 위치
 
-**Phase F — Advanced Features**
-- 다음 실행 파일: `collection-tasks.md` (G-1, Phase G)
+**Phase G — Polish**
+- 다음 실행 파일: `decoration-tasks.md` (ARC-046, Phase G)
 
 ---
 
@@ -80,7 +80,7 @@
 
 | 파일 | 완료 여부 | 비고 |
 |------|----------|------|
-| `collection-tasks.md` (ARC-041) | ⬜ 미시작 | |
+| `collection-tasks.md` (ARC-041) | ✅ 완료 | Q-A~Q-F 완료 (스크립트 10종, SO 27종, GatheringCatalogManager 씬배치+배열연결, CollectionPanel/GatheringCatalogToast UI 계층). Q-G(FishCatalogPanel 마이그레이션) FishCatalog 미구현으로 스킵. Q-H(통합테스트) execute_code 비활성으로 스킵. |
 | `decoration-tasks.md` (ARC-046) | ⬜ 미시작 | |
 
 ---
