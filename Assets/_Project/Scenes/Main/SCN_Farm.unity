@@ -177,7 +177,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 16926281}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2115901348}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -5911,7 +5911,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7608369c0307ee488ffd78238b53613, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SeedMind.Farm.GrowthSystem
-  farmGrid: {fileID: 0}
+  farmGrid: {fileID: 2122019856}
 --- !u!1 &1055680811
 GameObject:
   m_ObjectHideFlags: 0
@@ -6633,7 +6633,7 @@ CharacterController:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1337063561}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 1963575278}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -9386,6 +9386,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1948700928}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!134 &1963575278
+PhysicsMaterial:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  serializedVersion: 2
+  m_DynamicFriction: 0.6
+  m_StaticFriction: 0.6
+  m_Bounciness: 0
+  m_FrictionCombine: 0
+  m_BounceCombine: 0
 --- !u!1 &1984237843
 GameObject:
   m_ObjectHideFlags: 0
@@ -10356,6 +10369,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2111370691}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!134 &2115901348
+PhysicsMaterial:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  serializedVersion: 2
+  m_DynamicFriction: 0.6
+  m_StaticFriction: 0.6
+  m_Bounciness: 0
+  m_FrictionCombine: 0
+  m_BounceCombine: 0
 --- !u!1 &2122019854
 GameObject:
   m_ObjectHideFlags: 0

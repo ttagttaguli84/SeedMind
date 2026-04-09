@@ -8,6 +8,13 @@ You are running a **planning session** for SeedMind.
 
 > **Note**: CLAUDE.md, doc-standards.md, workflow.md are already loaded in system context. Do NOT read them again.
 
+**Step 0 — Check current Phase:**
+Read `CLAUDE.md` current status (already in context). If it says **Phase 2**, read `docs/mcp/progress.md` to find the current MCP execution position, then continue from there instead of running the document workflow below.
+
+> Phase 2 flow: read `docs/mcp/progress.md` → identify next task file → execute MCP tasks → save scene → update progress.md → commit + push.
+
+---
+
 Determine task type from `TODO.md` first, then load only what is needed:
 
 **Step 1 — Always read (all task types):**
