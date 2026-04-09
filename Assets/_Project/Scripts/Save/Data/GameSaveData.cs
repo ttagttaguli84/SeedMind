@@ -22,5 +22,9 @@ namespace SeedMind.Save.Data
         // --- 업적 세이브 데이터 ---
         // -> see docs/systems/achievement-architecture.md 섹션 7.3
         public SeedMind.Achievement.AchievementSaveData achievements;
+
+        // --- 튜토리얼 세이브 데이터 ---
+        // -> see docs/systems/tutorial-architecture.md 섹션 7.2
+        public SeedMind.Tutorial.TutorialSaveData tutorial;
     }
 }

@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cec3a67f3a964244c87479e1c53ec004, type: 3}
+  m_Name: SO_TutStep_Main_09_Harvest
+  m_EditorClassIdentifier: Assembly-CSharp::SeedMind.Tutorial.Data.TutorialStepData
+  stepId: STEP_Main_09_Harvest
+  uiType: 4
+  messageText: "\uC218\uD655\uD560 \uC2DC\uAE30\uAC00 \uB410\uC5B4\uC694!"
+  iconOverride: {fileID: 0}
+  anchorType: 1
+  anchorTargetId: 
+  showArrow: 0
+  arrowOffset: {x: 0, y: 0}
+  showHighlight: 0
+  highlightRadius: 0
+  completionType: 0
+  completionEventType: FarmEvents.OnCropHarvested
+  completionParam: 
+  autoAdvanceDelay: 0
+  blockOtherInput: 0
+  allowedInputActions: []

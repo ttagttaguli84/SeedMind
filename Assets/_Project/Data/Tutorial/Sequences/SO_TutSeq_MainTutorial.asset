@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08116ff6c74795d43a82b8d9f285840b, type: 3}
+  m_Name: SO_TutSeq_MainTutorial
+  m_EditorClassIdentifier: Assembly-CSharp::SeedMind.Tutorial.Data.TutorialSequenceData
+  sequenceId: SEQ_MainTutorial
+  displayName: "\uBA54\uC778 \uD29C\uD1A0\uB9AC\uC5BC"
+  tutorialType: 0
+  steps:
+  - {fileID: 11400000, guid: f17fea87c97068a47a2574de46608947, type: 2}
+  - {fileID: 11400000, guid: 1d3b7574b3faf2f48b159a115473db8f, type: 2}
+  - {fileID: 11400000, guid: 15cf9184c949f0d4a98bb3b03a96abe9, type: 2}
+  - {fileID: 11400000, guid: 82085517a2e72374b9c58d1a05e569ca, type: 2}
+  - {fileID: 11400000, guid: b91a261af01c27f4796e63c6b5306fc6, type: 2}
+  - {fileID: 11400000, guid: debdaae9a085beb43bd51e160e4c208b, type: 2}
+  - {fileID: 11400000, guid: 45af15c1771dfa747aaa2ae6ddf978d5, type: 2}
+  - {fileID: 11400000, guid: d1ed80caede7f504e86ebe9115022a45, type: 2}
+  - {fileID: 11400000, guid: 6525e85ed1fc66c4dbe4c2cd4af9fa1e, type: 2}
+  - {fileID: 11400000, guid: b7f3e815b0d99d8408eaec2318f5bc44, type: 2}
+  - {fileID: 11400000, guid: a7263d113acaa1a439254e219c2dad23, type: 2}
+  - {fileID: 11400000, guid: d4773172d4016874cae54e336f91a54c, type: 2}
+  autoStartOnNewGame: 1
+  prerequisiteSequenceId: 
+  startTriggerType: 0
+  startTriggerParam: 
+  skippable: 1
+  pauseGameTime: 0
