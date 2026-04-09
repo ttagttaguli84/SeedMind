@@ -1,6 +1,6 @@
 # SeedMind — MCP 태스크 실행 진행 상황
 
-> 최종 업데이트: 2026-04-10
+> 최종 업데이트: 2026-04-10 (progression-tasks.md 완료)
 > **갱신 규칙**: 각 MCP 태스크 파일 실행 완료 직후 해당 항목을 ✅로 바꾸고 커밋. 세션 종료와 무관하게 완료 즉시 갱신한다.
 > 새 세션 시작 시 `/start`가 이 파일을 읽어 진행 위치를 복원한다.
 
@@ -8,8 +8,8 @@
 
 ## 현재 위치
 
-**Phase B — Core Systems (핵심 시스템)**
-- 다음 실행 파일: `progression-tasks.md` (B-4)
+**Phase C — Content (콘텐츠)**
+- 다음 실행 파일: `crop-content-tasks.md` (C-1)
 
 ---
 
@@ -28,7 +28,7 @@
 | `farming-tasks.md` (ARC-003) | ✅ 완료 | Phase A~C 완료 (그리드 64타일, 작물SO, 도구SO, 스크립트 컴포넌트, 레이어). Phase D(Play Mode 검증) 미실행 |
 | `save-load-tasks.md` (ARC-012) | ✅ 완료 | T-1~T-5 완료 (Singleton/ISaveable/SaveEvents/SaveManager/AutoSaveTrigger/Data 클래스 생성, 씬 배치). T-6(이벤트 연결)은 TimeManager/BuildingEvents 구현 후 처리. T-7(SaveSlotPanel UI), T-8(PauseMenu 연동), T-9(통합 테스트)는 UI 시스템(Phase E) 이후 처리 |
 | `time-season-tasks.md` (ARC-021) | ✅ 완료 | Phase A~D 완료 (스크립트 12개, SO 13개, TimeSystem GO 배치). HUDController 시간 표시 연결 및 E-2 저장/로드 테스트는 UI 시스템(Phase E) 이후 처리 |
-| `progression-tasks.md` (BAL-002-MCP) | ⬜ 미시작 | |
+| `progression-tasks.md` (BAL-002-MCP) | ✅ 완료 | Phase A~B 완료 (스크립트 9개, SO_ProgressionData 생성, ProgressionManager GO 배치, LevelBarUI 연결). Phase C(런타임 검증) execute_code 비활성으로 스킵. unlockTable/milestones 배열은 빈 상태(콘텐츠 확정 후 에디터에서 입력 예정) |
 
 ---
 
