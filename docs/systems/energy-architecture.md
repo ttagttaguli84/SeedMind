@@ -160,7 +160,7 @@ EnergyManager ─implements─▶ ISaveable (SaveLoadOrder = 51)
 │  [초기화/세이브]                                                       │
 │  + Initialize(EnergyConfig config): void                             │
 │  + GetSaveData(): EnergySaveData                                     │
-│  + LoadSaveData(EnergySaveData data): void                           │
+│  + LoadSaveData(object data): void       // ISaveable canonical 시그니처 │
 │                                                                       │
 │  [이벤트 구독 — OnEnable/OnDisable]                                   │
 │  + TimeManager.OnDayChanged ─▶ HandleDayChanged                      │

@@ -44,8 +44,8 @@
 |---------|------|----------------|------------|
 | ARC-002 | `docs/mcp/scene-setup-tasks.md` | Phase A, B 전체 | 폴더 구조, SCN_Farm 기본 계층 (Managers, Environment, UI) |
 | ARC-003 | `docs/mcp/farming-tasks.md` | Phase A~C 전체 | FarmingSystem MonoBehaviour 컴파일 완료 |
-| ARC-008 | `docs/mcp/save-load-tasks.md` | Phase A 이상 | SaveManager, ISaveable, GameSaveData, PlayerSaveData |
-| ARC-011 | `docs/mcp/inventory-tasks.md` | Phase A 이상 | InventoryManager, 아이템 사용 이벤트 구조 |
+| ARC-012 | `docs/mcp/save-load-tasks.md` | Phase A 이상 | SaveManager, ISaveable, GameSaveData, PlayerSaveData |
+| ARC-013 | `docs/mcp/inventory-tasks.md` | Phase A 이상 | InventoryManager, 아이템 사용 이벤트 구조 |
 | ARC-028 | `docs/mcp/fishing-tasks.md` | Phase A 이상 | FishingManager MonoBehaviour 컴파일 완료 |
 | ARC-032 | `docs/mcp/gathering-tasks.md` | Phase A 이상 | GatheringManager MonoBehaviour 컴파일 완료 |
 | ARC-018 | `docs/mcp/ui-tasks.md` | HUD Phase 이상 | Canvas_Overlay, HUDController, 좌측 하단 HUD 슬롯 |
@@ -74,11 +74,11 @@
 | E-A | 스크립트 생성 (5개 파일) | ~9회 | 저 |
 | E-B | SO 에셋 생성 (EnergyConfig.asset 1종 + 필드 설정) | ~6회 | 저 |
 | E-C | EnergyManager 씬 배치 + EnergyConfig 연결 + PlayerController 연동 | ~8회 | 중 |
-| E-D | EnergyBarUI 생성 및 HUD Canvas 배치 + 참조 연결 | ~10회 | 중 |
+| E-D | EnergyBarUI 생성 및 HUD Canvas 배치 + 참조 연결 | ~15회 | 중 |
 | E-E | FarmingSystem / FishingManager / GatheringManager 연동 | ~6회 | 중 |
 | E-F | 수면 회복 / 기절 연동 (TimeManager, EconomyManager) | ~5회 | 중 |
 | E-G | ISaveable 등록 + 세이브/로드 검증 | ~6회 | 저 |
-| **합계** | | **~50회** | |
+| **합계** | | **~55회** | |
 
 [RISK] `EnergyConfig.asset`의 수치 필드 수는 약 25개에 달한다. 각 필드를 `set_property`로 개별 설정하면 ~25회의 추가 호출이 필요하다. Editor 스크립트(`InitEnergyConfig.cs`)를 통한 일괄 설정으로 ~25회를 ~2회로 압축 가능. 수치는 반드시 `docs/systems/energy-system.md` 섹션 9를 참조하여 입력해야 한다 (PATTERN-007).
 
@@ -432,7 +432,7 @@ save_scene
 - E-C 완료 (EnergyManager 씬 배치 완료, EnergyEvents 컴파일 완료)
 - ARC-018 완료 (`Canvas_Overlay` 및 HUD 좌측 하단 슬롯 존재)
 
-**예상 MCP 호출**: ~10회
+**예상 MCP 호출**: ~15회
 
 #### E-D-01: EnergyBarUI 스크립트 생성
 
@@ -516,9 +516,40 @@ create_object
 set_parent
   object: "WellRestedIcon"
   parent: "HUD_EnergyBar"
+
+create_object
+  name: "TempMaxExtension"
+  scene: "SCN_Farm"
+  // Image 컴포넌트 추가 — 임시 maxEnergy 초과 시 황금색 연장 바
+  // 기본 비활성 상태(SetActive false)
+  // 시각 규격 → see docs/systems/energy-architecture.md 섹션 7.2
+
+set_parent
+  object: "TempMaxExtension"
+  parent: "HUD_EnergyBar"
+
+create_object
+  name: "PulseAnimation"
+  scene: "SCN_Farm"
+  // Animator 컴포넌트 추가 — 경고 상태 펄스 애니메이터
+  // 기본 비활성 상태(SetActive false)
+
+set_parent
+  object: "PulseAnimation"
+  parent: "HUD_EnergyBar"
+
+create_object
+  name: "FloatingTextPrefab"
+  scene: "SCN_Farm"
+  // TextMeshProUGUI 컴포넌트 추가 — 소모 수치 플로팅 텍스트 프리팹
+  // [RISK] 프리팹 에셋으로 관리하는 경우 씬 내 오브젝트 대신 prefab 참조 방식 필요
+
+set_parent
+  object: "FloatingTextPrefab"
+  parent: "HUD_EnergyBar"
 ```
 
-- **MCP 호출**: 6회 (create_object + set_parent × 3쌍)
+- **MCP 호출**: 12회 (create_object + set_parent × 6쌍)
 
 [RISK] UI 세부 레이아웃 설정(RectTransform anchoredPosition, sizeDelta 등)은 MCP `set_property`로 설정하기 복잡하다. UI 정밀 배치는 Unity Editor에서 Inspector를 통해 수동 조정하거나, UI 설정 Editor 스크립트로 자동화하는 것을 권장한다. 시각 규격 → see `docs/systems/ui-system.md` 섹션 [E].
 
@@ -542,9 +573,27 @@ set_property
   component: "SeedMind.UI.EnergyBarUI"
   property: "_wellRestedIcon"
   value: [WellRestedIcon 오브젝트 참조]
+
+set_property
+  object: "HUD_EnergyBar"
+  component: "SeedMind.UI.EnergyBarUI"
+  property: "_tempMaxExtension"
+  value: [TempMaxExtension 오브젝트 참조]
+
+set_property
+  object: "HUD_EnergyBar"
+  component: "SeedMind.UI.EnergyBarUI"
+  property: "_pulseAnimation"
+  value: [PulseAnimation 오브젝트 참조]
+
+set_property
+  object: "HUD_EnergyBar"
+  component: "SeedMind.UI.EnergyBarUI"
+  property: "_floatingTextPrefab"
+  value: [FloatingTextPrefab 오브젝트 참조]
 ```
 
-- **MCP 호출**: 3회 (E-D-03~04 내 포함 집계)
+- **MCP 호출**: 6회
 
 #### E-D-06: 씬 저장
 
@@ -557,7 +606,7 @@ save_scene
 
 **E-D 완료 체크리스트**:
 - [ ] `Canvas_Overlay` 하위에 `HUD_EnergyBar` GO가 존재한다
-- [ ] `EnergyBarUI` 컴포넌트의 `_fillImage`, `_labelText`, `_wellRestedIcon` 참조가 연결되어 있다
+- [ ] `EnergyBarUI` 컴포넌트의 6개 참조 필드(`_fillImage`, `_labelText`, `_wellRestedIcon`, `_tempMaxExtension`, `_pulseAnimation`, `_floatingTextPrefab`)가 모두 연결되어 있다
 - [ ] Play Mode 진입 후 에너지 변경 시 게이지 바가 갱신된다
 
 ---
@@ -798,7 +847,8 @@ save_scene
 | `docs/mcp/farming-tasks.md` (ARC-003) | FarmingSystem 씬 배치 |
 | `docs/mcp/fishing-tasks.md` (ARC-028) | FishingManager 씬 배치 |
 | `docs/mcp/gathering-tasks.md` (ARC-032) | GatheringManager 씬 배치 |
-| `docs/mcp/save-load-tasks.md` (ARC-008) | SaveManager 씬 배치, ISaveable 구조 |
+| `docs/mcp/save-load-tasks.md` (ARC-012) | SaveManager 씬 배치, ISaveable 구조 |
+| `docs/mcp/ui-tasks.md` (ARC-018) | Canvas_Overlay, HUDController, HUD 좌측 하단 슬롯 배치 |
 
 ---
 
