@@ -9,7 +9,7 @@
 ## 현재 위치
 
 **Phase F — Advanced Features**
-- 다음 실행 파일: `livestock-tasks.md` (F-2)
+- 다음 실행 파일: `fishing-tasks.md` (F-3)
 
 ---
 
@@ -70,7 +70,7 @@
 | 파일 | 완료 여부 | 비고 |
 |------|----------|------|
 | `farm-expansion-tasks.md` (ARC-025) | ✅ 완료 | Z-1~Z-9 완료. 스크립트 14종(5 enum+ZoneEvents+ZoneData+ObstacleEntry/Instance+ZoneRuntimeState+FarmZoneManager+FarmGrid.Zone partial+ZoneSaveData/Entry/Obstacle). Editor 스크립트 3종(CreateObstacleAssets/CreateZoneAssets/ConnectZoneManagerRefs). 머티리얼 4종+프리팹 7종. ZoneData SO 7종(Zone A~G). FarmZoneManager 씬배치+배열연결. Z-9 Play Mode 통합테스트 execute_code 비활성으로 스킵. |
-| `livestock-tasks.md` (ARC-024) | ⬜ 미시작 | |
+| `livestock-tasks.md` (ARC-024) | ✅ 완료 | L-1~L-8 완료. 스크립트 10종(AnimalType/CollectResult/AnimalProductInfo/AnimalData/LivestockConfig/AnimalInstance/AnimalSaveData/HappinessCalculator/LivestockEvents/AnimalManager). UI 3종(AnimalShopUI/AnimalCareUI/AnimalSlotUI). Editor 3종(CreateAnimalAssets/ConnectAnimalManagerRefs/CreateLivestockUI). SO 에셋: AnimalData 4종+LivestockConfig+FeedItem 4종. AnimalManager GO 씬배치+SO 배열연결. Panel_AnimalShop/Panel_AnimalCare/PFB_AnimalSlot UI 생성. ProgressionManager LivestockEvents 구독 활성화. GameSaveData animals 필드 추가. L-9(통합테스트) execute_code 비활성으로 스킵. |
 | `fishing-tasks.md` (ARC-028) | ⬜ 미시작 | |
 | `gathering-tasks.md` (ARC-032) | ⬜ 미시작 | |
 
