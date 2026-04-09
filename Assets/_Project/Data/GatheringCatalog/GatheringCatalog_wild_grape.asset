@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baec1b8e0f3fba0498817c48fd05466d, type: 3}
+  m_Name: GatheringCatalog_wild_grape
+  m_EditorClassIdentifier: Assembly-CSharp::SeedMind.Collection.GatheringCatalogData
+  itemId: gather_wild_grape
+  hintLocked: "\uAC00\uC744 \uB364\uBD88\uC5D0 \uB9E4\uB2EC\uB9B0 \uAC80\uD478\uB978
+    \uC791\uC740 \uD3EC\uB3C4. \uBC1C\uD6A8\uC2DC\uD0A4\uBA74 \uAE4A\uC740 \uB9DB\uC758
+    \uC640\uC778\uC774 \uB41C\uB2E4."
+  descriptionUnlocked: "\uAC00\uC744 \uB364\uBD88\uC5D0 \uD3EC\uB3C4\uCC98\uB7FC
+    \uB9E4\uB2EC\uB9AC\uB294 \uC57C\uC0DD \uC5F4\uB9E4. \uBC1C\uD6A8\uC2DC\uD0A4\uBA74
+    \uAE4A\uC740 \uB9DB\uC758 \uBA38\uB8E8\uC8FC\uAC00 \uB418\uC5B4 \uD2B9\uBCC4\uD55C
+    \uC120\uBB3C\uB85C \uC778\uAE30\uB2E4."
+  rarity: 1
+  firstDiscoverGold: 15
+  firstDiscoverXP: 5
+  catalogIcon: {fileID: 0}
+  sortOrder: 16

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baec1b8e0f3fba0498817c48fd05466d, type: 3}
+  m_Name: GatheringCatalog_violet
+  m_EditorClassIdentifier: Assembly-CSharp::SeedMind.Collection.GatheringCatalogData
+  itemId: gather_violet
+  hintLocked: "\uB364\uBD88 \uC0AC\uC774\uC5D0 \uC228\uB4EF \uD53C\uC5B4\uB098\uB294
+    \uBCF4\uB77C\uBE5B \uC791\uC740 \uAF43. \uC120\uBB3C\uD558\uBA74 \uB204\uAD6C\uB098
+    \uBBF8\uC18C \uC9D3\uB294\uB2E4."
+  descriptionUnlocked: "\uBD04 \uB364\uBD88 \uC0AC\uC774\uC5D0 \uC18C\uB2F4\uD558\uAC8C
+    \uD53C\uC5B4\uB098\uB294 \uBCF4\uB77C\uBE5B \uAF43. \uD5A5\uAE30\uAC00 \uC740\uC740\uD558\uACE0
+    \uC0C9\uC774 \uC544\uB984\uB2E4\uC6CC \uC120\uBB3C\uC6A9\uC73C\uB85C\uB3C4 \uC778\uAE30\uB2E4."
+  rarity: 1
+  firstDiscoverGold: 15
+  firstDiscoverXP: 5
+  catalogIcon: {fileID: 0}
+  sortOrder: 4

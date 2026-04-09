@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baec1b8e0f3fba0498817c48fd05466d, type: 3}
+  m_Name: GatheringCatalog_millennium_reishi
+  m_EditorClassIdentifier: Assembly-CSharp::SeedMind.Collection.GatheringCatalogData
+  itemId: gather_millennium_reishi
+  hintLocked: "\uD750\uB9B0 \uAC00\uC744 \uB0A0, \uC232\uC758 \uAC00\uC7A5 \uAE4A\uC740
+    \uACF3\uC5D0\uC11C \uBC1C\uACAC\uB418\uB294 \uC804\uC124\uC758 \uBC84\uC12F.
+    \uCC9C \uB144\uC758 \uAE30\uC6B4\uC774 \uC11C\uB824 \uC788\uB2E4."
+  descriptionUnlocked: "\uCC9C \uB144\uC744 \uC790\uB780 \uC804\uC124\uC758 \uC601\uC9C0\uBC84\uC12F.
+    \uADF9\uD788 \uB4DC\uBB3C\uAC8C \uBC1C\uACAC\uB418\uBA70 \uADF8 \uC2E0\uBE44\uB85C\uC6B4
+    \uD6A8\uB2A5\uC740 \uC219\uB828\uB41C \uCC44\uC9D1\uAC00\uB4E4 \uC0AC\uC774\uC5D0\uC11C\uB9CC
+    \uC804\uD574\uC9C4\uB2E4."
+  rarity: 3
+  firstDiscoverGold: 200
+  firstDiscoverXP: 50
+  catalogIcon: {fileID: 0}
+  sortOrder: 18

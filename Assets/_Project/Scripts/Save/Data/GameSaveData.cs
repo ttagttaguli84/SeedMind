@@ -46,5 +46,10 @@ namespace SeedMind.Save.Data
         // -> see docs/systems/gathering-architecture.md 섹션 7
         // null 허용: 이전 세이브 호환. null 시 채집 통계/포인트 상태 초기화
         public SeedMind.Gathering.GatheringSaveData gathering;
+
+        // --- 채집 도감 세이브 데이터 ---
+        // -> see docs/systems/collection-architecture.md 섹션 5.2
+        // null 허용: 이전 세이브 호환. null 시 MigrateFromGatheringStats() 호출
+        public SeedMind.Collection.GatheringCatalogSaveData gatheringCatalog;
     }
 }

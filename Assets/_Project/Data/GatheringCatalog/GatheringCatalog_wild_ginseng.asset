@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baec1b8e0f3fba0498817c48fd05466d, type: 3}
+  m_Name: GatheringCatalog_wild_ginseng
+  m_EditorClassIdentifier: Assembly-CSharp::SeedMind.Collection.GatheringCatalogData
+  itemId: gather_wild_ginseng
+  hintLocked: "\uBD04\uBE44 \uB0B4\uB9B0 \uAE4A\uC740 \uC232\uC18D, \uC624\uB79C
+    \uC138\uC6D4\uC744 \uACAC\uB518 \uC2E0\uBE44\uB85C\uC6B4 \uBFCC\uB9AC. \uC219\uB828\uB41C
+    \uCC44\uC9D1\uAC00\uB9CC\uC774 \uBC1C\uACAC\uD560 \uC218 \uC788\uB2E4."
+  descriptionUnlocked: "\uAE4A\uC740 \uC232\uC18D\uC5D0\uC11C \uC218\uC2ED \uB144\uC744
+    \uC790\uB780 \uC0B0\uC0BC. \uADF9\uD788 \uB4DC\uBB3C\uAC8C \uBC1C\uACAC\uB418\uBA70,
+    \uADF8 \uC57D\uD6A8\uB294 \uC804\uC124\uC801\uC774\uB2E4."
+  rarity: 3
+  firstDiscoverGold: 200
+  firstDiscoverXP: 50
+  catalogIcon: {fileID: 0}
+  sortOrder: 6

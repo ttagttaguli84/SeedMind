@@ -16,5 +16,6 @@ namespace SeedMind.Level
         AnimalHarvest,      // 동물 생산물 수집
         FishingCatch,       // 낚시 포획
         GatheringComplete,  // 채집 완료
+        GatheringCatalog,   // 채집 도감 첫 발견 보상
     }
 }

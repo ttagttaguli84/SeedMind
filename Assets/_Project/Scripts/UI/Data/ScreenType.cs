@@ -15,6 +15,7 @@ namespace SeedMind.UI
         Dialogue    = 8,   // NPC 대화 화면
         Processing  = 9,   // 가공소 화면
         Crafting    = 10,  // 크래프팅 화면 (향후 확장)
-        ToolUpgrade = 11   // 대장간 도구 업그레이드 화면
+        ToolUpgrade = 11,  // 대장간 도구 업그레이드 화면
+        Collection  = 12   // 수집 도감 화면
     }
 }

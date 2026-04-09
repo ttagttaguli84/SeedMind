@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baec1b8e0f3fba0498817c48fd05466d, type: 3}
+  m_Name: GatheringCatalog_spring_herb
+  m_EditorClassIdentifier: Assembly-CSharp::SeedMind.Collection.GatheringCatalogData
+  itemId: gather_spring_herb
+  hintLocked: "\uC774\uC2AC \uB9FA\uD78C \uC232 \uAC00\uC7A5\uC790\uB9AC\uC5D0\uC11C
+    \uC790\uB77C\uB294 \uBD80\uB4DC\uB7EC\uC6B4 \uB098\uBB3C. \uBD04\uC758 \uD5A5\uAE0B\uD568\uC774
+    \uAC00\uB4DD\uD558\uB2E4."
+  descriptionUnlocked: "\uBD04 \uC232 \uAC00\uC7A5\uC790\uB9AC\uC5D0\uC11C \uC790\uB77C\uB294
+    \uD5A5\uAE0B\uD55C \uB098\uBB3C. \uC0B4\uC9DD \uB370\uCCD0 \uBB34\uCE58\uBA74
+    \uBD04\uC758 \uB9DB\uC744 \uADF8\uB300\uB85C \uB290\uB084 \uC218 \uC788\uB2E4."
+  rarity: 1
+  firstDiscoverGold: 15
+  firstDiscoverXP: 5
+  catalogIcon: {fileID: 0}
+  sortOrder: 3

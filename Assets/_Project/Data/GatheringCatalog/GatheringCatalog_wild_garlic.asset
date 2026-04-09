@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baec1b8e0f3fba0498817c48fd05466d, type: 3}
+  m_Name: GatheringCatalog_wild_garlic
+  m_EditorClassIdentifier: Assembly-CSharp::SeedMind.Collection.GatheringCatalogData
+  itemId: gather_wild_garlic
+  hintLocked: "\uBD04 \uC232\uC758 \uC740\uC740\uD55C \uD5A5\uAE30\uB97C \uB530\uB77C\uAC00\uBA74
+    \uB9CC\uB098\uB294 \uC791\uC740 \uD480. \uC54C\uC2F8\uD55C \uB9DB\uC774 \uC694\uB9AC\uC5D0
+    \uAE4A\uC774\uB97C \uB354\uD55C\uB2E4."
+  descriptionUnlocked: "\uBD04 \uC232 \uAC00\uC7A5\uC790\uB9AC\uC5D0\uC11C \uC790\uB77C\uB294
+    \uC57C\uC0DD \uB2EC\uB798. \uB3C5\uD2B9\uD55C \uD5A5\uACFC \uC54C\uC2F8\uD55C
+    \uB9DB\uC774 \uAC01\uC885 \uC694\uB9AC\uC5D0 \uAE4A\uC774\uB97C \uB354\uD574\uC900\uB2E4."
+  rarity: 0
+  firstDiscoverGold: 5
+  firstDiscoverXP: 2
+  catalogIcon: {fileID: 0}
+  sortOrder: 2
