@@ -1,6 +1,6 @@
 # SeedMind — MCP 태스크 실행 진행 상황
 
-> 최종 업데이트: 2026-04-10 (tool-upgrade-tasks.md T-1~T-4 완료)
+> 최종 업데이트: 2026-04-10 (npc-shop-tasks.md T-1~T-5 완료)
 > **갱신 규칙**: 각 MCP 태스크 파일 실행 완료 직후 해당 항목을 ✅로 바꾸고 커밋. 세션 종료와 무관하게 완료 즉시 갱신한다.
 > 새 세션 시작 시 `/start`가 이 파일을 읽어 진행 위치를 복원한다.
 
@@ -9,7 +9,7 @@
 ## 현재 위치
 
 **Phase D — Feature Systems**
-- 다음 실행 파일: `npc-shop-tasks.md` (D-2)
+- 다음 실행 파일: `blacksmith-tasks.md` (D-3)
 
 ---
 
@@ -47,7 +47,7 @@
 | 파일 | 완료 여부 | 비고 |
 |------|----------|------|
 | `tool-upgrade-tasks.md` (ARC-015) | ✅ 완료 | T-1~T-4 완료. ToolSpecialEffect/LevelReqType/UpgradeMaterial 신규 enum/struct. ToolData 확장(energyCost/cooldown/useSpeed/nextTier/specialEffect 등). EconomyManager stub 생성(economy-tasks.md 완전구현 예정). ToolData SO 9종+재료 SO 2종 생성(Resources/Data/). ToolUpgradeSystem+EconomyManager 씬배치. BlacksmithPanel 프리팹 생성. T-5(통합테스트) execute_code 비활성으로 스킵. |
-| `npc-shop-tasks.md` (ARC-009) | ⬜ 미시작 | |
+| `npc-shop-tasks.md` (ARC-009) | ✅ 완료 | T-1~T-5 완료. 스크립트 16종(NPCType/NPCActivityState/DayFlag/DialogueChoiceAction/DialogueChoice/DialogueNode/DialogueData/NPCData/TravelingShopPoolData/NPCSaveData/NPCEvents/NPCManager/NPCController/DialogueSystem/TravelingMerchantScheduler/DialogueUI). NPCData SO 4종+TravelingPool SO 1종+DialogueData SO 6종 생성. DialoguePanel 프리팹 생성(PFB_UI_DialoguePanel). NPC GO 3종+매니저 GO 3종 씬배치. DialogueUI→DialogueSystem 참조 연결. ShopSystem 확장(T-5-01)은 economy-tasks.md 이후 처리. T-6(통합테스트) execute_code 비활성으로 스킵. |
 | `blacksmith-tasks.md` (ARC-020) | ⬜ 미시작 | |
 | `processing-tasks.md` (ARC-014) | ⬜ 미시작 | |
 | `quest-tasks.md` (ARC-016) | ⬜ 미시작 | |
