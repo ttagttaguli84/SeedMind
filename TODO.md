@@ -242,7 +242,10 @@
 | ~~CON-020~~ | ~~1~~ | ~~장식 아이템 콘텐츠 상세 — decoration-system.md 5개 카테고리(울타리/경로/조명/장식물/수경) 전체 아이템 목록·가격·배치 규칙 정의 (`docs/content/decoration-items.md` 신규, decoration-architecture.md SO 에셋 생성 전 필요)~~ — DONE → `docs/content/decoration-items.md` (29종 itemId/buyPrice/타일/파라미터 canonical 확정, OPEN#A 복수 시즌 이슈 플래그) |
 | ~~ARC-044~~ | ~~2~~ | ~~에너지 시스템 기술 아키텍처 (EnergyManager, EnergyConfig SO, EnergyEvents, EnergyBarUI, 세이브/로드 통합 — DES-024 후속)~~ — DONE → `docs/systems/energy-architecture.md` (SaveLoadOrder 51 확정, data-pipeline.md EnergyConfig SO 추가) |
 | ~~FIX-118~~ | ~~2~~ | ~~farming-system.md / fishing-system.md / gathering-system.md / time-season.md 에너지 소모 수치를 `energy-system.md` canonical 참조로 교체 (DES-024 후속 — 분산 기재 에너지 수치가 아직 원본 문서에 잔존)~~ — DONE: 4개 문서 섹션 내 직접 수치 → canonical 참조 교체, Cross-references 갱신 |
-| ARC-047 | 1 | 에너지 시스템 MCP 태스크 시퀀스 독립 문서화 (energy-architecture.md Part II 개요 → docs/mcp/energy-tasks.md 상세 분리 — ARC-044 후속) |
+| ~~ARC-047~~ | ~~1~~ | ~~에너지 시스템 MCP 태스크 시퀀스 독립 문서화 (energy-architecture.md Part II 개요 → docs/mcp/energy-tasks.md 상세 분리 — ARC-044 후속)~~ — DONE → `docs/mcp/energy-tasks.md` (7개 태스크 그룹 E-A~E-G, ~55회 MCP 호출) |
 | ~~DES-025~~ | ~~2~~ | ~~음식/요리 아이템 에너지 회복 상세 설계 — energy-system.md 섹션 5.2 [OPEN] 후속: 회복 음식 아이템 종류(기본~고급 4등급 이상), 요리 시스템 연동 여부, 상점 판매 vs 직접 제조 경로 확정~~ — DONE → `docs/content/food-items.md` (CON-021, 음식 25종, 4등급 체계, 가공소+베이커리 통합, energy-system.md 섹션 5.2 [OPEN] 해소) |
 | ~~CON-022~~ | ~~2~~ | ~~processing-system.md에 음식 레시피 19종 실제 통합 (food-items.md 섹션 3.2/3.3/3.4 레시피 → processing-system.md 섹션 신규 추가, 전체 레시피 수 56→75종 — DES-025 후속)~~ — DONE → 섹션 3.1.5(일반 요리 8종), 3.4.2(고급/최고급 11종), 3.8(75종 요약), 2.2(총계) 추가 |
-| FIX-119 | 1 | gathering-items.md에 황금 연꽃/천년 영지 아이템 확인 및 판매가 canonical 등록 (food-items.md 섹션 3.4 [OPEN] 해소 — 잠정 100G/120G 확정 필요) |
+| ~~FIX-119~~ | ~~1~~ | ~~gathering-items.md에 황금 연꽃/천년 영지 아이템 확인 및 판매가 canonical 등록 (food-items.md 섹션 3.4 [OPEN] 해소 — 잠정 100G/120G 확정 필요)~~ — DONE: 황금 연꽃 100G/천년 영지 120G 명시 (→ gathering-system.md 참조), food-items.md [OPEN]* 해소 |
+| ARC-048 | 1 | 경제 시스템 MCP 태스크 시퀀스 독립 문서화 (economy-architecture.md Part II 요약 → docs/mcp/economy-tasks.md 상세 분리 — ARC-004 후속) |
+| ARC-049 | 1 | 비주얼 시스템 MCP 태스크 시퀀스 독립 문서화 (visual-architecture.md Part II 요약 → docs/mcp/visual-tasks.md 상세 분리) |
+| ARC-050 | 1 | 작물 성장 시스템 MCP 태스크 시퀀스 독립 문서화 (crop-growth-architecture.md Part II 요약 → docs/mcp/crop-growth-tasks.md 상세 분리) |
