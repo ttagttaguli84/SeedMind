@@ -243,7 +243,7 @@
 
 ## Open Questions
 
-- [OPEN] 쿼터뷰 vs 탑다운: 현재 쿼터뷰(아이소메트릭) 확정이나, MCP로 카메라 설정 테스트 후 최종 결정
+- ~~[OPEN] 쿼터뷰 vs 탑다운~~ → **확정**: 쿼터뷰(Orthographic, X=45°, Y=45°) 채택. 근거 및 파라미터 (→ see `docs/systems/player-character.md` 섹션 6)
 - [OPEN] 멀티 수확 작물(딸기 등) 메카닉 상세 미정
 
 ## Risks
