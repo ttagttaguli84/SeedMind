@@ -43,7 +43,7 @@ namespace SeedMind.Audio
         {
             if (Instance != null && Instance != this) { Destroy(gameObject); return; }
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(transform.root.gameObject);
 
             if (_soundRegistry != null) _soundRegistry.Initialize();
             if (_bgmRegistry != null) _bgmRegistry.Initialize();
