@@ -27,6 +27,11 @@ namespace SeedMind.Editor
             TMP_FontAsset existing = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(outPath);
             if (existing == null)
             {
+                // 1) 아틀라스 텍스처 먼저 생성
+                var atlasTex = new Texture2D(1024, 1024, TextureFormat.Alpha8, false);
+                atlasTex.name = "MalgunGothic SDF Atlas";
+
+                // 2) FontAsset 생성
                 TMP_FontAsset tmpFont = TMP_FontAsset.CreateFontAsset(
                     font, 90, 9,
                     GlyphRenderMode.SDFAA,
@@ -34,8 +39,25 @@ namespace SeedMind.Editor
                     AtlasPopulationMode.Dynamic
                 );
                 tmpFont.name = "MalgunGothic SDF";
+                tmpFont.atlasTextures = new Texture2D[] { atlasTex };
+
+                // 3) Material — null이면 직접 생성
+                var mat = tmpFont.material;
+                if (mat == null)
+                {
+                    var shader = Shader.Find("TextMeshPro/Distance Field");
+                    mat = new Material(shader);
+                }
+                mat.name = "MalgunGothic SDF Material";
+                mat.SetTexture(ShaderUtilities.ID_MainTex, atlasTex);
+                tmpFont.material = mat;
+
+                // 4) 에셋 저장 (주 에셋 → 서브에셋 순서 중요)
                 AssetDatabase.CreateAsset(tmpFont, outPath);
+                AssetDatabase.AddObjectToAsset(atlasTex, outPath);
+                AssetDatabase.AddObjectToAsset(mat, outPath);
                 AssetDatabase.SaveAssets();
+                AssetDatabase.ImportAsset(outPath, ImportAssetOptions.ForceUpdate);
                 existing = tmpFont;
                 Debug.Log("[SetupKoreanFont] MalgunGothic SDF.asset 생성 완료");
             }
@@ -56,6 +78,9 @@ namespace SeedMind.Editor
             if (liberation.fallbackFontAssetTable == null)
                 liberation.fallbackFontAssetTable = new List<TMP_FontAsset>();
 
+            // null 항목 제거 후 등록
+            liberation.fallbackFontAssetTable.RemoveAll(f => f == null);
+
             if (!liberation.fallbackFontAssetTable.Contains(existing))
             {
                 liberation.fallbackFontAssetTable.Add(existing);
@@ -65,6 +90,8 @@ namespace SeedMind.Editor
             }
             else
             {
+                EditorUtility.SetDirty(liberation);
+                AssetDatabase.SaveAssets();
                 Debug.Log("[SetupKoreanFont] 이미 fallback에 등록되어 있음");
             }
 
