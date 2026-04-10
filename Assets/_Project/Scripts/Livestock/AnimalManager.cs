@@ -60,7 +60,7 @@ namespace SeedMind.Livestock
             BuildingEvents.OnBuildingCompleted += HandleBuildingCompleted;
 
             if (TimeManager.Instance != null)
-                TimeManager.Instance.RegisterOnDayChanged(55, DailyUpdate);
+                TimeManager.Instance.RegisterOnDayChanged(54, DailyUpdate);
         }
 
         private void OnDisable()
@@ -269,7 +269,7 @@ namespace SeedMind.Livestock
         }
 
         // ============================================================
-        // 일일 업데이트 (TimeManager 콜백, priority=55)
+        // 일일 업데이트 (TimeManager 콜백, priority=54)
         // ============================================================
 
         private void DailyUpdate(int day)

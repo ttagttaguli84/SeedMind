@@ -31,7 +31,7 @@ namespace SeedMind.Player
         private void OnEnable()
         {
             if (TimeManager.Instance != null)
-                TimeManager.Instance.RegisterOnDayChanged(50, OnDayChanged);
+                TimeManager.Instance.RegisterOnDayChanged(51, OnDayChanged);
         }
 
         private void OnDisable()
