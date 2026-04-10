@@ -53,7 +53,37 @@ namespace SeedMind.UI
 
         public void RefreshAll()
         {
-            // 각 서브시스템 연결 후 상세 구현
+            RefreshGold();
+            RefreshTime();
+            RefreshLevel();
+        }
+
+        private void RefreshGold()
+        {
+            if (_goldText == null) return;
+            var econ = Economy.EconomyManager.Instance;
+            if (econ != null)
+                _goldText.text = $"{econ.CurrentGold:N0}G";
+        }
+
+        private void RefreshTime()
+        {
+            var tm = Core.TimeManager.Instance;
+            if (tm == null) return;
+            if (_timeText != null)
+                _timeText.text = $"{Mathf.FloorToInt(tm.CurrentHour):D2}:00";
+            if (_dayText != null)
+                _dayText.text = $"Day {tm.CurrentDay}";
+        }
+
+        private void RefreshLevel()
+        {
+            var pm = Level.ProgressionManager.Instance;
+            if (pm == null) return;
+            if (_levelText != null)
+                _levelText.text = $"Lv.{pm.CurrentLevel}";
+            if (_expBar != null)
+                _expBar.value = pm.ExpProgress;
         }
 
         public void ShowSaveIndicator()
