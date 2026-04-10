@@ -12,14 +12,14 @@
 - Phase 2 (A–G 전체) ✅ 완료 → Phase 3 전환 완료 (2026-04-10)
 - 플레이 테스트 첫 세션: 버그 6건 발견·수정 완료 (→ 데브로그 123 참조)
 
-### Phase 3 QA 현황
+### Phase 3 QA 현황 (2026-04-10 검증 완료)
 
 | ID | 씬/시스템 | 상태 | 비고 |
 |----|---------|------|------|
-| QA-001 | SCN_Farm 전체 플레이 | 미검증 | 이동·농사·HUD·저장 |
-| QA-002 | SCN_Farm UI(Overlay) 표시 | 미검증 | Canvas_Overlay 하위 패널 |
-| QA-003 | 씬 전환 후 시스템 초기화 | 미검증 | MainMenu→Farm |
-| QA-004 | AudioMixer 수동 생성 | 미완료 | sound-tasks.md 비고 참조 |
+| QA-001 | SCN_Farm 전체 플레이 | ✅ 완료 | Play Mode 에러 0건. HUDController → EconomyManager/TimeManager 이벤트 직접 구독 수정. GroundPlane MeshCollider 확인. |
+| QA-002 | SCN_Farm UI(Overlay) 표시 | ✅ 완료 | ScreenBase.Awake()에 alpha=0 초기화 추가 — 게임 시작 시 모든 Screen 숨김 처리. |
+| QA-003 | 씬 전환 후 시스템 초기화 | ✅ 완료 | MainMenu 버튼 4개 리스너 확인. Build Settings 3씬 등록 확인. Play Mode 에러 0건. |
+| QA-004 | AudioMixer 수동 생성 | 미완료 | sound-tasks.md 비고 참조 — AudioMixer 없이도 SoundManager 동작, 빌드에서 볼륨 제어만 비활성 |
 
 ---
 

@@ -30,6 +30,13 @@ namespace SeedMind.UI
         {
             if (_canvasGroup == null)
                 _canvasGroup = GetComponent<CanvasGroup>();
+            // 초기 상태: 숨김 (Open() 호출 전까지 화면에 표시되지 않음)
+            if (_canvasGroup != null)
+            {
+                _canvasGroup.alpha = 0f;
+                _canvasGroup.interactable = false;
+                _canvasGroup.blocksRaycasts = false;
+            }
             if (_screenType != ScreenType.None && UIManager.Instance != null)
                 UIManager.Instance.RegisterScreen(_screenType, this);
         }

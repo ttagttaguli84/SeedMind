@@ -37,6 +37,35 @@ namespace SeedMind.UI
         [Header("시스템")]
         [SerializeField] private GameObject _saveIndicator;
 
+        private System.Action<int, int> _goldChangedHandler;
+        private System.Action<int> _hourChangedHandler;
+
+        private void Start()
+        {
+            // 직접 이벤트 구독으로 실시간 HUD 갱신
+            _goldChangedHandler = (_, __) => RefreshGold();
+            _hourChangedHandler = _ => RefreshTime();
+
+            var econ = Economy.EconomyManager.Instance;
+            if (econ != null) econ.OnGoldChanged += _goldChangedHandler;
+
+            var tm = Core.TimeManager.Instance;
+            if (tm != null) tm.OnHourChanged += _hourChangedHandler;
+
+            RefreshAll();
+        }
+
+        private void OnDestroy()
+        {
+            var econ = Economy.EconomyManager.Instance;
+            if (econ != null && _goldChangedHandler != null)
+                econ.OnGoldChanged -= _goldChangedHandler;
+
+            var tm = Core.TimeManager.Instance;
+            if (tm != null && _hourChangedHandler != null)
+                tm.OnHourChanged -= _hourChangedHandler;
+        }
+
         private void OnEnable()
         {
             UIEvents.OnHUDRefreshRequested += RefreshAll;
