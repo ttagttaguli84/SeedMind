@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.UI;
 using TMPro;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -51,7 +52,7 @@ namespace SeedMind.Editor
             {
                 var es = new GameObject("EventSystem");
                 es.AddComponent<EventSystem>();
-                es.AddComponent<StandaloneInputModule>();
+                es.AddComponent<InputSystemUIInputModule>();
                 Undo.RegisterCreatedObjectUndo(es, "Create EventSystem");
                 Debug.Log("[RebuildMainMenuUI] EventSystem 생성");
             }
