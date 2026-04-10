@@ -424,41 +424,26 @@ namespace SeedMind.Tests
             Assert.AreEqual(harvestable, stateProp.GetValue(tile),
                 $"AdvanceDay {growthDays}회 후 Harvestable 기대. 실제={stateProp.GetValue(tile)}");
 
-            // Step 6: 수확 (ToolSystem으로 또는 직접)
+            // Step 6: 수확 — ToolSystem.HarvestCrop(tile) reflection 직접 호출
+            // (ToolSystem.TryUseToolAt는 도구 선택 상태에 의존하므로 private 메서드로 직접 검증)
             var toolType   = GameType("SeedMind.Player.ToolSystem");
             var toolSys    = GameObject.FindFirstObjectByType(toolType);
+            bool harvested = false;
+
             if (toolSys != null)
             {
-                var toolTypeEnum = GameType("SeedMind.Player.Data.ToolType");
-                var toolsField   = toolType.GetField("tools");
-                var tools        = toolsField?.GetValue(toolSys) as Array;
-                var toolDataType = GameType("SeedMind.Player.Data.ToolData");
-                var toolTypeProp = toolDataType?.GetField("toolType");
-                var idxField     = toolType.GetField("currentToolIndex");
-
-                if (tools != null && toolTypeEnum != null && toolTypeProp != null)
+                var harvestMethod = toolType.GetMethod("HarvestCrop",
+                    BindingFlags.Instance | BindingFlags.NonPublic);
+                if (harvestMethod != null)
                 {
-                    var sickleVal = Enum.Parse(toolTypeEnum, "Sickle");
-                    var handVal   = Enum.Parse(toolTypeEnum, "Hand");
-                    for (int i = 0; i < tools.Length; i++)
-                    {
-                        var t = tools.GetValue(i);
-                        if (t == null) continue;
-                        var tt = toolTypeProp.GetValue(t);
-                        if (tt.Equals(sickleVal) || tt.Equals(handVal))
-                        {
-                            idxField?.SetValue(toolSys, i);
-                            break;
-                        }
-                    }
+                    harvestMethod.Invoke(toolSys, new object[] { tile });
+                    harvested = true;
                 }
-
-                var tryUseTool = toolType.GetMethod("TryUseToolAt");
-                tryUseTool?.Invoke(toolSys, new object[] { new Vector2Int(1, 1) });
             }
-            else
+
+            if (!harvested)
             {
-                // ToolSystem 없으면 직접 수확 처리
+                // 최후 수단: 직접 수확 처리
                 if (cropInst != null) UnityEngine.Object.Destroy(cropInst.gameObject);
                 cropInstField.SetValue(tile, null);
                 setState.Invoke(tile, new[] { Enum.Parse(stateType, "Empty") });
