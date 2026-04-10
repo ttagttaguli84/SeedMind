@@ -2,60 +2,138 @@
 // -> see docs/systems/quest-architecture.md 섹션 3.2
 using UnityEngine;
 using System.Collections.Generic;
+using SeedMind.Core;
+using SeedMind.Economy;
+using SeedMind.Level;
+using SeedMind.Level.Data;
 using SeedMind.Quest.Data;
 
 namespace SeedMind.Quest
 {
-    public class QuestManager : MonoBehaviour //, ISaveable
+    public class QuestManager : MonoBehaviour
     {
         [SerializeField] private QuestData[] _allQuests;
         [SerializeField] private QuestData[] _dailyQuestPool;
 
-        private QuestTracker _tracker;
-        private QuestRewarder _rewarder;
-        private DailyQuestSelector _dailySelector;
-        private NPCRequestScheduler _npcScheduler;
-
-        private Dictionary<string, QuestInstance> _activeQuests
+        private readonly Dictionary<string, QuestInstance> _activeQuests
             = new Dictionary<string, QuestInstance>();
-        private HashSet<string> _completedQuestIds = new HashSet<string>();
+        private readonly HashSet<string> _completedQuestIds = new HashSet<string>();
+        private string _trackedQuestId;
 
-        // ISaveable
-        public int SaveLoadOrder => 85; // -> see docs/systems/quest-architecture.md 섹션 8.1
+        public int SaveLoadOrder => 85;
+
+        private void Awake()
+        {
+            Initialize();
+        }
 
         public void Initialize()
         {
-            // -> see docs/systems/quest-architecture.md 섹션 3.2
-            // 1) QuestInstance 생성 2) 해금 판정 3) 자동 Active 전환
-            // 4) _tracker 초기화 5) _dailySelector 첫 날 선택
+            if (_allQuests == null) return;
+            foreach (var data in _allQuests)
+            {
+                if (data == null || string.IsNullOrEmpty(data.questId)) continue;
+                if (!_activeQuests.ContainsKey(data.questId))
+                {
+                    var inst = new QuestInstance(data);
+                    inst.Status = QuestStatus.Available;
+                    _activeQuests[data.questId] = inst;
+                }
+            }
         }
 
-        public bool AcceptQuest(string questId) { return false; }
-        public bool AbandonQuest(string questId) { return false; }
-        public bool ClaimReward(string questId) { return false; }
+        public bool AcceptQuest(string questId)
+        {
+            if (!_activeQuests.TryGetValue(questId, out var inst)) return false;
+            if (inst.Status != QuestStatus.Available) return false;
+
+            inst.Status = QuestStatus.Active;
+            inst.AcceptedDay = TimeManager.Instance != null ? TimeManager.Instance.CurrentDay : 0;
+            Debug.Log($"[QuestManager] 퀘스트 수락: {questId}");
+            return true;
+        }
+
+        public bool AbandonQuest(string questId)
+        {
+            if (!_activeQuests.TryGetValue(questId, out var inst)) return false;
+            if (inst.Status != QuestStatus.Active) return false;
+
+            inst.Status = QuestStatus.Available;
+            Debug.Log($"[QuestManager] 퀘스트 포기: {questId}");
+            return true;
+        }
+
+        public bool ClaimReward(string questId)
+        {
+            if (!_activeQuests.TryGetValue(questId, out var inst)) return false;
+            if (inst.Status != QuestStatus.Active) return false;
+            if (!inst.AreAllObjectivesComplete()) return false;
+
+            GiveRewards(inst);
+
+            inst.Status = QuestStatus.Rewarded;
+            inst.CompletedDay = TimeManager.Instance != null ? TimeManager.Instance.CurrentDay : 0;
+            _completedQuestIds.Add(questId);
+            _activeQuests.Remove(questId);
+
+            Debug.Log($"[QuestManager] 퀘스트 완료 및 보상 지급: {questId}");
+            return true;
+        }
+
+        private void GiveRewards(QuestInstance inst)
+        {
+            if (inst.Data.rewards == null) return;
+            foreach (var reward in inst.Data.rewards)
+            {
+                switch (reward.type)
+                {
+                    case RewardType.Gold:
+                        EconomyManager.Instance?.AddGold(reward.amount);
+                        break;
+                    case RewardType.XP:
+                        ProgressionManager.Instance?.AddExp(reward.amount, XPSource.QuestComplete);
+                        break;
+                    case RewardType.Item:
+                        Player.InventoryManager.Instance?.AddItem(reward.targetId, reward.amount);
+                        break;
+                }
+            }
+        }
+
         public IReadOnlyList<QuestInstance> GetActiveQuests()
-            => new List<QuestInstance>();
-        public IReadOnlyList<QuestInstance> GetQuestsByCategory(
-            QuestCategory cat) => new List<QuestInstance>();
+        {
+            var list = new List<QuestInstance>();
+            foreach (var inst in _activeQuests.Values)
+                if (inst.Status == QuestStatus.Active)
+                    list.Add(inst);
+            return list;
+        }
+
+        public IReadOnlyList<QuestInstance> GetQuestsByCategory(QuestCategory cat)
+        {
+            var list = new List<QuestInstance>();
+            foreach (var inst in _activeQuests.Values)
+                if (inst.Data.category == cat)
+                    list.Add(inst);
+            return list;
+        }
+
         public bool IsQuestCompleted(string questId)
             => _completedQuestIds.Contains(questId);
-        public QuestInstance GetTrackedQuest() => null;
-        public void SetTrackedQuest(string questId) { }
 
-        public object GetSaveData()
+        public QuestInstance GetTrackedQuest()
         {
-            // -> see docs/systems/quest-architecture.md 섹션 8.3
-            return new QuestSaveData();
-        }
-        public void LoadSaveData(object rawData)
-        {
-            // -> see docs/systems/quest-architecture.md 섹션 8.3
+            if (_trackedQuestId == null) return null;
+            _activeQuests.TryGetValue(_trackedQuestId, out var inst);
+            return inst;
         }
 
-        // [구독] TimeManager.OnDayChanged -> CheckDailyReset, CheckTimeLimits
-        // [구독] TimeManager.OnSeasonChanged -> UnlockSeasonalQuests
-        // [구독] ProgressionEvents.OnLevelUp -> CheckLevelUnlocks
-        // [구독] TutorialEvents.OnTutorialCompleted -> ActivateQuestSystem
-        // [구독] NPCEvents.OnRequestAccepted -> AcceptNPCQuest
+        public void SetTrackedQuest(string questId)
+        {
+            _trackedQuestId = questId;
+        }
+
+        public object GetSaveData() => new QuestSaveData();
+        public void LoadSaveData(object rawData) { }
     }
 }

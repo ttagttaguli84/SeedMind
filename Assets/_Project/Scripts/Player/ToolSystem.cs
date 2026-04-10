@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using SeedMind.Core;
+using SeedMind.Economy;
 using SeedMind.Farm;
+using SeedMind.Farm.Data;
 using SeedMind.Player.Data;
 
 namespace SeedMind.Player
@@ -9,6 +12,9 @@ namespace SeedMind.Player
     {
         public ToolData[] tools;
         public int currentToolIndex = 0;
+
+        [Header("씨앗 기본 작물 ID (SeedBag 사용 시)")]
+        public string defaultSeedCropId = "crop_potato"; // 씬에서 설정 가능
 
         public ToolData CurrentTool =>
             (tools != null && tools.Length > 0) ? tools[currentToolIndex] : null;
@@ -37,15 +43,108 @@ namespace SeedMind.Player
                 if (obs != null && !obs.isCleared)
                 {
                     fzm.ClearObstacle(gridPos, tool.toolType, tool.tier);
-                    return true; // 기존 타일 액션 실행하지 않음
+                    return true;
                 }
             }
 
-            // [기존 타일 액션] 장애물 없으면 기본 도구 로직으로 진행
+            // [농사 액션]
+            var grid = FarmGrid.FindFirstObjectByType(typeof(FarmGrid)) as FarmGrid;
+            if (grid == null) return false;
+            var tile = grid.GetTile(gridPos.x, gridPos.y);
+            if (tile == null) return false;
+
+            return ApplyToolToTile(tool, tile);
+        }
+
+        private bool ApplyToolToTile(ToolData tool, FarmTile tile)
+        {
+            var state = tile.State;
+            switch (tool.toolType)
+            {
+                case ToolType.Hoe:
+                    if (state == TileState.Empty)
+                    {
+                        tile.SetState(TileState.Tilled);
+                        return true;
+                    }
+                    break;
+
+                case ToolType.SeedBag:
+                    if (state == TileState.Tilled)
+                    {
+                        PlantCrop(tile);
+                        return true;
+                    }
+                    break;
+
+                case ToolType.WateringCan:
+                    if (state == TileState.Planted || state == TileState.Dry)
+                    {
+                        tile.SetState(TileState.Watered);
+                        FarmEvents.OnTileWatered?.Invoke(tile);
+                        return true;
+                    }
+                    break;
+
+                case ToolType.Sickle:
+                case ToolType.Hand:
+                    if (state == TileState.Harvestable)
+                    {
+                        HarvestCrop(tile);
+                        return true;
+                    }
+                    break;
+            }
             return false;
         }
 
-private void Update()
+        private void PlantCrop(FarmTile tile)
+        {
+            // DataRegistry에서 작물 데이터 조회
+            var cropData = DataRegistry.Instance != null
+                ? DataRegistry.Instance.Get<Farm.Data.CropData>(defaultSeedCropId)
+                : null;
+
+            // CropInstance 생성
+            var cropGO = new GameObject($"Crop_{tile.gridX}_{tile.gridY}");
+            cropGO.transform.SetParent(tile.transform);
+            cropGO.transform.localPosition = Vector3.zero;
+            var cropInst = cropGO.AddComponent<CropInstance>();
+            if (cropData != null) cropInst.Initialize(cropData);
+            tile.cropInstance = cropInst;
+
+            tile.SetState(TileState.Planted);
+            Debug.Log($"[ToolSystem] ({tile.gridX},{tile.gridY}) 파종 완료: {defaultSeedCropId}");
+        }
+
+        private void HarvestCrop(FarmTile tile)
+        {
+            var cropInst = tile.cropInstance;
+            string cropId = cropInst?.cropData?.cropId ?? defaultSeedCropId;
+            int salePrice = cropInst?.cropData?.sellPrice ?? 50;
+
+            // 인벤토리에 추가
+            var inv = InventoryManager.Instance;
+            if (inv != null)
+                inv.AddItem(cropId, 1);
+
+            // 골드 지급
+            var econ = EconomyManager.Instance;
+            if (econ != null)
+                econ.AddGold(salePrice);
+
+            // 이벤트 발행
+            FarmEvents.OnCropHarvested?.Invoke(tile);
+
+            // 타일 초기화
+            if (cropInst != null) Destroy(cropInst.gameObject);
+            tile.cropInstance = null;
+            tile.SetState(TileState.Empty);
+
+            Debug.Log($"[ToolSystem] ({tile.gridX},{tile.gridY}) 수확 완료: {cropId} +{salePrice}G");
+        }
+
+        private void Update()
         {
             if (tools == null || tools.Length == 0) return;
             var mouse = Mouse.current;

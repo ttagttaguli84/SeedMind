@@ -32,6 +32,18 @@ namespace SeedMind.Farm
             return _tiles[x, y];
         }
 
+        /// <summary>
+        /// 월드 좌표에서 가장 가까운 타일을 반환. 그리드 범위 밖이면 null.
+        /// 타일은 1유닛 간격, FarmGrid transform이 그리드 원점(0,0) 위치 기준.
+        /// </summary>
+        public FarmTile GetTileAtWorldPos(Vector3 worldPos)
+        {
+            Vector3 local = transform.InverseTransformPoint(worldPos);
+            int x = Mathf.RoundToInt(local.x);
+            int y = Mathf.RoundToInt(local.z);
+            return GetTile(x, y);
+        }
+
         /// <summary>비/폭우/폭풍 시 WeatherSystem이 호출 — 모든 Planted/Dry 타일 자동 물주기.</summary>
         public void WaterAllPlantedTiles()
         {
