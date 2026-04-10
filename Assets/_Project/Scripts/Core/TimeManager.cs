@@ -64,7 +64,7 @@ namespace SeedMind.Core
             {
                 if (e.priority == priority)
                 {
-                    Debug.LogError($"[TimeManager] OnDayChanged priority {priority} 중복 등록 시도 무시.");
+                    Debug.LogWarning($"[TimeManager] OnDayChanged priority {priority} 중복 등록 시도 무시.");
                     return;
                 }
             }
@@ -83,7 +83,7 @@ namespace SeedMind.Core
             {
                 if (e.priority == priority)
                 {
-                    Debug.LogError($"[TimeManager] OnSeasonChanged priority {priority} 중복 등록 시도 무시.");
+                    Debug.LogWarning($"[TimeManager] OnSeasonChanged priority {priority} 중복 등록 시도 무시.");
                     return;
                 }
             }
