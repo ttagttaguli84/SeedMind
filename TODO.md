@@ -1,5 +1,16 @@
 # TODO
 
+## Phase 3 — QA & 플레이 테스트
+
+| ID | Priority | Description |
+|----|----------|-------------|
+| QA-001 | 4 | SCN_Farm 전체 플레이 테스트 (플레이어 이동·농사 사이클·HUD 표시·저장) |
+| QA-002 | 3 | SCN_Farm UI(Overlay) 표시 검증 (인벤토리/퀘스트/업적 패널 열기/닫기) |
+| QA-003 | 3 | 씬 전환 후 시스템 초기화 검증 (SCN_MainMenu → SCN_Farm) |
+| QA-004 | 2 | AudioMixer 에셋 수동 생성 필요 (sound-tasks.md 비고 참조 — MCP 미지원) |
+
+## Phase 1~2 완료 항목
+
 | ID | Priority | Description |
 |----|----------|-------------|
 | ~~DES-001~~ | ~~5~~ | ~~경작 시스템 상세 설계 (타일 상태, 도구 인터랙션, 물/비료 효과)~~ — DONE → `docs/systems/farming-system.md` |

@@ -128,7 +128,7 @@ When all four criteria above are confirmed:
 5. `git commit + push`
 6. Begin Unity MCP task execution starting from `docs/mcp/scene-setup-tasks.md`
 
-### Phase 2 → Phase 3 Completion Criteria (AI self-evaluated)
+### Phase 2 → Phase 3 Completion Criteria (AI self-evaluated) — ✅ COMPLETED (2026-04-10)
 
 `docs/mcp/progress.md`의 모든 Phase가 ✅일 때 완료.
 
@@ -151,7 +151,22 @@ When all four criteria above are confirmed:
 6. Phase 3 시작
 
 ### Phase 3 — QA & 플레이 테스트
-Phase 2 완료 후 범위 정의 예정.
+
+> 시작: 2026-04-10 | Phase 2 전체 구현(A–G) 완료 후 플레이 테스트 착수
+
+목표: 씬별 기능 검증, 버그 수정, 플레이어블 상태 달성
+
+**QA 체크리스트**
+
+| 씬 / 시스템 | 검증 항목 |
+|------------|----------|
+| SCN_MainMenu | 버튼 동작(New Game / Continue / Quit), 씬 전환 |
+| SCN_Farm | 플레이어 이동, 농사 사이클(경작→씨앗→물주기→수확), HUD 표시 |
+| 저장/로드 | 자동 저장 트리거, 씬 재진입 시 데이터 복원 |
+| 시스템 초기화 | 주요 Singleton/Manager 에러 없이 Awake/Start 완료 |
+| 씬 전환 | SCN_MainMenu → SCN_Farm 전환 후 모든 시스템 정상 초기화 |
+
+**완료 조건**: 주요 씬 에러 없이 엔드-투-엔드 플레이 가능 (작물 1사이클 완주)
 
 ### Phase 4 — 빌드 & 배포
 Phase 3 완료 후 범위 정의 예정.
